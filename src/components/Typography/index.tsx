@@ -8,25 +8,23 @@ interface TypographyProps {
   children: string;
 }
 
-function Typography({ variant, children }: TypographyProps) {
-  let typography: string;
-
+function getTypography(variant: TypographyVariant): string {
   switch (variant) {
     case VARIANT.TITLE1:
-      typography = 'h1';
-      break;
+      return 'h1';
     case VARIANT.TITLE2:
-      typography = 'h2';
-      break;
+      return 'h2';
     case VARIANT.SUBTITLE1:
-      typography = 'h3';
-      break;
+      return 'h3';
     case VARIANT.SUBTITLE2:
-      typography = 'h4';
-      break;
+      return 'h4';
     default:
-      typography = 'p';
+      return 'p';
   }
+}
+
+function Typography({ variant, children }: TypographyProps) {
+  const typography = getTypography(variant);
 
   return jsx(
     typography,
