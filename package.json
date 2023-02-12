@@ -55,6 +55,7 @@
     "stylelint-config-property-sort-order-smacss": "^9.0.0",
     "stylelint-config-recommended-scss": "^9.0.0",
     "typescript": "^4.9.3",
-    "vite": "^4.1.0"
+    "vite": "^4.1.0",
+    "vite-tsconfig-paths": "^4.0.5"
   }
 }
