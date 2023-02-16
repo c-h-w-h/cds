@@ -16,7 +16,7 @@ function Badge({
   children,
   size = 'small',
   outline = false,
-  color = '#1493FF',
+  color,
   fill = false,
 }: BadgeProps) {
   return (
@@ -33,17 +33,22 @@ function Badge({
 export default Badge;
 
 const BadgeContainer = styled.div<Omit<BadgeProps, 'children' | 'size'>>(
-  ({ outline, color, fill }) => ({
-    width: 'fit-content',
-    padding: '8px 12px',
-    borderRadius: 30,
-    border: outline ? `1px solid ${color}` : 'none',
-    color: fill ? 'white' : color,
-    backgroundColor: fill ? color : 'transparent',
+  ({ theme, outline, color, fill }) => {
+    const { color: themeColor } = theme;
+    const { white, primary100 } = themeColor;
 
-    ':hover': {
-      color: fill ? color : 'white',
-      backgroundColor: fill ? 'transparent' : color,
-    },
-  }),
+    return {
+      width: 'fit-content',
+      padding: '8px 12px',
+      borderRadius: 30,
+      border: outline ? `1px solid ${color ?? primary100}` : 'none',
+      color: fill ? white : color ?? primary100,
+      backgroundColor: fill ? color ?? primary100 : 'transparent',
+
+      ':hover': {
+        color: fill ? color ?? primary100 : white,
+        backgroundColor: fill ? 'transparent' : color ?? primary100,
+      },
+    };
+  },
 );
