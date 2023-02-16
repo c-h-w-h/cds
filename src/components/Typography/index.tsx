@@ -30,6 +30,7 @@ function Typography({ variant, children }: TypographyProps) {
     typography,
     {
       css: css`
+        margin: 0;
         font-size: ${FONT_SIZE[variant]};
         font-weight: ${FONT_WEIGHT[variant]};
       `,
