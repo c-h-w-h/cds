@@ -6,7 +6,6 @@ function Global() {
       styles={css`
         * {
           box-sizing: border-box;
-          font-family: 'NanumGothic';
         }
 
         @font-face {
@@ -106,8 +105,9 @@ function Global() {
           margin: 0;
           padding: 0;
           border: 0;
-          font-size: 100%;
           font: inherit;
+          font-size: 100%;
+          font-family: 'NanumGothic';
           vertical-align: baseline;
         }
 
