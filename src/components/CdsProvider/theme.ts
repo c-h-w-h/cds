@@ -1,5 +1,9 @@
 import { COLOR } from '@constants/color';
 
-export const theme = {
+export interface Theme {
+  color: typeof COLOR;
+}
+
+export const theme: Theme = {
   color: COLOR,
 } as const;
