@@ -9,7 +9,7 @@ interface BadgeProps {
   size?: BadgeSize;
   outline?: boolean;
   color?: string;
-  fill?: boolean;
+  filled?: boolean;
 }
 
 function Badge({
@@ -17,10 +17,10 @@ function Badge({
   size = 'small',
   outline = false,
   color,
-  fill = false,
+  filled = false,
 }: BadgeProps) {
   return (
-    <BadgeContainer {...{ outline, color, fill }}>
+    <BadgeContainer {...{ outline, color, filled }}>
       <Center>
         <Typography variant={size === 'large' ? 'body' : 'desc'}>
           {children}
@@ -33,7 +33,7 @@ function Badge({
 export default Badge;
 
 const BadgeContainer = styled.div<Omit<BadgeProps, 'children' | 'size'>>(
-  ({ theme, outline, color, fill }) => {
+  ({ theme, outline, color, filled }) => {
     const { color: themeColor } = theme;
     const { white, primary100 } = themeColor;
 
@@ -42,12 +42,12 @@ const BadgeContainer = styled.div<Omit<BadgeProps, 'children' | 'size'>>(
       padding: '8px 12px',
       borderRadius: 30,
       border: outline ? `1px solid ${color ?? primary100}` : 'none',
-      color: fill ? white : color ?? primary100,
-      backgroundColor: fill ? color ?? primary100 : 'transparent',
+      color: filled ? white : color ?? primary100,
+      backgroundColor: filled ? color ?? primary100 : 'transparent',
 
       ':hover': {
-        color: fill ? color ?? primary100 : white,
-        backgroundColor: fill ? 'transparent' : color ?? primary100,
+        color: filled ? color ?? primary100 : white,
+        backgroundColor: filled ? 'transparent' : color ?? primary100,
       },
     };
   },
