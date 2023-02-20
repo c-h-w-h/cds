@@ -1,9 +1,10 @@
 import { css } from '@emotion/react';
 import { DefaultPropsWithChildren } from '@util-types/DefaultPropsWithChildren';
+import { CSSProperties } from 'react';
 
 interface ContainerProps extends DefaultPropsWithChildren<HTMLDivElement> {
-  overflowX?: 'visible' | 'hidden' | 'scroll' | 'auto';
-  overflowY?: 'visible' | 'hidden' | 'scroll' | 'auto';
+  overflowX?: CSSProperties['overflowX'];
+  overflowY?: CSSProperties['overflowY'];
 }
 
 const Container = ({
