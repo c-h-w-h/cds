@@ -10,16 +10,12 @@ const resetCss = css`
   }
 
   @font-face {
-    font-family: 'NanumGothic';
+    font-family: 'NanumSquare';
     font-display: auto;
-    src: local('NanumGothic'),
-      url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumGothic/NanumGothic.eot),
-      url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumGothic/NanumGothic.eot?#iefix)
-        format('embedded-opentype'),
-      url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumGothic/NanumGothic.woff)
-        format('woff'),
-      url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumGothic/NanumGothic.ttf)
-        format('truetype');
+    src: local('NanumSquare'), url(@assets/NanumSquareR.woff2) format('woff2'),
+      url(@assets/NanumSquareR.woff) format('woff'),
+      url(@assets/NanumSquareR.ttf) format('truetype'),
+      url(@assets/NanumSquareR.eot) format('embedded-opentype');
   }
 
   html,
@@ -108,7 +104,7 @@ const resetCss = css`
     border: 0;
     font: inherit;
     font-size: 100%;
-    font-family: 'NanumGothic';
+    font-family: 'NanumSquare';
     vertical-align: baseline;
   }
 
