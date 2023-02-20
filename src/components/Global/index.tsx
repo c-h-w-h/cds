@@ -12,9 +12,10 @@ const resetCss = css`
   @font-face {
     font-family: 'NanumSquare';
     font-display: auto;
-    src: local('NanumSquare'), url(@assets/NanumSquareR.woff2) format('woff2'),
-      url(@assets/NanumSquareR.woff) format('woff'),
-      url(@assets/NanumSquareR.ttf) format('truetype');
+    src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquare/NanumSquareR.woff)
+        format('woff'),
+      url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquare/NanumSquareR.ttf)
+        format('truetype');
   }
 
   html,
