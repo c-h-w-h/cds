@@ -5,11 +5,12 @@ import {
   IMAGE_SHAPE,
 } from '@constants/image';
 import styled from '@emotion/styled';
+import { DefaultProps } from '@src/utils/types/DefaultProps';
 
 type ImageSizeProps = `${ImageSizeVariant}`;
 type ImageShapeProps = `${ImageShapeVariant}`;
 
-interface ImageProps {
+interface ImageProps extends DefaultProps<HTMLImageElement> {
   src: string;
   alt: string;
   size: ImageSizeProps;
