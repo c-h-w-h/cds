@@ -14,8 +14,7 @@ const resetCss = css`
     font-display: auto;
     src: local('NanumSquare'), url(@assets/NanumSquareR.woff2) format('woff2'),
       url(@assets/NanumSquareR.woff) format('woff'),
-      url(@assets/NanumSquareR.ttf) format('truetype'),
-      url(@assets/NanumSquareR.eot) format('embedded-opentype');
+      url(@assets/NanumSquareR.ttf) format('truetype');
   }
 
   html,
