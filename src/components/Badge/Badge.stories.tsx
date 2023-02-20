@@ -18,14 +18,14 @@ const Template: ComponentStory<typeof Badge> = (args) => (
 
 export const FilledLargeBadge = Template.bind({});
 FilledLargeBadge.args = {
-  fill: true,
+  filled: true,
   size: 'large',
   outline: true,
 };
 
 export const FilledSmallBadge = Template.bind({});
 FilledSmallBadge.args = {
-  fill: true,
+  filled: true,
   outline: true,
 };
 
