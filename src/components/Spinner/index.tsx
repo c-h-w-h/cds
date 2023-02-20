@@ -55,8 +55,8 @@ const Circle = styled.div<SpinnerProps>(({ theme, size }) => {
     height: size === 'small' ? small.INNERCIRCLE : large.INNERCIRCLE,
     border:
       size === 'small'
-        ? `${small.SROKEWIDTH} solid ${primary100}`
-        : `${large.SROKEWIDTH} solid ${primary100}`,
+        ? `${small.STROKEWIDTH} solid ${primary100}`
+        : `${large.STROKEWIDTH} solid ${primary100}`,
     borderTopColor: 'transparent',
     borderRadius: '50%',
     animation: 'spin-animation 1s linear infinite',
