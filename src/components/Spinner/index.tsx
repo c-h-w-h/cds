@@ -16,8 +16,8 @@ const Spinner = ({ size = 'small', color = '#1493FF' }: SpinnerProps) => {
 };
 
 const SpinnerContainer = styled.div<{ size: string }>(({ size }) => ({
-  width: size === 'small' ? '30px' : '50px',
-  height: size === 'small' ? '30px' : '50px',
+  width: size === 'small' ? '1.875rem' : '3.125rem',
+  height: size === 'small' ? '1.875rem' : '3.125rem',
   display: 'inline-block',
   overflow: 'hidden',
   background: '#ffffff',
@@ -42,14 +42,15 @@ const Spin = styled.div`
 
 const Circle = styled.div<SpinnerProps>(({ size, color }) => ({
   position: 'absolute',
-  width: size === 'small' ? '15px' : '25px',
-  height: size === 'small' ? '15px' : '25px',
-  border: size === 'small' ? `2px solid ${color}` : `3px solid ${color}`,
+  width: size === 'small' ? '0.938rem' : '1.563rem',
+  height: size === 'small' ? '0.938rem' : '1.563rem',
+  border:
+    size === 'small' ? `0.125rem solid ${color}` : `0.188rem solid ${color}`,
   borderTopColor: 'transparent',
   borderRadius: '50%',
   animation: 'spin-animation 1s linear infinite',
-  top: size === 'small' ? '15px' : '25px',
-  left: size === 'small' ? '15px' : '25px',
+  top: size === 'small' ? '0.938rem' : '1.563rem',
+  left: size === 'small' ? '0.938rem' : '1.563rem',
 }));
 
 export default Spinner;
