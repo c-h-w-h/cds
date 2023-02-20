@@ -9,18 +9,18 @@ interface BadgeProps {
   size?: BadgeSize;
   outline?: boolean;
   color?: string;
-  fill?: boolean;
+  filled?: boolean;
 }
 
 function Badge({
   children,
   size = 'small',
   outline = false,
-  color = '#1493FF',
-  fill = false,
+  color,
+  filled = false,
 }: BadgeProps) {
   return (
-    <BadgeContainer {...{ outline, color, fill }}>
+    <BadgeContainer {...{ outline, color, filled }}>
       <Center>
         <Typography variant={size === 'large' ? 'body' : 'desc'}>
           {children}
@@ -33,17 +33,22 @@ function Badge({
 export default Badge;
 
 const BadgeContainer = styled.div<Omit<BadgeProps, 'children' | 'size'>>(
-  ({ outline, color, fill }) => ({
-    width: 'fit-content',
-    padding: '8px 12px',
-    borderRadius: 30,
-    border: outline ? `1px solid ${color}` : 'none',
-    color: fill ? 'white' : color,
-    backgroundColor: fill ? color : 'transparent',
+  ({ theme, outline, color, filled }) => {
+    const { color: themeColor } = theme;
+    const { white, primary100 } = themeColor;
 
-    ':hover': {
-      color: fill ? color : 'white',
-      backgroundColor: fill ? 'transparent' : color,
-    },
-  }),
+    return {
+      width: 'fit-content',
+      padding: '8px 12px',
+      borderRadius: 30,
+      border: outline ? `1px solid ${color ?? primary100}` : 'none',
+      color: filled ? white : color ?? primary100,
+      backgroundColor: filled ? color ?? primary100 : 'transparent',
+
+      ':hover': {
+        color: filled ? color ?? primary100 : white,
+        backgroundColor: filled ? 'transparent' : color ?? primary100,
+      },
+    };
+  },
 );

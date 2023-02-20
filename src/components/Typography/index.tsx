@@ -1,8 +1,10 @@
-import { VARIANT, FONT_SIZE, FONT_WEIGHT } from '@constants/typography';
+import {
+  TypographyVariant as Variant,
+  TYPOGRAPHY,
+} from '@constants/typography';
 import { css, jsx } from '@emotion/react';
 
-type TypographyVariant = `${VARIANT}`;
-
+type TypographyVariant = `${Variant}`;
 interface TypographyProps {
   variant: TypographyVariant;
   children: string;
@@ -10,13 +12,13 @@ interface TypographyProps {
 
 function getTypography(variant: TypographyVariant): string {
   switch (variant) {
-    case VARIANT.TITLE1:
+    case Variant.TITLE1:
       return 'h1';
-    case VARIANT.TITLE2:
+    case Variant.TITLE2:
       return 'h2';
-    case VARIANT.SUBTITLE1:
+    case Variant.SUBTITLE1:
       return 'h3';
-    case VARIANT.SUBTITLE2:
+    case Variant.SUBTITLE2:
       return 'h4';
     default:
       return 'p';
@@ -31,8 +33,8 @@ function Typography({ variant, children }: TypographyProps) {
     {
       css: css`
         margin: 0;
-        font-size: ${FONT_SIZE[variant]};
-        font-weight: ${FONT_WEIGHT[variant]};
+        font-size: ${TYPOGRAPHY[variant].size};
+        font-weight: ${TYPOGRAPHY[variant].weight};
       `,
     },
     children,

@@ -1,4 +1,4 @@
-export enum VARIANT {
+export enum TypographyVariant {
   TITLE1 = 'title1',
   TITLE2 = 'title2',
   SUBTITLE1 = 'subtitle1',
@@ -7,20 +7,34 @@ export enum VARIANT {
   DESC = 'desc',
 }
 
-export const FONT_SIZE: Record<VARIANT, string> = {
-  [VARIANT.TITLE1]: '3rem',
-  [VARIANT.TITLE2]: '2.25rem',
-  [VARIANT.SUBTITLE1]: '1.5rem',
-  [VARIANT.SUBTITLE2]: '1.25rem',
-  [VARIANT.BODY]: '1rem',
-  [VARIANT.DESC]: '0.75rem',
-};
+interface Font {
+  size: string;
+  weight: number;
+}
 
-export const FONT_WEIGHT: Record<VARIANT, number> = {
-  [VARIANT.TITLE1]: 900,
-  [VARIANT.TITLE2]: 900,
-  [VARIANT.SUBTITLE1]: 700,
-  [VARIANT.SUBTITLE2]: 700,
-  [VARIANT.BODY]: 400,
-  [VARIANT.DESC]: 400,
-};
+export const TYPOGRAPHY: Record<TypographyVariant, Font> = {
+  [TypographyVariant.TITLE1]: {
+    size: '3rem',
+    weight: 900,
+  },
+  [TypographyVariant.TITLE2]: {
+    size: '2.25rem',
+    weight: 900,
+  },
+  [TypographyVariant.SUBTITLE1]: {
+    size: '1.5rem',
+    weight: 700,
+  },
+  [TypographyVariant.SUBTITLE2]: {
+    size: '1.25rem',
+    weight: 700,
+  },
+  [TypographyVariant.BODY]: {
+    size: '1rem',
+    weight: 400,
+  },
+  [TypographyVariant.DESC]: {
+    size: '0.75rem',
+    weight: 400,
+  },
+} as const;
