@@ -26,7 +26,7 @@ RowFlexbox.args = {
 
 export const SpaceBetweenFlexbox = Template.bind({});
 SpaceBetweenFlexbox.args = {
-  justify: 'space-between',
+  justifyContent: 'space-between',
   gap: '0rem',
   css: css`
     width: 300px;

@@ -4,8 +4,8 @@ import { CSSProperties } from 'react';
 
 interface FlexboxProps extends DefaultPropsWithChildren<HTMLDivElement> {
   direction?: CSSProperties['flexDirection'];
-  align?: CSSProperties['alignItems'];
-  justify?: CSSProperties['justifyContent'];
+  alignItems?: CSSProperties['alignItems'];
+  justifyContent?: CSSProperties['justifyContent'];
   gap?: CSSProperties['gap'];
 }
 
@@ -13,8 +13,8 @@ const Flexbox = ({
   children,
   css: style,
   direction = 'row',
-  align = 'center',
-  justify = 'center',
+  alignItems = 'center',
+  justifyContent = 'center',
   gap = '1rem',
   ...props
 }: FlexboxProps) => {
@@ -24,8 +24,8 @@ const Flexbox = ({
         css`
           display: flex;
           flex-direction: ${direction};
-          align-items: ${align};
-          justify-content: ${justify};
+          align-items: ${alignItems};
+          justify-content: ${justifyContent};
           gap: ${gap};
         `,
         style,
