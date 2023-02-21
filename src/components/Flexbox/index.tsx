@@ -1,15 +1,9 @@
 import { css } from '@emotion/react';
 import { DefaultPropsWithChildren } from '@util-types/DefaultPropsWithChildren';
-import { CSSProperties } from 'react';
+import { FlexContainerProps } from '@util-types/FlexContainerProps';
 
-interface FlexboxProps extends DefaultPropsWithChildren<HTMLDivElement> {
-  direction?: CSSProperties['flexDirection'];
-  wrap?: CSSProperties['flexWrap'];
-  alignContent?: CSSProperties['alignContent'];
-  alignItems?: CSSProperties['alignItems'];
-  justifyContent?: CSSProperties['justifyContent'];
-  gap?: CSSProperties['gap'];
-}
+type FlexboxProps = DefaultPropsWithChildren<HTMLDivElement> &
+  FlexContainerProps;
 
 const Flexbox = ({
   children,
