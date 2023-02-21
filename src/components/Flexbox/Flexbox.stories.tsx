@@ -11,13 +11,23 @@ export default {
   },
 } as ComponentMeta<typeof Flexbox>;
 
-const Template: ComponentStory<typeof Flexbox> = (args) => (
-  <Flexbox {...args}>
-    <p>1</p>
-    <p>2</p>
-    <p>3</p>
-  </Flexbox>
-);
+const Template: ComponentStory<typeof Flexbox> = (args) => {
+  const commonStyle = css`
+    width: 300px;
+    background-color: #dfdfdf;
+  `;
+
+  return (
+    <Flexbox css={commonStyle} {...args}>
+      <p>1</p>
+      <p>2</p>
+      <p>3</p>
+      <p>4</p>
+      <p>5</p>
+      <p>6</p>
+    </Flexbox>
+  );
+};
 
 export const RowFlexbox = Template.bind({});
 RowFlexbox.args = {
@@ -28,8 +38,16 @@ export const SpaceBetweenFlexbox = Template.bind({});
 SpaceBetweenFlexbox.args = {
   justifyContent: 'space-between',
   gap: '0rem',
+};
+
+export const MultiLineFlexbox = Template.bind({});
+MultiLineFlexbox.args = {
+  wrap: 'wrap',
+  alignContent: 'center',
   css: css`
-    width: 300px;
+    width: 100px;
+    height: 300px;
+    background-color: #dfdfdf;
   `,
 };
 
