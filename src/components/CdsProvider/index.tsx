@@ -1,10 +1,11 @@
 import Global from '@components/Global';
 import { ThemeProvider } from '@emotion/react';
+import { ReactNode } from 'react';
 
 import { theme } from './theme';
 
 interface CdsProviderProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 const CdsProvider = ({ children }: CdsProviderProps) => {
