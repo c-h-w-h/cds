@@ -1,5 +1,5 @@
-import Center from '@components/Center';
 import Typography from '@components/Typography';
+import Center from '@components-layout/Center';
 import styled from '@emotion/styled';
 
 type BadgeSize = 'large' | 'small';
