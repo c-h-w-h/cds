@@ -9,10 +9,17 @@ export default defineConfig({
   plugins: [react(), tsconfigPaths()],
   resolve: {
     alias: [
-      { find: '@src', replacement: resolve(__dirname, './src') },
       {
         find: '@components',
         replacement: resolve(__dirname, './src/components'),
+      },
+      {
+        find: '@components-common',
+        replacement: resolve(__dirname, './src/components/@common'),
+      },
+      {
+        find: '@components-layout',
+        replacement: resolve(__dirname, './src/components/@layout'),
       },
       {
         find: '@constants',
