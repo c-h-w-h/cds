@@ -7,13 +7,13 @@ interface CdsProviderProps {
   children: React.ReactNode;
 }
 
-function CdsProvider({ children }: CdsProviderProps) {
+const CdsProvider = ({ children }: CdsProviderProps) => {
   return (
     <>
       <Global />
       <ThemeProvider theme={theme}>{children}</ThemeProvider>
     </>
   );
-}
+};
 
 export default CdsProvider;

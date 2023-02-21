@@ -6,7 +6,7 @@ interface CenterProps {
   children: ReactNode;
 }
 
-function Center({ children }: CenterProps) {
+const Center = ({ children }: CenterProps) => {
   return (
     <Flexbox
       alignItems="center"
@@ -18,6 +18,6 @@ function Center({ children }: CenterProps) {
       {children}
     </Flexbox>
   );
-}
+};
 
 export default Center;

@@ -12,13 +12,13 @@ interface BadgeProps {
   filled?: boolean;
 }
 
-function Badge({
+const Badge = ({
   children,
   size = 'small',
   outline = false,
   color,
   filled = false,
-}: BadgeProps) {
+}: BadgeProps) => {
   return (
     <BadgeContainer {...{ outline, color, filled }}>
       <Center>
@@ -28,7 +28,7 @@ function Badge({
       </Center>
     </BadgeContainer>
   );
-}
+};
 
 export default Badge;
 
