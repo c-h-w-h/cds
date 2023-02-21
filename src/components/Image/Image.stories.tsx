@@ -17,53 +17,53 @@ const Template: ComponentStory<typeof Image> = (args) => (
   <Image {...args} src={DUMMY_SRC} alt={DUMMY_ALT} />
 );
 
-export const SmallDefaultImage = Template.bind({});
-SmallDefaultImage.args = {
+export const SmallDefault = Template.bind({});
+SmallDefault.args = {
   size: 'small',
 };
 
-export const SmallCircleImage = Template.bind({});
-SmallCircleImage.args = {
+export const SmallCircle = Template.bind({});
+SmallCircle.args = {
   size: 'small',
   shape: 'circle',
 };
 
-export const SmallRoundedImage = Template.bind({});
-SmallRoundedImage.args = {
+export const SmallRounded = Template.bind({});
+SmallRounded.args = {
   size: 'small',
   shape: 'rounded',
 };
 
-export const MediumDefaultImage = Template.bind({});
-MediumDefaultImage.args = {
+export const MediumDefault = Template.bind({});
+MediumDefault.args = {
   size: 'medium',
 };
 
-export const MediumCircleImage = Template.bind({});
-MediumCircleImage.args = {
+export const MediumCircle = Template.bind({});
+MediumCircle.args = {
   size: 'medium',
   shape: 'circle',
 };
 
-export const MediumRoundedImage = Template.bind({});
-MediumRoundedImage.args = {
+export const MediumRounded = Template.bind({});
+MediumRounded.args = {
   size: 'medium',
   shape: 'rounded',
 };
 
-export const LargeDefaultImage = Template.bind({});
-LargeDefaultImage.args = {
+export const LargeDefault = Template.bind({});
+LargeDefault.args = {
   size: 'large',
 };
 
-export const LargeCircleImage = Template.bind({});
-LargeCircleImage.args = {
+export const LargeCircle = Template.bind({});
+LargeCircle.args = {
   size: 'large',
   shape: 'circle',
 };
 
-export const LargeRoundedImage = Template.bind({});
-LargeRoundedImage.args = {
+export const LargeRounded = Template.bind({});
+LargeRounded.args = {
   size: 'large',
   shape: 'rounded',
 };

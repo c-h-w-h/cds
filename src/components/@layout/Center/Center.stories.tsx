@@ -12,13 +12,13 @@ export default {
 
 const Template: ComponentStory<typeof Center> = (args) => <Center {...args} />;
 
-export const Center1 = Template.bind({});
-Center1.args = {
+export const Basic = Template.bind({});
+Basic.args = {
   children: <p>안녕하세요</p>,
 };
 
-export const Center2 = Template.bind({});
-Center2.args = {
+export const MultipleLines = Template.bind({});
+MultipleLines.args = {
   children: (
     <div>
       hi <div>hi</div> <div>ㅗㅑ</div>

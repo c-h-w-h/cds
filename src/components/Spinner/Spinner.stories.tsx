@@ -14,12 +14,12 @@ const Template: ComponentStory<typeof Spinner> = (args) => (
   <Spinner {...args} />
 );
 
-export const SmallSpinner = Template.bind({});
-SmallSpinner.args = {
+export const Small = Template.bind({});
+Small.args = {
   size: 'small',
 };
 
-export const LargeSpinner = Template.bind({});
-LargeSpinner.args = {
+export const Large = Template.bind({});
+Large.args = {
   size: 'large',
 };

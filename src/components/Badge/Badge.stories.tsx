@@ -16,34 +16,34 @@ const Template: ComponentStory<typeof Badge> = (args) => (
   <Badge {...args}>{DUMMY_STRING}</Badge>
 );
 
-export const FilledLargeBadge = Template.bind({});
-FilledLargeBadge.args = {
+export const FilledLarge = Template.bind({});
+FilledLarge.args = {
   filled: true,
   size: 'large',
   outline: true,
 };
 
-export const FilledSmallBadge = Template.bind({});
-FilledSmallBadge.args = {
+export const FilledSmall = Template.bind({});
+FilledSmall.args = {
   filled: true,
   outline: true,
 };
 
-export const LargeBadge = Template.bind({});
-LargeBadge.args = {
+export const Large = Template.bind({});
+Large.args = {
   size: 'large',
   outline: true,
 };
 
-export const SmallBadge = Template.bind({});
-SmallBadge.args = {
+export const Small = Template.bind({});
+Small.args = {
   outline: true,
 };
 
-export const WithoutOutlineLargeBadge = Template.bind({});
-WithoutOutlineLargeBadge.args = {
+export const WithoutOutlineLarge = Template.bind({});
+WithoutOutlineLarge.args = {
   size: 'large',
 };
 
-export const WithoutOutlineSmallBadge = Template.bind({});
-WithoutOutlineSmallBadge.args = {};
+export const WithoutOutlineSmall = Template.bind({});
+WithoutOutlineSmall.args = {};

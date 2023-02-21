@@ -15,8 +15,8 @@ const Template: ComponentStory<typeof Container> = (args) => (
   <Container {...args} />
 );
 
-export const BasicContainer = Template.bind({});
-BasicContainer.args = {
+export const Basic = Template.bind({});
+Basic.args = {
   css: css`
     width: 300px;
     height: 300px;
@@ -32,8 +32,8 @@ BasicContainer.args = {
   ),
 };
 
-export const ScrollContainer = Template.bind({});
-ScrollContainer.args = {
+export const Scrollable = Template.bind({});
+Scrollable.args = {
   overflowY: 'scroll',
   css: css`
     height: 100px;
