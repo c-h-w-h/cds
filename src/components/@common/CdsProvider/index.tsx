@@ -1,4 +1,4 @@
-import Global from '@components/Global';
+import Global from '@components-common/Global';
 import { ThemeProvider } from '@emotion/react';
 import { ReactNode } from 'react';
 
