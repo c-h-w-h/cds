@@ -1,22 +1,22 @@
+import Flexbox from '@components/Flexbox';
 import { css } from '@emotion/react';
-import React from 'react';
+import { ReactNode } from 'react';
 
 interface CenterProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 function Center({ children }: CenterProps) {
   return (
-    <div
+    <Flexbox
+      alignItems="center"
+      justifyContent="center"
       css={css`
-        display: flex;
-        justify-content: center;
-        align-items: center;
         text-align: center;
       `}
     >
       {children}
-    </div>
+    </Flexbox>
   );
 }
 
