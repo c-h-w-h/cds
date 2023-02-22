@@ -11,6 +11,7 @@ import {
   MdOutlineCancel,
 } from 'react-icons/md';
 
+import { theme } from '../CdsProvider/theme';
 import Flexbox from '../Flexbox';
 import Typography from '../Typography';
 
@@ -46,7 +47,7 @@ enum HorizontalVariant {
   center = 'center',
 }
 
-type ToastKind = 'primary' | 'info' | 'success' | 'warning' | 'danger';
+type ToastKind = 'info' | 'success' | 'warning' | 'error';
 
 interface ToastProps extends DefaultProps<HTMLDivElement> {
   kind: ToastKind;
@@ -82,18 +83,19 @@ const H_POSITION_MAP: Record<HorizontalVariant, object> = {
 
 const Toast = ({ kind, vertical, horizontal }: ToastProps) => {
   const [mainIcon, setMainIcon] = useState<ReactNode | null>();
+  const { color: themeColor } = theme;
 
   useEffect(() => {
     const getMainIcon = (kind: ToastKind) => {
       switch (kind) {
         case 'info':
-          return <MdInfoOutline size="32" />;
+          return <MdInfoOutline size="32" color={themeColor[kind]} />;
         case 'success':
-          return <MdCheckCircleOutline size="32" />;
+          return <MdCheckCircleOutline size="32" color={themeColor[kind]} />;
         case 'warning':
-          return <MdWarningAmber size="32" />;
-        case 'danger':
-          return <MdOutlineDangerous size="32" />;
+          return <MdWarningAmber size="32" color={themeColor[kind]} />;
+        case 'error':
+          return <MdOutlineDangerous size="32" color={themeColor[kind]} />;
         default:
           return <MdOutlineNotifications size="32" />;
       }
