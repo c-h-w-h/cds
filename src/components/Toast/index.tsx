@@ -3,11 +3,11 @@ import styled from '@emotion/styled';
 import { DefaultProps } from '@src/utils/types/DefaultProps';
 import { ReactNode, useEffect, useState } from 'react';
 import {
-  MdOutlineNotifications,
-  MdInfoOutline,
-  MdCheckCircleOutline,
-  MdWarningAmber,
-  MdOutlineDangerous,
+  MdNotifications,
+  MdInfo,
+  MdCheckCircle,
+  MdWarning,
+  MdDangerous,
   MdOutlineCancel,
 } from 'react-icons/md';
 
@@ -50,7 +50,7 @@ enum HorizontalVariant {
 type ToastKind = 'info' | 'success' | 'warning' | 'error';
 
 interface ToastProps extends DefaultProps<HTMLDivElement> {
-  kind: ToastKind;
+  kind?: ToastKind;
   vertical: keyof typeof VerticalVariant;
   horizontal: keyof typeof HorizontalVariant;
 }
@@ -86,18 +86,18 @@ const Toast = ({ kind, vertical, horizontal }: ToastProps) => {
   const { color: themeColor } = theme;
 
   useEffect(() => {
-    const getMainIcon = (kind: ToastKind) => {
+    const getMainIcon = (kind: ToastKind | undefined) => {
       switch (kind) {
         case 'info':
-          return <MdInfoOutline size="32" color={themeColor[kind]} />;
+          return <MdInfo size="32" color={themeColor[kind]} />;
         case 'success':
-          return <MdCheckCircleOutline size="32" color={themeColor[kind]} />;
+          return <MdCheckCircle size="32" color={themeColor[kind]} />;
         case 'warning':
-          return <MdWarningAmber size="32" color={themeColor[kind]} />;
+          return <MdWarning size="32" color={themeColor[kind]} />;
         case 'error':
-          return <MdOutlineDangerous size="32" color={themeColor[kind]} />;
+          return <MdDangerous size="32" color={themeColor[kind]} />;
         default:
-          return <MdOutlineNotifications size="32" />;
+          return <MdNotifications size="32" />;
       }
     };
     setMainIcon(getMainIcon(kind));
