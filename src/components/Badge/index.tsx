@@ -1,5 +1,5 @@
-import Center from '@components/Center';
 import Typography from '@components/Typography';
+import Center from '@components-layout/Center';
 import styled from '@emotion/styled';
 
 type BadgeSize = 'large' | 'small';
@@ -12,13 +12,13 @@ interface BadgeProps {
   filled?: boolean;
 }
 
-function Badge({
+const Badge = ({
   children,
   size = 'small',
   outline = false,
   color,
   filled = false,
-}: BadgeProps) {
+}: BadgeProps) => {
   return (
     <BadgeContainer {...{ outline, color, filled }}>
       <Center>
@@ -28,7 +28,7 @@ function Badge({
       </Center>
     </BadgeContainer>
   );
-}
+};
 
 export default Badge;
 

@@ -1,8 +1,8 @@
 import { Global as EmotionGlobal, css } from '@emotion/react';
 
-function Global() {
+const Global = () => {
   return <EmotionGlobal styles={resetCss} />;
-}
+};
 
 const resetCss = css`
   * {

@@ -29,19 +29,19 @@ const Template: ComponentStory<typeof Flexbox> = (args) => {
   );
 };
 
-export const RowFlexbox = Template.bind({});
-RowFlexbox.args = {
+export const Row = Template.bind({});
+Row.args = {
   direction: 'row',
 };
 
-export const SpaceBetweenFlexbox = Template.bind({});
-SpaceBetweenFlexbox.args = {
+export const SpaceBetween = Template.bind({});
+SpaceBetween.args = {
   justifyContent: 'space-between',
   gap: '0rem',
 };
 
-export const MultiLineFlexbox = Template.bind({});
-MultiLineFlexbox.args = {
+export const MultiLine = Template.bind({});
+MultiLine.args = {
   wrap: 'wrap',
   alignContent: 'center',
   css: css`
@@ -51,7 +51,7 @@ MultiLineFlexbox.args = {
   `,
 };
 
-export const ColumnFlexbox = Template.bind({});
-ColumnFlexbox.args = {
+export const Column = Template.bind({});
+Column.args = {
   direction: 'column',
 };

@@ -1,5 +1,5 @@
+import { SPINNER_SIZE } from '@constants/spinner';
 import styled from '@emotion/styled';
-import { SPINNER_SIZE } from '@src/constants/spinner';
 
 interface SpinnerProps {
   size: 'small' | 'large';

@@ -1,19 +1,20 @@
-import Global from '@components/Global';
+import Global from '@components-common/Global';
 import { ThemeProvider } from '@emotion/react';
+import { ReactNode } from 'react';
 
 import { theme } from './theme';
 
 interface CdsProviderProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
-function CdsProvider({ children }: CdsProviderProps) {
+const CdsProvider = ({ children }: CdsProviderProps) => {
   return (
     <>
       <Global />
       <ThemeProvider theme={theme}>{children}</ThemeProvider>
     </>
   );
-}
+};
 
 export default CdsProvider;

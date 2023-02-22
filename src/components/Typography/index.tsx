@@ -10,7 +10,7 @@ interface TypographyProps {
   children: string;
 }
 
-function getTypography(variant: TypographyVariant): string {
+const getTypography = (variant: TypographyVariant): string => {
   switch (variant) {
     case Variant.TITLE1:
       return 'h1';
@@ -23,9 +23,9 @@ function getTypography(variant: TypographyVariant): string {
     default:
       return 'p';
   }
-}
+};
 
-function Typography({ variant, children }: TypographyProps) {
+const Typography = ({ variant, children }: TypographyProps) => {
   const typography = getTypography(variant);
 
   return jsx(
@@ -39,6 +39,6 @@ function Typography({ variant, children }: TypographyProps) {
     },
     children,
   );
-}
+};
 
 export default Typography;

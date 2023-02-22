@@ -1,4 +1,4 @@
-import CdsProvider from '../src/components/CdsProvider';
+import CdsProvider from '../src/components/@common/CdsProvider';
 import React from 'react';
 
 export const parameters = {
