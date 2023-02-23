@@ -45,3 +45,9 @@ MultiLine.args = {
     `,
   ],
 };
+
+export const Row = Template.bind({});
+Row.args = {
+  flexDirection: 'row',
+  css: commonStyle,
+};
