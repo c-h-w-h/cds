@@ -36,7 +36,7 @@ Basic.args = {
 
 export const MultiLine = Template.bind({});
 MultiLine.args = {
-  wrap: 'wrap',
+  flexWrap: 'wrap',
   alignContent: 'space-around',
   css: [
     commonStyle,
