@@ -1,5 +1,12 @@
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
+import {
+  ToastKind,
+  VerticalVariant,
+  HorizontalVariant,
+  V_POSITION_MAP,
+  H_POSITION_MAP,
+} from '@src/constants/toast';
 import { DefaultProps } from '@src/utils/types/DefaultProps';
 import { ReactNode, useEffect, useState } from 'react';
 import {
@@ -15,40 +22,6 @@ import { theme } from '../CdsProvider/theme';
 import Flexbox from '../Flexbox';
 import Typography from '../Typography';
 
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-`;
-
-const bounce = (vertical: string) => keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(${vertical === 'top' ? -1 : 1}em);
-  }
-
-  to {
-    transform: translateY(0);
-  }
-`;
-
-enum VerticalVariant {
-  top = 'top',
-  bottom = 'bottom',
-}
-
-enum HorizontalVariant {
-  left = 'left',
-  right = 'right',
-  center = 'center',
-}
-
-type ToastKind = 'info' | 'success' | 'warning' | 'error';
-
 interface ToastProps extends DefaultProps<HTMLDivElement> {
   kind?: ToastKind;
   title?: string;
@@ -56,32 +29,6 @@ interface ToastProps extends DefaultProps<HTMLDivElement> {
   vertical: keyof typeof VerticalVariant;
   horizontal: keyof typeof HorizontalVariant;
 }
-
-const V_POSITION_MAP: Record<VerticalVariant, object> = {
-  [VerticalVariant.top]: {
-    top: 0,
-    marginTop: '1rem',
-  },
-  [VerticalVariant.bottom]: {
-    bottom: 0,
-    marginBottom: '1rem',
-  },
-};
-
-const H_POSITION_MAP: Record<HorizontalVariant, object> = {
-  [HorizontalVariant.left]: {
-    left: 0,
-    marginLeft: '1rem',
-  },
-  [HorizontalVariant.right]: {
-    right: 0,
-    marginRight: '1rem',
-  },
-  [HorizontalVariant.center]: {
-    left: '50%',
-    transform: 'translate(-50%, 0)',
-  },
-};
 
 const startWithCapitalLetter = (str: string) => {
   return str[0].toUpperCase() + str.substring(1);
@@ -156,6 +103,27 @@ export default Toast;
 
 const TypographyGroup = styled.div`
   max-width: 10vw;
+`;
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+`;
+
+const bounce = (vertical: string) => keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(${vertical === 'top' ? -1 : 1}em);
+  }
+
+  to {
+    transform: translateY(0);
+  }
 `;
 
 const TempButton = styled.button`
