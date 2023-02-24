@@ -51,6 +51,8 @@ type ToastKind = 'info' | 'success' | 'warning' | 'error';
 
 interface ToastProps extends DefaultProps<HTMLDivElement> {
   kind?: ToastKind;
+  title?: string;
+  message: string;
   vertical: keyof typeof VerticalVariant;
   horizontal: keyof typeof HorizontalVariant;
 }
@@ -81,23 +83,33 @@ const H_POSITION_MAP: Record<HorizontalVariant, object> = {
   },
 };
 
-const Toast = ({ kind, vertical, horizontal }: ToastProps) => {
+const startWithCapitalLetter = (str: string) => {
+  return str[0].toUpperCase() + str.substring(1);
+};
+
+const Toast = ({ kind, title, message, vertical, horizontal }: ToastProps) => {
   const [mainIcon, setMainIcon] = useState<ReactNode | null>();
   const { color: themeColor } = theme;
+  const mainColor = kind ? themeColor[kind] : '';
 
   useEffect(() => {
     const getMainIcon = (kind: ToastKind | undefined) => {
+      const iconStyle = {
+        size: 32,
+        color: mainColor,
+      };
+
       switch (kind) {
         case 'info':
-          return <MdInfo size="32" color={themeColor[kind]} />;
+          return <MdInfo {...iconStyle} />;
         case 'success':
-          return <MdCheckCircle size="32" color={themeColor[kind]} />;
+          return <MdCheckCircle {...iconStyle} />;
         case 'warning':
-          return <MdWarning size="32" color={themeColor[kind]} />;
+          return <MdWarning {...iconStyle} />;
         case 'error':
-          return <MdDangerous size="32" color={themeColor[kind]} />;
+          return <MdDangerous {...iconStyle} />;
         default:
-          return <MdNotifications size="32" />;
+          return <MdNotifications {...iconStyle} />;
       }
     };
     setMainIcon(getMainIcon(kind));
@@ -114,7 +126,7 @@ const Toast = ({ kind, vertical, horizontal }: ToastProps) => {
       <Flexbox
         css={css`
           padding: 1rem;
-          border: 2px solid black;
+          border: 2px solid ${mainColor};
           border-radius: 16px;
           opacity: 0;
           animation: ${fadeIn} 0.01s 1s linear forwards;
@@ -126,14 +138,14 @@ const Toast = ({ kind, vertical, horizontal }: ToastProps) => {
         `}
       >
         {mainIcon}
-        <div>
-          <Typography variant="subtitle2">Success</Typography>
-          <Typography variant="desc">
-            Toast Message 구현에 성공했습니다!
+        <TypographyGroup>
+          <Typography variant="subtitle2">
+            {title ?? (kind ? startWithCapitalLetter(kind) : 'Alarm')}
           </Typography>
-        </div>
+          <Typography variant="desc">{message}</Typography>
+        </TypographyGroup>
         <TempButton onClick={() => alert('Clicked!')}>
-          <MdOutlineCancel size="16" />
+          <MdOutlineCancel size="24" color={mainColor} />
         </TempButton>
       </Flexbox>
     </div>
@@ -141,6 +153,10 @@ const Toast = ({ kind, vertical, horizontal }: ToastProps) => {
 };
 
 export default Toast;
+
+const TypographyGroup = styled.div`
+  max-width: 10vw;
+`;
 
 const TempButton = styled.button`
   display: flex;
