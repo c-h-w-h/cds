@@ -8,7 +8,7 @@ type Color = keyof typeof COLOR;
 /**
  * @name tableCommonStyle: 기본 스타일
  */
-const tableCommontyle = styled.table<{
+const tableCommonStyle = styled.table<{
   textColor?: Color;
   backgroundColor?: Color;
 }>(({ textColor, backgroundColor }) => {
@@ -23,7 +23,7 @@ const tableCommontyle = styled.table<{
 /**
  * @name tableDataStyle: th, td 스타일을 디테일하게 적용
  */
-const tableDataStyle = styled(tableCommontyle.withComponent('td'))<{
+const tableDataStyle = styled(tableCommonStyle.withComponent('td'))<{
   textAlign?: CSSProperties['textAlign'];
   fontWeight?: CSSProperties['fontWeight'];
 }>(({ textAlign = 'center', fontWeight = 400 }) => {
@@ -39,7 +39,7 @@ const tableDataStyle = styled(tableCommontyle.withComponent('td'))<{
  * @prop {outline}: true일 경우 table의 테두리 표시
  * @prop {rounded}: true일 경우 borderRadius 6px로 설정
  */
-export const Table = styled(tableCommontyle.withComponent('table'))<{
+export const Table = styled(tableCommonStyle.withComponent('table'))<{
   outline?: boolean;
   rounded?: boolean;
 }>(({ outline = false, rounded = false }) => {
@@ -58,9 +58,9 @@ export const Table = styled(tableCommontyle.withComponent('table'))<{
   };
 });
 
-export const TableHead = styled(tableCommontyle.withComponent('thead'))();
-export const TableBody = styled(tableCommontyle.withComponent('tbody'))();
-export const TableRow = styled(tableCommontyle.withComponent('tr'))();
+export const TableHead = styled(tableCommonStyle.withComponent('thead'))();
+export const TableBody = styled(tableCommonStyle.withComponent('tbody'))();
+export const TableRow = styled(tableCommonStyle.withComponent('tr'))();
 
 export const TableHeadData = styled(tableDataStyle.withComponent('th'))(
   ({ fontWeight = 'bold' }) => {
