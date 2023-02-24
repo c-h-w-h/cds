@@ -1,13 +1,18 @@
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-const Portal = ({ children }: { children: ReactNode }) => {
+interface PortalProps {
+  id?: string;
+  children: ReactNode;
+}
+
+const Portal = ({ id, children }: PortalProps) => {
   const ref = useRef<Element | null>();
   const [mounted, setMounted] = useState<boolean>(false);
 
   useEffect(() => {
     setMounted(true);
-    const portalRoot = document.getElementById('portal-root');
+    const portalRoot = document.getElementById(id ?? 'portal-root');
     ref.current = portalRoot;
   }, []);
 
