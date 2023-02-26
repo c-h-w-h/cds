@@ -4,8 +4,6 @@ import { TYPOGRAPHY } from '@constants/typography';
 import styled from '@emotion/styled';
 import { DefaultPropsWithChildren } from '@utils/types/DefaultPropsWithChildren';
 
-// 후에 버튼 컴포넌트 적용 예정
-
 type Handler = () => void;
 type Buttons = { key: string; handler: Handler }[];
 interface ModalProps extends DefaultPropsWithChildren<HTMLDivElement> {
@@ -80,7 +78,7 @@ const Content = styled.div`
 
 const Footer = styled.div`
   width: 100%;
-  margin-top: 3rem;
+  margin-top: 2rem;
   justify-content: space-between;
 `;
 
@@ -100,15 +98,22 @@ const BackGround = styled.div<Pick<ModalProps, 'isOpen'>>(
   },
 );
 
-const Button = styled.button(({ theme }) => {
+/**
+ * 임시 Button style
+ * 후에 구현된 Button 컴포넌트로 바꿀 예정
+ */
+export const Button = styled.button(({ theme }) => {
   const { color: themeColor } = theme;
   const { primary100, white } = themeColor;
   return {
-    width: '5rem',
+    width: 'min-content',
     height: '1.7rem',
+    padding: '0 1.2rem',
     borderRadius: '0.5rem',
     backgroundColor: primary100,
     color: white,
+    whiteSpace: 'nowrap',
+    cursor: 'pointer',
     '@media (hover: hover)': {
       ':hover': {
         filter: 'brightness(0.9)',
