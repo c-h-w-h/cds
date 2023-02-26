@@ -59,19 +59,38 @@ const DropdownItem = ({
       <Flexbox
         direction="column"
         gap=".3rem"
+        alignItems="center"
         css={css`
           flex: 1;
           text-align: left;
         `}
       >
-        <ItemTitle>{title}</ItemTitle>
-        <ItemDescription>{description}</ItemDescription>
+        {title && <ItemTitle>{title}</ItemTitle>}
+        {description && <ItemDescription>{description}</ItemDescription>}
       </Flexbox>
     </DropdownListItem>
   );
 };
 
-export { Dropdown, DropdownItem };
+const DropdownCustomItem = ({
+  children,
+  ...props
+}: DefaultPropsWithChildren<HTMLLIElement>) => {
+  return (
+    <li
+      css={[
+        css`
+          cursor: pointer;
+        `,
+      ]}
+      {...props}
+    >
+      {children}
+    </li>
+  );
+};
+
+export { Dropdown, DropdownItem, DropdownCustomItem };
 
 const DropdownWrapper = styled.details`
   width: fit-content;
@@ -125,7 +144,7 @@ const DropdownListItem = styled.li`
   justify-content: space-between;
   background-color: white;
   padding: 0.5rem 0.6rem;
-  gap: 0.2rem;
+  gap: 1rem;
 
   &:hover {
     filter: brightness(0.95);

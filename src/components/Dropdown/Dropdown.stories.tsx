@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { MdAccessibility } from 'react-icons/md';
 
-import { Dropdown, DropdownItem } from '.';
+import { Dropdown, DropdownCustomItem, DropdownItem } from '.';
 
 export default {
   title: 'Dropdown',
@@ -19,8 +19,17 @@ export default {
 } as ComponentMeta<typeof Dropdown>;
 
 const DUMMY_TOGGLE = () => {
-  return <div>Click to expand Dropdown Mesnu!</div>;
+  return (
+    <div>
+      드롭다운토글은커스텀엘레먼트로자유롭게서식을적용할수있습니다테스트를위해아주긴토글을만들었어요
+    </div>
+  );
 };
+
+const DUMMY_CUSTOM_ITEM = css`
+  font-weight: 700;
+  background-color: red;
+`;
 
 const Template: ComponentStory<typeof Dropdown> = (args) => (
   <Dropdown {...args} toggleElement={<DUMMY_TOGGLE />}>
@@ -37,6 +46,9 @@ const Template: ComponentStory<typeof Dropdown> = (args) => (
         alert('무료로 제공해드리는 alert입니다');
       }}
     />
+    <DropdownCustomItem css={DUMMY_CUSTOM_ITEM}>
+      저는 커스텀 아이템 이에용
+    </DropdownCustomItem>
   </Dropdown>
 );
 
@@ -54,10 +66,3 @@ export const Center = Template.bind({});
 Center.args = {
   align: 'center',
 };
-
-// export const Dropdown2 = Template.bind({});
-// Dropdown2.args = {
-//   children: (
-
-//   ),
-// };
