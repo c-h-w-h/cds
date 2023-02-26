@@ -3,13 +3,13 @@ import Flexbox from '@components/@layout/Flexbox';
 import { TYPOGRAPHY } from '@constants/typography';
 import styled from '@emotion/styled';
 import { DefaultPropsWithChildren } from '@utils/types/DefaultPropsWithChildren';
+import { MouseEventHandler } from 'react';
 
-type Handler = () => void;
-type Buttons = { key: string; handler: Handler }[];
+type Buttons = { key: string; handler: MouseEventHandler }[];
 interface ModalProps extends DefaultPropsWithChildren<HTMLDivElement> {
   title?: string;
   isOpen: boolean;
-  onClose: Handler;
+  onClose: MouseEventHandler;
   footer?: Buttons;
 }
 
