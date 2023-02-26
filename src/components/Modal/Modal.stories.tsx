@@ -17,10 +17,10 @@ const SimpleTemplate: ComponentStory<typeof Modal> = (args) => {
     updateArgs({ isOpen: !isOpen });
   };
   return (
-    <>
+    <div>
       <Button onClick={toggleHandler}>Show Modal</Button>
       <Modal {...args} onClose={toggleHandler} />
-    </>
+    </div>
   );
 };
 
@@ -39,10 +39,10 @@ const WithFooterTemplate: ComponentStory<typeof Modal> = (args) => {
     { key: 'Cancel', handler: toggleHandler },
   ];
   return (
-    <>
+    <div>
       <Button onClick={toggleHandler}>Show Modal</Button>
       <Modal {...args} onClose={toggleHandler} footer={footerButtons} />
-    </>
+    </div>
   );
 };
 

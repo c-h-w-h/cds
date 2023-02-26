@@ -16,7 +16,7 @@ interface ModalProps extends DefaultPropsWithChildren<HTMLDivElement> {
 const Modal = ({ title, children, isOpen, onClose, footer }: ModalProps) => {
   return (
     <ModalWrapper {...{ isOpen }}>
-      <BackGround {...{ isOpen }} onClick={onClose}></BackGround>
+      <BackGround onClick={onClose}></BackGround>
       <Center>
         <ModalBox>
           {title && <Title>{title}</Title>}
@@ -82,21 +82,19 @@ const Footer = styled.div`
   justify-content: space-between;
 `;
 
-const BackGround = styled.div<Pick<ModalProps, 'isOpen'>>(
-  ({ theme, isOpen }) => {
-    const { color: themeColor } = theme;
-    const { black } = themeColor;
-    return {
-      width: '100%',
-      height: '100%',
-      position: 'fixed',
-      zIndex: 998,
-      display: isOpen ? 'flex' : 'none',
-      opacity: 0.4,
-      backgroundColor: black,
-    };
-  },
-);
+const BackGround = styled.div(({ theme }) => {
+  const { color: themeColor } = theme;
+  const { black } = themeColor;
+  return {
+    width: '100%',
+    height: '100%',
+    position: 'fixed',
+    zIndex: 998,
+    display: 'flex',
+    opacity: 0.4,
+    backgroundColor: black,
+  };
+});
 
 /**
  * 임시 Button style
