@@ -22,7 +22,7 @@ const SimpleTemplate: ComponentStory<typeof Modal> = (args) => {
 };
 
 const WithButtonsTemplate: ComponentStory<typeof Modal> = (args) => {
-  const [open, setOpen] = useState<boolean>(true);
+  const [open, setOpen] = useState<boolean>(false);
   const closeHandler = () => {
     action('onClose');
     setOpen(false);
@@ -38,18 +38,21 @@ const WithButtonsTemplate: ComponentStory<typeof Modal> = (args) => {
   ];
   return (
     <>
-      {open ? (
-        <Modal
-          {...args}
-          isOpen={open}
-          onClose={closeHandler}
-          footer={footerButtons}
-        />
-      ) : (
-        <button style={{ margin: 'auto' }} onClick={() => setOpen(true)}>
-          Show Modal
-        </button>
-      )}
+      <div>
+        <div>본문 내용</div>
+        <div>본문 내용</div>
+        <div>본문 내용</div>
+        <div>본문 내용</div>
+        <div>본문 내용</div>
+        <div>본문 내용</div>
+        <button onClick={() => setOpen(true)}>Show Modal</button>
+      </div>
+      <Modal
+        {...args}
+        isOpen={open}
+        onClose={closeHandler}
+        footer={footerButtons}
+      />
     </>
   );
 };
