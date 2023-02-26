@@ -11,7 +11,6 @@ import {
   CLOSE_ICON_SIZE,
 } from '@src/constants/toast';
 import { DefaultProps } from '@src/utils/types/DefaultProps';
-import { ReactNode, useEffect, useState } from 'react';
 import {
   MdNotifications,
   MdInfo,
@@ -35,39 +34,37 @@ interface ToastProps extends DefaultProps<HTMLDivElement> {
 const startWithCapitalLetter = (str: string) =>
   str[0].toUpperCase() + str.substring(1);
 
+const getMainIcon = (
+  kind: ToastProps['kind'],
+  iconStyle: { size: number; color: string },
+) => {
+  switch (kind) {
+    case 'info':
+      return <MdInfo {...iconStyle} />;
+    case 'success':
+      return <MdCheckCircle {...iconStyle} />;
+    case 'warning':
+      return <MdWarning {...iconStyle} />;
+    case 'error':
+      return <MdDangerous {...iconStyle} />;
+    default:
+      return <MdNotifications {...iconStyle} />;
+  }
+};
+
 const Toast = ({ kind, title, message, vertical, horizontal }: ToastProps) => {
-  const [mainIcon, setMainIcon] = useState<ReactNode | null>();
   const { color: themeColor } = theme;
   const mainColor = kind ? themeColor[kind] : '';
-
-  useEffect(() => {
-    const getMainIcon = (kind: ToastKind | undefined) => {
-      const iconStyle = {
-        size: MAIN_ICON_SIZE,
-        color: mainColor,
-      };
-
-      switch (kind) {
-        case 'info':
-          return <MdInfo {...iconStyle} />;
-        case 'success':
-          return <MdCheckCircle {...iconStyle} />;
-        case 'warning':
-          return <MdWarning {...iconStyle} />;
-        case 'error':
-          return <MdDangerous {...iconStyle} />;
-        default:
-          return <MdNotifications {...iconStyle} />;
-      }
-    };
-    setMainIcon(getMainIcon(kind));
-  }, []);
+  const mainIcon = getMainIcon(kind, {
+    size: MAIN_ICON_SIZE,
+    color: mainColor,
+  });
 
   return (
     <Flexbox
       css={[
         css`
-          position: absoulte;
+          position: absolute;
           padding: 1rem;
           border: 2px solid ${mainColor};
           border-radius: 16px;
