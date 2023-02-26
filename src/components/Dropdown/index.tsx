@@ -36,7 +36,7 @@ const Dropdown = ({
   );
 };
 
-interface ItemProps extends DefaultProps<HTMLLIElement> {
+interface DropdownItemProps extends DefaultProps<HTMLLIElement> {
   title?: string;
   icon?: IconType;
   description?: string;
@@ -48,7 +48,7 @@ const DropdownItem = ({
   icon: Icon,
   description = '',
   onClick: clickEventHandler,
-}: ItemProps) => {
+}: DropdownItemProps) => {
   return (
     <DropdownListItem onClick={clickEventHandler}>
       {Icon && (
@@ -72,23 +72,11 @@ const DropdownItem = ({
   );
 };
 
-const DropdownCustomItem = ({
-  children,
-  ...props
-}: DefaultPropsWithChildren<HTMLLIElement>) => {
-  return (
-    <li
-      css={[
-        css`
-          cursor: pointer;
-        `,
-      ]}
-      {...props}
-    >
-      {children}
-    </li>
-  );
-};
+const DropdownCustomItem = styled.li<DefaultProps<HTMLLIElement>>(() => {
+  return {
+    cursor: 'pointer',
+  };
+});
 
 export { Dropdown, DropdownItem, DropdownCustomItem };
 
