@@ -1,3 +1,4 @@
+import Typography from '@components/Typography';
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import {
@@ -6,6 +7,8 @@ import {
   HorizontalVariant,
   V_POSITION_MAP,
   H_POSITION_MAP,
+  MAIN_ICON_SIZE,
+  CLOSE_ICON_SIZE,
 } from '@src/constants/toast';
 import { DefaultProps } from '@src/utils/types/DefaultProps';
 import { ReactNode, useEffect, useState } from 'react';
@@ -20,19 +23,17 @@ import {
 
 import { theme } from '../CdsProvider/theme';
 import Flexbox from '../Flexbox';
-import Typography from '../Typography';
 
 interface ToastProps extends DefaultProps<HTMLDivElement> {
   kind?: ToastKind;
   title?: string;
   message: string;
-  vertical: keyof typeof VerticalVariant;
-  horizontal: keyof typeof HorizontalVariant;
+  vertical: VerticalVariant;
+  horizontal: HorizontalVariant;
 }
 
-const startWithCapitalLetter = (str: string) => {
-  return str[0].toUpperCase() + str.substring(1);
-};
+const startWithCapitalLetter = (str: string) =>
+  str[0].toUpperCase() + str.substring(1);
 
 const Toast = ({ kind, title, message, vertical, horizontal }: ToastProps) => {
   const [mainIcon, setMainIcon] = useState<ReactNode | null>();
@@ -42,7 +43,7 @@ const Toast = ({ kind, title, message, vertical, horizontal }: ToastProps) => {
   useEffect(() => {
     const getMainIcon = (kind: ToastKind | undefined) => {
       const iconStyle = {
-        size: 32,
+        size: MAIN_ICON_SIZE,
         color: mainColor,
       };
 
@@ -60,18 +61,13 @@ const Toast = ({ kind, title, message, vertical, horizontal }: ToastProps) => {
       }
     };
     setMainIcon(getMainIcon(kind));
-  }, [kind]);
+  }, []);
 
   return (
-    <div
-      css={{
-        position: 'absolute',
-        ...V_POSITION_MAP[vertical],
-        ...H_POSITION_MAP[horizontal],
-      }}
-    >
-      <Flexbox
-        css={css`
+    <Flexbox
+      css={[
+        css`
+          position: absoulte;
           padding: 1rem;
           border: 2px solid ${mainColor};
           border-radius: 16px;
@@ -82,20 +78,22 @@ const Toast = ({ kind, title, message, vertical, horizontal }: ToastProps) => {
             animation: ${bounce(vertical)} 0.6s 1s
               cubic-bezier(0.34, 1.72, 0.58, 0.85) forwards;
           }
-        `}
-      >
-        {mainIcon}
-        <TypographyGroup>
-          <Typography variant="subtitle2">
-            {title ?? (kind ? startWithCapitalLetter(kind) : 'Alarm')}
-          </Typography>
-          <Typography variant="desc">{message}</Typography>
-        </TypographyGroup>
-        <TempButton onClick={() => alert('Clicked!')}>
-          <MdOutlineCancel size="24" color={mainColor} />
-        </TempButton>
-      </Flexbox>
-    </div>
+        `,
+        V_POSITION_MAP[vertical],
+        H_POSITION_MAP[horizontal],
+      ]}
+    >
+      {mainIcon}
+      <TypographyGroup>
+        <Typography variant="subtitle2">
+          {title ?? (kind ? startWithCapitalLetter(kind) : 'Alarm')}
+        </Typography>
+        <Typography variant="desc">{message}</Typography>
+      </TypographyGroup>
+      <TempButton onClick={() => alert('Clicked!')}>
+        <MdOutlineCancel size={CLOSE_ICON_SIZE} color={mainColor} />
+      </TempButton>
+    </Flexbox>
   );
 };
 
