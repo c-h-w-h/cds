@@ -1,38 +1,37 @@
+import { Interpolation, Theme } from '@emotion/react';
+
 export type ToastKind = 'info' | 'success' | 'warning' | 'error';
 
-export enum VerticalVariant {
-  top = 'top',
-  bottom = 'bottom',
-}
+export type VerticalVariant = 'top' | 'bottom';
 
-export enum HorizontalVariant {
-  left = 'left',
-  right = 'right',
-  center = 'center',
-}
+export type HorizontalVariant = 'left' | 'right' | 'center';
 
-export const V_POSITION_MAP: Record<VerticalVariant, object> = {
-  [VerticalVariant.top]: {
+export const V_POSITION_MAP: Record<VerticalVariant, Interpolation<Theme>> = {
+  top: {
     top: 0,
     marginTop: '1rem',
   },
-  [VerticalVariant.bottom]: {
+  bottom: {
     bottom: 0,
     marginBottom: '1rem',
   },
 };
 
-export const H_POSITION_MAP: Record<HorizontalVariant, object> = {
-  [HorizontalVariant.left]: {
+export const H_POSITION_MAP: Record<HorizontalVariant, Interpolation<Theme>> = {
+  left: {
     left: 0,
     marginLeft: '1rem',
   },
-  [HorizontalVariant.right]: {
+  right: {
     right: 0,
     marginRight: '1rem',
   },
-  [HorizontalVariant.center]: {
+  center: {
     left: '50%',
     transform: 'translate(-50%, 0)',
   },
 };
+
+export const MAIN_ICON_SIZE = 32;
+
+export const CLOSE_ICON_SIZE = 24;
