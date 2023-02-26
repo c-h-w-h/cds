@@ -1,6 +1,5 @@
-import { action } from '@storybook/addon-actions';
+import { useArgs } from '@storybook/client-api';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { useState } from 'react';
 
 import Modal from '.';
 
@@ -13,19 +12,17 @@ export default {
 } as ComponentMeta<typeof Modal>;
 
 const SimpleTemplate: ComponentStory<typeof Modal> = (args) => {
-  const [open, setOpen] = useState<boolean>(true);
-  const closeHandler = () => {
-    action('onClose');
-    setOpen(false);
+  const [{ isOpen }, updateArgs] = useArgs();
+  const toggleHandler = () => {
+    updateArgs({ isOpen: !isOpen });
   };
-  return <Modal {...args} isOpen={open} onClose={closeHandler} />;
+  return <Modal {...args} onClose={toggleHandler} />;
 };
 
 const WithButtonsTemplate: ComponentStory<typeof Modal> = (args) => {
-  const [open, setOpen] = useState<boolean>(false);
-  const closeHandler = () => {
-    action('onClose');
-    setOpen(false);
+  const [{ isOpen }, updateArgs] = useArgs();
+  const toggleHandler = () => {
+    updateArgs({ isOpen: !isOpen });
   };
   const footerButtons = [
     {
@@ -34,7 +31,7 @@ const WithButtonsTemplate: ComponentStory<typeof Modal> = (args) => {
         return;
       },
     },
-    { key: 'Cancel', handler: closeHandler },
+    { key: 'Cancel', handler: toggleHandler },
   ];
   return (
     <>
@@ -45,14 +42,9 @@ const WithButtonsTemplate: ComponentStory<typeof Modal> = (args) => {
         <div>본문 내용</div>
         <div>본문 내용</div>
         <div>본문 내용</div>
-        <button onClick={() => setOpen(true)}>Show Modal</button>
+        <button onClick={toggleHandler}>Show Modal</button>
       </div>
-      <Modal
-        {...args}
-        isOpen={open}
-        onClose={closeHandler}
-        footer={footerButtons}
-      />
+      <Modal {...args} onClose={toggleHandler} footer={footerButtons} />
     </>
   );
 };
@@ -73,4 +65,5 @@ export const Alert = WithButtonsTemplate.bind({});
 Alert.args = {
   title: 'Title',
   children: <p>Content</p>,
+  isOpen: false,
 };

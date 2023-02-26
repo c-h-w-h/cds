@@ -4,6 +4,8 @@ import { TYPOGRAPHY } from '@constants/typography';
 import styled from '@emotion/styled';
 import { DefaultPropsWithChildren } from '@utils/types/DefaultPropsWithChildren';
 
+// 후에 버튼 컴포넌트 적용 예정
+
 type Handler = () => void;
 type Buttons = { key: string; handler: Handler }[];
 interface ModalProps extends DefaultPropsWithChildren<HTMLDivElement> {
@@ -25,9 +27,9 @@ const Modal = ({ title, children, isOpen, onClose, footer }: ModalProps) => {
             <Footer>
               <Flexbox justifyContent="space-evenly">
                 {footer.map((btn) => (
-                  <button key={btn.key} onClick={btn.handler}>
+                  <Button key={btn.key} onClick={btn.handler}>
                     {btn.key}
-                  </button>
+                  </Button>
                 ))}
               </Flexbox>
             </Footer>
@@ -97,5 +99,25 @@ const BackGround = styled.div<Pick<ModalProps, 'isOpen'>>(
     };
   },
 );
+
+const Button = styled.button(({ theme }) => {
+  const { color: themeColor } = theme;
+  const { primary100, white } = themeColor;
+  return {
+    width: '5rem',
+    height: '1.7rem',
+    borderRadius: '0.5rem',
+    backgroundColor: primary100,
+    color: white,
+    '@media (hover: hover)': {
+      ':hover': {
+        filter: 'brightness(0.9)',
+      },
+    },
+    ':active': {
+      filter: 'brightness(0.7)',
+    },
+  };
+});
 
 export default Modal;
