@@ -84,13 +84,10 @@ const DropdownWrapper = styled.details`
   width: fit-content;
 
   & > summary {
-    border: 1px solid ${({ theme }) => theme.color.gray200};
-    border-radius: 5px;
     cursor: pointer;
     &::marker {
       content: '';
     }
-    padding: 0.5rem;
   }
 
   &[open] > summary::before {

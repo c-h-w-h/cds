@@ -20,7 +20,13 @@ export default {
 
 const DUMMY_TOGGLE = () => {
   return (
-    <div>
+    <div
+      style={{
+        border: `1px solid #dedede`,
+        borderRadius: '5px',
+        padding: '.5rem',
+      }}
+    >
       드롭다운토글은커스텀엘레먼트로자유롭게서식을적용할수있습니다테스트를위해아주긴토글을만들었어요
     </div>
   );
