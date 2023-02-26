@@ -116,9 +116,18 @@ const DropdownList = styled.ul<ListProps>`
   position: relative;
   width: fit-content;
   box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.25);
+  border-radius: 0.2rem;
 
   & > li:not(:first-of-type) {
     border-top: 1px solid #ccc;
+  }
+
+  & > li:first-of-type {
+    border-radius: 0.2rem 0.2rem 0 0;
+  }
+
+  & > li:last-of-type {
+    border-radius: 0 0 0.2rem 0.2rem;
   }
 `;
 

@@ -34,7 +34,8 @@ const DUMMY_TOGGLE = () => {
 
 const DUMMY_CUSTOM_ITEM = css`
   font-weight: 700;
-  background-color: red;
+  background-color: aqua;
+  padding: 0.5rem;
 `;
 
 const Template: ComponentStory<typeof Dropdown> = (args) => (
