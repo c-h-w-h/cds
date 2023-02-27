@@ -1,39 +1,18 @@
-import { css } from '@emotion/react';
-import { DefaultPropsWithChildren } from '@util-types/DefaultPropsWithChildren';
-import { FlexContainerProps } from '@util-types/FlexContainerProps';
+import Flexbox from '@components-layout/Flexbox';
+import { Interpolation, Theme } from '@emotion/react';
+import { FlexContainerProps } from '@utils/types/FlexContainerProps';
+import { ReactNode } from 'react';
 
-type ListProps = DefaultPropsWithChildren<HTMLUListElement> &
-  FlexContainerProps;
+type ListProps = FlexContainerProps & {
+  children: ReactNode;
+  css?: Interpolation<Theme>;
+};
 
-const List = ({
-  children,
-  css: style,
-  direction = 'column',
-  wrap = 'nowrap',
-  alignContent = 'normal',
-  alignItems = 'center',
-  justifyContent = 'center',
-  gap = '1rem',
-  ...props
-}: ListProps) => {
+const List = ({ flexDirection = 'column', children, ...props }: ListProps) => {
   return (
-    <ul
-      css={[
-        css`
-          display: flex;
-          flex-direction: ${direction};
-          flex-wrap: ${wrap};
-          align-content: ${alignContent};
-          align-items: ${alignItems};
-          justify-content: ${justifyContent};
-          gap: ${gap};
-        `,
-        style,
-      ]}
-      {...props}
-    >
+    <Flexbox as={'ul'} flexDirection={flexDirection} {...props}>
       {children}
-    </ul>
+    </Flexbox>
   );
 };
 

@@ -1,8 +1,8 @@
 import { CSSProperties } from 'react';
 
 export interface FlexContainerProps {
-  direction?: CSSProperties['flexDirection'];
-  wrap?: CSSProperties['flexWrap'];
+  flexDirection?: CSSProperties['flexDirection'];
+  flexWrap?: CSSProperties['flexWrap'];
   alignContent?: CSSProperties['alignContent'];
   alignItems?: CSSProperties['alignItems'];
   justifyContent?: CSSProperties['justifyContent'];

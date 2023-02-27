@@ -31,7 +31,7 @@ const Template: ComponentStory<typeof Flexbox> = (args) => {
 
 export const Row = Template.bind({});
 Row.args = {
-  direction: 'row',
+  flexDirection: 'row',
 };
 
 export const SpaceBetween = Template.bind({});
@@ -42,7 +42,7 @@ SpaceBetween.args = {
 
 export const MultiLine = Template.bind({});
 MultiLine.args = {
-  wrap: 'wrap',
+  flexWrap: 'wrap',
   alignContent: 'center',
   css: css`
     width: 100px;
@@ -53,5 +53,5 @@ MultiLine.args = {
 
 export const Column = Template.bind({});
 Column.args = {
-  direction: 'column',
+  flexDirection: 'column',
 };
