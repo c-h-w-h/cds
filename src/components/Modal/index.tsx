@@ -1,6 +1,7 @@
 import Center from '@components/@layout/Center';
 import Flexbox from '@components/@layout/Flexbox';
-import { TYPOGRAPHY } from '@constants/typography';
+import Typography from '@components/Typography';
+import { TypographyVariant } from '@constants/typography';
 import styled from '@emotion/styled';
 import { DefaultPropsWithChildren } from '@utils/types/DefaultPropsWithChildren';
 import { MouseEventHandler } from 'react';
@@ -19,7 +20,11 @@ const Modal = ({ title, children, isOpen, onClose, actions }: ModalProps) => {
       <BackGround onClick={onClose}></BackGround>
       <Center>
         <ModalBox>
-          {title && <Title>{title}</Title>}
+          {title && (
+            <Typography variant={TypographyVariant.SUBTITLE1}>
+              {title}
+            </Typography>
+          )}
           <Content>{children}</Content>
           {actions && (
             <Footer>
@@ -56,24 +61,16 @@ const ModalBox = styled.div(({ theme }) => {
     height: 'min-content',
     position: 'relative',
     zIndex: 999,
-    padding: '2rem 0',
+    padding: '1rem 0',
     boxShadow: 'rgb(0 0 0 / 20%) 0px 2px 5px 1px',
     borderRadius: '1rem',
     backgroundColor: white,
   };
 });
 
-const Title = styled.div`
-  height: min-content;
-  margin-bottom: 1rem;
-  font-size: ${TYPOGRAPHY.subtitle1.size};
-  font-weight: ${TYPOGRAPHY.subtitle1.weight};
-`;
-
 const Content = styled.div`
   height: min-content;
-  font-size: ${TYPOGRAPHY.body.size};
-  font-weight: ${TYPOGRAPHY.body.weight};
+  margin: 1rem 0;
 `;
 
 const Footer = styled.div`
