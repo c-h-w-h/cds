@@ -1,6 +1,6 @@
+import { theme } from '@components/CdsProvider/theme';
+import Flexbox from '@components/Flexbox';
 import Typography from '@components/Typography';
-import { css, keyframes } from '@emotion/react';
-import styled from '@emotion/styled';
 import {
   ToastKind,
   VerticalVariant,
@@ -9,8 +9,10 @@ import {
   H_POSITION_MAP,
   MAIN_ICON_SIZE,
   CLOSE_ICON_SIZE,
-} from '@src/constants/toast';
-import { DefaultProps } from '@src/utils/types/DefaultProps';
+} from '@constants/toast';
+import { css, keyframes } from '@emotion/react';
+import styled from '@emotion/styled';
+import { DefaultProps } from '@utils/types/DefaultProps';
 import {
   MdNotifications,
   MdInfo,
@@ -19,9 +21,6 @@ import {
   MdDangerous,
   MdOutlineCancel,
 } from 'react-icons/md';
-
-import { theme } from '../CdsProvider/theme';
-import Flexbox from '../Flexbox';
 
 interface ToastProps extends DefaultProps<HTMLDivElement> {
   kind?: ToastKind;
