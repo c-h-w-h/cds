@@ -41,7 +41,7 @@ const WithFooterTemplate: ComponentStory<typeof Modal> = (args) => {
   return (
     <div>
       <Button onClick={toggleHandler}>Show Modal</Button>
-      <Modal {...args} onClose={toggleHandler} footer={footerButtons} />
+      <Modal {...args} onClose={toggleHandler} actions={footerButtons} />
     </div>
   );
 };

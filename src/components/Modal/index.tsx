@@ -5,15 +5,15 @@ import styled from '@emotion/styled';
 import { DefaultPropsWithChildren } from '@utils/types/DefaultPropsWithChildren';
 import { MouseEventHandler } from 'react';
 
-type Buttons = { key: string; handler: MouseEventHandler }[];
+type Actions = { key: string; handler: MouseEventHandler }[];
 interface ModalProps extends DefaultPropsWithChildren<HTMLDivElement> {
   title?: string;
   isOpen: boolean;
   onClose: MouseEventHandler;
-  footer?: Buttons;
+  actions?: Actions;
 }
 
-const Modal = ({ title, children, isOpen, onClose, footer }: ModalProps) => {
+const Modal = ({ title, children, isOpen, onClose, actions }: ModalProps) => {
   return (
     <ModalWrapper {...{ isOpen }}>
       <BackGround onClick={onClose}></BackGround>
@@ -21,10 +21,10 @@ const Modal = ({ title, children, isOpen, onClose, footer }: ModalProps) => {
         <ModalBox>
           {title && <Title>{title}</Title>}
           <Content>{children}</Content>
-          {footer && (
+          {actions && (
             <Footer>
               <Flexbox justifyContent="space-evenly">
-                {footer.map((btn) => (
+                {actions.map((btn) => (
                   <Button key={btn.key} onClick={btn.handler}>
                     {btn.key}
                   </Button>
