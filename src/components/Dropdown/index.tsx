@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { DefaultProps } from '@utils/types/DefaultProps';
 import { DefaultPropsWithChildren } from '@utils/types/DefaultPropsWithChildren';
-import React, { ReactNode, useRef } from 'react';
+import React, { MouseEvent, MouseEventHandler, ReactNode, useRef } from 'react';
 import { IconType } from 'react-icons/lib';
 
 type DropdownAlign = 'left' | 'right' | 'center';
@@ -20,7 +20,7 @@ const Dropdown = ({
 }: DropdownProps) => {
   const detailsRef = useRef<HTMLDetailsElement | null>(null);
 
-  const closeDropdown = (e: React.MouseEvent) => {
+  const closeDropdown = (e: MouseEvent) => {
     const { target } = e;
     if (!target || !detailsRef.current) return;
     detailsRef.current.open = false;
@@ -40,7 +40,7 @@ interface DropdownItemProps extends DefaultProps<HTMLLIElement> {
   title?: string;
   icon?: IconType;
   description?: string;
-  onClick?: React.MouseEventHandler;
+  onClick?: MouseEventHandler;
 }
 
 const DropdownItem = ({
