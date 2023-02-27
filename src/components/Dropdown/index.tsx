@@ -82,6 +82,7 @@ export { Dropdown, DropdownItem, DropdownCustomItem };
 
 const DropdownWrapper = styled.details`
   width: fit-content;
+  position: relative;
 
   & > summary {
     cursor: pointer;
@@ -109,11 +110,11 @@ interface ListProps {
 }
 
 const DropdownList = styled.ul<ListProps>`
-  float: ${({ align }) => (align === 'right' ? 'right' : 'left')};
+  ${({ align }) => (align === 'right' ? 'right' : 'left')}: 0;
+  position: absolute;
   ${({ align }) =>
     align === 'center' && 'left: 50%; transform: translateX(-50%);'}
   z-index: 999;
-  position: relative;
   width: fit-content;
   box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.25);
   border-radius: 0.2rem;
