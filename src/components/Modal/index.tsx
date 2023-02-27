@@ -6,12 +6,12 @@ import styled from '@emotion/styled';
 import { DefaultPropsWithChildren } from '@utils/types/DefaultPropsWithChildren';
 import { MouseEventHandler } from 'react';
 
-type Actions = { key: string; handler: MouseEventHandler }[];
+type Actions = { key: string; handler: MouseEventHandler };
 interface ModalProps extends DefaultPropsWithChildren<HTMLDivElement> {
   title?: string;
   isOpen: boolean;
   onClose: MouseEventHandler;
-  actions?: Actions;
+  actions?: Actions[];
 }
 
 const Modal = ({ title, children, isOpen, onClose, actions }: ModalProps) => {
@@ -29,9 +29,9 @@ const Modal = ({ title, children, isOpen, onClose, actions }: ModalProps) => {
           {actions && (
             <Footer>
               <Flexbox justifyContent="space-evenly">
-                {actions.map((btn) => (
-                  <Button key={btn.key} onClick={btn.handler}>
-                    {btn.key}
+                {actions.map(({ key, handler }) => (
+                  <Button key={key} onClick={handler}>
+                    {key}
                   </Button>
                 ))}
               </Flexbox>
