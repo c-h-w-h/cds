@@ -6,12 +6,12 @@ import styled from '@emotion/styled';
 import { DefaultPropsWithChildren } from '@utils/types/DefaultPropsWithChildren';
 import { MouseEventHandler } from 'react';
 
-type Actions = { key: string; handler: MouseEventHandler };
+type Action = { key: string; handler: MouseEventHandler };
 interface ModalProps extends DefaultPropsWithChildren<HTMLDivElement> {
   title?: string;
   isOpen: boolean;
   onClose: MouseEventHandler;
-  actions?: Actions[];
+  actions?: Action[];
 }
 
 const Modal = ({ title, children, isOpen, onClose, actions }: ModalProps) => {
