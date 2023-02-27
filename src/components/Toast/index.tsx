@@ -1,5 +1,5 @@
-import { theme } from '@components/CdsProvider/theme';
-import Flexbox from '@components/Flexbox';
+import { theme } from '@components/@common/CdsProvider/theme';
+import Flexbox from '@components/@layout/Flexbox';
 import Typography from '@components/Typography';
 import {
   ToastKind,
