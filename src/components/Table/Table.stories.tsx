@@ -3,8 +3,7 @@ import Container from '@components/@layout/Container';
 import { ComponentMeta } from '@storybook/react';
 import { ReactNode } from 'react';
 
-import {
-  Table,
+import Table, {
   TableHead,
   TableBody,
   TableRow,
