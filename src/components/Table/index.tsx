@@ -2,6 +2,7 @@ import { COLOR } from '@constants/color';
 import { TYPOGRAPHY } from '@constants/typography';
 import { CSSProperties } from '@emotion/serialize';
 import styled from '@emotion/styled';
+import { pixelToRem } from '@utils/pixelToRem';
 
 type Color = keyof typeof COLOR;
 
@@ -39,13 +40,15 @@ const tableDataStyle = styled(tableCommonStyle.withComponent('td'))<{
  * @prop {outline}: true일 경우 table의 테두리 표시
  * @prop {rounded}: true일 경우 borderRadius 6px로 설정
  */
-export const Table = styled(tableCommonStyle.withComponent('table'))<{
+const Table = styled(tableCommonStyle.withComponent('table'))<{
   outline?: boolean;
   rounded?: boolean;
 }>(({ outline = false, rounded = false }) => {
+  const borderStyle = pixelToRem(`1px solid ${COLOR.gray200}`);
+
   return {
     width: '100%',
-    outline: outline ? `1px solid ${COLOR.gray200}` : 'none',
+    outline: outline ? borderStyle : 'none',
     outlineOffset: -1,
     borderRadius: rounded ? 6 : 0,
 
@@ -53,10 +56,12 @@ export const Table = styled(tableCommonStyle.withComponent('table'))<{
 
     'th, td': {
       padding: 10,
-      border: outline ? `1px solid ${COLOR.gray200}` : 'none',
+      border: outline ? borderStyle : 'none',
     },
   };
 });
+
+export default Table;
 
 export const TableHead = styled(tableCommonStyle.withComponent('thead'))();
 export const TableBody = styled(tableCommonStyle.withComponent('tbody'))();
