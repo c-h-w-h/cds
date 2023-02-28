@@ -59,7 +59,7 @@ const DropdownItem = ({
         </Flexbox>
       )}
       <Flexbox
-        direction="column"
+        flexDirection="column"
         gap=".3rem"
         alignItems="center"
         css={css`
