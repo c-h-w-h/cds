@@ -33,31 +33,9 @@ interface ToastProps extends DefaultProps<HTMLDivElement> {
 const startWithCapitalLetter = (str: string) =>
   str[0].toUpperCase() + str.substring(1);
 
-const getMainIcon = (
-  kind: ToastProps['kind'],
-  iconStyle: { size: number; color: string },
-) => {
-  switch (kind) {
-    case 'info':
-      return <MdInfo {...iconStyle} />;
-    case 'success':
-      return <MdCheckCircle {...iconStyle} />;
-    case 'warning':
-      return <MdWarning {...iconStyle} />;
-    case 'error':
-      return <MdDangerous {...iconStyle} />;
-    default:
-      return <MdNotifications {...iconStyle} />;
-  }
-};
-
 const Toast = ({ kind, title, message, vertical, horizontal }: ToastProps) => {
   const { color: themeColor } = theme;
   const mainColor = kind ? themeColor[kind] : '';
-  const mainIcon = getMainIcon(kind, {
-    size: MAIN_ICON_SIZE,
-    color: mainColor,
-  });
 
   return (
     <Flexbox
@@ -79,13 +57,21 @@ const Toast = ({ kind, title, message, vertical, horizontal }: ToastProps) => {
         H_POSITION_MAP[horizontal],
       ]}
     >
-      {mainIcon}
-      <TypographyGroup>
+      <ToastIcon kind={kind} size={MAIN_ICON_SIZE} color={mainColor} />
+      <Flexbox
+        flexDirection="column"
+        alignItems={'flex-start'}
+        css={[
+          css`
+            max-width: 10vw;
+          `,
+        ]}
+      >
         <Typography variant="subtitle2">
           {title ?? (kind ? startWithCapitalLetter(kind) : 'Alarm')}
         </Typography>
         <Typography variant="desc">{message}</Typography>
-      </TypographyGroup>
+      </Flexbox>
       <TempButton onClick={() => alert('Clicked!')}>
         <MdOutlineCancel size={CLOSE_ICON_SIZE} color={mainColor} />
       </TempButton>
@@ -95,9 +81,31 @@ const Toast = ({ kind, title, message, vertical, horizontal }: ToastProps) => {
 
 export default Toast;
 
-const TypographyGroup = styled.div`
-  max-width: 10vw;
-`;
+interface ToastIconProps {
+  kind: ToastProps['kind'];
+  size: number;
+  color: string;
+}
+
+const ToastIcon = ({ kind, size, color }: ToastIconProps) => {
+  const iconStyle = {
+    size,
+    color,
+  };
+
+  switch (kind) {
+    case 'info':
+      return <MdInfo {...iconStyle} />;
+    case 'success':
+      return <MdCheckCircle {...iconStyle} />;
+    case 'warning':
+      return <MdWarning {...iconStyle} />;
+    case 'error':
+      return <MdDangerous {...iconStyle} />;
+    default:
+      return <MdNotifications {...iconStyle} />;
+  }
+};
 
 const fadeIn = keyframes`
   from {
