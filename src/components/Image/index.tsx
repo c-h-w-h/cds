@@ -5,7 +5,7 @@ import {
   IMAGE_SHAPE,
 } from '@constants/image';
 import styled from '@emotion/styled';
-import { DefaultProps } from '@src/utils/types/DefaultProps';
+import { DefaultProps } from '@utils/types/DefaultProps';
 
 type ImageSizeProps = `${ImageSizeVariant}`;
 type ImageShapeProps = `${ImageShapeVariant}`;
