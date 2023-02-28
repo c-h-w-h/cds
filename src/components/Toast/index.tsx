@@ -83,7 +83,7 @@ export default Toast;
 
 interface ToastIconProps {
   kind: ToastProps['kind'];
-  size: number;
+  size: string;
   color: string;
 }
 

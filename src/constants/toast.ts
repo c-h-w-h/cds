@@ -1,4 +1,5 @@
 import { Interpolation, Theme } from '@emotion/react';
+import { pixelToRem } from '@utils/pixelToRem';
 
 export type ToastKind = 'info' | 'success' | 'warning' | 'error';
 
@@ -32,6 +33,6 @@ export const H_POSITION_MAP: Record<HorizontalVariant, Interpolation<Theme>> = {
   },
 };
 
-export const MAIN_ICON_SIZE = 32;
+export const MAIN_ICON_SIZE = pixelToRem('32px');
 
-export const CLOSE_ICON_SIZE = 24;
+export const CLOSE_ICON_SIZE = pixelToRem('24px');
