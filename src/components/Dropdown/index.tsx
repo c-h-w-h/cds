@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { DefaultProps } from '@utils/types/DefaultProps';
 import { DefaultPropsWithChildren } from '@utils/types/DefaultPropsWithChildren';
-import React, { MouseEvent, MouseEventHandler, ReactNode, useRef } from 'react';
+import { MouseEvent, MouseEventHandler, ReactNode, useRef } from 'react';
 import { IconType } from 'react-icons/lib';
 
 type DropdownAlign = 'left' | 'right' | 'center';
