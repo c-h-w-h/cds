@@ -38,22 +38,24 @@ const Dropdown = ({
 
 interface DropdownItemProps extends DefaultProps<HTMLLIElement> {
   title?: string;
-  icon?: IconType;
+  leftIcon?: IconType;
+  rightIcon?: IconType;
   description?: string;
   onClick?: MouseEventHandler;
 }
 
 const DropdownItem = ({
   title = '',
-  icon: Icon,
+  leftIcon: LeftIcon,
+  rightIcon: RightIcon,
   description = '',
   onClick: clickEventHandler,
 }: DropdownItemProps) => {
   return (
     <DropdownListItem onClick={clickEventHandler}>
-      {Icon && (
-        <Flexbox alignItems="flex-start">
-          <Icon size={'1.2rem'} />
+      {LeftIcon && (
+        <Flexbox alignItems="center">
+          <LeftIcon size={'1.2rem'} />
         </Flexbox>
       )}
       <Flexbox
@@ -68,6 +70,11 @@ const DropdownItem = ({
         {title && <ItemTitle>{title}</ItemTitle>}
         {description && <ItemDescription>{description}</ItemDescription>}
       </Flexbox>
+      {RightIcon && (
+        <Flexbox alignItems="center">
+          <RightIcon size={'1.2rem'} />
+        </Flexbox>
+      )}
     </DropdownListItem>
   );
 };

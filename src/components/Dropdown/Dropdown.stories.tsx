@@ -40,18 +40,23 @@ const DUMMY_CUSTOM_ITEM = css`
 
 const Template: ComponentStory<typeof Dropdown> = (args) => (
   <Dropdown {...args} toggleElement={<DUMMY_TOGGLE />}>
-    <DropdownItem title="첫 번째 아이템" icon={MdAccessibility} />
+    <DropdownItem title="첫 번째 아이템" leftIcon={MdAccessibility} />
     <DropdownItem title="두 번째 아이템" description="저는 설명이 있는데용" />
     <DropdownItem
       title="세 번째 아이템"
       description="저는 설명과 아이콘도 있어용"
-      icon={MdAccessibility}
+      leftIcon={MdAccessibility}
     />
     <DropdownItem
       title="세 번째 아이템(무료 alert 포함)"
       onClick={() => {
         alert('무료로 제공해드리는 alert입니다');
       }}
+    />
+    <DropdownItem
+      title="네 번째 아이템"
+      description="저는 오른쪽에 아이콘이 있어용"
+      rightIcon={MdAccessibility}
     />
     <DropdownCustomItem css={DUMMY_CUSTOM_ITEM}>
       저는 커스텀 아이템 이에용
