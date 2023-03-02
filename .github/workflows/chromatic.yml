@@ -1,0 +1,19 @@
+name: 'Chromatic Deployment'
+
+on: 
+  pull_request:
+    branches: ['main']
+    paths:
+      - 'src/**'
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - run: yarn
+        
+      - uses: chromaui/action@v1
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
