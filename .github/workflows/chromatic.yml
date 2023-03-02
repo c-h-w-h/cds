@@ -13,6 +13,12 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - run: yarn
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'yarn'
+          cache-dependency-path: yarn.lock
         
       - uses: chromaui/action@v1
         with:
