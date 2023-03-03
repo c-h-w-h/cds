@@ -7,7 +7,6 @@ type FlexboxProps = DefaultPropsWithChildren<HTMLDivElement> &
 
 const Flexbox = styled.div<FlexboxProps>(
   ({
-    css,
     flexDirection = 'row',
     flexWrap = 'nowrap',
     alignContent = 'normal',
@@ -25,7 +24,6 @@ const Flexbox = styled.div<FlexboxProps>(
         justifyContent,
         gap,
       },
-      css?.toString(),
     ];
   },
 );

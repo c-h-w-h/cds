@@ -40,15 +40,16 @@ SpaceBetween.args = {
   gap: '0rem',
 };
 
-export const MultiLine = Template.bind({});
-MultiLine.args = {
-  flexWrap: 'wrap',
-  alignContent: 'center',
+export const MultiLine = Template.bind({
   css: css`
     width: 100px;
     height: 300px;
     background-color: #dfdfdf;
   `,
+});
+MultiLine.args = {
+  flexWrap: 'wrap',
+  alignContent: 'center',
 };
 
 export const Column = Template.bind({});
