@@ -19,6 +19,13 @@ Basic.args = {
   text: '상장하기',
 };
 
+export const Link = Template.bind({});
+Link.args = {
+  icon: MdCelebration,
+  text: '상장하기',
+  href: 'http://localhost:6006/?path=/story/button--link',
+};
+
 export const IconRight = Template.bind({});
 IconRight.args = {
   icon: MdCelebration,

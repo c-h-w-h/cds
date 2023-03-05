@@ -1,8 +1,9 @@
 import Icon, { IconSource } from '@components/Icon';
 import Typography from '@components/Typography';
-import Flexbox from '@components-layout/Flexbox';
 import { css, useTheme } from '@emotion/react';
+import { flexboxStyle } from '@styles/flex-box';
 import { pixelToRem } from '@utils/pixelToRem';
+import { DefaultProps } from '@utils/types/DefaultProps';
 import { CSSProperties } from 'react';
 
 type ButtonVariant =
@@ -12,13 +13,14 @@ type ButtonVariant =
   | 'round light'
   | 'square light';
 
-interface ButtonProps {
+interface ButtonProps extends DefaultProps<HTMLButtonElement> {
   variant?: ButtonVariant;
   text?: string;
   icon?: IconSource;
   iconSize?: CSSProperties['width'];
   iconPosition?: 'left' | 'right';
   iconTranslateY?: CSSProperties['translate'];
+  href?: string;
 }
 
 const Button = ({
@@ -28,6 +30,7 @@ const Button = ({
   iconSize = '1.5rem',
   iconPosition = 'left',
   iconTranslateY = 0,
+  href,
   ...props
 }: ButtonProps) => {
   const { color: themeColor } = useTheme();
@@ -37,7 +40,7 @@ const Button = ({
   const isSquare = variant.includes('square');
   const isIconOnly = !!icon && !text;
 
-  const buttonCss = css`
+  const buttonStyle = css`
     width: fit-content;
     padding: ${pixelToRem('12px')};
     border-radius: ${getBorderRadius(isSquare, isIconOnly)};
@@ -72,8 +75,13 @@ const Button = ({
     }
   `;
 
-  return (
-    <Flexbox as="button" gap={'0.125rem'} css={buttonCss} {...props}>
+  const comonProps: Record<string, unknown> = {
+    css: [flexboxStyle({ gap: '0.125rem' }), buttonStyle],
+    ...props,
+  };
+
+  const children = (
+    <>
       {icon && iconPosition === 'left' && (
         <Icon
           source={icon}
@@ -89,8 +97,18 @@ const Button = ({
           color={isLight ? primary200 : white}
         />
       )}
-    </Flexbox>
+    </>
   );
+
+  if (href) {
+    return (
+      <a href={href} {...comonProps}>
+        {children}
+      </a>
+    );
+  }
+
+  return <button {...comonProps}>{children}</button>;
 };
 
 const getBorderRadius = (isSquare: boolean, isIconOnly: boolean) => {
