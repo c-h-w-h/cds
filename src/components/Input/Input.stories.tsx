@@ -12,7 +12,7 @@ export default {
   },
 } as ComponentMeta<typeof Input>;
 
-const BasicUncontrolledTemplate: ComponentStory<typeof Input> = (args) => {
+const UncontrolledTemplate: ComponentStory<typeof Input> = (args) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [inputValue, setInputValue] = useState<string>('');
   return (
@@ -31,58 +31,59 @@ const BasicUncontrolledTemplate: ComponentStory<typeof Input> = (args) => {
   );
 };
 
-const CustomUncontrolledTemplate: ComponentStory<typeof Input> = (args) => {
-  const inputRef = useRef<HTMLInputElement | null>(null);
+const ControlledTemplate: ComponentStory<typeof Input> = (args) => {
   const [inputValue, setInputValue] = useState<string>('');
-  const templateStyle = css`
-    width: 300px;
-    height: 60px;
-    &::placeholder {
-      color: red;
-      font-style: italic;
-      font-size: 26px;
+  const [isValidate, setIsValidate] = useState<boolean>(true);
+  const validateHandler = (target: EventTarget & HTMLInputElement) => {
+    if (target.value.length < 5) {
+      setIsValidate(false);
+    } else {
+      setIsValidate(true);
     }
-  `;
-  return (
-    <>
-      <Input {...args} css={templateStyle} inputRef={inputRef}></Input>
-      <button
-        type="submit"
-        onClick={() =>
-          setInputValue(inputRef.current ? inputRef.current.value : '')
-        }
-      >
-        제출
-      </button>
-      <div>{inputValue}</div>
-    </>
-  );
-};
-
-const BasicControlledTemplate: ComponentStory<typeof Input> = (args) => {
-  const [inputValue, setInputValue] = useState<string>('');
+  };
+  const changeHandler = (target: EventTarget & HTMLInputElement) => {
+    validateHandler(target);
+    setInputValue(target.value);
+  };
   return (
     <>
       <Input
         {...args}
-        onChange={({ target }) => setInputValue(target.value)}
+        onChange={({ target }) => changeHandler(target)}
+        validate={isValidate}
       ></Input>
+      {!isValidate && (
+        <div style={{ color: 'red', fontSize: '10px' }}>
+          5글자 이상 입력하세요.
+        </div>
+      )}
       <div>{inputValue}</div>
     </>
   );
 };
 
-export const UncontrolledDefaultStyle = BasicUncontrolledTemplate.bind({});
+export const UncontrolledDefaultStyle = UncontrolledTemplate.bind({});
 UncontrolledDefaultStyle.args = {
   placeholder: '입력하세요',
 };
 
-export const UncontrolledCustomStyle = CustomUncontrolledTemplate.bind({});
+export const UncontrolledCustomStyle = UncontrolledTemplate.bind({});
 UncontrolledCustomStyle.args = {
   placeholder: '입력하세요',
+  css: css`
+    width: 300px;
+    height: 34px;
+    &::placeholder {
+      color: violet;
+      font-style: italic;
+    }
+  `,
 };
 
-export const ControlledDefaultStyle = BasicControlledTemplate.bind({});
-ControlledDefaultStyle.args = {
+export const Controlled = ControlledTemplate.bind({});
+Controlled.args = {
   placeholder: '입력하세요',
+  css: css`
+    margin: 20px;
+  `,
 };
