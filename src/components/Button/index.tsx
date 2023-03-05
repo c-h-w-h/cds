@@ -24,7 +24,7 @@ const Button = ({
   ...props
 }: ButtonProps) => {
   const { color: themeColor } = useTheme();
-  const { white, primary200, primary400 } = themeColor;
+  const { white, primary200, primary400, gray200 } = themeColor;
 
   const isLight = style.includes('light');
   const isSquare = style.includes('square');
@@ -43,7 +43,7 @@ const Button = ({
       transform: translateY(${pixelToRem(`${iconTranslateY}`)});
     }
 
-    :hover {
+    &:hover {
       cursor: pointer;
       color: ${isLight ? primary400 : white};
       background-color: ${isLight ? white : primary400};
@@ -51,6 +51,16 @@ const Button = ({
 
       & > svg {
         fill: ${isLight ? primary400 : white};
+      }
+    }
+
+    &:disabled {
+      color: ${isLight ? gray200 : white};
+      background-color: ${isLight ? white : gray200};
+      ${isLight ? `border: 0.125rem solid ${gray200};` : ''}
+
+      & > svg {
+        fill: ${isLight ? gray200 : white};
       }
     }
   `;
