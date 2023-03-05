@@ -75,7 +75,7 @@ const Button = ({
     }
   `;
 
-  const comonProps: Record<string, unknown> = {
+  const commonProps: Record<string, unknown> = {
     css: [flexboxStyle({ gap: '0.125rem' }), buttonStyle],
     ...props,
   };
@@ -102,13 +102,13 @@ const Button = ({
 
   if (href) {
     return (
-      <a href={href} {...comonProps}>
+      <a href={href} {...commonProps}>
         {children}
       </a>
     );
   }
 
-  return <button {...comonProps}>{children}</button>;
+  return <button {...commonProps}>{children}</button>;
 };
 
 const getBorderRadius = (isSquare: boolean, isIconOnly: boolean) => {
