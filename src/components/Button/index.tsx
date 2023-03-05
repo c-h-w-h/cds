@@ -47,6 +47,7 @@ const Button = ({
     color: ${isLight ? primary200 : white};
     background-color: ${isLight ? white : primary200};
     ${isLight ? `border: 0.125rem solid ${primary200};` : ''}
+    text-decoration: none;
 
     & > svg,
     & > img {
