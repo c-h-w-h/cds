@@ -77,7 +77,7 @@ const Button = ({
 
 const getBorderRadius = (isSquare: boolean, isIconOnly: boolean) => {
   if (isSquare) {
-    return isIconOnly ? '10%' : pixelToRem('16px');
+    return isIconOnly ? '30%' : pixelToRem('16px');
   }
   return isIconOnly ? '50%' : pixelToRem('36px');
 };

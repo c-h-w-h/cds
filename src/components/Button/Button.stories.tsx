@@ -58,3 +58,16 @@ Square.args = {
   text: '상장하기',
   style: 'square',
 };
+
+export const SquareLight = Template.bind({});
+SquareLight.args = {
+  icon: MdCelebration,
+  text: '상장하기',
+  style: 'square light',
+};
+
+export const SquareIconOnly = Template.bind({});
+SquareIconOnly.args = {
+  icon: MdCelebration,
+  style: 'square',
+};
