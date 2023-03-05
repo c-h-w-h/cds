@@ -6,12 +6,12 @@ import { pixelToRem } from '@utils/pixelToRem';
 import { DefaultProps } from '@utils/types/DefaultProps';
 import { CSSProperties } from 'react';
 
+type ButtonShapeVariant = 'round' | 'square';
+type ButtonThemeVariant = 'light';
 type ButtonVariant =
-  | 'round'
-  | 'square'
-  | 'light'
-  | 'round light'
-  | 'square light';
+  | ButtonShapeVariant
+  | ButtonThemeVariant
+  | `${ButtonShapeVariant} ${ButtonThemeVariant}`;
 
 interface ButtonProps extends DefaultProps<HTMLButtonElement> {
   variant?: ButtonVariant;
