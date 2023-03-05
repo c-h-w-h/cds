@@ -49,25 +49,25 @@ export const Light = Template.bind({});
 Light.args = {
   icon: MdCelebration,
   text: '상장하기',
-  style: 'light',
+  variant: 'light',
 };
 
 export const Square = Template.bind({});
 Square.args = {
   icon: MdCelebration,
   text: '상장하기',
-  style: 'square',
+  variant: 'square',
 };
 
 export const SquareLight = Template.bind({});
 SquareLight.args = {
   icon: MdCelebration,
   text: '상장하기',
-  style: 'square light',
+  variant: 'square light',
 };
 
 export const SquareIconOnly = Template.bind({});
 SquareIconOnly.args = {
   icon: MdCelebration,
-  style: 'square',
+  variant: 'square',
 };

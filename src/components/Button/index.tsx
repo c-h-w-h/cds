@@ -5,8 +5,15 @@ import { css, useTheme } from '@emotion/react';
 import { pixelToRem } from '@utils/pixelToRem';
 import { CSSProperties } from 'react';
 
+type ButtonVariant =
+  | 'round'
+  | 'square'
+  | 'light'
+  | 'round light'
+  | 'square light';
+
 interface ButtonProps {
-  style?: 'round' | 'square' | 'light' | 'round light' | 'square light';
+  variant?: ButtonVariant;
   text?: string;
   icon?: IconSource;
   iconSize?: CSSProperties['width'];
@@ -15,7 +22,7 @@ interface ButtonProps {
 }
 
 const Button = ({
-  style = 'round',
+  variant = 'round',
   text,
   icon,
   iconSize = '1.5rem',
@@ -26,8 +33,8 @@ const Button = ({
   const { color: themeColor } = useTheme();
   const { white, primary200, primary400, gray200 } = themeColor;
 
-  const isLight = style.includes('light');
-  const isSquare = style.includes('square');
+  const isLight = variant.includes('light');
+  const isSquare = variant.includes('square');
   const isIconOnly = !!icon && !text;
 
   const buttonCss = css`
