@@ -3,7 +3,6 @@ import { IconType } from '@react-icons/all-files';
 import { pixelToRem } from '@utils/pixelToRem';
 import { CSSProperties } from 'react';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type IconSource = string | IconType;
 
 interface IconProps {
