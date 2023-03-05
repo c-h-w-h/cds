@@ -135,7 +135,8 @@ CustomColor.args = {
 
 export const CustomSize = Template.bind({});
 CustomSize.args = {
-  size: '5rem',
+  size: '3rem',
+  outerSize: '5rem',
 };
 
 export const Disabled = Template.bind({});
