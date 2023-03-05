@@ -50,7 +50,7 @@ const ControlledTemplate: ComponentStory<typeof Input> = (args) => {
       <Input
         {...args}
         onChange={({ target }) => changeHandler(target)}
-        validate={isValidate}
+        isValid={isValidate}
       ></Input>
       {!isValidate && (
         <div style={{ color: 'red', fontSize: '10px' }}>
