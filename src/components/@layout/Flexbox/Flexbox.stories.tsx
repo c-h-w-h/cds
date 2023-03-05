@@ -16,7 +16,6 @@ const Template: ComponentStory<typeof Flexbox> = (args) => {
     width: 300px;
     background-color: #dfdfdf;
   `;
-
   return (
     <Flexbox css={commonStyle} {...args}>
       <p>1</p>
@@ -40,15 +39,16 @@ SpaceBetween.args = {
   gap: '0rem',
 };
 
-export const MultiLine = Template.bind({});
-MultiLine.args = {
-  flexWrap: 'wrap',
-  alignContent: 'center',
+export const MultiLine = Template.bind({
   css: css`
     width: 100px;
     height: 300px;
-    background-color: #dfdfdf;
+    background-color: red;
   `,
+});
+MultiLine.args = {
+  flexWrap: 'wrap',
+  alignContent: 'center',
 };
 
 export const Column = Template.bind({});
