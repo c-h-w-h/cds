@@ -52,6 +52,7 @@ const Button = ({
       & > svg {
         fill: ${isLight ? primary400 : white};
       }
+    }
   `;
 
   return (
