@@ -12,7 +12,7 @@ export default {
   },
 } as ComponentMeta<typeof Input>;
 
-const BasicControlledTemplate: ComponentStory<typeof Input> = (args) => {
+const BasicUncontrolledTemplate: ComponentStory<typeof Input> = (args) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [inputValue, setInputValue] = useState<string>('');
   return (
@@ -31,7 +31,7 @@ const BasicControlledTemplate: ComponentStory<typeof Input> = (args) => {
   );
 };
 
-const CustomControlledTemplate: ComponentStory<typeof Input> = (args) => {
+const CustomUncontrolledTemplate: ComponentStory<typeof Input> = (args) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [inputValue, setInputValue] = useState<string>('');
   const templateStyle = css`
@@ -59,12 +59,30 @@ const CustomControlledTemplate: ComponentStory<typeof Input> = (args) => {
   );
 };
 
-export const ControlledDefaultStyle = BasicControlledTemplate.bind({});
-ControlledDefaultStyle.args = {
+const BasicControlledTemplate: ComponentStory<typeof Input> = (args) => {
+  const [inputValue, setInputValue] = useState<string>('');
+  return (
+    <>
+      <Input
+        {...args}
+        onChange={({ target }) => setInputValue(target.value)}
+      ></Input>
+      <div>{inputValue}</div>
+    </>
+  );
+};
+
+export const UncontrolledDefaultStyle = BasicUncontrolledTemplate.bind({});
+UncontrolledDefaultStyle.args = {
   placeholder: '입력하세요',
 };
 
-export const ControlledCustomStyle = CustomControlledTemplate.bind({});
-ControlledCustomStyle.args = {
+export const UncontrolledCustomStyle = CustomUncontrolledTemplate.bind({});
+UncontrolledCustomStyle.args = {
+  placeholder: '입력하세요',
+};
+
+export const ControlledDefaultStyle = BasicControlledTemplate.bind({});
+ControlledDefaultStyle.args = {
   placeholder: '입력하세요',
 };

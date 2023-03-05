@@ -1,21 +1,24 @@
 import styled from '@emotion/styled';
 import { DefaultProps } from '@utils/types/DefaultProps';
-import { RefObject } from 'react';
+import { ChangeEventHandler, RefObject } from 'react';
 
 interface InputProps extends DefaultProps<HTMLInputElement> {
   placeholder?: string;
   inputRef?: RefObject<HTMLInputElement>;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
 }
 
 const Input = ({
   placeholder = '입력하세요',
   inputRef,
+  onChange,
   ...props
 }: InputProps) => {
   return (
     <InputContainer
       placeholder={placeholder}
       ref={inputRef}
+      onChange={onChange}
       {...props}
     ></InputContainer>
   );
