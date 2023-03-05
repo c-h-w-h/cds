@@ -11,7 +11,7 @@ interface RadioButtonProps extends DefaultProps<HTMLInputElement> {
   outerSize?: CSSProperties['width'];
   size?: CSSProperties['width'];
   disabled?: boolean;
-  customFlag?: ReactNode;
+  customButton?: ReactNode;
 }
 
 const RadioButton = ({
@@ -22,7 +22,7 @@ const RadioButton = ({
   size = '1rem',
   outerSize = '1.5rem',
   disabled = false,
-  customFlag,
+  customButton,
   ...props
 }: RadioButtonProps) => {
   return (
@@ -35,10 +35,10 @@ const RadioButton = ({
         disabled={disabled}
         {...props}
       />
-      {customFlag ? (
-        customFlag
+      {customButton ? (
+        customButton
       ) : (
-        <Flag viewBox="0 0 30 30" width={size} height={size}>
+        <Button viewBox="0 0 30 30" width={size} height={size}>
           <circle
             cx="15"
             cy="15"
@@ -50,7 +50,7 @@ const RadioButton = ({
             height="30"
           />
           <circle cx="15" cy="15" r="7" fill={color} width="30" height="30" />
-        </Flag>
+        </Button>
       )}
     </RadioButtonWrapper>
   );
@@ -76,7 +76,7 @@ const RadioButtonWrapper = styled.label<WrapperProps>`
   }
 `;
 
-const Flag = styled.svg`
+const Button = styled.svg`
   & > circle:nth-of-type(2) {
     display: none;
   }

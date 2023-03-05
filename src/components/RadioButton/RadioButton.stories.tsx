@@ -144,7 +144,7 @@ Disabled.args = {
   disabled: true,
 };
 
-export const CustomFlag = Template.bind({});
-CustomFlag.args = {
-  customFlag: <DUMMY_FLAG />,
+export const CustomButton = Template.bind({});
+CustomButton.args = {
+  customButton: <DUMMY_FLAG />,
 };
