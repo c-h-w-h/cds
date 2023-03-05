@@ -15,6 +15,7 @@ export default {
     size: '1rem',
     disabled: false,
     color: theme.color.primary100,
+    outerSize: '1.5rem',
   },
   argTypes: {
     name: {
