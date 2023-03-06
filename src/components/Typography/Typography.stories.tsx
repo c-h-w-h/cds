@@ -1,5 +1,7 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
+import Highlight from './Highlight';
+
 import Typography from '.';
 
 export default {
@@ -10,10 +12,10 @@ export default {
   },
 } as ComponentMeta<typeof Typography>;
 
-const DUMMY_TEXT = '안녕하세요. 콜드스터디 디자인 시스템입니다. 🧊';
-
 const Template: ComponentStory<typeof Typography> = (args) => (
-  <Typography {...args}>{DUMMY_TEXT}</Typography>
+  <Typography {...args}>
+    안녕하세요. 콜드스터디 디자인 시스템입니다. 🧊
+  </Typography>
 );
 
 export const Title1 = Template.bind({});
@@ -45,3 +47,23 @@ export const Desc = Template.bind({});
 Desc.args = {
   variant: 'desc',
 };
+
+export const Title1WithColor = Template.bind({});
+Title1WithColor.args = {
+  variant: 'title1',
+  color: 'blue',
+};
+
+export const Title1Highlighted: ComponentStory<typeof Typography> = () => (
+  <Typography variant="title1">
+    안녕하세요. <Highlight>콜드스터디</Highlight> 디자인 시스템입니다. 🧊
+  </Typography>
+);
+
+export const Title1CustomHighlighted: ComponentStory<typeof Typography> =
+  () => (
+    <Typography variant="title1">
+      안녕하세요. <Highlight color="blue">콜드스터디</Highlight> 디자인
+      시스템입니다. 🧊
+    </Typography>
+  );
