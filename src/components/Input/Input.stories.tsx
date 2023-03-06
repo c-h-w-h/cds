@@ -12,7 +12,7 @@ export default {
   },
 } as ComponentMeta<typeof Input>;
 
-const UncontrolledTemplate: ComponentStory<typeof Input> = (args) => {
+const UncontrolledDefaultStyle: ComponentStory<typeof Input> = (args) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [inputValue, setInputValue] = useState<string>('');
   return (
@@ -31,7 +31,46 @@ const UncontrolledTemplate: ComponentStory<typeof Input> = (args) => {
   );
 };
 
-const ControlledTemplate: ComponentStory<typeof Input> = (args) => {
+UncontrolledDefaultStyle.args = {
+  placeholder: '입력하세요',
+  id: 'uncontrolled',
+};
+
+const UncontrolledCustomStyle: ComponentStory<typeof Input> = (args) => {
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const [inputValue, setInputValue] = useState<string>('');
+  return (
+    <>
+      <Input
+        {...args}
+        forwordRef={inputRef}
+        css={css`
+          width: 300px;
+          height: 34px;
+          &::placeholder {
+            color: violet;
+            font-style: italic;
+          }
+        `}
+      />
+      <button
+        type="submit"
+        onClick={() =>
+          setInputValue(inputRef.current ? inputRef.current.value : '')
+        }
+      >
+        제출
+      </button>
+      <div>{inputValue}</div>
+    </>
+  );
+};
+UncontrolledCustomStyle.args = {
+  placeholder: '입력하세요',
+  id: 'uncontrolled',
+};
+
+const Controlled: ComponentStory<typeof Input> = (args) => {
   const [inputValue, setInputValue] = useState<string>('');
   const [isValidate, setIsValidate] = useState<boolean>(true);
   const validateHandler = (target: EventTarget & HTMLInputElement) => {
@@ -62,31 +101,7 @@ const ControlledTemplate: ComponentStory<typeof Input> = (args) => {
   );
 };
 
-export const UncontrolledDefaultStyle = UncontrolledTemplate.bind({});
-UncontrolledDefaultStyle.args = {
-  placeholder: '입력하세요',
-  id: 'uncontrolled',
-};
-
-export const UncontrolledCustomStyle = UncontrolledTemplate.bind({});
-UncontrolledCustomStyle.args = {
-  placeholder: '입력하세요',
-  id: 'uncontrolled',
-  css: css`
-    width: 300px;
-    height: 34px;
-    &::placeholder {
-      color: violet;
-      font-style: italic;
-    }
-  `,
-};
-
-export const Controlled = ControlledTemplate.bind({});
 Controlled.args = {
   placeholder: '입력하세요',
   id: 'controlled',
-  css: css`
-    margin: 20px;
-  `,
 };
