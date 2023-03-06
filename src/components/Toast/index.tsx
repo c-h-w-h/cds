@@ -13,16 +13,11 @@ import {
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { DefaultProps } from '@utils/types/DefaultProps';
-import {
-  MdNotifications,
-  MdInfo,
-  MdCheckCircle,
-  MdWarning,
-  MdDangerous,
-  MdOutlineCancel,
-} from 'react-icons/md';
+import { MdOutlineCancel } from 'react-icons/md';
 
-interface ToastProps extends DefaultProps<HTMLDivElement> {
+import ToastIcon from './ToastIcon';
+
+export interface ToastProps extends DefaultProps<HTMLDivElement> {
   kind?: ToastKind;
   title?: string;
   message: string;
@@ -80,32 +75,6 @@ const Toast = ({ kind, title, message, vertical, horizontal }: ToastProps) => {
 };
 
 export default Toast;
-
-interface ToastIconProps {
-  kind: ToastProps['kind'];
-  size: string;
-  color: string;
-}
-
-const ToastIcon = ({ kind, size, color }: ToastIconProps) => {
-  const iconStyle = {
-    size,
-    color,
-  };
-
-  switch (kind) {
-    case 'info':
-      return <MdInfo {...iconStyle} />;
-    case 'success':
-      return <MdCheckCircle {...iconStyle} />;
-    case 'warning':
-      return <MdWarning {...iconStyle} />;
-    case 'error':
-      return <MdDangerous {...iconStyle} />;
-    default:
-      return <MdNotifications {...iconStyle} />;
-  }
-};
 
 const fadeIn = keyframes`
   from {
