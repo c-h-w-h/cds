@@ -11,16 +11,15 @@ export default {
   },
 } as ComponentMeta<typeof Container>;
 
-const Template: ComponentStory<typeof Container> = (args) => (
-  <Container {...args} />
+export const Basic: ComponentStory<typeof Container> = (args) => (
+  <Container
+    {...args}
+    css={css`
+      width: 300px;
+      height: 300px;
+    `}
+  />
 );
-
-export const Basic = Template.bind({
-  css: css`
-    width: 300px;
-    height: 300px;
-  `,
-});
 Basic.args = {
   children: (
     <Container
@@ -33,11 +32,14 @@ Basic.args = {
   ),
 };
 
-export const Scrollable = Template.bind({
-  css: css`
-    height: 100px;
-  `,
-});
+export const Scrollable: ComponentStory<typeof Container> = (args) => (
+  <Container
+    {...args}
+    css={css`
+      height: 100px;
+    `}
+  />
+);
 Scrollable.args = {
   overflowY: 'scroll',
   children: (
