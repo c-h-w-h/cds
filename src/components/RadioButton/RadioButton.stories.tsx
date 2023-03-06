@@ -41,14 +41,14 @@ export default {
   },
 } as ComponentMeta<typeof RadioButton>;
 
-const DUMMY_LABEL = styled.label`
+const DummyLabel = styled.label`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 `;
 
-const DUMMY_CUSTOM_FLAG = styled.div`
+const DummyCustomFlag = styled.div`
   border: 1px solid black;
   border-radius: 0.2rem;
   background-color: white;
@@ -73,10 +73,10 @@ const DUMMY_CUSTOM_FLAG = styled.div`
   }
 `;
 
-const DUMMY_FLAG = () => (
-  <DUMMY_CUSTOM_FLAG>
+const DummyFlag = () => (
+  <DummyCustomFlag>
     <div>✔️</div>
-  </DUMMY_CUSTOM_FLAG>
+  </DummyCustomFlag>
 );
 
 const Template: ComponentStory<typeof RadioButton> = (args) => (
@@ -98,30 +98,30 @@ const Template: ComponentStory<typeof RadioButton> = (args) => (
     >
       팀장뽑기
     </legend>
-    <DUMMY_LABEL>
+    <DummyLabel>
       <RadioButton {...args} name="leader" value="김세영" checked />
       <span>김세영</span>
-    </DUMMY_LABEL>
-    <DUMMY_LABEL>
+    </DummyLabel>
+    <DummyLabel>
       <RadioButton {...args} name="leader" value="백도훈" />
       <span>백도훈</span>
-    </DUMMY_LABEL>
-    <DUMMY_LABEL>
+    </DummyLabel>
+    <DummyLabel>
       <RadioButton {...args} name="leader" value="이선민" />
       <span>이선민</span>
-    </DUMMY_LABEL>
-    <DUMMY_LABEL>
+    </DummyLabel>
+    <DummyLabel>
       <RadioButton {...args} name="leader" value="이우재" />
       <span>이우재</span>
-    </DUMMY_LABEL>
-    <DUMMY_LABEL>
+    </DummyLabel>
+    <DummyLabel>
       <RadioButton {...args} name="leader" value="이현빈" />
       <span>이현빈</span>
-    </DUMMY_LABEL>
-    <DUMMY_LABEL>
+    </DummyLabel>
+    <DummyLabel>
       <RadioButton {...args} name="leader" value="정주연" />
       <span>정주연</span>
-    </DUMMY_LABEL>
+    </DummyLabel>
   </fieldset>
 );
 
@@ -146,5 +146,5 @@ Disabled.args = {
 
 export const CustomButton = Template.bind({});
 CustomButton.args = {
-  customButton: <DUMMY_FLAG />,
+  customButton: <DummyFlag />,
 };
