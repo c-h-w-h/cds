@@ -44,7 +44,7 @@ const Button = ({
 
   const buttonStyle = css`
     width: fit-content;
-    padding: ${pixelToRem('12px')};
+    padding: '0.75rem';
     border-radius: ${getBorderRadius(isSquare, isIconOnly)};
     color: ${isLight ? primary200 : white};
     background-color: ${isLight ? white : primary200};
@@ -120,10 +120,10 @@ const Button = ({
 };
 
 const getBorderRadius = (isSquare: boolean, isIconOnly: boolean) => {
-  if (isSquare) {
-    return isIconOnly ? '30%' : pixelToRem('16px');
-  }
-  return isIconOnly ? '50%' : pixelToRem('36px');
+  const percentage = isSquare ? '30%' : '50%';
+  const rem = isSquare ? '1rem' : '2.25rem';
+
+  return isIconOnly ? percentage : rem;
 };
 
 export default Button;
