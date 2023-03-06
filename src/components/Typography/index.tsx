@@ -1,38 +1,43 @@
-import {
-  TypographyVariant as Variant,
-  TYPOGRAPHY,
-} from '@constants/typography';
-import { css, jsx } from '@emotion/react';
+import { TYPOGRAPHY } from '@constants/typography';
+import { css, jsx, useTheme } from '@emotion/react';
+import { CSSProperties, ReactNode, ReactPortal } from 'react';
 
-type TypographyVariant = `${Variant}`;
+type TextNode = Exclude<
+  ReactNode,
+  number | boolean | ReactPortal | null | undefined
+>;
+
 interface TypographyProps {
-  variant: TypographyVariant;
-  children: string;
+  children: TextNode;
+  variant?: TypographyVariant;
+  color?: CSSProperties['color'];
 }
 
 const getTypography = (variant: TypographyVariant): string => {
   switch (variant) {
-    case Variant.TITLE1:
+    case 'title1':
       return 'h1';
-    case Variant.TITLE2:
+    case 'title2':
       return 'h2';
-    case Variant.SUBTITLE1:
+    case 'subtitle1':
       return 'h3';
-    case Variant.SUBTITLE2:
+    case 'subtitle2':
       return 'h4';
     default:
       return 'p';
   }
 };
 
-const Typography = ({ variant, children }: TypographyProps) => {
+const Typography = ({ children, variant = 'body', color }: TypographyProps) => {
   const typography = getTypography(variant);
+  const { color: themeColor } = useTheme();
 
   return jsx(
     typography,
     {
       css: css`
         margin: 0;
+        color: ${color ?? themeColor.black};
         font-size: ${TYPOGRAPHY[variant].size};
         font-weight: ${TYPOGRAPHY[variant].weight};
       `,

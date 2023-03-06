@@ -1,8 +1,9 @@
-import { SPINNER_SIZE } from '@constants/spinner';
+import { SPINNER_STYLE } from '@constants/spinner';
+import { Theme } from '@emotion/react';
 import styled from '@emotion/styled';
 
 interface SpinnerProps {
-  size: 'small' | 'large';
+  size: SpinnerSizeVariant;
 }
 
 const Spinner = ({ size = 'small' }: SpinnerProps) => {
@@ -15,18 +16,24 @@ const Spinner = ({ size = 'small' }: SpinnerProps) => {
   );
 };
 
-const SpinnerContainer = styled.div<SpinnerProps>(({ theme, size }) => {
-  const { color: themeColor } = theme;
-  const { white } = themeColor;
-  const { small, large } = SPINNER_SIZE;
-  return {
-    width: size === 'small' ? small.OUTCIRCLE : large.OUTCIRCLE,
-    height: size === 'small' ? small.OUTCIRCLE : large.OUTCIRCLE,
-    display: 'inline-block',
-    overflow: 'hidden',
-    background: white,
-  };
-});
+type SpinnerStyleProps = {
+  theme: Theme;
+} & SpinnerProps;
+
+const SpinnerContainer = styled.div<SpinnerProps>(
+  ({ theme, size }: SpinnerStyleProps) => {
+    const { color: themeColor } = theme;
+    const { white } = themeColor;
+
+    return {
+      width: SPINNER_STYLE[size].OUTCIRCLE,
+      height: SPINNER_STYLE[size].OUTCIRCLE,
+      display: 'inline-block',
+      overflow: 'hidden',
+      background: white,
+    };
+  },
+);
 
 const Spin = styled.div`
   width: 100%;
@@ -45,24 +52,23 @@ const Spin = styled.div`
   }
 `;
 
-const Circle = styled.div<SpinnerProps>(({ theme, size }) => {
-  const { color: themeColor } = theme;
-  const { primary100 } = themeColor;
-  const { small, large } = SPINNER_SIZE;
-  return {
-    position: 'absolute',
-    width: size === 'small' ? small.INNERCIRCLE : large.INNERCIRCLE,
-    height: size === 'small' ? small.INNERCIRCLE : large.INNERCIRCLE,
-    border:
-      size === 'small'
-        ? `${small.STROKEWIDTH} solid ${primary100}`
-        : `${large.STROKEWIDTH} solid ${primary100}`,
-    borderTopColor: 'transparent',
-    borderRadius: '50%',
-    animation: 'spin-animation 1s linear infinite',
-    top: size === 'small' ? small.INNERCIRCLE : large.INNERCIRCLE,
-    left: size === 'small' ? small.INNERCIRCLE : large.INNERCIRCLE,
-  };
-});
+const Circle = styled.div<SpinnerProps>(
+  ({ theme, size }: SpinnerStyleProps) => {
+    const { color: themeColor } = theme;
+    const { primary100 } = themeColor;
+
+    return {
+      position: 'absolute',
+      width: SPINNER_STYLE[size].INNERCIRCLE,
+      height: SPINNER_STYLE[size].INNERCIRCLE,
+      border: `${SPINNER_STYLE[size].STROKEWIDTH} solid ${primary100}`,
+      borderTopColor: 'transparent',
+      borderRadius: '50%',
+      animation: 'spin-animation 1s linear infinite',
+      top: SPINNER_STYLE[size].INNERCIRCLE,
+      left: SPINNER_STYLE[size].INNERCIRCLE,
+    };
+  },
+);
 
 export default Spinner;
