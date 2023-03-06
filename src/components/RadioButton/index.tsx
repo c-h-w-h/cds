@@ -1,4 +1,4 @@
-import { theme } from '@components/@common/CdsProvider/theme';
+import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { DefaultProps } from '@utils/types/DefaultProps';
 import { CSSProperties, ReactNode } from 'react';
@@ -19,7 +19,7 @@ const RadioButton = ({
   name,
   value = '',
   checked = false,
-  color = theme.color.primary100,
+  color,
   size = '1rem',
   outerSize = '1.5rem',
   disabled = false,
@@ -27,6 +27,9 @@ const RadioButton = ({
   id,
   ...props
 }: RadioButtonProps) => {
+  const { color: themeColor } = useTheme();
+  if (!color) color = themeColor.primary100;
+
   return (
     <RadioButtonWrapper size={outerSize}>
       <ActualButton
