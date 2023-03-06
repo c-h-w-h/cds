@@ -17,89 +17,89 @@ const DUMMY_LONG_MESSAGE =
 
 const Template: ComponentStory<typeof Toast> = (args) => <Toast {...args} />;
 
-export const TopLeftToast = Template.bind({});
-TopLeftToast.args = {
+export const TopLeft = Template.bind({});
+TopLeft.args = {
   message: DUMMY_SHORT_MESSAGE,
   vertical: 'top',
   horizontal: 'left',
 };
 
-export const TopCenterToast = Template.bind({});
-TopCenterToast.args = {
+export const TopCenter = Template.bind({});
+TopCenter.args = {
   message: DUMMY_SHORT_MESSAGE,
   vertical: 'top',
   horizontal: 'center',
 };
 
-export const TopRightToast = Template.bind({});
-TopRightToast.args = {
+export const TopRight = Template.bind({});
+TopRight.args = {
   message: DUMMY_SHORT_MESSAGE,
   vertical: 'top',
   horizontal: 'right',
 };
 
-export const BottomLeftToast = Template.bind({});
-BottomLeftToast.args = {
+export const BottomLeft = Template.bind({});
+BottomLeft.args = {
   message: DUMMY_SHORT_MESSAGE,
   vertical: 'bottom',
   horizontal: 'left',
 };
 
-export const BottomCenterToast = Template.bind({});
-BottomCenterToast.args = {
+export const BottomCenter = Template.bind({});
+BottomCenter.args = {
   message: DUMMY_SHORT_MESSAGE,
   vertical: 'bottom',
   horizontal: 'center',
 };
 
-export const BottomRightToast = Template.bind({});
-BottomRightToast.args = {
+export const BottomRight = Template.bind({});
+BottomRight.args = {
   message: DUMMY_SHORT_MESSAGE,
   vertical: 'bottom',
   horizontal: 'right',
 };
 
-export const WithTitleToast = Template.bind({});
-WithTitleToast.args = {
+export const WithTitle = Template.bind({});
+WithTitle.args = {
   message: DUMMY_SHORT_MESSAGE,
   title: DUMMY_TITLE,
   vertical: 'top',
   horizontal: 'left',
 };
 
-export const LongMessageToast = Template.bind({});
-LongMessageToast.args = {
+export const LongMessage = Template.bind({});
+LongMessage.args = {
   message: DUMMY_LONG_MESSAGE,
   vertical: 'top',
   horizontal: 'left',
 };
 
-export const InfoToast = Template.bind({});
-InfoToast.args = {
+export const Info = Template.bind({});
+Info.args = {
   message: DUMMY_SHORT_MESSAGE,
   kind: 'info',
   vertical: 'top',
   horizontal: 'left',
 };
 
-export const SuccessToast = Template.bind({});
-SuccessToast.args = {
+export const Success = Template.bind({});
+Success.args = {
   message: DUMMY_SHORT_MESSAGE,
   kind: 'success',
   vertical: 'top',
   horizontal: 'left',
 };
 
-export const WarningToast = Template.bind({});
-WarningToast.args = {
+export const Warning = Template.bind({});
+Warning.args = {
   message: DUMMY_SHORT_MESSAGE,
   kind: 'warning',
   vertical: 'top',
   horizontal: 'left',
 };
 
-export const ErrorToast = Template.bind({});
-ErrorToast.args = {
+export const Error = Template.bind({});
+Error.args = {
   message: DUMMY_SHORT_MESSAGE,
   kind: 'error',
   vertical: 'top',
