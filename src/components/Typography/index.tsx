@@ -1,9 +1,16 @@
 import { TYPOGRAPHY } from '@constants/typography';
-import { css, jsx } from '@emotion/react';
+import { css, jsx, useTheme } from '@emotion/react';
+import { CSSProperties, ReactNode, ReactPortal } from 'react';
+
+type TextNode = Exclude<
+  ReactNode,
+  number | boolean | ReactPortal | null | undefined
+>;
 
 interface TypographyProps {
-  variant: TypographyVariant;
-  children: string;
+  children: TextNode;
+  variant?: TypographyVariant;
+  color?: CSSProperties['color'];
 }
 
 const getTypography = (variant: TypographyVariant): string => {
@@ -21,14 +28,16 @@ const getTypography = (variant: TypographyVariant): string => {
   }
 };
 
-const Typography = ({ variant, children }: TypographyProps) => {
+const Typography = ({ children, variant = 'body', color }: TypographyProps) => {
   const typography = getTypography(variant);
+  const { color: themeColor } = useTheme();
 
   return jsx(
     typography,
     {
       css: css`
         margin: 0;
+        color: ${color ?? themeColor.black};
         font-size: ${TYPOGRAPHY[variant].size};
         font-weight: ${TYPOGRAPHY[variant].weight};
       `,
