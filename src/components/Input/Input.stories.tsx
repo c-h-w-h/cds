@@ -17,7 +17,7 @@ const UncontrolledTemplate: ComponentStory<typeof Input> = (args) => {
   const [inputValue, setInputValue] = useState<string>('');
   return (
     <>
-      <Input {...args} ref={inputRef}></Input>
+      <Input {...args} ref={inputRef} />
       <button
         type="submit"
         onClick={() =>
@@ -51,7 +51,7 @@ const ControlledTemplate: ComponentStory<typeof Input> = (args) => {
         {...args}
         onChange={({ target }) => changeHandler(target)}
         isValid={isValidate}
-      ></Input>
+      />
       {!isValidate && (
         <div style={{ color: 'red', fontSize: '10px' }}>
           5글자 이상 입력하세요.

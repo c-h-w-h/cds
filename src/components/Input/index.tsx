@@ -29,7 +29,7 @@ const Input = ({
       name={name ? name : id}
       {...{ isValid }}
       {...props}
-    ></InputContainer>
+    />
   );
 };
 
