@@ -12,7 +12,9 @@ export default {
   },
 } as ComponentMeta<typeof Input>;
 
-const UncontrolledDefaultStyle: ComponentStory<typeof Input> = (args) => {
+export const UncontrolledDefaultStyle: ComponentStory<typeof Input> = (
+  args,
+) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [inputValue, setInputValue] = useState<string>('');
   return (
@@ -36,7 +38,7 @@ UncontrolledDefaultStyle.args = {
   id: 'uncontrolled',
 };
 
-const UncontrolledCustomStyle: ComponentStory<typeof Input> = (args) => {
+export const UncontrolledCustomStyle: ComponentStory<typeof Input> = (args) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [inputValue, setInputValue] = useState<string>('');
   return (
@@ -70,7 +72,7 @@ UncontrolledCustomStyle.args = {
   id: 'uncontrolled',
 };
 
-const Controlled: ComponentStory<typeof Input> = (args) => {
+export const Controlled: ComponentStory<typeof Input> = (args) => {
   const [inputValue, setInputValue] = useState<string>('');
   const [isValidate, setIsValidate] = useState<boolean>(true);
   const validateHandler = (target: EventTarget & HTMLInputElement) => {

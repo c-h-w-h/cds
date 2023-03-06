@@ -14,7 +14,6 @@ interface InputProps extends DefaultProps<HTMLInputElement> {
 const Input = ({
   placeholder = '입력하세요',
   forwordRef,
-  onChange,
   isValid = true,
   id,
   name,
@@ -22,13 +21,9 @@ const Input = ({
 }: InputProps) => {
   return (
     <InputContainer
-      placeholder={placeholder}
       ref={forwordRef}
-      onChange={onChange}
-      id={id}
       name={name ? name : id}
-      {...{ isValid }}
-      {...props}
+      {...{ isValid, placeholder, id, ...props }}
     />
   );
 };
@@ -40,7 +35,7 @@ const InputContainer = styled.input<Pick<InputProps, 'isValid'>>(
     return {
       width: '8rem',
       height: '1.6rem',
-      border: isValid ? `0.07rem solid ${gray200}` : `0.1rem solid ${error}`,
+      border: `0.1rem solid ${isValid ? primary100 : error}`,
       borderRadius: '0.2rem',
       outline: 'none',
       '::placeholder': {
