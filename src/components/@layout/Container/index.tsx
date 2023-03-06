@@ -9,7 +9,6 @@ interface ContainerProps extends DefaultPropsWithChildren<HTMLDivElement> {
 
 const Container = ({
   children,
-  css: style,
   overflowX = 'hidden',
   overflowY = 'hidden',
   ...props
@@ -24,7 +23,6 @@ const Container = ({
           overflow-x: ${overflowX};
           overflow-y: ${overflowY};
         `,
-        style,
       ]}
       {...props}
     >

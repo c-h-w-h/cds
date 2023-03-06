@@ -11,16 +11,16 @@ export default {
   },
 } as ComponentMeta<typeof Container>;
 
-const Template: ComponentStory<typeof Container> = (args) => (
-  <Container {...args} />
+export const Basic: ComponentStory<typeof Container> = (args) => (
+  <Container
+    {...args}
+    css={css`
+      width: 300px;
+      height: 300px;
+    `}
+  />
 );
-
-export const Basic = Template.bind({});
 Basic.args = {
-  css: css`
-    width: 300px;
-    height: 300px;
-  `,
   children: (
     <Container
       css={css`
@@ -32,12 +32,16 @@ Basic.args = {
   ),
 };
 
-export const Scrollable = Template.bind({});
+export const Scrollable: ComponentStory<typeof Container> = (args) => (
+  <Container
+    {...args}
+    css={css`
+      height: 100px;
+    `}
+  />
+);
 Scrollable.args = {
   overflowY: 'scroll',
-  css: css`
-    height: 100px;
-  `,
   children: (
     <div style={{ height: '300px' }}>Container보다 세로로 더 긴 컨텐츠</div>
   ),

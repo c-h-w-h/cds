@@ -11,6 +11,17 @@ export default {
   },
 } as ComponentMeta<typeof Flexbox>;
 
+const items = (
+  <>
+    <p>1</p>
+    <p>2</p>
+    <p>3</p>
+    <p>4</p>
+    <p>5</p>
+    <p>6</p>
+  </>
+);
+
 const Template: ComponentStory<typeof Flexbox> = (args) => {
   const commonStyle = css`
     width: 300px;
@@ -19,19 +30,14 @@ const Template: ComponentStory<typeof Flexbox> = (args) => {
 
   return (
     <Flexbox css={commonStyle} {...args}>
-      <p>1</p>
-      <p>2</p>
-      <p>3</p>
-      <p>4</p>
-      <p>5</p>
-      <p>6</p>
+      {items}
     </Flexbox>
   );
 };
 
 export const Row = Template.bind({});
 Row.args = {
-  direction: 'row',
+  flexDirection: 'row',
 };
 
 export const SpaceBetween = Template.bind({});
@@ -40,18 +46,25 @@ SpaceBetween.args = {
   gap: '0rem',
 };
 
-export const MultiLine = Template.bind({});
-MultiLine.args = {
-  wrap: 'wrap',
-  alignContent: 'center',
-  css: css`
+export const Column = Template.bind({});
+Column.args = {
+  flexDirection: 'column',
+};
+
+export const MultiLine: ComponentStory<typeof Flexbox> = (args) => {
+  const narrowWidthStyle = css`
     width: 100px;
     height: 300px;
     background-color: #dfdfdf;
-  `,
-};
+  `;
 
-export const Column = Template.bind({});
-Column.args = {
-  direction: 'column',
+  return (
+    <Flexbox css={narrowWidthStyle} {...args}>
+      {items}
+    </Flexbox>
+  );
+};
+MultiLine.args = {
+  flexWrap: 'wrap',
+  alignContent: 'center',
 };
