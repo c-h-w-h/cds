@@ -4,7 +4,7 @@ import { ChangeEventHandler, RefObject } from 'react';
 
 interface InputProps extends DefaultProps<HTMLInputElement> {
   placeholder?: string;
-  ref?: RefObject<HTMLInputElement>;
+  forwordRef?: RefObject<HTMLInputElement>;
   onChange?: ChangeEventHandler<HTMLInputElement>;
   isValid?: boolean;
   id: string;
@@ -13,7 +13,7 @@ interface InputProps extends DefaultProps<HTMLInputElement> {
 
 const Input = ({
   placeholder = '입력하세요',
-  ref,
+  forwordRef,
   onChange,
   isValid = true,
   id,
@@ -23,7 +23,7 @@ const Input = ({
   return (
     <InputContainer
       placeholder={placeholder}
-      ref={ref}
+      ref={forwordRef}
       onChange={onChange}
       id={id}
       name={name ? name : id}

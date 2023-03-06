@@ -17,7 +17,7 @@ const UncontrolledTemplate: ComponentStory<typeof Input> = (args) => {
   const [inputValue, setInputValue] = useState<string>('');
   return (
     <>
-      <Input {...args} ref={inputRef} />
+      <Input {...args} forwordRef={inputRef} />
       <button
         type="submit"
         onClick={() =>
