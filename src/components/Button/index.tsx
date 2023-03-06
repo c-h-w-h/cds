@@ -44,7 +44,7 @@ const Button = ({
 
   const buttonStyle = css`
     width: fit-content;
-    padding: '0.75rem';
+    padding: 0.75rem;
     border-radius: ${getBorderRadius(isSquare, isIconOnly)};
     color: ${isLight ? primary200 : white};
     background-color: ${isLight ? white : primary200};
@@ -58,9 +58,12 @@ const Button = ({
 
     &:hover {
       cursor: pointer;
-      color: ${isLight ? primary400 : white};
       background-color: ${isLight ? white : primary400};
       ${isLight ? `border: 0.125rem solid ${primary400};` : ''}
+
+      & > * {
+        color: ${isLight ? primary400 : white};
+      }
 
       & > svg {
         fill: ${isLight ? primary400 : white};
@@ -93,7 +96,11 @@ const Button = ({
           color={isLight ? primary200 : white}
         />
       )}
-      {text && <Typography variant="body">{text}</Typography>}
+      {text && (
+        <Typography variant="body" color={isLight ? primary200 : white}>
+          {text}
+        </Typography>
+      )}
       {icon && iconPosition === 'right' && (
         <Icon
           source={icon}
