@@ -12,6 +12,7 @@ interface RadioButtonProps extends DefaultProps<HTMLInputElement> {
   size?: CSSProperties['width'];
   disabled?: boolean;
   customButton?: ReactNode;
+  id?: string;
 }
 
 const RadioButton = ({
@@ -23,6 +24,7 @@ const RadioButton = ({
   outerSize = '1.5rem',
   disabled = false,
   customButton,
+  id,
   ...props
 }: RadioButtonProps) => {
   return (
@@ -34,6 +36,7 @@ const RadioButton = ({
         defaultChecked={checked}
         disabled={disabled}
         {...props}
+        id={id ?? ''}
       />
       {customButton ? (
         customButton
