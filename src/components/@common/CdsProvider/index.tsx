@@ -12,7 +12,10 @@ const CdsProvider = ({ children }: CdsProviderProps) => {
   return (
     <>
       <Global />
-      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+      <ThemeProvider theme={theme}>
+        {children}
+        <div id="cds-portal-root"></div>
+      </ThemeProvider>
     </>
   );
 };

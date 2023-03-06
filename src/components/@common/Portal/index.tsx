@@ -9,10 +9,11 @@ interface PortalProps {
 const Portal = ({ id, children }: PortalProps) => {
   const ref = useRef<Element | null>();
   const [mounted, setMounted] = useState<boolean>(false);
+  const PORTAL_ROOT_ID = 'cds-portal-root';
 
   useEffect(() => {
     setMounted(true);
-    const portalRoot = document.getElementById(id ?? 'portal-root');
+    const portalRoot = document.getElementById(id ?? PORTAL_ROOT_ID);
     ref.current = portalRoot;
   }, []);
 
