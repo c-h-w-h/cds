@@ -19,6 +19,10 @@ Basic.args = {
   text: '상장하기',
 };
 
+export const Disabled: ComponentStory<typeof Button> = () => (
+  <Button icon={MdCelebration} text={'상장하기'} disabled />
+);
+
 export const Link = Template.bind({});
 Link.args = {
   icon: MdCelebration,
@@ -58,6 +62,10 @@ Light.args = {
   text: '상장하기',
   variant: 'light',
 };
+
+export const LightDisabled: ComponentStory<typeof Button> = () => (
+  <Button icon={MdCelebration} text={'상장하기'} variant="light" disabled />
+);
 
 export const Square = Template.bind({});
 Square.args = {

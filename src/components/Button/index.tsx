@@ -21,6 +21,7 @@ interface ButtonProps extends DefaultProps<HTMLButtonElement> {
   iconPosition?: 'left' | 'right';
   iconTranslateY?: CSSProperties['translate'];
   href?: string;
+  disabled?: boolean;
 }
 
 const Button = ({
@@ -31,6 +32,7 @@ const Button = ({
   iconPosition = 'left',
   iconTranslateY = 0,
   href,
+  disabled,
   ...props
 }: ButtonProps) => {
   const { color: themeColor } = useTheme();
@@ -65,7 +67,8 @@ const Button = ({
       }
     }
 
-    &:disabled {
+    &:disabled,
+    &.disabled {
       color: ${isLight ? gray200 : white};
       background-color: ${isLight ? white : gray200};
       ${isLight ? `border: 0.125rem solid ${gray200};` : ''}
@@ -103,13 +106,17 @@ const Button = ({
 
   if (href) {
     return (
-      <a href={href} {...commonProps}>
+      <a href={href} {...commonProps} className={disabled ? 'disabled' : ''}>
         {children}
       </a>
     );
   }
 
-  return <button {...commonProps}>{children}</button>;
+  return (
+    <button {...commonProps} disabled={disabled}>
+      {children}
+    </button>
+  );
 };
 
 const getBorderRadius = (isSquare: boolean, isIconOnly: boolean) => {
