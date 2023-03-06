@@ -1,10 +1,6 @@
-import {
-  TypographyVariant as Variant,
-  TYPOGRAPHY,
-} from '@constants/typography';
+import { TYPOGRAPHY } from '@constants/typography';
 import { css, jsx } from '@emotion/react';
 
-type TypographyVariant = `${Variant}`;
 interface TypographyProps {
   variant: TypographyVariant;
   children: string;
@@ -12,13 +8,13 @@ interface TypographyProps {
 
 const getTypography = (variant: TypographyVariant): string => {
   switch (variant) {
-    case Variant.TITLE1:
+    case 'title1':
       return 'h1';
-    case Variant.TITLE2:
+    case 'title2':
       return 'h2';
-    case Variant.SUBTITLE1:
+    case 'subtitle1':
       return 'h3';
-    case Variant.SUBTITLE2:
+    case 'subtitle2':
       return 'h4';
     default:
       return 'p';

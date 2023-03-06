@@ -1,20 +1,12 @@
-import {
-  ImageSizeVariant,
-  ImageShapeVariant,
-  IMAGE_SIZE,
-  IMAGE_SHAPE,
-} from '@constants/image';
+import { IMAGE_SIZE, IMAGE_SHAPE } from '@constants/image';
 import styled from '@emotion/styled';
-import { DefaultProps } from '@utils/types/DefaultProps';
-
-type ImageSizeProps = `${ImageSizeVariant}`;
-type ImageShapeProps = `${ImageShapeVariant}`;
+import { DefaultProps } from '@util-types/DefaultProps';
 
 interface ImageProps extends DefaultProps<HTMLImageElement> {
   src: string;
   alt: string;
-  size: ImageSizeProps;
-  shape?: ImageShapeProps;
+  size: ImageSizeVariant;
+  shape?: ImageShapeVariant;
 }
 
 const Image = ({ src, alt, size, shape }: ImageProps) => {
