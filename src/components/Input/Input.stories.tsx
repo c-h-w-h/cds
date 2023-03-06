@@ -65,11 +65,13 @@ const ControlledTemplate: ComponentStory<typeof Input> = (args) => {
 export const UncontrolledDefaultStyle = UncontrolledTemplate.bind({});
 UncontrolledDefaultStyle.args = {
   placeholder: '입력하세요',
+  id: 'uncontrolled',
 };
 
 export const UncontrolledCustomStyle = UncontrolledTemplate.bind({});
 UncontrolledCustomStyle.args = {
   placeholder: '입력하세요',
+  id: 'uncontrolled',
   css: css`
     width: 300px;
     height: 34px;
@@ -83,6 +85,7 @@ UncontrolledCustomStyle.args = {
 export const Controlled = ControlledTemplate.bind({});
 Controlled.args = {
   placeholder: '입력하세요',
+  id: 'controlled',
   css: css`
     margin: 20px;
   `,

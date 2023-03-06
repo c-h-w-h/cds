@@ -7,7 +7,7 @@ interface InputProps extends DefaultProps<HTMLInputElement> {
   ref?: RefObject<HTMLInputElement>;
   onChange?: ChangeEventHandler<HTMLInputElement>;
   isValid?: boolean;
-  id?: string;
+  id: string;
   name?: string;
 }
 
