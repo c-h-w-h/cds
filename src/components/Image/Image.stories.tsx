@@ -10,7 +10,7 @@ export default {
   },
 } as ComponentMeta<typeof Image>;
 
-const DUMMY_SRC = 'https://picsum.photos/200/300';
+const DUMMY_SRC = 'https://picsum.photos/seed/picsum/200/300';
 const DUMMY_ALT = '테스트 이미지를 설명';
 
 const Template: ComponentStory<typeof Image> = (args) => (
