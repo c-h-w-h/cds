@@ -2,7 +2,16 @@ import Flexbox from '@components/@layout/Flexbox';
 import Typography from '@components/Typography';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { createContext, ReactNode, useContext, useRef, useState } from 'react';
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
 const RangeSelectorContext =
   createContext<
@@ -70,16 +79,62 @@ const RangeDisplay = () => {
 
 const Slider = () => {
   const context = useContext(RangeSelectorContext);
+  const [movable, setMovable] = useState<boolean>(false);
+  const minXPosRef = useRef<number>(0);
+  const maxXPosRef = useRef<number>(0);
   const TrackRef = useRef<HTMLDivElement | null>(null);
   const FilledRef = useRef<HTMLDivElement | null>(null);
   const ThumbRef = useRef<HTMLDivElement | null>(null);
+
+  const thumbHalfWidth = useMemo(() => {
+    return ThumbRef.current
+      ? ThumbRef.current?.getBoundingClientRect().width / 2
+      : 0;
+  }, [ThumbRef.current]);
+
+  useLayoutEffect(() => {
+    if (TrackRef.current?.getBoundingClientRect()) {
+      const { left, right } = TrackRef.current.getBoundingClientRect();
+      minXPosRef.current = left;
+      maxXPosRef.current = right;
+    }
+  }, [TrackRef.current]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const { signal } = controller;
+
+    window.addEventListener(
+      'mousemove',
+      (e) => {
+        window.addEventListener('mouseup', () => {
+          setMovable(false);
+          controller.abort();
+        });
+
+        if (!movable) return;
+        if (e.clientX > maxXPosRef.current) return;
+        if (e.clientX < minXPosRef.current) return;
+        if (
+          ThumbRef.current &&
+          FilledRef.current &&
+          TrackRef.current &&
+          context
+        ) {
+          ThumbRef.current.style.left = `${e.clientX - thumbHalfWidth}px`;
+          FilledRef.current.style.width = `${e.clientX - thumbHalfWidth}px`;
+        }
+      },
+      { signal },
+    );
+  }, [movable]);
 
   if (context === null) return null;
   return (
     <Flexbox>
       <Track ref={TrackRef} size={context.size} />
       <Filled ref={FilledRef} size={context.size} />
-      <Thumb ref={ThumbRef}>
+      <Thumb ref={ThumbRef} onMouseDown={() => setMovable(true)}>
         <Flexbox justifyContent={'center'} alignItems={'center'}>
           <Typography variant={'desc'}>{context.value.toString()}</Typography>
         </Flexbox>
