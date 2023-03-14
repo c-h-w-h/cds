@@ -1,4 +1,6 @@
-export const pixelToRem = (str: PixelString) => {
+export const pixelToRem = (str: string) => {
+  if (!str.includes('px')) return str;
+
   const tokens = str.split(/(\d+px)/);
 
   const reducer = (pre: string, cur: string) => {
@@ -15,20 +17,5 @@ export const pixelToRem = (str: PixelString) => {
 };
 
 const converter = (value: number) => {
-  const mod = value % 16;
-
-  switch (true) {
-    case mod < 4:
-      return Math.floor(value / 16);
-    case mod >= 4 && mod < 8:
-      return Math.floor(value / 16) + 0.25;
-    case mod >= 12:
-      return Math.ceil(value / 16) - 0.25;
-    default:
-      return Math.ceil(value / 16) - 0.5;
-  }
+  return value % 2 ? (value + 1) / 16 : value / 16;
 };
-
-type PixelString = `${Pre}${number}px${Post}`;
-type Pre = `${string} ` | '';
-type Post = ` ${string}` | '';
