@@ -4,6 +4,8 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import {
   createContext,
+  MouseEvent,
+  MouseEventHandler,
   ReactNode,
   useContext,
   useEffect,
@@ -92,6 +94,15 @@ const Slider = () => {
       : 0;
   }, [ThumbRef.current]);
 
+  const handleThumbPosition = (
+    e: MouseEvent<HTMLDivElement> | globalThis.MouseEvent,
+  ) => {
+    if (ThumbRef.current && FilledRef.current && TrackRef.current && context) {
+      ThumbRef.current.style.left = `${e.clientX - thumbHalfWidth}px`;
+      FilledRef.current.style.width = `${e.clientX - thumbHalfWidth}px`;
+    }
+  };
+
   useLayoutEffect(() => {
     if (TrackRef.current?.getBoundingClientRect()) {
       const { left, right } = TrackRef.current.getBoundingClientRect();
@@ -115,15 +126,7 @@ const Slider = () => {
         if (!movable) return;
         if (e.clientX > maxXPosRef.current) return;
         if (e.clientX < minXPosRef.current) return;
-        if (
-          ThumbRef.current &&
-          FilledRef.current &&
-          TrackRef.current &&
-          context
-        ) {
-          ThumbRef.current.style.left = `${e.clientX - thumbHalfWidth}px`;
-          FilledRef.current.style.width = `${e.clientX - thumbHalfWidth}px`;
-        }
+        handleThumbPosition(e);
       },
       { signal },
     );
@@ -132,8 +135,12 @@ const Slider = () => {
   if (context === null) return null;
   return (
     <Flexbox>
-      <Track ref={TrackRef} size={context.size} />
-      <Filled ref={FilledRef} size={context.size} />
+      <Track ref={TrackRef} size={context.size} onClick={handleThumbPosition} />
+      <Filled
+        ref={FilledRef}
+        size={context.size}
+        onClick={handleThumbPosition}
+      />
       <Thumb ref={ThumbRef} onMouseDown={() => setMovable(true)}>
         <Flexbox justifyContent={'center'} alignItems={'center'}>
           <Typography variant={'desc'}>{context.value.toString()}</Typography>
@@ -145,6 +152,7 @@ const Slider = () => {
 
 interface TrackProps {
   size: number;
+  onClick: MouseEventHandler<HTMLDivElement>;
 }
 
 const Track = styled.div<TrackProps>`
