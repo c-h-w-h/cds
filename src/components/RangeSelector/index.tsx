@@ -84,8 +84,8 @@ const calcRangeValue = (
   max: number,
   min: number,
   maxPos: number,
-  currentX: number,
-) => max - min - Math.floor(((maxPos - currentX - 8) / size) * 100);
+  mousePos: number,
+) => max - min - Math.floor(((maxPos - mousePos) / size) * 100);
 
 const setInitialThumbPos = (
   max: number,
@@ -98,30 +98,30 @@ const setInitialThumbPos = (
 const Slider = () => {
   const context = useContext(RangeSelectorContext);
   const [movable, setMovable] = useState<boolean>(false);
-  const minXPosRef = useRef<number>(0);
-  const maxXPosRef = useRef<number>(0);
-  const TrackRef = useRef<HTMLDivElement | null>(null);
-  const FilledRef = useRef<HTMLDivElement | null>(null);
-  const ThumbRef = useRef<HTMLDivElement | null>(null);
+  const minPosRef = useRef<number>(0);
+  const maxPosRef = useRef<number>(0);
+  const trackRef = useRef<HTMLDivElement | null>(null);
+  const filledRef = useRef<HTMLDivElement | null>(null);
+  const thumbRef = useRef<HTMLDivElement | null>(null);
 
   const thumbWidth = useMemo(() => {
-    return ThumbRef.current
-      ? ThumbRef.current?.getBoundingClientRect().width
+    return thumbRef.current
+      ? thumbRef.current?.getBoundingClientRect().width
       : 0;
-  }, [ThumbRef.current]);
+  }, [thumbRef.current]);
 
   const handleThumbPosition = (
     e: MouseEvent<HTMLDivElement> | globalThis.MouseEvent,
   ) => {
-    if (ThumbRef.current && FilledRef.current && TrackRef.current && context) {
+    if (thumbRef.current && filledRef.current && trackRef.current && context) {
       let clickedPos = e.clientX;
-      if (clickedPos > maxXPosRef.current) {
-        clickedPos = maxXPosRef.current;
-      } else if (clickedPos < minXPosRef.current) {
-        clickedPos = minXPosRef.current;
+      if (clickedPos > maxPosRef.current) {
+        clickedPos = maxPosRef.current;
+      } else if (clickedPos < minPosRef.current) {
+        clickedPos = minPosRef.current;
       }
-      ThumbRef.current.style.left = `${clickedPos - thumbWidth / 2}px`;
-      FilledRef.current.style.width = `${
+      thumbRef.current.style.left = `${clickedPos - thumbWidth / 2}px`;
+      filledRef.current.style.width = `${
         clickedPos - thumbWidth - thumbWidth / 2
       }px`;
       context.setValue(
@@ -129,7 +129,7 @@ const Slider = () => {
           context.size - thumbWidth,
           context.max,
           context.min,
-          maxXPosRef.current + thumbWidth / 2,
+          maxPosRef.current,
           clickedPos,
         ),
       );
@@ -137,15 +137,15 @@ const Slider = () => {
   };
 
   useLayoutEffect(() => {
-    if (TrackRef.current && ThumbRef.current && FilledRef.current && context) {
+    if (trackRef.current && thumbRef.current && filledRef.current && context) {
       const { max, min, value } = context;
-      const { left, right } = TrackRef.current.getBoundingClientRect();
-      const { width } = ThumbRef.current.getBoundingClientRect();
-      minXPosRef.current = left + width / 2;
-      maxXPosRef.current = right - width / 2;
+      const { left, right } = trackRef.current.getBoundingClientRect();
+      const { width } = thumbRef.current.getBoundingClientRect();
+      minPosRef.current = left + width / 2;
+      maxPosRef.current = right - width / 2;
       const initialPos = setInitialThumbPos(max, min, right, left, value);
-      ThumbRef.current.style.left = initialPos + width + 'px';
-      FilledRef.current.style.width = initialPos + 'px';
+      thumbRef.current.style.left = initialPos + width + 'px';
+      filledRef.current.style.width = initialPos + 'px';
     }
   }, []);
 
@@ -162,8 +162,8 @@ const Slider = () => {
         });
 
         if (!movable) return;
-        if (e.clientX > maxXPosRef.current) return;
-        if (e.clientX < minXPosRef.current) return;
+        if (e.clientX > maxPosRef.current) return;
+        if (e.clientX < minPosRef.current) return;
         handleThumbPosition(e);
       },
       { signal },
@@ -173,13 +173,13 @@ const Slider = () => {
   if (context === null) return null;
   return (
     <Flexbox>
-      <Track ref={TrackRef} size={context.size} onClick={handleThumbPosition} />
+      <Track ref={trackRef} size={context.size} onClick={handleThumbPosition} />
       <Filled
-        ref={FilledRef}
+        ref={filledRef}
         size={context.size}
         onClick={handleThumbPosition}
       />
-      <Thumb ref={ThumbRef} onMouseDown={() => setMovable(true)}>
+      <Thumb ref={thumbRef} onMouseDown={() => setMovable(true)}>
         <Flexbox justifyContent={'center'} alignItems={'center'}>
           <Typography variant={'desc'}>{context.value.toString()}</Typography>
         </Flexbox>
