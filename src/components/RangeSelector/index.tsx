@@ -79,6 +79,22 @@ const RangeDisplay = () => {
   );
 };
 
+const calcRangeValue = (
+  size: number,
+  max: number,
+  min: number,
+  maxPos: number,
+  currentX: number,
+) => max - min - Math.floor(((maxPos - currentX - 8) / size) * 100);
+
+const setInitialThumbPos = (
+  max: number,
+  min: number,
+  maxPos: number,
+  minPos: number,
+  value: number,
+) => ((value / (max - min)) * 100 * (maxPos - minPos)) / 100;
+
 const Slider = () => {
   const context = useContext(RangeSelectorContext);
   const [movable, setMovable] = useState<boolean>(false);
@@ -98,18 +114,38 @@ const Slider = () => {
     e: MouseEvent<HTMLDivElement> | globalThis.MouseEvent,
   ) => {
     if (ThumbRef.current && FilledRef.current && TrackRef.current && context) {
-      ThumbRef.current.style.left = `${e.clientX - thumbHalfWidth}px`;
-      FilledRef.current.style.width = `${e.clientX - thumbHalfWidth}px`;
+      let clickedPos = e.clientX;
+      if (clickedPos > maxXPosRef.current - 8) {
+        clickedPos = maxXPosRef.current;
+      } else if (clickedPos < minXPosRef.current + 8) {
+        clickedPos = minXPosRef.current;
+      }
+      ThumbRef.current.style.left = `${clickedPos - 8}px`;
+      FilledRef.current.style.width = `${clickedPos - 24}px`;
+      context.setValue(
+        calcRangeValue(
+          context.size - 16,
+          context.max,
+          context.min,
+          maxXPosRef.current + 8,
+          clickedPos,
+        ),
+      );
     }
   };
 
   useLayoutEffect(() => {
-    if (TrackRef.current?.getBoundingClientRect()) {
+    if (TrackRef.current && ThumbRef.current && FilledRef.current && context) {
+      const { max, min, value } = context;
       const { left, right } = TrackRef.current.getBoundingClientRect();
-      minXPosRef.current = left;
-      maxXPosRef.current = right;
+      const { width } = ThumbRef.current.getBoundingClientRect();
+      minXPosRef.current = left + width / 2;
+      maxXPosRef.current = right - width / 2;
+      const initialPos = setInitialThumbPos(max, min, right, left, value);
+      ThumbRef.current.style.left = initialPos + 16 + 'px';
+      FilledRef.current.style.width = initialPos + 'px';
     }
-  }, [TrackRef.current]);
+  }, []);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -158,20 +194,22 @@ interface TrackProps {
 const Track = styled.div<TrackProps>`
   width: ${({ size }) => size + 'px'};
   height: 1px;
-  border: 1px solid lightgray;
+  height: 3px;
+  background-color: lightgray;
 `;
 
 const Filled = styled.div<TrackProps>`
   position: absolute;
-  left: 1rem;
+  left: 0;
   height: 3px;
+  margin: 1.5rem;
   background-color: skyblue;
   cursor: pointer;
 `;
 
 const Thumb = styled.div`
   position: absolute;
-  left: 1rem;
+  left: 0;
   width: 1rem;
   height: 1rem;
   border-radius: 2rem;
