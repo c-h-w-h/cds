@@ -104,9 +104,9 @@ const Slider = () => {
   const FilledRef = useRef<HTMLDivElement | null>(null);
   const ThumbRef = useRef<HTMLDivElement | null>(null);
 
-  const thumbHalfWidth = useMemo(() => {
+  const thumbWidth = useMemo(() => {
     return ThumbRef.current
-      ? ThumbRef.current?.getBoundingClientRect().width / 2
+      ? ThumbRef.current?.getBoundingClientRect().width
       : 0;
   }, [ThumbRef.current]);
 
@@ -115,19 +115,21 @@ const Slider = () => {
   ) => {
     if (ThumbRef.current && FilledRef.current && TrackRef.current && context) {
       let clickedPos = e.clientX;
-      if (clickedPos > maxXPosRef.current - 8) {
+      if (clickedPos > maxXPosRef.current) {
         clickedPos = maxXPosRef.current;
-      } else if (clickedPos < minXPosRef.current + 8) {
+      } else if (clickedPos < minXPosRef.current) {
         clickedPos = minXPosRef.current;
       }
-      ThumbRef.current.style.left = `${clickedPos - 8}px`;
-      FilledRef.current.style.width = `${clickedPos - 24}px`;
+      ThumbRef.current.style.left = `${clickedPos - thumbWidth / 2}px`;
+      FilledRef.current.style.width = `${
+        clickedPos - thumbWidth - thumbWidth / 2
+      }px`;
       context.setValue(
         calcRangeValue(
-          context.size - 16,
+          context.size - thumbWidth,
           context.max,
           context.min,
-          maxXPosRef.current + 8,
+          maxXPosRef.current + thumbWidth / 2,
           clickedPos,
         ),
       );
@@ -142,7 +144,7 @@ const Slider = () => {
       minXPosRef.current = left + width / 2;
       maxXPosRef.current = right - width / 2;
       const initialPos = setInitialThumbPos(max, min, right, left, value);
-      ThumbRef.current.style.left = initialPos + 16 + 'px';
+      ThumbRef.current.style.left = initialPos + width + 'px';
       FilledRef.current.style.width = initialPos + 'px';
     }
   }, []);
