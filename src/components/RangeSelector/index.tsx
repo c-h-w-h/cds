@@ -1,3 +1,4 @@
+import { theme } from '@components/@common/CdsProvider/theme';
 import Flexbox from '@components/@layout/Flexbox';
 import Typography from '@components/Typography';
 import { css } from '@emotion/react';
@@ -29,7 +30,6 @@ interface RangeSelectorProps {
   init: number;
   size: number;
   children: ReactNode;
-  color?: string;
 }
 
 const RangeSelector = ({
@@ -37,12 +37,11 @@ const RangeSelector = ({
   max,
   init,
   size,
-  color,
   children,
 }: RangeSelectorProps) => {
   const [value, setValue] = useState<number>(init);
 
-  const providerValue = { value, setValue, min, max, size, color };
+  const providerValue = { value, setValue, min, max, size };
 
   return (
     <RangeSelectorContext.Provider value={providerValue}>
@@ -110,6 +109,8 @@ const Slider = () => {
   const offsetRef = useRef<number>(0);
   const trackRef = useRef<HTMLDivElement | null>(null);
   const thumbRef = useRef<HTMLDivElement | null>(null);
+  const { color: themeColor } = theme;
+  const { primary100, gray100 } = themeColor;
 
   const handleThumbPosition = (
     e: MouseEvent<HTMLDivElement> | globalThis.MouseEvent,
@@ -184,8 +185,18 @@ const Slider = () => {
   if (context === null) return null;
   return (
     <Flexbox>
-      <Track ref={trackRef} size={context.size} onClick={handleThumbPosition} />
-      <Thumb ref={thumbRef} onMouseDown={() => setMovable(true)}>
+      <Track
+        ref={trackRef}
+        size={context.size}
+        trackColor={gray100}
+        filledColor={primary100}
+        onClick={handleThumbPosition}
+      />
+      <Thumb
+        ref={thumbRef}
+        thumbColor={primary100}
+        onMouseDown={() => setMovable(true)}
+      >
         <Flexbox justifyContent={'center'} alignItems={'center'}>
           <Typography variant={'desc'}>{context.value.toString()}</Typography>
         </Flexbox>
@@ -196,13 +207,15 @@ const Slider = () => {
 
 interface TrackProps {
   size: number;
+  trackColor: string;
+  filledColor: string;
   onClick: MouseEventHandler<HTMLDivElement>;
 }
 
 const Track = styled.div<TrackProps>`
   width: ${({ size }) => size + 'px'};
   height: 3px;
-  background-color: lightgray;
+  background-color: ${({ trackColor }) => trackColor};
   cursor: pointer;
 
   ::after {
@@ -211,18 +224,22 @@ const Track = styled.div<TrackProps>`
     width: var(--filled);
     height: 3px;
     display: inline-block;
-    background-color: skyblue;
+    background-color: ${({ filledColor }) => filledColor};
     cursor: pointer;
   }
 `;
 
-const Thumb = styled.div`
+interface ThumbProps {
+  thumbColor: string;
+}
+
+const Thumb = styled.div<ThumbProps>`
   position: absolute;
   left: 0;
   width: 1rem;
   height: 1rem;
   border-radius: 2rem;
-  background-color: skyblue;
+  background-color: ${({ thumbColor }) => thumbColor};
   user-select: none;
   cursor: pointer;
 `;
