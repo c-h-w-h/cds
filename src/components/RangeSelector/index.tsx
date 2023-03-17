@@ -87,13 +87,8 @@ const calcRangeValue = (
   mousePos: number,
 ) => max - min - Math.floor(((maxPos - mousePos) / size) * 100);
 
-const setInitialThumbPos = (
-  max: number,
-  min: number,
-  maxPos: number,
-  minPos: number,
-  value: number,
-) => ((value / (max - min)) * 100 * (maxPos - minPos)) / 100;
+const setSliderPos = (size: number, max: number, min: number, value: number) =>
+  (size / (max - min)) * value;
 
 const Slider = () => {
   const context = useContext(RangeSelectorContext);
@@ -101,7 +96,6 @@ const Slider = () => {
   const minPosRef = useRef<number>(0);
   const maxPosRef = useRef<number>(0);
   const trackRef = useRef<HTMLDivElement | null>(null);
-  const filledRef = useRef<HTMLDivElement | null>(null);
   const thumbRef = useRef<HTMLDivElement | null>(null);
 
   const thumbWidth = useMemo(() => {
@@ -113,39 +107,43 @@ const Slider = () => {
   const handleThumbPosition = (
     e: MouseEvent<HTMLDivElement> | globalThis.MouseEvent,
   ) => {
-    if (thumbRef.current && filledRef.current && trackRef.current && context) {
+    if (thumbRef.current && trackRef.current && context) {
       let clickedPos = e.clientX;
       if (clickedPos > maxPosRef.current) {
         clickedPos = maxPosRef.current;
       } else if (clickedPos < minPosRef.current) {
         clickedPos = minPosRef.current;
       }
-      thumbRef.current.style.left = `${clickedPos - thumbWidth / 2}px`;
-      filledRef.current.style.width = `${
-        clickedPos - thumbWidth - thumbWidth / 2
-      }px`;
-      context.setValue(
-        calcRangeValue(
-          context.size - thumbWidth,
-          context.max,
-          context.min,
-          maxPosRef.current,
-          clickedPos,
-        ),
+      const value = calcRangeValue(
+        context.size - thumbWidth,
+        context.max,
+        context.min,
+        maxPosRef.current,
+        clickedPos,
       );
+      thumbRef.current.style.left = `${clickedPos - thumbWidth / 2}px`;
+      trackRef.current.style.setProperty(
+        '--filled',
+        setSliderPos(context.size, context.max, context.min, value) + 'px',
+      );
+      context.setValue(value);
     }
   };
 
   useLayoutEffect(() => {
-    if (trackRef.current && thumbRef.current && filledRef.current && context) {
-      const { max, min, value } = context;
+    if (trackRef.current && thumbRef.current && context) {
+      const { size, max, min, value } = context;
       const { left, right } = trackRef.current.getBoundingClientRect();
       const { width } = thumbRef.current.getBoundingClientRect();
+
       minPosRef.current = left + width / 2;
       maxPosRef.current = right - width / 2;
-      const initialPos = setInitialThumbPos(max, min, right, left, value);
-      thumbRef.current.style.left = initialPos + width + 'px';
-      filledRef.current.style.width = initialPos + 'px';
+
+      const thumbPos = setSliderPos(size - width, max, min, value);
+      const filledTrackPos = setSliderPos(size, max, min, value);
+
+      thumbRef.current.style.left = left + thumbPos + 'px';
+      trackRef.current.style.setProperty('--filled', filledTrackPos + 'px');
     }
   }, []);
 
@@ -174,11 +172,6 @@ const Slider = () => {
   return (
     <Flexbox>
       <Track ref={trackRef} size={context.size} onClick={handleThumbPosition} />
-      <Filled
-        ref={filledRef}
-        size={context.size}
-        onClick={handleThumbPosition}
-      />
       <Thumb ref={thumbRef} onMouseDown={() => setMovable(true)}>
         <Flexbox justifyContent={'center'} alignItems={'center'}>
           <Typography variant={'desc'}>{context.value.toString()}</Typography>
@@ -195,18 +188,19 @@ interface TrackProps {
 
 const Track = styled.div<TrackProps>`
   width: ${({ size }) => size + 'px'};
-  height: 1px;
   height: 3px;
   background-color: lightgray;
-`;
-
-const Filled = styled.div<TrackProps>`
-  position: absolute;
-  left: 0;
-  height: 3px;
-  margin: 1.5rem;
-  background-color: skyblue;
   cursor: pointer;
+
+  ::after {
+    content: '';
+    position: absolute;
+    width: var(--filled);
+    height: 3px;
+    background-color: skyblue;
+    cursor: pointer;
+    display: inline-block;
+  }
 `;
 
 const Thumb = styled.div`
@@ -218,6 +212,7 @@ const Thumb = styled.div`
   background-color: skyblue;
   user-select: none;
   cursor: pointer;
+  opacity: 50%;
 `;
 
 RangeSelector.Slider = Slider;
