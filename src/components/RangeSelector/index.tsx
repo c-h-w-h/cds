@@ -78,6 +78,8 @@ const RangeDisplay = () => {
   );
 };
 
+const fixInt = (float: number) => Number(float.toFixed(0));
+
 const calcRangeValue = (
   size: number,
   max: number,
@@ -88,10 +90,9 @@ const calcRangeValue = (
 ) =>
   max -
   min -
-  +(
-    (Math.round(maxPos - mousePos) / (offset ? size - offset : size)) *
-    100
-  ).toFixed(0);
+  fixInt(
+    (Math.round(maxPos - mousePos) / (offset ? size - offset : size)) * 100,
+  );
 
 const setSliderPos = (
   size: number,
@@ -145,8 +146,8 @@ const Slider = () => {
       const { left, right } = trackRef.current.getBoundingClientRect();
       const { width: offset } = thumbRef.current.getBoundingClientRect();
 
-      minPosRef.current = left + offset / 2;
-      maxPosRef.current = right - offset / 2;
+      minPosRef.current = fixInt(left) + offset / 2;
+      maxPosRef.current = fixInt(right) - offset / 2;
       offsetRef.current = offset;
 
       const thumbPos = setSliderPos(size, max, min, value, offset);
@@ -224,7 +225,6 @@ const Thumb = styled.div`
   background-color: skyblue;
   user-select: none;
   cursor: pointer;
-  opacity: 50%;
 `;
 
 RangeSelector.Slider = Slider;
