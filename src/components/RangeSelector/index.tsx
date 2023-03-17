@@ -110,7 +110,7 @@ const setSliderPos = (
   min: number,
   value: number,
   offset?: number,
-) => ((offset ? size - offset : size) / (max - min)) * value;
+) => ((offset ? size - offset : size) / (max - min)) * (value - min);
 
 const Slider = () => {
   const context = useContext(RangeSelectorContext);
@@ -144,11 +144,11 @@ const Slider = () => {
         clickedPos,
         offsetRef.current,
       );
-      const rangePos = setSliderPos(size, max, min, rangeValue);
+      const rangePos = setSliderPos(size, max, min, rangeValue + min);
 
       thumbRef.current.style.left = `${clickedPos - offsetRef.current / 2}px`;
       trackRef.current.style.setProperty('--filled', `${rangePos}px`);
-      setValue(rangeValue);
+      setValue(min + rangeValue);
     }
   };
 
