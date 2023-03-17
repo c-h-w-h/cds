@@ -24,3 +24,7 @@ const Template: ComponentStory<typeof DropdownV2> = (args) => (
 );
 
 export const Default = Template.bind({});
+Default.args = {
+  id: 'dropdown1',
+  dropdownLabel: 'Default dropdown',
+};

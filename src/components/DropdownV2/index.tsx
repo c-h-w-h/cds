@@ -21,19 +21,21 @@ interface IDropdownContext {
   setIsOpen?: Dispatch<SetStateAction<boolean>>;
   collapseOnBlur?: boolean;
   dropdownLabel?: string;
+  id?: string;
 }
 const DropdownContext = createContext<IDropdownContext>({});
 
 const DropdownV2 = ({
   collapseOnBlur = false,
   dropdownLabel = '',
+  id,
   children,
 }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
     <DropdownContext.Provider
-      value={{ isOpen, setIsOpen, collapseOnBlur, dropdownLabel }}
+      value={{ isOpen, setIsOpen, collapseOnBlur, dropdownLabel, id }}
     >
       {children}
     </DropdownContext.Provider>
@@ -41,7 +43,7 @@ const DropdownV2 = ({
 };
 
 const Trigger = ({ children }: DefaultProps<HTMLDivElement>) => {
-  const { isOpen, setIsOpen, dropdownLabel } = useContext(DropdownContext);
+  const { isOpen, setIsOpen, dropdownLabel, id } = useContext(DropdownContext);
   return (
     <>
       {setIsOpen && (
@@ -53,6 +55,7 @@ const Trigger = ({ children }: DefaultProps<HTMLDivElement>) => {
           aria-expanded={isOpen}
           aria-haspopup="true"
           aria-label={dropdownLabel}
+          id={id}
         >
           {children}
         </div>
@@ -62,7 +65,7 @@ const Trigger = ({ children }: DefaultProps<HTMLDivElement>) => {
 };
 
 const Menu = ({ children }: DefaultProps<HTMLDivElement>) => {
-  const { isOpen, setIsOpen, collapseOnBlur } = useContext(DropdownContext);
+  const { isOpen, setIsOpen, collapseOnBlur, id } = useContext(DropdownContext);
   const menuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -91,7 +94,11 @@ const Menu = ({ children }: DefaultProps<HTMLDivElement>) => {
     };
   }, [isOpen]);
 
-  return <MenuWrapper ref={menuRef}>{isOpen && children}</MenuWrapper>;
+  return (
+    <MenuWrapper ref={menuRef} aria-labelledby={id}>
+      {isOpen && children}
+    </MenuWrapper>
+  );
 };
 
 const MenuWrapper = styled.div`
