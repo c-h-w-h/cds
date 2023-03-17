@@ -7,11 +7,9 @@ import {
   MouseEvent,
   MouseEventHandler,
   ReactNode,
-  useCallback,
   useContext,
   useEffect,
   useLayoutEffect,
-  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -96,14 +94,9 @@ const Slider = () => {
   const [movable, setMovable] = useState<boolean>(false);
   const minPosRef = useRef<number>(0);
   const maxPosRef = useRef<number>(0);
+  const offsetRef = useRef<number>(0);
   const trackRef = useRef<HTMLDivElement | null>(null);
   const thumbRef = useRef<HTMLDivElement | null>(null);
-
-  const thumbWidth = useMemo(() => {
-    return thumbRef.current
-      ? thumbRef.current?.getBoundingClientRect().width
-      : 0;
-  }, [thumbRef.current]);
 
   const handleThumbPosition = (
     e: MouseEvent<HTMLDivElement> | globalThis.MouseEvent,
@@ -119,7 +112,7 @@ const Slider = () => {
       }
 
       const rangeValue = calcRangeValue(
-        size - thumbWidth,
+        size - offsetRef.current,
         max,
         min,
         maxPosRef.current,
@@ -127,7 +120,7 @@ const Slider = () => {
       );
       const rangePos = setSliderPos(size, max, min, rangeValue);
 
-      thumbRef.current.style.left = `${clickedPos - thumbWidth / 2}px`;
+      thumbRef.current.style.left = `${clickedPos - offsetRef.current / 2}px`;
       trackRef.current.style.setProperty('--filled', rangePos + 'px');
       setValue(rangeValue);
     }
@@ -141,6 +134,7 @@ const Slider = () => {
 
       minPosRef.current = left + width / 2;
       maxPosRef.current = right - width / 2;
+      offsetRef.current = width;
 
       const thumbPos = setSliderPos(size - width, max, min, value);
       const filledTrackPos = setSliderPos(size, max, min, value);
