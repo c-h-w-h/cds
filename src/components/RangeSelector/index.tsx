@@ -7,6 +7,7 @@ import {
   MouseEvent,
   MouseEventHandler,
   ReactNode,
+  useCallback,
   useContext,
   useEffect,
   useLayoutEffect,
@@ -85,7 +86,7 @@ const calcRangeValue = (
   min: number,
   maxPos: number,
   mousePos: number,
-) => max - min - Math.floor(((maxPos - mousePos) / size) * 100);
+) => max - min - +((Math.round(maxPos - mousePos) / size) * 100).toFixed(0);
 
 const setSliderPos = (size: number, max: number, min: number, value: number) =>
   (size / (max - min)) * value;
@@ -108,25 +109,27 @@ const Slider = () => {
     e: MouseEvent<HTMLDivElement> | globalThis.MouseEvent,
   ) => {
     if (thumbRef.current && trackRef.current && context) {
+      const { size, max, min, setValue } = context;
       let clickedPos = e.clientX;
+
       if (clickedPos > maxPosRef.current) {
         clickedPos = maxPosRef.current;
       } else if (clickedPos < minPosRef.current) {
         clickedPos = minPosRef.current;
       }
-      const value = calcRangeValue(
-        context.size - thumbWidth,
-        context.max,
-        context.min,
+
+      const rangeValue = calcRangeValue(
+        size - thumbWidth,
+        max,
+        min,
         maxPosRef.current,
         clickedPos,
       );
+      const rangePos = setSliderPos(size, max, min, rangeValue);
+
       thumbRef.current.style.left = `${clickedPos - thumbWidth / 2}px`;
-      trackRef.current.style.setProperty(
-        '--filled',
-        setSliderPos(context.size, context.max, context.min, value) + 'px',
-      );
-      context.setValue(value);
+      trackRef.current.style.setProperty('--filled', rangePos + 'px');
+      setValue(rangeValue);
     }
   };
 
@@ -197,9 +200,9 @@ const Track = styled.div<TrackProps>`
     position: absolute;
     width: var(--filled);
     height: 3px;
+    display: inline-block;
     background-color: skyblue;
     cursor: pointer;
-    display: inline-block;
   }
 `;
 
