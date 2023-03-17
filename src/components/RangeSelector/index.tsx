@@ -90,7 +90,8 @@ const calcRangeValue = (
   max -
   min -
   fixInt(
-    (Math.round(maxPos - mousePos) / (offset ? size - offset : size)) * 100,
+    (Math.round(maxPos - mousePos) / (offset ? size - offset : size)) *
+      (max - min),
   );
 
 const setSliderPos = (
