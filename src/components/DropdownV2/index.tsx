@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import { DefaultProps } from '@util-types/DefaultProps';
 import {
   createContext,
@@ -12,27 +13,35 @@ import {
 
 interface DropdownProps extends DefaultProps<HTMLDivElement> {
   collapseOnBlur: boolean;
+  dropdownLabel?: string;
 }
 
 interface IDropdownContext {
   isOpen?: boolean;
   setIsOpen?: Dispatch<SetStateAction<boolean>>;
   collapseOnBlur?: boolean;
+  dropdownLabel?: string;
 }
 const DropdownContext = createContext<IDropdownContext>({});
 
-const DropdownV2 = ({ collapseOnBlur = false, children }: DropdownProps) => {
+const DropdownV2 = ({
+  collapseOnBlur = false,
+  dropdownLabel = '',
+  children,
+}: DropdownProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
-    <DropdownContext.Provider value={{ isOpen, setIsOpen, collapseOnBlur }}>
+    <DropdownContext.Provider
+      value={{ isOpen, setIsOpen, collapseOnBlur, dropdownLabel }}
+    >
       {children}
     </DropdownContext.Provider>
   );
 };
 
 const Trigger = ({ children }: DefaultProps<HTMLDivElement>) => {
-  const { isOpen, setIsOpen } = useContext(DropdownContext);
+  const { isOpen, setIsOpen, dropdownLabel } = useContext(DropdownContext);
   return (
     <>
       {setIsOpen && (
@@ -41,6 +50,9 @@ const Trigger = ({ children }: DefaultProps<HTMLDivElement>) => {
             e.stopPropagation();
             setIsOpen(!isOpen);
           }}
+          aria-expanded={isOpen}
+          aria-haspopup="true"
+          aria-label={dropdownLabel}
         >
           {children}
         </div>
@@ -79,8 +91,12 @@ const Menu = ({ children }: DefaultProps<HTMLDivElement>) => {
     };
   }, [isOpen]);
 
-  return <>{isOpen && <div ref={menuRef}>{children}</div>}</>;
+  return <MenuWrapper ref={menuRef}>{isOpen && children}</MenuWrapper>;
 };
+
+const MenuWrapper = styled.div`
+  position: absolute;
+`;
 
 DropdownV2.Trigger = Trigger;
 DropdownV2.Menu = Menu;
