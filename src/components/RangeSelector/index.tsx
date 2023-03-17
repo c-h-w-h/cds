@@ -84,10 +84,22 @@ const calcRangeValue = (
   min: number,
   maxPos: number,
   mousePos: number,
-) => max - min - +((Math.round(maxPos - mousePos) / size) * 100).toFixed(0);
+  offset?: number,
+) =>
+  max -
+  min -
+  +(
+    (Math.round(maxPos - mousePos) / (offset ? size - offset : size)) *
+    100
+  ).toFixed(0);
 
-const setSliderPos = (size: number, max: number, min: number, value: number) =>
-  (size / (max - min)) * value;
+const setSliderPos = (
+  size: number,
+  max: number,
+  min: number,
+  value: number,
+  offset?: number,
+) => ((offset ? size - offset : size) / (max - min)) * value;
 
 const Slider = () => {
   const context = useContext(RangeSelectorContext);
@@ -112,16 +124,17 @@ const Slider = () => {
       }
 
       const rangeValue = calcRangeValue(
-        size - offsetRef.current,
+        size,
         max,
         min,
         maxPosRef.current,
         clickedPos,
+        offsetRef.current,
       );
       const rangePos = setSliderPos(size, max, min, rangeValue);
 
       thumbRef.current.style.left = `${clickedPos - offsetRef.current / 2}px`;
-      trackRef.current.style.setProperty('--filled', rangePos + 'px');
+      trackRef.current.style.setProperty('--filled', `${rangePos}px`);
       setValue(rangeValue);
     }
   };
@@ -130,17 +143,17 @@ const Slider = () => {
     if (trackRef.current && thumbRef.current && context) {
       const { size, max, min, value } = context;
       const { left, right } = trackRef.current.getBoundingClientRect();
-      const { width } = thumbRef.current.getBoundingClientRect();
+      const { width: offset } = thumbRef.current.getBoundingClientRect();
 
-      minPosRef.current = left + width / 2;
-      maxPosRef.current = right - width / 2;
-      offsetRef.current = width;
+      minPosRef.current = left + offset / 2;
+      maxPosRef.current = right - offset / 2;
+      offsetRef.current = offset;
 
-      const thumbPos = setSliderPos(size - width, max, min, value);
+      const thumbPos = setSliderPos(size, max, min, value, offset);
       const filledTrackPos = setSliderPos(size, max, min, value);
 
-      thumbRef.current.style.left = left + thumbPos + 'px';
-      trackRef.current.style.setProperty('--filled', filledTrackPos + 'px');
+      thumbRef.current.style.left = `${left + thumbPos}px`;
+      trackRef.current.style.setProperty('--filled', `${filledTrackPos}px`);
     }
   }, []);
 
