@@ -25,6 +25,8 @@ const RangeSelectorContext =
   >(null);
 
 interface RangeSelectorProps {
+  id: string;
+  label: string;
   min: number;
   max: number;
   init: number;
@@ -33,6 +35,8 @@ interface RangeSelectorProps {
 }
 
 const RangeSelector = ({
+  id,
+  label,
   min,
   max,
   init,
@@ -41,12 +45,14 @@ const RangeSelector = ({
 }: RangeSelectorProps) => {
   const [value, setValue] = useState<number>(init);
 
-  const providerValue = { value, setValue, min, max, size };
+  const providerValue = { id, label, value, setValue, min, max, size };
 
   return (
     <RangeSelectorContext.Provider value={providerValue}>
       <Flexbox
         flexDirection="column"
+        role={'slider'}
+        aria-label={label}
         css={css`
           width: ${size}px;
           padding: 1rem;
@@ -71,8 +77,12 @@ const RangeDisplay = () => {
         user-select: none;
       `}
     >
-      <Typography variant={'desc'}>{context.min.toString()}</Typography>
-      <Typography variant={'desc'}>{context.max.toString()}</Typography>
+      <Typography variant={'desc'} aria-valuemin={context.min}>
+        {context.min.toString()}
+      </Typography>
+      <Typography variant={'desc'} aria-valuemax={context.max}>
+        {context.max.toString()}
+      </Typography>
     </Flexbox>
   );
 };
@@ -187,19 +197,24 @@ const Slider = () => {
   return (
     <Flexbox>
       <Track
+        id={`${context.id}_track`}
         ref={trackRef}
         size={context.size}
         trackColor={gray100}
         filledColor={primary100}
         onClick={handleThumbPosition}
+        aria-orientation={'horizontal'}
       />
       <Thumb
         ref={thumbRef}
         thumbColor={primary100}
         onMouseDown={() => setMovable(true)}
+        aria-controls={`${context.id}_track`}
       >
         <Flexbox justifyContent={'center'} alignItems={'center'}>
-          <Typography variant={'desc'}>{context.value.toString()}</Typography>
+          <Typography variant={'desc'} aria-valuenow={context.value}>
+            {context.value.toString()}
+          </Typography>
         </Flexbox>
       </Thumb>
     </Flexbox>
