@@ -154,21 +154,23 @@ const Slider = () => {
     const controller = new AbortController();
     const { signal } = controller;
 
-    window.addEventListener(
-      'mousemove',
-      (e) => {
-        window.addEventListener('mouseup', () => {
-          setMovable(false);
-          controller.abort();
-        });
+    if (movable) {
+      window.addEventListener(
+        'mousemove',
+        (e) => {
+          window.addEventListener('mouseup', () => {
+            setMovable(false);
+            controller.abort();
+          });
 
-        if (!movable) return;
-        if (e.clientX > maxPosRef.current) return;
-        if (e.clientX < minPosRef.current) return;
-        handleThumbPosition(e);
-      },
-      { signal },
-    );
+          if (!movable) return;
+          if (e.clientX > maxPosRef.current) return;
+          if (e.clientX < minPosRef.current) return;
+          handleThumbPosition(e);
+        },
+        { signal },
+      );
+    }
   }, [movable]);
 
   if (context === null) return null;
