@@ -16,9 +16,9 @@ const Template: ComponentStory<typeof DropdownV2> = (args) => (
       <DropdownV2.Trigger>
         <button>ㅎㅇㅎㅇ</button>
       </DropdownV2.Trigger>
-      <DropdownV2.List>
+      <DropdownV2.Menu>
         <div>리스트</div>
-      </DropdownV2.List>
+      </DropdownV2.Menu>
     </DropdownV2>
   </>
 );
