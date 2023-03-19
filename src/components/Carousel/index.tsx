@@ -1,26 +1,41 @@
 import Center from '@components/@layout/Center';
+import Icon from '@components/Icon';
 import styled from '@emotion/styled';
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 
 type CarouselProps = {
   itemList: ReactNode[];
 };
 
 const Carousel = ({ itemList }: CarouselProps) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
   return (
     <CarouselWrapper>
       <Center>
-        <NavigationButton>{'<'}</NavigationButton>
+        <NavigationButton
+          onClick={() => setCurrentIndex(currentIndex - 1)}
+          disabled={currentIndex === 0 ? true : false}
+        >
+          {'〈'}
+        </NavigationButton>
       </Center>
       <ItemList>
         {itemList.map((item) => (
-          <Item key={JSON.stringify(item)}>
+          <Item
+            currentItem={(-100 / itemList.length) * currentIndex * 5}
+            key={JSON.stringify(item)}
+          >
             <ItemView>{item}</ItemView>
           </Item>
         ))}
       </ItemList>
       <Center>
-        <NavigationButton>{'>'}</NavigationButton>
+        <NavigationButton
+          onClick={() => setCurrentIndex(currentIndex + 1)}
+          disabled={currentIndex === itemList.length - 1 ? true : false}
+        >
+          {'〉'}
+        </NavigationButton>
       </Center>
     </CarouselWrapper>
   );
@@ -44,13 +59,12 @@ const ItemList = styled.div`
   }
 `;
 
-const Item = styled.div`
+const Item = styled.div<{ currentItem: number }>`
   display: inline-block;
   scroll-snap-align: start;
   width: min-content;
-  &:last-child {
-    padding-right: 20px;
-  }
+  transform: translateX(${({ currentItem }) => currentItem}%);
+  transition: transform 0.7s;
 `;
 
 const ItemView = styled.div`
@@ -59,7 +73,7 @@ const ItemView = styled.div`
   height: 15rem;
   border: 1px solid ${({ theme }) => theme.color.black};
   margin-right: 20px;
-  transform: translateX(20px);
+  transform: translateX(10px);
 `;
 
 const NavigationButton = styled.button`
@@ -68,14 +82,17 @@ const NavigationButton = styled.button`
   color: ${({ theme }) => theme.color.black};
   background-color: ${({ theme }) => theme.color.white};
   border-radius: 2rem;
-  cursor: pointer;
   @media (hover: hover) {
-    &:hover {
+    &:enabled:hover {
       filter: brightness(0.9);
+      cursor: pointer;
     }
   }
-  &:active {
+  &:enabled:active {
     filter: brightness(0.7);
+  }
+  &:disabled {
+    opacity: 0;
   }
 `;
 
