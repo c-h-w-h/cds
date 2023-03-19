@@ -1,55 +1,49 @@
-import Typography from '@components/Typography';
 import Center from '@components-layout/Center';
 import styled from '@emotion/styled';
 import { pixelToRem } from '@utils/pixelToRem';
 import { useState } from 'react';
 
+import LargeCards from './LargeCards';
+import NavigationButton from './NavigationButton';
+import SmallCards from './SmallCards';
+
 type CarouselProps = {
   itemList: { img?: string; content?: string }[];
+  size?: 'small' | 'large';
 };
 
-const Carousel = ({ itemList }: CarouselProps) => {
+const Carousel = ({ itemList, size = 'large' }: CarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const lastIndex =
+    size === 'small' ? Math.ceil(itemList.length / 2) - 1 : itemList.length - 1;
   return (
     <CarouselWrapper>
       <Slider>
-        <Center>
-          <NavigationButton
-            onClick={() => setCurrentIndex(currentIndex - 1)}
-            disabled={currentIndex === 0 ? true : false}
-          >
-            {'〈'}
-          </NavigationButton>
-        </Center>
-        <ItemList>
-          {itemList.map((item) => (
-            <Item
-              currentItem={(-100 / itemList.length) * currentIndex * 4}
-              key={JSON.stringify(item)}
-            >
-              <ItemView>
-                {item.img && <img src={item.img} alt="Item" />}
-                <Typography variant="body">
-                  {item.content ? item.content : ''}
-                </Typography>
-              </ItemView>
-            </Item>
-          ))}
-        </ItemList>
-        <Center>
-          <NavigationButton
-            onClick={() => setCurrentIndex(currentIndex + 1)}
-            disabled={currentIndex === itemList.length - 1 ? true : false}
-          >
-            {'〉'}
-          </NavigationButton>
-        </Center>
+        <NavigationButton
+          clickHandler={() => setCurrentIndex(currentIndex - 1)}
+          disabled={currentIndex === 0}
+        >
+          {'〈'}
+        </NavigationButton>
+        {size === 'large' ? (
+          <LargeCards {...{ itemList, currentIndex }} />
+        ) : (
+          <SmallCards {...{ itemList, currentIndex }} />
+        )}
+        <NavigationButton
+          clickHandler={() => setCurrentIndex(currentIndex + 1)}
+          disabled={currentIndex === lastIndex}
+        >
+          {'〉'}
+        </NavigationButton>
       </Slider>
-      <Center>
-        {itemList.map((item, index) => (
-          <Dot key={JSON.stringify(item)} current={index === currentIndex} />
-        ))}
-      </Center>
+      {size === 'large' && (
+        <Center>
+          {itemList.map((item, index) => (
+            <Dot key={JSON.stringify(item)} current={index === currentIndex} />
+          ))}
+        </Center>
+      )}
     </CarouselWrapper>
   );
 };
@@ -63,62 +57,6 @@ const Slider = styled.div`
   overflow: hidden;
   display: flex;
   margin: 0 ${pixelToRem('10px')};
-`;
-
-const ItemList = styled.div`
-  overflow-x: scroll;
-  width: 100%;
-  vertical-align: top;
-  display: inline-flex;
-  padding: ${pixelToRem('20px')} 0;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`;
-
-const Item = styled.div<{ currentItem: number }>`
-  display: inline-block;
-  scroll-snap-align: start;
-  width: min-content;
-  transform: translateX(${({ currentItem }) => currentItem}%);
-  transition: transform 0.5s;
-`;
-
-const ItemView = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 10rem;
-  height: 13rem;
-  margin-right: ${pixelToRem('20px')};
-  transform: translateX(${pixelToRem('10px')});
-  background-color: ${({ theme }) => theme.color.white};
-  img {
-    width: 100%;
-    height: 10rem;
-    border: 1px solid ${({ theme }) => theme.color.gray100};
-    border-radius: 10px;
-    margin-bottom: 10px;
-  }
-`;
-
-const NavigationButton = styled.button`
-  width: 1.5rem;
-  height: 1.5rem;
-  color: ${({ theme }) => theme.color.black};
-  background-color: ${({ theme }) => theme.color.white};
-  border-radius: 1.5rem;
-  @media (hover: hover) {
-    &:enabled:hover {
-      filter: brightness(0.9);
-      cursor: pointer;
-    }
-  }
-  &:enabled:active {
-    filter: brightness(0.7);
-  }
-  &:disabled {
-    opacity: 0;
-  }
 `;
 
 const Dot = styled.div<{ current: boolean }>`
