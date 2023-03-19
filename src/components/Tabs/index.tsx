@@ -33,10 +33,27 @@ const Tabs = ({ defaultValue, children }: TabsProps) => {
 
 interface TabListProps {
   children: ReactNode;
+  isFitted?: boolean;
 }
 
-const List = ({ children }: TabListProps) => {
-  return <Flexbox>{children}</Flexbox>;
+const List = ({ isFitted = false, children }: TabListProps) => {
+  return (
+    <Container overflowX="auto">
+      <Flexbox
+        justifyContent={'flex-start'}
+        css={css`
+          width: ${isFitted === false && 'max-content'};
+
+          & > button {
+            width: ${isFitted === true && '100%'};
+            white-space: nowrap;
+          }
+        `}
+      >
+        {children}
+      </Flexbox>
+    </Container>
+  );
 };
 
 interface TabTriggerProps {
