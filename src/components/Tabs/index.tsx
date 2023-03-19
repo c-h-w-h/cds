@@ -1,3 +1,4 @@
+import Button from '@components/Button';
 import Container from '@components-layout/Container';
 import Flexbox from '@components-layout/Flexbox';
 import { css } from '@emotion/react';
@@ -19,7 +20,13 @@ const Tabs = ({ defaultValue, children }: TabsProps) => {
 
   return (
     <TabsContext.Provider value={{ selectedIndex, setSelectedIndex }}>
-      {children}
+      <Container
+        css={css`
+          padding: 1rem;
+        `}
+      >
+        {children}
+      </Container>
     </TabsContext.Provider>
   );
 };
@@ -35,14 +42,19 @@ const List = ({ children }: TabListProps) => {
 interface TabTriggerProps {
   value: string;
   children: ReactNode;
+  disabled?: boolean;
 }
 
-const Trigger = ({ value, children }: TabTriggerProps) => {
+const Trigger = ({ value, disabled = false, children }: TabTriggerProps) => {
   const context = useContext(TabsContext);
 
   if (context === null) return null;
   return (
-    <button onClick={() => context.setSelectedIndex(value)}>{children}</button>
+    <Button
+      text={children?.toString()}
+      disabled={disabled}
+      onClick={() => context.setSelectedIndex(value)}
+    />
   );
 };
 
@@ -59,8 +71,8 @@ const Content = ({ value, children }: TabContentProps) => {
   return (
     <Container
       css={css`
+        padding: 1rem;
         display: ${context.selectedIndex === value ? 'block' : 'none'};
-        color: red;
       `}
     >
       {children}
