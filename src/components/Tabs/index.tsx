@@ -1,7 +1,9 @@
 import Button from '@components/Button';
+import { IconSource } from '@components/Icon';
 import Container from '@components-layout/Container';
 import Flexbox from '@components-layout/Flexbox';
 import { css, useTheme } from '@emotion/react';
+import { pixelToRem } from '@utils/pixelToRem';
 import { createContext, ReactNode, useContext, useState } from 'react';
 
 type TabListVariant = 'underline' | 'rounded';
@@ -80,14 +82,21 @@ interface TabTriggerProps {
   value: string;
   children: ReactNode;
   disabled?: boolean;
+  icon?: IconSource;
 }
 
-const Trigger = ({ value, disabled = false, children }: TabTriggerProps) => {
+const Trigger = ({
+  value,
+  disabled = false,
+  icon,
+  children,
+}: TabTriggerProps) => {
   const context = useContext(TabsContext);
   if (context === null) return null;
 
   const { color: themeColor } = useTheme();
   const { primary100, gray100, black, white } = themeColor;
+  const isActive = context.selectedIndex === value;
 
   const underlineStyle = {
     borderColor: `${context.selectedIndex === value ? primary100 : gray100}`,
@@ -115,12 +124,18 @@ const Trigger = ({ value, disabled = false, children }: TabTriggerProps) => {
     <Button
       text={children?.toString()}
       disabled={disabled}
+      icon={icon}
+      iconSize={pixelToRem('16px')}
       onClick={() => context.setSelectedIndex(value)}
       css={css`
         ${triggerStyles[context.variant]}
 
         & > p {
-          color: ${context.selectedIndex === value ? primary100 : black};
+          color: ${isActive ? primary100 : black};
+        }
+
+        & > svg {
+          fill: ${isActive ? primary100 : black};
         }
 
         &:hover {
