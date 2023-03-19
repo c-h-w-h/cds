@@ -126,7 +126,7 @@ const Trigger = ({
       disabled={disabled}
       icon={icon}
       iconSize={pixelToRem('16px')}
-      onClick={() => context.setSelectedIndex(value)}
+      onClick={() => !disabled && context.setSelectedIndex(value)}
       css={css`
         ${triggerStyles[context.variant]}
 
@@ -141,6 +141,23 @@ const Trigger = ({
         &:hover {
           background-color: ${primary100};
           border-bottom-color: ${primary100};
+        }
+
+        &:disabled {
+          background-color: ${white};
+          cursor: not-allowed;
+
+          & > p {
+            color: ${gray100};
+          }
+
+          & > svg {
+            fill: ${gray100};
+          }
+
+          &: hover {
+            border-bottom-color: ${gray100};
+          }
         }
       `}
     />
