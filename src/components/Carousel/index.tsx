@@ -1,5 +1,4 @@
-import Center from '@components/@layout/Center';
-import Icon from '@components/Icon';
+import Center from '@components-layout/Center';
 import styled from '@emotion/styled';
 import { ReactNode, useState } from 'react';
 
@@ -11,37 +10,49 @@ const Carousel = ({ itemList }: CarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   return (
     <CarouselWrapper>
-      <Center>
-        <NavigationButton
-          onClick={() => setCurrentIndex(currentIndex - 1)}
-          disabled={currentIndex === 0 ? true : false}
-        >
-          {'〈'}
-        </NavigationButton>
-      </Center>
-      <ItemList>
-        {itemList.map((item) => (
-          <Item
-            currentItem={(-100 / itemList.length) * currentIndex * 5}
-            key={JSON.stringify(item)}
+      <Slider>
+        <Center>
+          <NavigationButton
+            onClick={() => setCurrentIndex(currentIndex - 1)}
+            disabled={currentIndex === 0 ? true : false}
           >
-            <ItemView>{item}</ItemView>
-          </Item>
-        ))}
-      </ItemList>
+            {'〈'}
+          </NavigationButton>
+        </Center>
+        <ItemList>
+          {itemList.map((item) => (
+            <Item
+              currentItem={(-100 / itemList.length) * currentIndex * 5}
+              key={JSON.stringify(item)}
+            >
+              <ItemView>{item}</ItemView>
+            </Item>
+          ))}
+        </ItemList>
+        <Center>
+          <NavigationButton
+            onClick={() => setCurrentIndex(currentIndex + 1)}
+            disabled={currentIndex === itemList.length - 1 ? true : false}
+          >
+            {'〉'}
+          </NavigationButton>
+        </Center>
+      </Slider>
       <Center>
-        <NavigationButton
-          onClick={() => setCurrentIndex(currentIndex + 1)}
-          disabled={currentIndex === itemList.length - 1 ? true : false}
-        >
-          {'〉'}
-        </NavigationButton>
+        {itemList.map((item, index) => (
+          <Dot key={JSON.stringify(item)} current={index === currentIndex} />
+        ))}
       </Center>
     </CarouselWrapper>
   );
 };
 
 const CarouselWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Slider = styled.div`
   overflow: hidden;
   display: flex;
   margin: 0px 10px;
@@ -64,7 +75,7 @@ const Item = styled.div<{ currentItem: number }>`
   scroll-snap-align: start;
   width: min-content;
   transform: translateX(${({ currentItem }) => currentItem}%);
-  transition: transform 0.7s;
+  transition: transform 0.5s;
 `;
 
 const ItemView = styled.div`
@@ -94,6 +105,15 @@ const NavigationButton = styled.button`
   &:disabled {
     opacity: 0;
   }
+`;
+
+const Dot = styled.div<{ current: boolean }>`
+  background: ${({ theme, current }) =>
+    current ? theme.color.primary100 : theme.color.gray100};
+  border-radius: 100%;
+  height: 10px;
+  width: 10px;
+  transition: all 0.3s;
 `;
 
 export default Carousel;
