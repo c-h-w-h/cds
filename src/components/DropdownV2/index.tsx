@@ -68,24 +68,18 @@ const Menu = ({ children }: DefaultProps<HTMLDivElement>) => {
   const { isOpen, setIsOpen, collapseOnBlur, id } = useContext(DropdownContext);
   const menuRef = useRef<HTMLDivElement | null>(null);
 
+  const toggleEventHandler = (e: MouseEvent) => {
+    if (!isOpen) return;
+
+    const { target } = e;
+    if (!target || !menuRef.current || !setIsOpen) return;
+
+    if (!menuRef.current.contains(target as Node)) {
+      setIsOpen(false);
+    }
+  };
+
   useEffect(() => {
-    const toggleEventHandler = (e: MouseEvent) => {
-      if (!isOpen) return;
-
-      const { target } = e;
-      if (
-        !target ||
-        !(target instanceof Node) ||
-        !menuRef.current ||
-        !setIsOpen
-      )
-        return;
-
-      if (!menuRef.current.contains(target)) {
-        setIsOpen(false);
-      }
-    };
-
     if (collapseOnBlur) document.addEventListener('click', toggleEventHandler);
 
     return () => {
