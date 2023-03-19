@@ -147,12 +147,12 @@ const Trigger = ({
   );
 };
 
-interface TabContentProps {
+interface TabPanelProps {
   value: string;
   children: ReactNode;
 }
 
-const Content = ({ value, children }: TabContentProps) => {
+const Panel = ({ value, children }: TabPanelProps) => {
   const context = useContext(TabsContext);
 
   if (context === null) return null;
@@ -171,6 +171,6 @@ const Content = ({ value, children }: TabContentProps) => {
 
 Tabs.List = List;
 Tabs.Trigger = Trigger;
-Tabs.Content = Content;
+Tabs.Panel = Panel;
 
 export default Tabs;
