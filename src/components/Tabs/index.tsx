@@ -90,20 +90,20 @@ const Trigger = ({ value, disabled = false, children }: TabTriggerProps) => {
   const { primary100, gray100, black, white } = themeColor;
 
   const underlineStyle = {
-    'border-color': `${context.selectedIndex === value ? primary100 : gray100}`,
-    'border-radius': 0,
-    'border-bottom-width': '2px',
-    'border-bottom-style': 'solid',
-    'margin-bottom': '-2px',
+    borderColor: `${context.selectedIndex === value ? primary100 : gray100}`,
+    borderRadius: 0,
+    borderBottomWidth: '2px',
+    borderBottomStyle: 'solid',
+    marginBottom: '-2px',
   } as const;
 
   const roundedStyle = {
     border: `${context.selectedIndex === value && `2px ${gray100} solid`}`,
-    'border-radius': '10px',
-    'border-bottom-left-radius': 0,
-    'border-bottom-right-radius': 0,
-    'border-bottom-color': `${white}`,
-    'margin-bottom': '-2px',
+    borderRadius: '10px',
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+    borderBottomColor: `${white}`,
+    marginBottom: '-2px',
   } as const;
 
   const triggerStyles = {
