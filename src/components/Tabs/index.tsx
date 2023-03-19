@@ -6,12 +6,12 @@ import { css, useTheme } from '@emotion/react';
 import { pixelToRem } from '@utils/pixelToRem';
 import { createContext, ReactNode, useContext, useState } from 'react';
 
-type TabListVariant = 'underline' | 'rounded';
+type TabsVariant = 'underline' | 'rounded';
 
 const TabsContext =
   createContext<{
     isFitted: boolean;
-    variant: TabListVariant;
+    variant: TabsVariant;
     selectedIndex: string;
     setSelectedIndex: React.Dispatch<React.SetStateAction<string>>;
   } | null>(null);
@@ -19,7 +19,7 @@ const TabsContext =
 interface TabsProps {
   defaultValue: string;
   children: ReactNode;
-  variant?: TabListVariant;
+  variant?: TabsVariant;
   isFitted?: boolean;
 }
 
