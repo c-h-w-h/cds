@@ -57,7 +57,16 @@ const List = ({ children }: TabListProps) => {
 
   if (context === null) return null;
   return (
-    <Container overflowX="auto">
+    <Container
+      overflowX="auto"
+      css={css`
+        -ms-overflow-style: none;
+
+        ::-webkit-scrollbar {
+          display: none;
+        }
+      `}
+    >
       <Flexbox
         justifyContent={'flex-start'}
         css={css`

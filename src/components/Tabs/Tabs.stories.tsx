@@ -111,3 +111,25 @@ export const WithDisabled = WithDisabledTemplate.bind({});
 WithDisabled.args = {
   defaultValue: '1',
 };
+
+const ScrollableTemplate: ComponentStory<typeof Tabs> = (args) => (
+  <Tabs {...args}>
+    <Tabs.List>
+      <Tabs.Trigger value="1">
+        축하하는 탭을 띄우기 위한 트리거입니다.
+      </Tabs.Trigger>
+      <Tabs.Trigger value="2">
+        정보를 표시하기 위해서 여기를 클릭하세요.
+      </Tabs.Trigger>
+      <Tabs.Trigger value="3">아무튼 길어지면 스크롤이 생기겠죠?</Tabs.Trigger>
+      <Tabs.Trigger value="4">
+        여기까지 보이시면 너비를 줄여주시겠어요?
+      </Tabs.Trigger>
+    </Tabs.List>
+  </Tabs>
+);
+
+export const Scrollable = ScrollableTemplate.bind({});
+Scrollable.args = {
+  defaultValue: '1',
+};
