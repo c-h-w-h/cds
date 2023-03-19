@@ -1,9 +1,10 @@
 import Center from '@components-layout/Center';
 import styled from '@emotion/styled';
-import { ReactNode, useState } from 'react';
+import { pixelToRem } from '@utils/pixelToRem';
+import { useState } from 'react';
 
 type CarouselProps = {
-  itemList: ReactNode[];
+  itemList: { img?: string; content?: string }[];
 };
 
 const Carousel = ({ itemList }: CarouselProps) => {
@@ -25,7 +26,7 @@ const Carousel = ({ itemList }: CarouselProps) => {
               currentItem={(-100 / itemList.length) * currentIndex * 5}
               key={JSON.stringify(item)}
             >
-              <ItemView>{item}</ItemView>
+              <ItemView>{item.content}</ItemView>
             </Item>
           ))}
         </ItemList>
@@ -55,7 +56,7 @@ const CarouselWrapper = styled.div`
 const Slider = styled.div`
   overflow: hidden;
   display: flex;
-  margin: 0px 10px;
+  margin: 0 ${pixelToRem('10px')};
 `;
 
 const ItemList = styled.div`
@@ -63,8 +64,7 @@ const ItemList = styled.div`
   width: 100%;
   vertical-align: top;
   display: inline-flex;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding: ${pixelToRem('20px')} 0;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -82,9 +82,11 @@ const ItemView = styled.div`
   display: flex;
   width: 10rem;
   height: 15rem;
-  border: 1px solid ${({ theme }) => theme.color.black};
-  margin-right: 20px;
-  transform: translateX(10px);
+  border-radius: 10px;
+  padding: 5px;
+  margin-right: ${pixelToRem('20px')};
+  transform: translateX(${pixelToRem('10px')});
+  background-color: ${({ theme }) => theme.color.white};
 `;
 
 const NavigationButton = styled.button`
@@ -92,7 +94,7 @@ const NavigationButton = styled.button`
   height: 1.5rem;
   color: ${({ theme }) => theme.color.black};
   background-color: ${({ theme }) => theme.color.white};
-  border-radius: 2rem;
+  border-radius: 1.5rem;
   @media (hover: hover) {
     &:enabled:hover {
       filter: brightness(0.9);
@@ -111,8 +113,8 @@ const Dot = styled.div<{ current: boolean }>`
   background: ${({ theme, current }) =>
     current ? theme.color.primary100 : theme.color.gray100};
   border-radius: 100%;
-  height: 10px;
-  width: 10px;
+  height: ${pixelToRem('8px')};
+  width: ${pixelToRem('8px')};
   transition: all 0.3s;
 `;
 

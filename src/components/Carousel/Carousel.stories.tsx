@@ -10,11 +10,14 @@ export default {
   },
 } as ComponentMeta<typeof Carousel>;
 
-const Template: ComponentStory<typeof Carousel> = (args) => (
-  <Carousel {...args} />
-);
+const Template: ComponentStory<typeof Carousel> = () => {
+  const itemList = [
+    { content: '1' },
+    { content: '2' },
+    { content: '3' },
+    { content: '4' },
+  ];
+  return <Carousel itemList={itemList}></Carousel>;
+};
 
 export const Default = Template.bind({});
-Default.args = {
-  itemList: [`1`, `2`, `3`, `4`, `5`],
-};
