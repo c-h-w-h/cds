@@ -35,7 +35,11 @@ const Template: ComponentStory<typeof Dropdown> = (args) => (
         <Button text="팀원 목록" icon={MdPeople} variant="light" />
       </Dropdown.Trigger>
       <Dropdown.Menu>
-        <List>
+        <List
+          css={css`
+            width: max-content;
+          `}
+        >
           <li>김세영</li>
           <li>백도훈</li>
           <li>이선민</li>
