@@ -4,20 +4,16 @@ import { pixelToRem } from '@utils/pixelToRem';
 
 type SmallCardsProps = {
   itemList: { img?: string; content?: string }[];
-  currentIndex: number;
 };
 
-const SmallCards = ({ itemList, currentIndex }: SmallCardsProps) => {
+const SmallCards = ({ itemList }: SmallCardsProps) => {
   return (
     <ItemList>
       {itemList.map((item, index) => {
         if (index % 2 === 1) return;
         const secondItem = itemList.at(index + 1) ? itemList.at(index + 1) : {};
         return (
-          <Item
-            currentItem={(-100 / itemList.length) * currentIndex * 4}
-            key={JSON.stringify(item)}
-          >
+          <Item key={JSON.stringify(item)}>
             <ItemView>
               {item.img && <img src={item.img} alt="Item" />}
               <Typography variant="body">
@@ -50,10 +46,9 @@ const ItemList = styled.div`
   }
 `;
 
-const Item = styled.div<{ currentItem: number }>`
+const Item = styled.div`
   display: inline-block;
   width: min-content;
-  transform: translateX(${({ currentItem }) => currentItem}%);
   transition: transform 0.5s;
 `;
 

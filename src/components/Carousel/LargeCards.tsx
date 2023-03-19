@@ -1,6 +1,7 @@
 import Typography from '@components/Typography';
 import styled from '@emotion/styled';
 import { pixelToRem } from '@utils/pixelToRem';
+import { useEffect, useRef } from 'react';
 
 type LargeCardProps = {
   itemList: { img?: string; content?: string }[];
@@ -8,15 +9,18 @@ type LargeCardProps = {
 };
 
 const LargeCards = ({ itemList, currentIndex }: LargeCardProps) => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    scrollRef.current?.scrollTo(currentIndex * 180, 0);
+  }, [currentIndex]);
   return (
-    <ItemList>
+    <ItemList ref={scrollRef}>
       {itemList.map((item) => (
-        <Item xPosition={-100 * currentIndex} key={JSON.stringify(item)}>
+        <Item key={JSON.stringify(item)}>
           <ItemView>
             {item.img && <img src={item.img} alt="Item" />}
             <Typography variant="body">
               {item.content ? item.content : ''}
-              {(-100 / itemList.length) * currentIndex * 4}
             </Typography>
           </ItemView>
         </Item>
@@ -31,16 +35,18 @@ const ItemList = styled.div`
   vertical-align: top;
   display: inline-flex;
   padding: ${pixelToRem('20px')} 0;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
   &::-webkit-scrollbar {
     display: none;
   }
 `;
 
-const Item = styled.div<{ xPosition: number }>`
+const Item = styled.div`
   display: inline-block;
   width: min-content;
-  transform: translateX(${({ xPosition }) => xPosition}%);
-  transition: transform 0.5s;
+  scroll-snap-align: start;
+  scroll-behavior: smooth;
 `;
 
 const ItemView = styled.div`
