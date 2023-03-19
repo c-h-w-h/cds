@@ -1,3 +1,4 @@
+import Typography from '@components/Typography';
 import Center from '@components-layout/Center';
 import styled from '@emotion/styled';
 import { pixelToRem } from '@utils/pixelToRem';
@@ -23,10 +24,15 @@ const Carousel = ({ itemList }: CarouselProps) => {
         <ItemList>
           {itemList.map((item) => (
             <Item
-              currentItem={(-100 / itemList.length) * currentIndex * 5}
+              currentItem={(-100 / itemList.length) * currentIndex * 4}
               key={JSON.stringify(item)}
             >
-              <ItemView>{item.content}</ItemView>
+              <ItemView>
+                {item.img && <img src={item.img} alt="Item" />}
+                <Typography variant="body">
+                  {item.content ? item.content : ''}
+                </Typography>
+              </ItemView>
             </Item>
           ))}
         </ItemList>
@@ -80,13 +86,19 @@ const Item = styled.div<{ currentItem: number }>`
 
 const ItemView = styled.div`
   display: flex;
+  flex-direction: column;
   width: 10rem;
-  height: 15rem;
-  border-radius: 10px;
-  padding: 5px;
+  height: 13rem;
   margin-right: ${pixelToRem('20px')};
   transform: translateX(${pixelToRem('10px')});
   background-color: ${({ theme }) => theme.color.white};
+  img {
+    width: 100%;
+    height: 10rem;
+    border: 1px solid ${({ theme }) => theme.color.gray100};
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
 `;
 
 const NavigationButton = styled.button`
