@@ -1,3 +1,5 @@
+import Container from '@components-layout/Container';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { DefaultProps } from '@util-types/DefaultProps';
 import {
@@ -14,6 +16,7 @@ import {
 interface DropdownProps extends DefaultProps<HTMLDivElement> {
   collapseOnBlur: boolean;
   dropdownLabel?: string;
+  direction?: 'left' | 'right' | 'top' | 'bottom';
 }
 
 interface IDropdownContext {
@@ -22,6 +25,17 @@ interface IDropdownContext {
   collapseOnBlur?: boolean;
   dropdownLabel?: string;
   id?: string;
+  direction?: 'left' | 'right' | 'top' | 'bottom';
+  triggerSize?: {
+    width: number;
+    height: number;
+  };
+  setTriggerSize?: Dispatch<
+    SetStateAction<{
+      width: number;
+      height: number;
+    }>
+  >;
 }
 const DropdownContext = createContext<IDropdownContext>({});
 
@@ -29,21 +43,55 @@ const DropdownV2 = ({
   collapseOnBlur = false,
   dropdownLabel = '',
   id,
+  direction = 'bottom',
   children,
 }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [triggerSize, setTriggerSize] = useState<{
+    width: number;
+    height: number;
+  }>({ width: 0, height: 0 });
+
+  const contextValues = {
+    isOpen,
+    setIsOpen,
+    collapseOnBlur,
+    dropdownLabel,
+    id,
+    direction,
+    triggerSize,
+    setTriggerSize,
+  };
 
   return (
-    <DropdownContext.Provider
-      value={{ isOpen, setIsOpen, collapseOnBlur, dropdownLabel, id }}
-    >
-      {children}
+    <DropdownContext.Provider value={contextValues}>
+      <Container
+        css={css`
+          width: auto;
+          height: auto;
+          position: relative;
+          overflow: visible;
+        `}
+      >
+        {children}
+      </Container>
     </DropdownContext.Provider>
   );
 };
 
 const Trigger = ({ children }: DefaultProps<HTMLDivElement>) => {
-  const { isOpen, setIsOpen, dropdownLabel, id } = useContext(DropdownContext);
+  const { isOpen, setIsOpen, dropdownLabel, id, setTriggerSize } =
+    useContext(DropdownContext);
+  const triggerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!triggerRef.current || !setTriggerSize) return;
+    setTriggerSize({
+      width: triggerRef.current.offsetWidth,
+      height: triggerRef.current.offsetHeight,
+    });
+  }, [triggerRef.current]);
+
   return (
     <>
       {setIsOpen && (
@@ -56,6 +104,7 @@ const Trigger = ({ children }: DefaultProps<HTMLDivElement>) => {
           aria-haspopup="true"
           aria-label={dropdownLabel}
           id={id}
+          ref={triggerRef}
         >
           {children}
         </div>
@@ -65,7 +114,8 @@ const Trigger = ({ children }: DefaultProps<HTMLDivElement>) => {
 };
 
 const Menu = ({ children }: DefaultProps<HTMLDivElement>) => {
-  const { isOpen, setIsOpen, collapseOnBlur, id } = useContext(DropdownContext);
+  const { isOpen, setIsOpen, collapseOnBlur, id, direction, triggerSize } =
+    useContext(DropdownContext);
   const menuRef = useRef<HTMLDivElement | null>(null);
 
   const toggleEventHandler = (e: MouseEvent) => {
@@ -89,14 +139,36 @@ const Menu = ({ children }: DefaultProps<HTMLDivElement>) => {
   }, [isOpen]);
 
   return (
-    <MenuWrapper ref={menuRef} aria-labelledby={id}>
+    <MenuWrapper
+      ref={menuRef}
+      aria-labelledby={id}
+      direction={direction ?? 'bottom'}
+      triggerSize={triggerSize ?? { width: 0, height: 0 }}
+    >
       {isOpen && children}
     </MenuWrapper>
   );
 };
 
-const MenuWrapper = styled.div`
+interface IMenuWrapper {
+  direction: 'left' | 'right' | 'top' | 'bottom';
+  triggerSize: { width: number; height: number };
+}
+
+const MenuWrapper = styled.div<IMenuWrapper>`
   position: absolute;
+  ${({ direction, triggerSize }) => {
+    switch (direction) {
+      case 'top':
+        return `bottom: ${triggerSize.height}px; left:0;`;
+      case 'right':
+        return `left: ${triggerSize.width}px; top:0;`;
+      case 'left':
+        return `right: ${triggerSize.width}px; top:0;`;
+      default:
+        return `top: ${triggerSize.height}px; left:0;`;
+    }
+  }}
 `;
 
 DropdownV2.Trigger = Trigger;
