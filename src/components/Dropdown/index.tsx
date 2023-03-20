@@ -130,11 +130,14 @@ const Menu = ({ children }: DefaultProps<HTMLDivElement>) => {
   };
 
   useEffect(() => {
-    if (collapseOnBlur) document.addEventListener('click', toggleEventHandler);
+    if (collapseOnBlur) {
+      document.addEventListener('click', toggleEventHandler);
+    }
 
     return () => {
-      if (collapseOnBlur)
+      if (collapseOnBlur) {
         document.removeEventListener('click', toggleEventHandler);
+      }
     };
   }, [isOpen]);
 
