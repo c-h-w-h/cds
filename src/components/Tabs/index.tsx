@@ -4,17 +4,25 @@ import Container from '@components-layout/Container';
 import Flexbox from '@components-layout/Flexbox';
 import { css, useTheme } from '@emotion/react';
 import { pixelToRem } from '@utils/pixelToRem';
-import { createContext, ReactNode, useContext, useState } from 'react';
+import {
+  createContext,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useContext,
+  useState,
+} from 'react';
 
 type TabsVariant = 'underline' | 'rounded';
 
-const TabsContext =
-  createContext<{
-    isFitted: boolean;
-    variant: TabsVariant;
-    selectedIndex: string;
-    setSelectedIndex: React.Dispatch<React.SetStateAction<string>>;
-  } | null>(null);
+interface TabsContextInterface {
+  isFitted: boolean;
+  variant: TabsVariant;
+  selectedIndex: string;
+  setSelectedIndex: Dispatch<SetStateAction<string>>;
+}
+
+const TabsContext = createContext<TabsContextInterface | null>(null);
 
 interface TabsProps {
   defaultValue: string;
