@@ -197,15 +197,6 @@ const ItemView = styled.div<Omit<CarouselContextInterface, 'cardLayout'>>`
     border-radius: 10px;
     margin-bottom: 10px;
   }
-  p,
-  div,
-  span {
-    display: -webkit-box;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-  }
 `;
 
 const Dot = styled.div<{ current: boolean }>`

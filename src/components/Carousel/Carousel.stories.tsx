@@ -49,7 +49,7 @@ const Template: ComponentStory<typeof Carousel> = (args) => {
           src="https://user-images.githubusercontent.com/81913106/226325071-2d690efc-0274-4778-a5e6-36a9f35a43ba.png"
           alt="item"
         />
-        <div>라떼 맛있어요. 라떼 드세요. 우아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ</div>
+        <div>라떼 맛있어요. 라떼 드세요.</div>
       </Carousel.Card>
       <Carousel.Card>
         <img
