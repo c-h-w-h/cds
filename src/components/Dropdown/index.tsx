@@ -85,9 +85,11 @@ const Trigger = ({ children }: DefaultProps<HTMLDivElement>) => {
 
   if (!context) return <></>;
 
+  const { isOpen, setIsOpen, dropdownLabel, id, setTriggerSize } = context;
+
   useEffect(() => {
-    if (!triggerRef.current || !context.setTriggerSize) return;
-    context.setTriggerSize({
+    if (!triggerRef.current || !setTriggerSize) return;
+    setTriggerSize({
       width: triggerRef.current.offsetWidth,
       height: triggerRef.current.offsetHeight,
     });
@@ -97,12 +99,12 @@ const Trigger = ({ children }: DefaultProps<HTMLDivElement>) => {
     <div
       onClick={(e: ReactMouseEvent) => {
         e.stopPropagation();
-        context.setIsOpen(!context.isOpen);
+        setIsOpen(!isOpen);
       }}
-      aria-expanded={context.isOpen}
+      aria-expanded={isOpen}
       aria-haspopup="true"
-      aria-label={context.dropdownLabel}
-      id={context.id}
+      aria-label={dropdownLabel}
+      id={id}
       ref={triggerRef}
     >
       {children}
@@ -116,37 +118,40 @@ const Menu = ({ children }: DefaultProps<HTMLDivElement>) => {
 
   if (!context) return <></>;
 
+  const { isOpen, setIsOpen, collapseOnBlur, id, direction, triggerSize } =
+    context;
+
   const toggleEventHandler = (e: MouseEvent) => {
-    if (!context.isOpen) return;
+    if (!isOpen) return;
 
     const { target } = e;
     if (!target || !menuRef.current) return;
 
     if (!menuRef.current.contains(target as Node)) {
-      context.setIsOpen(false);
+      setIsOpen(false);
     }
   };
 
   useEffect(() => {
-    if (context.collapseOnBlur) {
+    if (collapseOnBlur) {
       document.addEventListener('click', toggleEventHandler);
     }
 
     return () => {
-      if (context.collapseOnBlur) {
+      if (collapseOnBlur) {
         document.removeEventListener('click', toggleEventHandler);
       }
     };
-  }, [context.isOpen]);
+  }, [isOpen]);
 
   return (
     <MenuWrapper
       ref={menuRef}
-      aria-labelledby={context.id}
-      direction={context.direction ?? 'bottom'}
-      triggerSize={context.triggerSize ?? { width: 0, height: 0 }}
+      aria-labelledby={id}
+      direction={direction ?? 'bottom'}
+      triggerSize={triggerSize ?? { width: 0, height: 0 }}
     >
-      {context.isOpen && children}
+      {isOpen && children}
     </MenuWrapper>
   );
 };
