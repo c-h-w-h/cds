@@ -19,7 +19,7 @@ interface DropdownProps extends DefaultProps<HTMLDivElement> {
   direction?: 'left' | 'right' | 'top' | 'bottom';
 }
 
-interface IDropdownContext {
+interface DropdownContextInterface {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   collapseOnBlur: boolean;
@@ -37,7 +37,7 @@ interface IDropdownContext {
     }>
   >;
 }
-const DropdownContext = createContext<IDropdownContext | null>(null);
+const DropdownContext = createContext<DropdownContextInterface | null>(null);
 
 const Dropdown = ({
   collapseOnBlur = false,
@@ -156,12 +156,12 @@ const Menu = ({ children }: DefaultProps<HTMLDivElement>) => {
   );
 };
 
-interface IMenuWrapper {
+interface MenuWrapperProps {
   direction: 'left' | 'right' | 'top' | 'bottom';
   triggerSize: { width: number; height: number };
 }
 
-const MenuWrapper = styled.div<IMenuWrapper>`
+const MenuWrapper = styled.div<MenuWrapperProps>`
   position: absolute;
   ${({ direction, triggerSize }) => {
     switch (direction) {
