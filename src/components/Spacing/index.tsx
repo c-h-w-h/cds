@@ -7,7 +7,6 @@ interface SpacingProps {
 
 const Spacing = ({ size }: SpacingProps) => {
   const spacingStyle = css`
-    min-height: ${SPACING[size]};
     height: ${SPACING[size]};
   `;
 
