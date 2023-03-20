@@ -4,7 +4,9 @@ import Typography from '@components/Typography';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import {
+  SetStateAction,
   createContext,
+  Dispatch,
   MouseEvent,
   MouseEventHandler,
   ReactNode,
@@ -15,14 +17,18 @@ import {
   useState,
 } from 'react';
 
+interface RangeSelectorContextInterface {
+  id: string;
+  label: string;
+  min: number;
+  max: number;
+  trackWidth: number;
+  value: number;
+  setValue: Dispatch<SetStateAction<number>>;
+}
+
 const RangeSelectorContext =
-  createContext<
-    | (Omit<RangeSelectorProps, 'init' | 'children'> & {
-        value: number;
-        setValue: React.Dispatch<React.SetStateAction<number>>;
-      })
-    | null
-  >(null);
+  createContext<RangeSelectorContextInterface | null>(null);
 
 interface RangeSelectorProps {
   id: string;
