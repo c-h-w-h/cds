@@ -17,15 +17,13 @@ import {
   useState,
 } from 'react';
 
-interface RangeSelectorContextInterface {
-  id: string;
-  label: string;
-  min: number;
-  max: number;
-  trackWidth: number;
+type RangeSelectorContextInterface = Omit<
+  RangeSelectorProps,
+  'init' | 'children'
+> & {
   value: number;
   setValue: Dispatch<SetStateAction<number>>;
-}
+};
 
 const RangeSelectorContext =
   createContext<RangeSelectorContextInterface | null>(null);
