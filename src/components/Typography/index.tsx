@@ -1,5 +1,5 @@
 import { TYPOGRAPHY } from '@constants/typography';
-import { css, jsx, useTheme } from '@emotion/react';
+import { css, jsx } from '@emotion/react';
 import { CSSProperties, ReactNode, ReactPortal } from 'react';
 
 type TextNode = Exclude<
@@ -30,14 +30,13 @@ const getTypography = (variant: TypographyVariant): string => {
 
 const Typography = ({ children, variant = 'body', color }: TypographyProps) => {
   const typography = getTypography(variant);
-  const { color: themeColor } = useTheme();
 
   return jsx(
     typography,
     {
       css: css`
         margin: 0;
-        color: ${color ?? themeColor.black};
+        color: ${color ?? 'inherit'};
         font-size: ${TYPOGRAPHY[variant].size};
         font-weight: ${TYPOGRAPHY[variant].weight};
       `,
