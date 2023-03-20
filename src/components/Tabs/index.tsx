@@ -66,6 +66,8 @@ const List = ({ children }: TabListProps) => {
   if (context === null) return null;
   return (
     <Container
+      role={'tablist'}
+      aria-orientation={'horizontal'}
       overflowX="auto"
       css={css`
         -ms-overflow-style: none;
@@ -139,6 +141,10 @@ const Trigger = ({
 
   return (
     <Button
+      id={`cds-tabs-trigger-${value}`}
+      role={'tab'}
+      aria-selected={isActive}
+      aria-controls={`cds-tabs-panel-${value}`}
       text={children?.toString()}
       disabled={disabled}
       icon={icon}
@@ -193,6 +199,9 @@ const Panel = ({ value, children }: TabPanelProps) => {
 
   return (
     <Container
+      id={`cds-tabs-panel-${value}`}
+      role={'tabpanel'}
+      aria-labelledby={`cds-tabs-trigger-${value}`}
       css={css`
         padding: 1rem;
         display: ${context.selectedIndex === value ? 'block' : 'none'};
