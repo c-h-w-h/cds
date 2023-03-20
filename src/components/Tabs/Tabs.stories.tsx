@@ -20,7 +20,7 @@ const DUMMY_STR_3 =
 
 const Template: ComponentStory<typeof Tabs> = (args) => (
   <Tabs {...args}>
-    <Tabs.List>
+    <Tabs.List label={'기본 Tabs 목록'}>
       <Tabs.Trigger value="1">메인</Tabs.Trigger>
       <Tabs.Trigger value="2">이벤트</Tabs.Trigger>
       <Tabs.Trigger value="3">설정</Tabs.Trigger>
@@ -72,7 +72,7 @@ DefaultValue.args = {
 
 const WithIconsTemplate: ComponentStory<typeof Tabs> = (args) => (
   <Tabs {...args}>
-    <Tabs.List>
+    <Tabs.List label={'아이콘 확인용 Tabs 목록'}>
       <Tabs.Trigger value="1" icon={MdCelebration}>
         축하
       </Tabs.Trigger>
@@ -93,7 +93,7 @@ WithIcons.args = {
 
 const WithDisabledTemplate: ComponentStory<typeof Tabs> = (args) => (
   <Tabs {...args}>
-    <Tabs.List>
+    <Tabs.List label={'비활성화 확인용 Tabs 목록'}>
       <Tabs.Trigger value="1" icon={MdCelebration}>
         축하
       </Tabs.Trigger>
@@ -114,7 +114,7 @@ WithDisabled.args = {
 
 const ScrollableTemplate: ComponentStory<typeof Tabs> = (args) => (
   <Tabs {...args}>
-    <Tabs.List>
+    <Tabs.List label={'스크롤이 생기는 Tabs 목록'}>
       <Tabs.Trigger value="1">
         축하하는 탭을 띄우기 위한 트리거입니다.
       </Tabs.Trigger>

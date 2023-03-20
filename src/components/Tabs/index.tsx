@@ -55,10 +55,11 @@ const Tabs = ({
 };
 
 interface TabListProps {
+  label: string;
   children: ReactNode;
 }
 
-const List = ({ children }: TabListProps) => {
+const List = ({ label, children }: TabListProps) => {
   const context = useContext(TabsContext);
   const { color: themeColor } = useTheme();
   const { white, gray100 } = themeColor;
@@ -67,6 +68,7 @@ const List = ({ children }: TabListProps) => {
   return (
     <Container
       role={'tablist'}
+      aria-label={label}
       aria-orientation={'horizontal'}
       overflowX="auto"
       css={css`
