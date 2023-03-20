@@ -64,7 +64,7 @@ const List = ({ label, children }: TabListProps) => {
   const { color: themeColor } = useTheme();
   const { white, gray100 } = themeColor;
 
-  if (context === null) return null;
+  if (context === null) return <></>;
   return (
     <Container
       role={'tablist'}
@@ -113,7 +113,7 @@ const Trigger = ({
   children,
 }: TabTriggerProps) => {
   const context = useContext(TabsContext);
-  if (context === null) return null;
+  if (context === null) return <></>;
 
   const { color: themeColor } = useTheme();
   const { primary100, gray100, black, white } = themeColor;
@@ -198,7 +198,7 @@ interface TabPanelProps {
 const Panel = ({ value, children }: TabPanelProps) => {
   const context = useContext(TabsContext);
 
-  if (context === null) return null;
+  if (context === null) return <></>;
 
   return (
     <Container
