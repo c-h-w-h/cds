@@ -27,7 +27,7 @@ StartFromZero.args = {
   min: 0,
   max: 100,
   init: 0,
-  size: 200,
+  trackWidth: 200,
 };
 
 export const StartFromHalf = Template.bind({});
@@ -35,7 +35,7 @@ StartFromHalf.args = {
   min: 0,
   max: 100,
   init: 50,
-  size: 200,
+  trackWidth: 200,
 };
 
 export const StartFromEnd = Template.bind({});
@@ -43,7 +43,7 @@ StartFromEnd.args = {
   min: 0,
   max: 100,
   init: 100,
-  size: 200,
+  trackWidth: 200,
 };
 
 export const MinValueVariant = Template.bind({});
@@ -51,7 +51,7 @@ MinValueVariant.args = {
   min: 50,
   max: 100,
   init: 75,
-  size: 200,
+  trackWidth: 200,
 };
 
 export const MaxValueVariant = Template.bind({});
@@ -59,7 +59,7 @@ MaxValueVariant.args = {
   min: 50,
   max: 200,
   init: 100,
-  size: 200,
+  trackWidth: 200,
 };
 
 export const SizeVariant = Template.bind({});
@@ -67,5 +67,5 @@ SizeVariant.args = {
   min: 0,
   max: 100,
   init: 50,
-  size: 500,
+  trackWidth: 500,
 };

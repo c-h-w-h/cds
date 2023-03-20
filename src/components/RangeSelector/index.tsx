@@ -30,7 +30,7 @@ interface RangeSelectorProps {
   min: number;
   max: number;
   init: number;
-  size: number;
+  trackWidth: number;
   children: ReactNode;
 }
 
@@ -40,12 +40,12 @@ const RangeSelector = ({
   min,
   max,
   init,
-  size,
+  trackWidth,
   children,
 }: RangeSelectorProps) => {
   const [value, setValue] = useState<number>(init);
 
-  const providerValue = { id, label, value, setValue, min, max, size };
+  const providerValue = { id, label, value, setValue, min, max, trackWidth };
 
   return (
     <RangeSelectorContext.Provider value={providerValue}>
@@ -54,7 +54,7 @@ const RangeSelector = ({
         role={'slider'}
         aria-label={label}
         css={css`
-          width: ${size}px;
+          width: ${trackWidth}px;
           padding: 1rem;
         `}
       >
@@ -67,7 +67,7 @@ const RangeSelector = ({
 const RangeDisplay = () => {
   const context = useContext(RangeSelectorContext);
 
-  if (context === null) return null;
+  if (context === null) return <></>;
   return (
     <Flexbox
       justifyContent={'space-between'}
@@ -90,7 +90,7 @@ const RangeDisplay = () => {
 const fixInt = (float: number) => Number(float.toFixed(0));
 
 const calcRangeValue = (
-  size: number,
+  trackWidth: number,
   max: number,
   min: number,
   maxPos: number,
@@ -99,15 +99,15 @@ const calcRangeValue = (
 ) =>
   max -
   min -
-  fixInt((Math.round(maxPos - mousePos) / (size - offset)) * (max - min));
+  fixInt((Math.round(maxPos - mousePos) / (trackWidth - offset)) * (max - min));
 
 const setSliderPos = (
-  size: number,
+  trackWidth: number,
   max: number,
   min: number,
   value: number,
   offset = 0,
-) => ((size - offset) / (max - min)) * (value - min);
+) => ((trackWidth - offset) / (max - min)) * (value - min);
 
 const Slider = () => {
   const context = useContext(RangeSelectorContext);
@@ -123,84 +123,84 @@ const Slider = () => {
   const handleThumbPosition = (
     e: MouseEvent<HTMLDivElement> | globalThis.MouseEvent,
   ) => {
-    if (thumbRef.current && trackRef.current && context) {
-      const { size, max, min, setValue } = context;
-      let clickedPos = e.clientX;
+    if (!thumbRef.current || !trackRef.current || !context) return;
 
-      if (clickedPos > maxPosRef.current) {
-        clickedPos = maxPosRef.current;
-      } else if (clickedPos < minPosRef.current) {
-        clickedPos = minPosRef.current;
-      }
+    const { trackWidth, max, min, setValue } = context;
+    let clickedPos = e.clientX;
 
-      const rangeValue = calcRangeValue(
-        size,
-        max,
-        min,
-        maxPosRef.current,
-        clickedPos,
-        offsetRef.current,
-      );
-      const rangePos = setSliderPos(size, max, min, rangeValue + min);
-
-      thumbRef.current.style.left = `${clickedPos - offsetRef.current / 2}px`;
-      trackRef.current.style.setProperty('--filled', `${rangePos}px`);
-      setValue(min + rangeValue);
+    if (clickedPos > maxPosRef.current) {
+      clickedPos = maxPosRef.current;
+    } else if (clickedPos < minPosRef.current) {
+      clickedPos = minPosRef.current;
     }
+
+    const rangeValue = calcRangeValue(
+      trackWidth,
+      max,
+      min,
+      maxPosRef.current,
+      clickedPos,
+      offsetRef.current,
+    );
+    const rangePos = setSliderPos(trackWidth, max, min, rangeValue + min);
+
+    thumbRef.current.style.left = `${clickedPos - offsetRef.current / 2}px`;
+    trackRef.current.style.setProperty('--filled', `${rangePos}px`);
+    setValue(min + rangeValue);
   };
 
   useLayoutEffect(() => {
-    if (trackRef.current && thumbRef.current && context) {
-      const { size, max, min, value } = context;
-      const { left, right } = trackRef.current.getBoundingClientRect();
-      const { width: offset } = thumbRef.current.getBoundingClientRect();
+    if (!thumbRef.current || !trackRef.current || !context) return;
 
-      minPosRef.current = fixInt(left) + offset / 2;
-      maxPosRef.current = fixInt(right) - offset / 2;
-      offsetRef.current = offset;
+    const { trackWidth, max, min, value } = context;
+    const { left, right } = trackRef.current.getBoundingClientRect();
+    const { width: offset } = thumbRef.current.getBoundingClientRect();
 
-      const thumbPos = setSliderPos(size, max, min, value, offset);
-      const filledTrackPos = setSliderPos(size, max, min, value);
+    minPosRef.current = fixInt(left) + offset / 2;
+    maxPosRef.current = fixInt(right) - offset / 2;
+    offsetRef.current = offset;
 
-      thumbRef.current.style.left = `${left + thumbPos}px`;
-      trackRef.current.style.setProperty('--filled', `${filledTrackPos}px`);
-    }
+    const thumbPos = setSliderPos(trackWidth, max, min, value, offset);
+    const filledTrackPos = setSliderPos(trackWidth, max, min, value);
+
+    thumbRef.current.style.left = `${left + thumbPos}px`;
+    trackRef.current.style.setProperty('--filled', `${filledTrackPos}px`);
   }, []);
 
   useEffect(() => {
     const controller = new AbortController();
     const { signal } = controller;
 
-    if (movable) {
-      window.addEventListener(
-        'mousemove',
-        (e) => {
-          window.addEventListener(
-            'mouseup',
-            () => {
-              setMovable(false);
-              controller.abort();
-            },
-            { signal },
-          );
+    if (!movable) return;
 
-          if (!movable) return;
-          if (e.clientX > maxPosRef.current) return;
-          if (e.clientX < minPosRef.current) return;
-          handleThumbPosition(e);
-        },
-        { signal },
-      );
-    }
+    window.addEventListener(
+      'mousemove',
+      (e) => {
+        window.addEventListener(
+          'mouseup',
+          () => {
+            setMovable(false);
+            controller.abort();
+          },
+          { signal },
+        );
+
+        if (!movable) return;
+        if (e.clientX > maxPosRef.current) return;
+        if (e.clientX < minPosRef.current) return;
+        handleThumbPosition(e);
+      },
+      { signal },
+    );
   }, [movable]);
 
-  if (context === null) return null;
+  if (context === null) return <></>;
   return (
     <Flexbox>
       <Track
         id={`${context.id}_track`}
         ref={trackRef}
-        size={context.size}
+        trackWidth={context.trackWidth}
         trackColor={gray100}
         filledColor={primary100}
         onClick={handleThumbPosition}
@@ -223,14 +223,14 @@ const Slider = () => {
 };
 
 interface TrackProps {
-  size: number;
+  trackWidth: number;
   trackColor: string;
   filledColor: string;
   onClick: MouseEventHandler<HTMLDivElement>;
 }
 
 const Track = styled.div<TrackProps>`
-  width: ${({ size }) => size + 'px'};
+  width: ${({ trackWidth }) => trackWidth + 'px'};
   height: 3px;
   background-color: ${({ trackColor }) => trackColor};
   cursor: pointer;
