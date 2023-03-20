@@ -17,11 +17,13 @@ import NavigationButton from './NavigationButton';
 
 interface CarouselProps extends DefaultPropsWithChildren<HTMLDivElement> {
   itemList: { img?: string; content?: string }[];
-  size?: CarouselSlideSizeVariant;
+  cardSize?: CarouselSlideSizeVariant;
+  cardWidth?: number;
+  cardHeight?: number;
 }
 
 interface CarouselContextInterface {
-  size: CarouselSlideSizeVariant;
+  cardSize: CarouselSlideSizeVariant;
   WIDTH: number;
   HEIGHT: number;
   GAP: number;
@@ -29,20 +31,33 @@ interface CarouselContextInterface {
 
 const CarouselContext = createContext<CarouselContextInterface | null>(null);
 
-const Carousel = ({ size = 'large', children }: CarouselProps) => {
+const Carousel = ({
+  cardSize = 'inline',
+  children,
+  cardWidth,
+  cardHeight,
+}: CarouselProps) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPage, setTotalPage] = useState(1);
   const scrollRef = useRef<HTMLDivElement>(null);
   const totalChildren = Children.count(children);
 
-  const { WIDTH, GAP, HEIGHT } =
-    size === 'small' ? CAROUSEL_SLIDE.small : CAROUSEL_SLIDE.large;
+  const getCardSize = () => {
+    const defaultSize =
+      cardSize === 'grid' ? CAROUSEL_SLIDE.grid : CAROUSEL_SLIDE.inline;
+    if (cardWidth && cardHeight)
+      return { ...defaultSize, WIDTH: cardWidth, HEIGHT: cardHeight };
+    if (cardHeight) return { ...defaultSize, HEIGHT: cardHeight };
+    if (cardWidth) return { ...defaultSize, WIDTH: cardWidth };
+    return { ...defaultSize };
+  };
 
+  const { WIDTH, GAP, HEIGHT } = getCardSize();
   const totalSlide =
-    size === 'small' ? Math.ceil(totalChildren / 2) : totalChildren;
+    cardSize === 'grid' ? Math.ceil(totalChildren / 2) : totalChildren;
 
   const contextValues = {
-    size,
+    cardSize,
     WIDTH,
     HEIGHT,
     GAP,
@@ -89,13 +104,13 @@ const Carousel = ({ size = 'large', children }: CarouselProps) => {
           >
             {'〈'}
           </NavigationButton>
-          {size === 'large' ? (
+          {cardSize === 'inline' ? (
             <ItemList ref={scrollRef} onScroll={() => scrollEventHandler()}>
               {children}
             </ItemList>
           ) : (
             <ItemList ref={scrollRef} onScroll={() => scrollEventHandler()}>
-              <SmallSlider {...{ HEIGHT }}>{children}</SmallSlider>
+              <GridLayout {...{ HEIGHT }}>{children}</GridLayout>
             </ItemList>
           )}
           <NavigationButton
@@ -105,7 +120,7 @@ const Carousel = ({ size = 'large', children }: CarouselProps) => {
             {'〉'}
           </NavigationButton>
         </Slider>
-        {size === 'large' && (
+        {cardSize === 'inline' && (
           <Center>
             {Array.from({ length: totalPage }).map((item, index) => (
               <Dot
@@ -158,14 +173,14 @@ const Item = styled.div`
   display: inline-block;
 `;
 
-const SmallSlider = styled.div<Pick<CarouselContextInterface, 'HEIGHT'>>`
+const GridLayout = styled.div<Pick<CarouselContextInterface, 'HEIGHT'>>`
   display: flex;
   flex-flow: column wrap;
   height: ${({ HEIGHT }) => pixelToRem(`${HEIGHT * 2 + 20}px`)};
   justify-content: space-between;
 `;
 
-const ItemView = styled.div<Omit<CarouselContextInterface, 'size'>>`
+const ItemView = styled.div<Omit<CarouselContextInterface, 'cardSize'>>`
   display: flex;
   flex-direction: column;
   width: ${({ WIDTH }) => pixelToRem(`${WIDTH}px`)};

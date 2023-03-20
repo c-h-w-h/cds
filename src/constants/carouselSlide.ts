@@ -8,12 +8,12 @@ export const CAROUSEL_SLIDE: Record<
   CarouselSlideSizeVariant,
   CarouselSlideStyle
 > = {
-  small: {
+  grid: {
     WIDTH: 112,
     HEIGHT: 160,
     GAP: 20,
   },
-  large: {
+  inline: {
     WIDTH: 160,
     HEIGHT: 208,
     GAP: 20,

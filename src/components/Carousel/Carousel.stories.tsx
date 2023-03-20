@@ -66,9 +66,16 @@ const Template: ComponentStory<typeof Carousel> = (args) => {
   );
 };
 
-export const Large = Template.bind({});
+export const InlineDefault = Template.bind({});
+export const InlineCustom = Template.bind({});
+InlineCustom.args = {
+  cardWidth: 300,
+  cardHeight: 400,
+};
 
-export const Small = Template.bind({});
-Small.args = {
-  size: 'small',
+export const Grid = Template.bind({});
+Grid.args = {
+  cardSize: 'grid',
+  cardWidth: 300,
+  cardHeight: 400,
 };
