@@ -2,28 +2,51 @@ import Center from '@components-layout/Center';
 import { CAROUSEL_SLIDE } from '@constants/carouselSlide';
 import styled from '@emotion/styled';
 import { pixelToRem } from '@utils/pixelToRem';
+import { DefaultPropsWithChildren } from '@utils/types/DefaultPropsWithChildren';
 import { debounce } from 'lodash';
-import { useState, useRef, useEffect } from 'react';
+import {
+  useState,
+  useRef,
+  useEffect,
+  useContext,
+  createContext,
+  Children,
+} from 'react';
 
-import LargeCard from './LargeCard';
 import NavigationButton from './NavigationButton';
-import SmallCard from './SmallCard';
 
-type CarouselProps = {
+interface CarouselProps extends DefaultPropsWithChildren<HTMLDivElement> {
   itemList: { img?: string; content?: string }[];
   size?: CarouselSlideSizeVariant;
-};
+}
 
-const Carousel = ({ itemList, size = 'large' }: CarouselProps) => {
+interface CarouselContextInterface {
+  size: CarouselSlideSizeVariant;
+  WIDTH: number;
+  HEIGHT: number;
+  GAP: number;
+}
+
+const CarouselContext = createContext<CarouselContextInterface | null>(null);
+
+const Carousel = ({ size = 'large', children }: CarouselProps) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPage, setTotalPage] = useState(1);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const totalChildren = Children.count(children);
 
-  const { WIDTH, GAP } =
+  const { WIDTH, GAP, HEIGHT } =
     size === 'small' ? CAROUSEL_SLIDE.small : CAROUSEL_SLIDE.large;
 
   const totalSlide =
-    size === 'small' ? Math.ceil(itemList.length / 2) : itemList.length;
+    size === 'small' ? Math.ceil(totalChildren / 2) : totalChildren;
+
+  const contextValues = {
+    size,
+    WIDTH,
+    HEIGHT,
+    GAP,
+  };
 
   const isLastSlide = (currentLeft: number) => {
     return window.innerWidth + currentLeft === (WIDTH + GAP) * totalSlide + 68;
@@ -56,50 +79,55 @@ const Carousel = ({ itemList, size = 'large' }: CarouselProps) => {
       window.removeEventListener('resize', initPageHandler);
     };
   }, []);
-
   return (
-    <CarouselWrapper>
-      <Slider>
-        <NavigationButton
-          clickHandler={() => setCurrentPage(currentPage - 1)}
-          disabled={currentPage === 0}
-        >
-          {'〈'}
-        </NavigationButton>
-        <ItemList ref={scrollRef} onScroll={() => scrollEventHandler()}>
-          {itemList.map((item, index) => (
-            <Item key={`${JSON.stringify(item)}+${index}`}>
-              {size === 'large' ? (
-                <LargeCard {...{ item }} />
-              ) : (
-                index % 2 === 0 && (
-                  <SmallCard
-                    firstItem={item}
-                    secondItem={itemList.at(index + 1)}
-                  />
-                )
-              )}
-            </Item>
-          ))}
-        </ItemList>
-        <NavigationButton
-          clickHandler={() => setCurrentPage(currentPage + 1)}
-          disabled={currentPage === totalPage - 1 || totalPage === 0}
-        >
-          {'〉'}
-        </NavigationButton>
-      </Slider>
-      {size === 'large' && (
-        <Center>
-          {Array.from({ length: totalPage }).map((item, index) => (
-            <Dot
-              key={`${JSON.stringify(item)}+${index}`}
-              current={index === currentPage}
-            />
-          ))}
-        </Center>
-      )}
-    </CarouselWrapper>
+    <CarouselContext.Provider value={contextValues}>
+      <CarouselWrapper>
+        <Slider>
+          <NavigationButton
+            clickHandler={() => setCurrentPage(currentPage - 1)}
+            disabled={currentPage === 0}
+          >
+            {'〈'}
+          </NavigationButton>
+          {size === 'large' ? (
+            <ItemList ref={scrollRef} onScroll={() => scrollEventHandler()}>
+              {children}
+            </ItemList>
+          ) : (
+            <ItemList ref={scrollRef} onScroll={() => scrollEventHandler()}>
+              <SmallSlider {...{ HEIGHT }}>{children}</SmallSlider>
+            </ItemList>
+          )}
+          <NavigationButton
+            clickHandler={() => setCurrentPage(currentPage + 1)}
+            disabled={currentPage === totalPage - 1 || totalPage === 0}
+          >
+            {'〉'}
+          </NavigationButton>
+        </Slider>
+        {size === 'large' && (
+          <Center>
+            {Array.from({ length: totalPage }).map((item, index) => (
+              <Dot
+                key={`${JSON.stringify(item)}+${index}`}
+                current={index === currentPage}
+              />
+            ))}
+          </Center>
+        )}
+      </CarouselWrapper>
+    </CarouselContext.Provider>
+  );
+};
+
+const Card = ({ children }: DefaultPropsWithChildren<HTMLDivElement>) => {
+  const context = useContext(CarouselContext);
+  if (!context) return <></>;
+  const { WIDTH, GAP, HEIGHT } = context;
+  return (
+    <Item>
+      <ItemView {...{ WIDTH, GAP, HEIGHT }}>{children}</ItemView>
+    </Item>
   );
 };
 
@@ -128,8 +156,39 @@ const ItemList = styled.div`
 
 const Item = styled.div`
   display: inline-block;
-  width: min-content;
-  scroll-snap-align: start;
+`;
+
+const SmallSlider = styled.div<Pick<CarouselContextInterface, 'HEIGHT'>>`
+  display: flex;
+  flex-flow: column wrap;
+  height: ${({ HEIGHT }) => pixelToRem(`${HEIGHT * 2 + 20}px`)};
+  justify-content: space-between;
+`;
+
+const ItemView = styled.div<Omit<CarouselContextInterface, 'size'>>`
+  display: flex;
+  flex-direction: column;
+  width: ${({ WIDTH }) => pixelToRem(`${WIDTH}px`)};
+  height: ${({ HEIGHT }) => pixelToRem(`${HEIGHT}px`)};
+  margin-right: ${({ GAP }) => pixelToRem(`${GAP}px`)};
+  transform: translateX(${pixelToRem('10px')});
+  background-color: ${({ theme }) => theme.color.white};
+  img {
+    width: 100%;
+    height: ${({ WIDTH }) => pixelToRem(`${WIDTH}px`)};
+    border: 1px solid ${({ theme }) => theme.color.gray100};
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  p,
+  div,
+  span {
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
 `;
 
 const Dot = styled.div<{ current: boolean }>`
@@ -140,5 +199,7 @@ const Dot = styled.div<{ current: boolean }>`
   width: ${pixelToRem('8px')};
   transition: all 0.1s;
 `;
+
+Carousel.Card = Card;
 
 export default Carousel;

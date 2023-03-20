@@ -10,7 +10,7 @@ export const CAROUSEL_SLIDE: Record<
 > = {
   small: {
     WIDTH: 112,
-    HEIGHT: 208,
+    HEIGHT: 160,
     GAP: 20,
   },
   large: {

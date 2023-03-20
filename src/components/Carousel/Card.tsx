@@ -1,19 +1,12 @@
-import Typography from '@components/Typography';
 import { CAROUSEL_SLIDE } from '@constants/carouselSlide';
 import styled from '@emotion/styled';
 import { pixelToRem } from '@utils/pixelToRem';
-
-type LargeCardProps = {
-  item: { img?: string; content?: string };
-};
+import { DefaultPropsWithChildren } from '@utils/types/DefaultPropsWithChildren';
 
 const { WIDTH, HEIGHT, GAP } = CAROUSEL_SLIDE.large;
 
-const LargeCards = ({ item }: LargeCardProps) => (
-  <ItemView>
-    {item.img && <img src={item.img} alt="Item" />}
-    <Typography variant="body">{item.content ? item.content : ''}</Typography>
-  </ItemView>
+const Card = ({ children }: DefaultPropsWithChildren<HTMLDivElement>) => (
+  <ItemView>{children}</ItemView>
 );
 
 const ItemView = styled.div`
@@ -26,7 +19,7 @@ const ItemView = styled.div`
   background-color: ${({ theme }) => theme.color.white};
   img {
     width: 100%;
-    height: 10rem;
+    height: ${pixelToRem(`${WIDTH}px`)};
     border: 1px solid ${({ theme }) => theme.color.gray100};
     border-radius: 10px;
     margin-bottom: 10px;
@@ -40,4 +33,4 @@ const ItemView = styled.div`
   }
 `;
 
-export default LargeCards;
+export default Card;
