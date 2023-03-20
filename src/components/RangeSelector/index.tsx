@@ -95,22 +95,19 @@ const calcRangeValue = (
   min: number,
   maxPos: number,
   mousePos: number,
-  offset?: number,
+  offset = 0,
 ) =>
   max -
   min -
-  fixInt(
-    (Math.round(maxPos - mousePos) / (offset ? size - offset : size)) *
-      (max - min),
-  );
+  fixInt((Math.round(maxPos - mousePos) / (size - offset)) * (max - min));
 
 const setSliderPos = (
   size: number,
   max: number,
   min: number,
   value: number,
-  offset?: number,
-) => ((offset ? size - offset : size) / (max - min)) * (value - min);
+  offset = 0,
+) => ((size - offset) / (max - min)) * (value - min);
 
 const Slider = () => {
   const context = useContext(RangeSelectorContext);
@@ -178,10 +175,14 @@ const Slider = () => {
       window.addEventListener(
         'mousemove',
         (e) => {
-          window.addEventListener('mouseup', () => {
-            setMovable(false);
-            controller.abort();
-          });
+          window.addEventListener(
+            'mouseup',
+            () => {
+              setMovable(false);
+              controller.abort();
+            },
+            { signal },
+          );
 
           if (!movable) return;
           if (e.clientX > maxPosRef.current) return;
