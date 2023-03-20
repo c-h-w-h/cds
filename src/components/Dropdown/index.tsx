@@ -20,29 +20,29 @@ interface DropdownProps extends DefaultProps<HTMLDivElement> {
 }
 
 interface IDropdownContext {
-  isOpen?: boolean;
-  setIsOpen?: Dispatch<SetStateAction<boolean>>;
-  collapseOnBlur?: boolean;
-  dropdownLabel?: string;
-  id?: string;
-  direction?: 'left' | 'right' | 'top' | 'bottom';
-  triggerSize?: {
+  isOpen: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  collapseOnBlur: boolean;
+  dropdownLabel: string;
+  id: string;
+  direction: 'left' | 'right' | 'top' | 'bottom';
+  triggerSize: {
     width: number;
     height: number;
   };
-  setTriggerSize?: Dispatch<
+  setTriggerSize: Dispatch<
     SetStateAction<{
       width: number;
       height: number;
     }>
   >;
 }
-const DropdownContext = createContext<IDropdownContext>({});
+const DropdownContext = createContext<IDropdownContext | null>(null);
 
 const Dropdown = ({
   collapseOnBlur = false,
   dropdownLabel = '',
-  id,
+  id = '',
   direction = 'bottom',
   children,
 }: DropdownProps) => {
@@ -80,75 +80,73 @@ const Dropdown = ({
 };
 
 const Trigger = ({ children }: DefaultProps<HTMLDivElement>) => {
-  const { isOpen, setIsOpen, dropdownLabel, id, setTriggerSize } =
-    useContext(DropdownContext);
+  const context = useContext(DropdownContext);
   const triggerRef = useRef<HTMLDivElement | null>(null);
 
+  if (!context) return <></>;
+
   useEffect(() => {
-    if (!triggerRef.current || !setTriggerSize) return;
-    setTriggerSize({
+    if (!triggerRef.current || !context.setTriggerSize) return;
+    context.setTriggerSize({
       width: triggerRef.current.offsetWidth,
       height: triggerRef.current.offsetHeight,
     });
   }, [triggerRef.current]);
 
   return (
-    <>
-      {setIsOpen && (
-        <div
-          onClick={(e: ReactMouseEvent) => {
-            e.stopPropagation();
-            setIsOpen(!isOpen);
-          }}
-          aria-expanded={isOpen}
-          aria-haspopup="true"
-          aria-label={dropdownLabel}
-          id={id}
-          ref={triggerRef}
-        >
-          {children}
-        </div>
-      )}
-    </>
+    <div
+      onClick={(e: ReactMouseEvent) => {
+        e.stopPropagation();
+        context.setIsOpen(!context.isOpen);
+      }}
+      aria-expanded={context.isOpen}
+      aria-haspopup="true"
+      aria-label={context.dropdownLabel}
+      id={context.id}
+      ref={triggerRef}
+    >
+      {children}
+    </div>
   );
 };
 
 const Menu = ({ children }: DefaultProps<HTMLDivElement>) => {
-  const { isOpen, setIsOpen, collapseOnBlur, id, direction, triggerSize } =
-    useContext(DropdownContext);
+  const context = useContext(DropdownContext);
   const menuRef = useRef<HTMLDivElement | null>(null);
 
+  if (!context) return <></>;
+
   const toggleEventHandler = (e: MouseEvent) => {
-    if (!isOpen) return;
+    if (!context.isOpen) return;
 
     const { target } = e;
-    if (!target || !menuRef.current || !setIsOpen) return;
+    if (!target || !menuRef.current) return;
 
     if (!menuRef.current.contains(target as Node)) {
-      setIsOpen(false);
+      context.setIsOpen(false);
     }
   };
 
   useEffect(() => {
-    if (collapseOnBlur) {
+    if (context.collapseOnBlur) {
       document.addEventListener('click', toggleEventHandler);
     }
 
     return () => {
-      if (collapseOnBlur) {
+      if (context.collapseOnBlur) {
         document.removeEventListener('click', toggleEventHandler);
       }
     };
-  }, [isOpen]);
+  }, [context.isOpen]);
 
   return (
     <MenuWrapper
       ref={menuRef}
-      aria-labelledby={id}
-      direction={direction ?? 'bottom'}
-      triggerSize={triggerSize ?? { width: 0, height: 0 }}
+      aria-labelledby={context.id}
+      direction={context.direction ?? 'bottom'}
+      triggerSize={context.triggerSize ?? { width: 0, height: 0 }}
     >
-      {isOpen && children}
+      {context.isOpen && children}
     </MenuWrapper>
   );
 };
