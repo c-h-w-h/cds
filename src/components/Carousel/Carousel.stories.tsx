@@ -42,11 +42,7 @@ const Template: ComponentStory<typeof Carousel> = (args) => {
         <Typography variant="body">라떼 맛있어요. 라떼 드세요.</Typography>
       </Carousel.Card>
       <Carousel.Card>
-        <img
-          src="https://user-images.githubusercontent.com/81913106/226325071-2d690efc-0274-4778-a5e6-36a9f35a43ba.png"
-          alt="item"
-        />
-        <Typography variant="body">라떼 맛있어요. 라떼 드세요.</Typography>
+        <Typography variant="body">이미지 없는 카드</Typography>
       </Carousel.Card>
       <Carousel.Card>
         <img
@@ -75,7 +71,11 @@ InlineCustom.args = {
 
 export const Grid = Template.bind({});
 Grid.args = {
-  cardSize: 'grid',
+  cardLayout: 'grid',
+};
+export const GridCustom = Template.bind({});
+GridCustom.args = {
+  cardLayout: 'grid',
   cardWidth: 300,
   cardHeight: 400,
 };

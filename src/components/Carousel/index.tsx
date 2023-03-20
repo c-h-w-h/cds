@@ -17,13 +17,13 @@ import NavigationButton from './NavigationButton';
 
 interface CarouselProps extends DefaultPropsWithChildren<HTMLDivElement> {
   itemList: { img?: string; content?: string }[];
-  cardSize?: CarouselSlideSizeVariant;
+  cardLayout?: CarouselSlideSizeVariant;
   cardWidth?: number;
   cardHeight?: number;
 }
 
 interface CarouselContextInterface {
-  cardSize: CarouselSlideSizeVariant;
+  cardLayout: CarouselSlideSizeVariant;
   WIDTH: number;
   HEIGHT: number;
   GAP: number;
@@ -32,7 +32,7 @@ interface CarouselContextInterface {
 const CarouselContext = createContext<CarouselContextInterface | null>(null);
 
 const Carousel = ({
-  cardSize = 'inline',
+  cardLayout = 'inline',
   children,
   cardWidth,
   cardHeight,
@@ -44,7 +44,7 @@ const Carousel = ({
 
   const getCardSize = () => {
     const defaultSize =
-      cardSize === 'grid' ? CAROUSEL_SLIDE.grid : CAROUSEL_SLIDE.inline;
+      cardLayout === 'grid' ? CAROUSEL_SLIDE.grid : CAROUSEL_SLIDE.inline;
     if (cardWidth && cardHeight)
       return { ...defaultSize, WIDTH: cardWidth, HEIGHT: cardHeight };
     if (cardHeight) return { ...defaultSize, HEIGHT: cardHeight };
@@ -54,17 +54,18 @@ const Carousel = ({
 
   const { WIDTH, GAP, HEIGHT } = getCardSize();
   const totalSlide =
-    cardSize === 'grid' ? Math.ceil(totalChildren / 2) : totalChildren;
+    cardLayout === 'grid' ? Math.ceil(totalChildren / 2) : totalChildren;
 
   const contextValues = {
-    cardSize,
+    cardLayout,
     WIDTH,
     HEIGHT,
     GAP,
   };
 
   const isLastSlide = (currentLeft: number) => {
-    return window.innerWidth + currentLeft === (WIDTH + GAP) * totalSlide + 68;
+    const sliderWidth = scrollRef.current ? scrollRef.current.offsetWidth : 0;
+    return currentLeft === (WIDTH + GAP) * totalSlide - sliderWidth;
   };
 
   const scrollEventHandler = debounce(() => {
@@ -79,7 +80,7 @@ const Carousel = ({
   const initPageHandler = debounce(() => {
     const sliderWidth = scrollRef.current ? scrollRef.current.offsetWidth : 0;
     const total = totalSlide - Math.floor(sliderWidth / (WIDTH + GAP)) + 1;
-    setTotalPage(total < 0 ? 0 : total);
+    setTotalPage(total <= 0 ? 1 : total);
     setCurrentPage(0);
   }, 200);
 
@@ -104,7 +105,7 @@ const Carousel = ({
           >
             {'〈'}
           </NavigationButton>
-          {cardSize === 'inline' ? (
+          {cardLayout === 'inline' ? (
             <ItemList ref={scrollRef} onScroll={() => scrollEventHandler()}>
               {children}
             </ItemList>
@@ -120,7 +121,7 @@ const Carousel = ({
             {'〉'}
           </NavigationButton>
         </Slider>
-        {cardSize === 'inline' && (
+        {cardLayout === 'inline' && (
           <Center>
             {Array.from({ length: totalPage }).map((item, index) => (
               <Dot
@@ -156,6 +157,7 @@ const Slider = styled.div`
   display: flex;
   margin: 0 ${pixelToRem('10px')};
 `;
+
 const ItemList = styled.div`
   overflow-x: scroll;
   width: 100%;
@@ -180,7 +182,7 @@ const GridLayout = styled.div<Pick<CarouselContextInterface, 'HEIGHT'>>`
   justify-content: space-between;
 `;
 
-const ItemView = styled.div<Omit<CarouselContextInterface, 'cardSize'>>`
+const ItemView = styled.div<Omit<CarouselContextInterface, 'cardLayout'>>`
   display: flex;
   flex-direction: column;
   width: ${({ WIDTH }) => pixelToRem(`${WIDTH}px`)};
