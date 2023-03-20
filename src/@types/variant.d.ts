@@ -8,5 +8,5 @@ declare type TypographyVariant =
 
 declare type ImageSizeVariant = 'small' | 'medium' | 'large';
 declare type ImageShapeVariant = 'circle' | 'rounded';
-
+declare type CarouselSlideSizeVariant = 'small' | 'large';
 declare type SpinnerSizeVariant = 'small' | 'large';

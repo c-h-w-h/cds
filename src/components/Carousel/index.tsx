@@ -1,4 +1,5 @@
 import Center from '@components-layout/Center';
+import { CAROUSEL_SLIDE } from '@constants/carouselSlide';
 import styled from '@emotion/styled';
 import { pixelToRem } from '@utils/pixelToRem';
 import { debounce } from 'lodash';
@@ -10,38 +11,58 @@ import SmallCard from './SmallCard';
 
 type CarouselProps = {
   itemList: { img?: string; content?: string }[];
-  size?: 'small' | 'large';
+  size?: CarouselSlideSizeVariant;
 };
 
 const Carousel = ({ itemList, size = 'large' }: CarouselProps) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const lastIndex =
-    size === 'small'
-      ? Math.floor(itemList.length / 2) - 1
-      : itemList.length - 1;
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalPage, setTotalPage] = useState(1);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  const { WIDTH, GAP } =
+    size === 'small' ? CAROUSEL_SLIDE.small : CAROUSEL_SLIDE.large;
+
+  const totalSlide =
+    size === 'small' ? Math.ceil(itemList.length / 2) : itemList.length;
+
+  const isLastSlide = (currentLeft: number) => {
+    return window.innerWidth + currentLeft === (WIDTH + GAP) * totalSlide + 68;
+  };
+
   const scrollEventHandler = debounce(() => {
-    const currentLeft = scrollRef.current?.scrollLeft
-      ? scrollRef.current?.scrollLeft
-      : 0;
-    const currentWidth = scrollRef.current?.scrollWidth
-      ? scrollRef.current?.scrollWidth
-      : 0;
-    if (currentWidth - currentLeft < 300) {
-      setCurrentIndex(Math.ceil(currentLeft / 180));
-    } else {
-      setCurrentIndex(Math.floor(currentLeft / 180));
+    const currentLeft = scrollRef.current ? scrollRef.current.scrollLeft : 0;
+    if (isLastSlide(currentLeft)) {
+      setCurrentPage(totalPage - 1);
+      return;
     }
+    setCurrentPage(Math.floor(currentLeft / (WIDTH + GAP)));
   }, 200);
+
+  const initPageHandler = debounce(() => {
+    const sliderWidth = scrollRef.current ? scrollRef.current.offsetWidth : 0;
+    const total = totalSlide - Math.floor(sliderWidth / (WIDTH + GAP)) + 1;
+    setTotalPage(total < 0 ? 0 : total);
+    setCurrentPage(0);
+  }, 200);
+
   useEffect(() => {
-    scrollRef.current?.scrollTo(currentIndex * 180, 0);
-  }, [currentIndex]);
+    scrollRef.current?.scrollTo(currentPage * (WIDTH + GAP), 0);
+  }, [currentPage]);
+
+  useEffect(() => {
+    initPageHandler();
+    window.addEventListener('resize', initPageHandler);
+    return () => {
+      window.removeEventListener('resize', initPageHandler);
+    };
+  }, []);
+
   return (
     <CarouselWrapper>
       <Slider>
         <NavigationButton
-          clickHandler={() => setCurrentIndex(currentIndex - 1)}
-          disabled={currentIndex === 0}
+          clickHandler={() => setCurrentPage(currentPage - 1)}
+          disabled={currentPage === 0}
         >
           {'〈'}
         </NavigationButton>
@@ -62,18 +83,18 @@ const Carousel = ({ itemList, size = 'large' }: CarouselProps) => {
           ))}
         </ItemList>
         <NavigationButton
-          clickHandler={() => setCurrentIndex(currentIndex + 1)}
-          disabled={currentIndex === lastIndex}
+          clickHandler={() => setCurrentPage(currentPage + 1)}
+          disabled={currentPage === totalPage - 1 || totalPage === 0}
         >
           {'〉'}
         </NavigationButton>
       </Slider>
       {size === 'large' && (
         <Center>
-          {itemList.map((item, index) => (
+          {Array.from({ length: totalPage }).map((item, index) => (
             <Dot
               key={`${JSON.stringify(item)}+${index}`}
-              current={index === currentIndex}
+              current={index === currentPage}
             />
           ))}
         </Center>
@@ -117,7 +138,7 @@ const Dot = styled.div<{ current: boolean }>`
   border-radius: 100%;
   height: ${pixelToRem('8px')};
   width: ${pixelToRem('8px')};
-  transition: all 0.3s;
+  transition: all 0.1s;
 `;
 
 export default Carousel;

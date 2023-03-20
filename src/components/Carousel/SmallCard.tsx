@@ -1,4 +1,5 @@
 import Typography from '@components/Typography';
+import { CAROUSEL_SLIDE } from '@constants/carouselSlide';
 import styled from '@emotion/styled';
 import { pixelToRem } from '@utils/pixelToRem';
 
@@ -6,6 +7,8 @@ type SmallCardsProps = {
   firstItem: { img?: string; content?: string };
   secondItem: { img?: string; content?: string } | undefined;
 };
+
+const { WIDTH, HEIGHT, GAP } = CAROUSEL_SLIDE.small;
 
 const SmallCards = ({ firstItem, secondItem }: SmallCardsProps) => (
   <>
@@ -27,9 +30,9 @@ const SmallCards = ({ firstItem, secondItem }: SmallCardsProps) => (
 const ItemView = styled.div`
   display: flex;
   flex-direction: column;
-  width: 7rem;
-  height: 10rem;
-  margin-right: ${pixelToRem('20px')};
+  width: ${pixelToRem(`${WIDTH}px`)};
+  height: ${pixelToRem(`${HEIGHT}px`)};
+  margin-right: ${pixelToRem(`${GAP}px`)};
   margin-bottom: ${pixelToRem('10px')};
   transform: translateX(${pixelToRem('10px')});
   background-color: ${({ theme }) => theme.color.white};
