@@ -164,7 +164,7 @@ const Trigger = ({
             fill: ${gray100};
           }
 
-          &: hover {
+          &:hover {
             border-bottom-color: ${gray100};
           }
         }
