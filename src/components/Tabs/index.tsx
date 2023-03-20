@@ -147,6 +147,7 @@ const Trigger = ({
       role={'tab'}
       aria-selected={isActive}
       aria-controls={`cds-tabs-panel-${value}`}
+      tabIndex={isActive ? 0 : -1}
       text={children?.toString()}
       disabled={disabled}
       icon={icon}
@@ -204,6 +205,7 @@ const Panel = ({ value, children }: TabPanelProps) => {
       id={`cds-tabs-panel-${value}`}
       role={'tabpanel'}
       aria-labelledby={`cds-tabs-trigger-${value}`}
+      tabIndex={0}
       css={css`
         padding: 1rem;
         display: ${context.selectedIndex === value ? 'block' : 'none'};
