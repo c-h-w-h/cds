@@ -1,3 +1,4 @@
+import { useTheme } from '@emotion/react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import Highlight from './Highlight';
@@ -12,11 +13,16 @@ export default {
   },
 } as ComponentMeta<typeof Typography>;
 
-const Template: ComponentStory<typeof Typography> = (args) => (
-  <Typography {...args}>
-    안녕하세요. 콜드스터디 디자인 시스템입니다. 🧊
-  </Typography>
-);
+const Template: ComponentStory<typeof Typography> = (args) => {
+  const { color } = useTheme();
+  const { black } = color;
+
+  return (
+    <Typography color={black} {...args}>
+      안녕하세요. 콜드스터디 디자인 시스템입니다. 🧊
+    </Typography>
+  );
+};
 
 export const Title1 = Template.bind({});
 Title1.args = {
@@ -54,16 +60,26 @@ Title1WithColor.args = {
   color: 'blue',
 };
 
-export const Title1Highlighted: ComponentStory<typeof Typography> = () => (
-  <Typography variant="title1">
-    안녕하세요. <Highlight>콜드스터디</Highlight> 디자인 시스템입니다. 🧊
-  </Typography>
-);
+export const Title1Highlighted: ComponentStory<typeof Typography> = () => {
+  const { color } = useTheme();
+  const { black } = color;
 
-export const Title1CustomHighlighted: ComponentStory<typeof Typography> =
-  () => (
-    <Typography variant="title1">
-      안녕하세요. <Highlight color="blue">콜드스터디</Highlight> 디자인
-      시스템입니다. 🧊
+  return (
+    <Typography variant="title1" color={black}>
+      안녕하세요. <Highlight>콜드스터디</Highlight> 디자인 시스템입니다. 🧊
     </Typography>
   );
+};
+
+export const Title1CustomHighlighted: ComponentStory<typeof Typography> =
+  () => {
+    const { color } = useTheme();
+    const { black } = color;
+
+    return (
+      <Typography variant="title1" color={black}>
+        안녕하세요. <Highlight color="blue">콜드스터디</Highlight> 디자인
+        시스템입니다. 🧊
+      </Typography>
+    );
+  };
