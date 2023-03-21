@@ -99,12 +99,6 @@ const Carousel = ({
     <CarouselContext.Provider value={contextValues}>
       <CarouselWrapper>
         <Slider>
-          <NavigationButton
-            clickHandler={() => setCurrentPage(currentPage - 1)}
-            disabled={currentPage === 0}
-          >
-            {'〈'}
-          </NavigationButton>
           {line === 1 ? (
             <ItemList ref={scrollRef} onScroll={() => scrollEventHandler()}>
               {children}
@@ -114,12 +108,20 @@ const Carousel = ({
               <GridLayout {...{ HEIGHT, line }}>{children}</GridLayout>
             </ItemList>
           )}
-          <NavigationButton
-            clickHandler={() => setCurrentPage(currentPage + 1)}
-            disabled={currentPage === totalPage - 1 || totalPage === 0}
-          >
-            {'〉'}
-          </NavigationButton>
+          <NavigationContainer>
+            <NavigationButton
+              clickHandler={() => setCurrentPage(currentPage - 1)}
+              disabled={currentPage === 0}
+            >
+              {'〈'}
+            </NavigationButton>
+            <NavigationButton
+              clickHandler={() => setCurrentPage(currentPage + 1)}
+              disabled={currentPage === totalPage - 1 || totalPage === 0}
+            >
+              {'〉'}
+            </NavigationButton>
+          </NavigationContainer>
         </Slider>
         {line === 1 && (
           <Center>
@@ -153,6 +155,7 @@ const CarouselWrapper = styled.div`
 `;
 
 const Slider = styled.div`
+  position: relative;
   overflow: hidden;
   display: flex;
   margin: 0 ${pixelToRem('10px')};
@@ -202,6 +205,16 @@ const ItemView = styled.div<Omit<CarouselContextInterface, 'line'>>`
     border-radius: 10px;
     margin-bottom: 10px;
   }
+`;
+
+const NavigationContainer = styled.div`
+  width: 98%;
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 const Dot = styled.div<{ current: boolean }>`

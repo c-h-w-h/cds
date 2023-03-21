@@ -25,25 +25,22 @@ const NavigationButton = ({
 const Button = styled.button`
   width: 1.8rem;
   height: 1.8rem;
-  color: ${({ theme }) => theme.color.black};
-  background-color: ${({ theme }) => theme.color.white};
+  color: ${({ theme }) => theme.color.white};
+  background-color: ${({ theme }) => theme.color.black};
+  background-color: rgba(0, 0, 0, 0.2);
   border-radius: 1.3rem;
   line-height: 1.8rem;
-  margin: 0 0.5rem;
   font-weight: 600;
   font-size: 1.5rem;
   @media (hover: hover) {
     &:enabled:hover {
-      background-color: ${({ theme }) => theme.color.primary100};
-      color: ${({ theme }) => theme.color.white};
-      opacity: 0.5;
+      background-color: ${({ theme }) => theme.color.black};
+      background-color: rgba(0, 0, 0, 0.5);
       cursor: pointer;
     }
   }
   &:enabled:active {
     filter: brightness(0.7);
-    background-color: ${({ theme }) => theme.color.primary100};
-    color: ${({ theme }) => theme.color.white};
   }
   &:disabled {
     opacity: 0;
