@@ -1,5 +1,5 @@
-import Button from '@components/Button';
-import { IconSource } from '@components/Icon';
+import Icon, { IconSource } from '@components/Icon';
+import Typography from '@components/Typography';
 import Container from '@components-layout/Container';
 import Flexbox from '@components-layout/Flexbox';
 import { css, useTheme } from '@emotion/react';
@@ -10,6 +10,7 @@ import {
   ReactNode,
   SetStateAction,
   useContext,
+  useRef,
   useState,
 } from 'react';
 
@@ -101,20 +102,16 @@ const List = ({ label, children }: TabListProps) => {
 
 interface TabTriggerProps {
   value: string;
-  children: ReactNode;
-  disabled?: boolean;
+  text?: string;
   icon?: IconSource;
+  disabled?: boolean;
 }
 
-const Trigger = ({
-  value,
-  disabled = false,
-  icon,
-  children,
-}: TabTriggerProps) => {
+const Trigger = ({ value, text, icon, disabled = false }: TabTriggerProps) => {
   const context = useContext(TabsContext);
   if (context === null) return <></>;
 
+  const triggerRef = useRef<HTMLButtonElement | null>(null);
   const { color: themeColor } = useTheme();
   const { primary100, gray100, black, white } = themeColor;
   const isActive = context.selectedIndex === value;
@@ -141,19 +138,32 @@ const Trigger = ({
     rounded: roundedStyle,
   };
 
+  const handleTriggerEvent = () => {
+    if (disabled || !triggerRef.current) return;
+    context.setSelectedIndex(value);
+    triggerRef.current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+      inline: 'start',
+    });
+  };
+
   return (
-    <Button
+    <button
+      ref={triggerRef}
       id={`cds-tabs-trigger-${value}`}
       role={'tab'}
       aria-selected={isActive}
       aria-controls={`cds-tabs-panel-${value}`}
       tabIndex={isActive ? 0 : -1}
-      text={children?.toString()}
       disabled={disabled}
-      icon={icon}
-      iconSize={pixelToRem('16px')}
-      onClick={() => !disabled && context.setSelectedIndex(value)}
+      onClick={handleTriggerEvent}
       css={css`
+        display: flex;
+        justify-content: center;
+        padding: 0.75rem;
+        text-decoration: none;
+        scroll-margin: ${pixelToRem('24px')};
         ${triggerStyles[context.variant]}
 
         & > p {
@@ -165,8 +175,17 @@ const Trigger = ({
         }
 
         &:hover {
-          background-color: ${primary100};
+          cursor: pointer;
+          background-color: ${isActive ? white : primary100};
           border-bottom-color: ${primary100};
+
+          & > * {
+            color: ${isActive ? primary100 : white};
+          }
+
+          & > svg {
+            fill: ${isActive ? primary100 : white};
+          }
         }
 
         &:disabled {
@@ -186,7 +205,16 @@ const Trigger = ({
           }
         }
       `}
-    />
+    >
+      {icon && (
+        <Icon
+          source={icon}
+          size={pixelToRem('16px')}
+          color={isActive ? primary100 : black}
+        />
+      )}
+      {text && <Typography variant="body">{text}</Typography>}
+    </button>
   );
 };
 
