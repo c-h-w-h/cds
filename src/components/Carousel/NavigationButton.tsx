@@ -14,11 +14,9 @@ const NavigationButton = ({
   children,
 }: NavButtonProps) => {
   return (
-    <Center>
-      <Button onClick={clickHandler} {...{ disabled }}>
-        {children}
-      </Button>
-    </Center>
+    <Button onClick={clickHandler} {...{ disabled }}>
+      <Center>{children}</Center>
+    </Button>
   );
 };
 
@@ -29,9 +27,6 @@ const Button = styled.button`
   background-color: ${({ theme }) => theme.color.black};
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 1.3rem;
-  line-height: 1.8rem;
-  font-weight: 600;
-  font-size: 1.5rem;
   @media (hover: hover) {
     &:enabled:hover {
       background-color: ${({ theme }) => theme.color.black};

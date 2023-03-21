@@ -12,11 +12,11 @@ import {
   createContext,
   Children,
 } from 'react';
+import { MdArrowBackIosNew, MdArrowForwardIos } from 'react-icons/md';
 
 import NavigationButton from './NavigationButton';
 
 interface CarouselProps extends DefaultPropsWithChildren<HTMLDivElement> {
-  itemList: { img?: string; content?: string }[];
   line?: number;
   cardWidth?: number;
   cardHeight?: number;
@@ -113,13 +113,13 @@ const Carousel = ({
               clickHandler={() => setCurrentPage(currentPage - 1)}
               disabled={currentPage === 0}
             >
-              {'〈'}
+              <MdArrowBackIosNew />
             </NavigationButton>
             <NavigationButton
               clickHandler={() => setCurrentPage(currentPage + 1)}
               disabled={currentPage === totalPage - 1 || totalPage === 0}
             >
-              {'〉'}
+              <MdArrowForwardIos />
             </NavigationButton>
           </NavigationContainer>
         </Slider>
