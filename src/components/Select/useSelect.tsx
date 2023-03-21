@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useRef } from 'react';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const useOptions = (id: string, setValue?: Dispatch<SetStateAction<any>>) => {
+const useSelect = (id: string, setValue?: Dispatch<SetStateAction<any>>) => {
   const selectRef = useRef<HTMLSelectElement>(null);
   const optionRefs = useRef<HTMLLIElement[]>([]);
 
@@ -35,4 +35,4 @@ const useOptions = (id: string, setValue?: Dispatch<SetStateAction<any>>) => {
   };
 };
 
-export default useOptions;
+export default useSelect;

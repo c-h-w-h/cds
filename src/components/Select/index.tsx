@@ -10,7 +10,7 @@ import {
   useContext,
 } from 'react';
 
-import useOptions from './useOptions';
+import useSelect from './useSelect';
 
 type SelectProps = {
   id: string;
@@ -26,7 +26,7 @@ interface SelectContextInterface {
 const SelectContext = createContext<SelectContextInterface | null>(null);
 
 const Select = ({ id, setValue, children }: SelectProps) => {
-  const { selectRef, selectValue, registerOption } = useOptions(id, setValue);
+  const { selectRef, selectValue, registerOption } = useSelect(id, setValue);
 
   return (
     <Dropdown collapseOnBlur={true}>
