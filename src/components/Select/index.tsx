@@ -86,12 +86,9 @@ const HiddenSelect = forwardRef<HTMLSelectElement, { id: string }>(
 );
 const hiddenStyle = css`
   position: absolute;
+  visibility: hidden;
   height: 0px;
   width: 0px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  clippath: inset(50%);
-  whitespace: nowrap;
 `;
 HiddenSelect.displayName = 'HiddenSelect';
 
