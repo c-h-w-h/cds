@@ -141,14 +141,16 @@ const Trigger = ({ value, text, icon, disabled = false }: TabTriggerProps) => {
     rounded: roundedStyle,
   };
 
+  const scrollOptions = {
+    behavior: 'smooth',
+    block: 'nearest',
+    inline: 'start',
+  } as const;
+
   const handleTriggerEvent = () => {
     if (disabled || !triggerRef.current) return;
     context.setSelectedIndex(value);
-    triggerRef.current.scrollIntoView({
-      behavior: 'smooth',
-      block: 'nearest',
-      inline: 'start',
-    });
+    triggerRef.current.scrollIntoView(scrollOptions);
   };
 
   const handleArrowKeys = (e: KeyboardEvent) => {
@@ -174,6 +176,7 @@ const Trigger = ({ value, text, icon, disabled = false }: TabTriggerProps) => {
     if (futureValue === undefined) return;
 
     futureTrigger.focus();
+    futureTrigger.scrollIntoView(scrollOptions);
     context.setSelectedIndex(futureValue);
   };
 
