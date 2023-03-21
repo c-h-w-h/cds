@@ -71,11 +71,11 @@ InlineCustom.args = {
 
 export const Grid = Template.bind({});
 Grid.args = {
-  cardLayout: 'grid',
+  line: 4,
 };
 export const GridCustom = Template.bind({});
 GridCustom.args = {
-  cardLayout: 'grid',
+  line: 3,
   cardWidth: 300,
   cardHeight: 400,
 };

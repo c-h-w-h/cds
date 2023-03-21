@@ -17,13 +17,13 @@ import NavigationButton from './NavigationButton';
 
 interface CarouselProps extends DefaultPropsWithChildren<HTMLDivElement> {
   itemList: { img?: string; content?: string }[];
-  cardLayout?: CarouselSlideSizeVariant;
+  line?: number;
   cardWidth?: number;
   cardHeight?: number;
 }
 
 interface CarouselContextInterface {
-  cardLayout: CarouselSlideSizeVariant;
+  line: number;
   WIDTH: number;
   HEIGHT: number;
   GAP: number;
@@ -32,7 +32,7 @@ interface CarouselContextInterface {
 const CarouselContext = createContext<CarouselContextInterface | null>(null);
 
 const Carousel = ({
-  cardLayout = 'inline',
+  line = 1,
   children,
   cardWidth,
   cardHeight,
@@ -44,7 +44,7 @@ const Carousel = ({
 
   const getCardSize = () => {
     const defaultSize =
-      cardLayout === 'grid' ? CAROUSEL_SLIDE.grid : CAROUSEL_SLIDE.inline;
+      line === 1 ? CAROUSEL_SLIDE.inline : CAROUSEL_SLIDE.multiline;
     if (cardWidth && cardHeight)
       return { ...defaultSize, WIDTH: cardWidth, HEIGHT: cardHeight };
     if (cardHeight) return { ...defaultSize, HEIGHT: cardHeight };
@@ -54,10 +54,10 @@ const Carousel = ({
 
   const { WIDTH, GAP, HEIGHT } = getCardSize();
   const totalSlide =
-    cardLayout === 'grid' ? Math.ceil(totalChildren / 2) : totalChildren;
+    line === 1 ? totalChildren : Math.ceil(totalChildren / line);
 
   const contextValues = {
-    cardLayout,
+    line,
     WIDTH,
     HEIGHT,
     GAP,
@@ -105,13 +105,13 @@ const Carousel = ({
           >
             {'〈'}
           </NavigationButton>
-          {cardLayout === 'inline' ? (
+          {line === 1 ? (
             <ItemList ref={scrollRef} onScroll={() => scrollEventHandler()}>
               {children}
             </ItemList>
           ) : (
             <ItemList ref={scrollRef} onScroll={() => scrollEventHandler()}>
-              <GridLayout {...{ HEIGHT }}>{children}</GridLayout>
+              <GridLayout {...{ HEIGHT, line }}>{children}</GridLayout>
             </ItemList>
           )}
           <NavigationButton
@@ -121,7 +121,7 @@ const Carousel = ({
             {'〉'}
           </NavigationButton>
         </Slider>
-        {cardLayout === 'inline' && (
+        {line === 1 && (
           <Center>
             {Array.from({ length: totalPage }).map((item, index) => (
               <Dot
@@ -175,14 +175,19 @@ const Item = styled.div`
   display: inline-block;
 `;
 
-const GridLayout = styled.div<Pick<CarouselContextInterface, 'HEIGHT'>>`
+const GridLayout = styled.div<
+  Pick<CarouselContextInterface, 'HEIGHT' | 'line'>
+>`
   display: flex;
   flex-flow: column wrap;
-  height: ${({ HEIGHT }) => pixelToRem(`${HEIGHT * 2 + 20}px`)};
-  justify-content: space-between;
+  height: ${({ HEIGHT, line }) => pixelToRem(`${(HEIGHT + 20) * line}px`)};
+  justify-content: flex-start;
+  div {
+    margin-bottom: ${pixelToRem('10px')};
+  }
 `;
 
-const ItemView = styled.div<Omit<CarouselContextInterface, 'cardLayout'>>`
+const ItemView = styled.div<Omit<CarouselContextInterface, 'line'>>`
   display: flex;
   flex-direction: column;
   width: ${({ WIDTH }) => pixelToRem(`${WIDTH}px`)};

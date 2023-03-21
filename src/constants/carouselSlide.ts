@@ -8,7 +8,7 @@ export const CAROUSEL_SLIDE: Record<
   CarouselSlideSizeVariant,
   CarouselSlideStyle
 > = {
-  grid: {
+  multiline: {
     WIDTH: 112,
     HEIGHT: 160,
     GAP: 20,
