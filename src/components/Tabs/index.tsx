@@ -2,11 +2,13 @@ import Icon, { IconSource } from '@components/Icon';
 import Typography from '@components/Typography';
 import Container from '@components-layout/Container';
 import Flexbox from '@components-layout/Flexbox';
+import { NEXT_KEY, PREV_KEY } from '@constants/key';
 import { css, useTheme } from '@emotion/react';
 import { pixelToRem } from '@utils/pixelToRem';
 import {
   createContext,
   Dispatch,
+  KeyboardEvent,
   ReactNode,
   SetStateAction,
   useContext,
@@ -62,10 +64,11 @@ interface TabListProps {
 
 const List = ({ label, children }: TabListProps) => {
   const context = useContext(TabsContext);
+  if (context === null) return <></>;
+
   const { color: themeColor } = useTheme();
   const { white, gray100 } = themeColor;
 
-  if (context === null) return <></>;
   return (
     <Container
       role={'tablist'}
@@ -148,6 +151,32 @@ const Trigger = ({ value, text, icon, disabled = false }: TabTriggerProps) => {
     });
   };
 
+  const handleArrowKeys = (e: KeyboardEvent) => {
+    e.preventDefault();
+    const currentTrigger = e.target;
+
+    if (!(currentTrigger instanceof HTMLElement)) return;
+
+    let futureTrigger;
+
+    if (NEXT_KEY.includes(e.key)) {
+      futureTrigger = currentTrigger.nextElementSibling as HTMLElement;
+    }
+
+    if (PREV_KEY.includes(e.key)) {
+      futureTrigger = currentTrigger.previousElementSibling as HTMLElement;
+    }
+
+    if (!futureTrigger) return;
+
+    const futureValue = futureTrigger.dataset['triggerValue'];
+
+    if (futureValue === undefined) return;
+
+    futureTrigger.focus();
+    context.setSelectedIndex(futureValue);
+  };
+
   return (
     <button
       ref={triggerRef}
@@ -158,6 +187,8 @@ const Trigger = ({ value, text, icon, disabled = false }: TabTriggerProps) => {
       tabIndex={isActive ? 0 : -1}
       disabled={disabled}
       onClick={handleTriggerEvent}
+      onKeyDown={handleArrowKeys}
+      data-trigger-value={value}
       css={css`
         display: flex;
         justify-content: center;
