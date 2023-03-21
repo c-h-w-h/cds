@@ -1,4 +1,4 @@
-import Dropdown from '@components/Dropdown';
+import Dropdown, { DropdownContext } from '@components/Dropdown';
 import { css } from '@emotion/react';
 import { DefaultPropsWithChildren } from '@util-types/DefaultPropsWithChildren';
 import {
@@ -61,8 +61,19 @@ const Option = ({ value, children }: OptionProps) => {
     registerOption($el, value);
   };
 
+  const dropdownContext = useContext(DropdownContext);
+  if (!dropdownContext) {
+    throw new Error('Select component must have its own Dropdown context');
+  }
+  const { setIsOpen } = dropdownContext;
+
+  const onSelect = () => {
+    selectValue(value);
+    setIsOpen(false);
+  };
+
   return (
-    <li role="listitem" ref={refCallback} onClick={() => selectValue(value)}>
+    <li role="listitem" ref={refCallback} onClick={onSelect}>
       {children}
     </li>
   );
