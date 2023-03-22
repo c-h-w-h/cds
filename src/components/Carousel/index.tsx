@@ -18,9 +18,9 @@ import { MdArrowBackIosNew, MdArrowForwardIos } from 'react-icons/md';
 import NavigationButton from './NavigationButton';
 
 interface CarouselProps extends DefaultPropsWithChildren<HTMLDivElement> {
-  line?: number;
-  cardWidth?: number;
-  cardHeight?: number;
+  line: number;
+  cardWidth?: number | undefined;
+  cardHeight?: number | undefined;
 }
 
 interface CarouselContextInterface {
@@ -33,6 +33,30 @@ interface CarouselContextInterface {
 
 const CarouselContext = createContext<CarouselContextInterface | null>(null);
 
+const getCardSize = ({
+  line,
+  cardHeight,
+  cardWidth,
+}: Omit<CarouselProps, 'children'>) => {
+  const cardSize =
+    line === 1 ? CAROUSEL_SLIDE_STYLE.inline : CAROUSEL_SLIDE_STYLE.multiline;
+  const newCardSize = { ...cardSize };
+  if (cardHeight) {
+    newCardSize.HEIGHT = cardHeight;
+  }
+  if (cardWidth) {
+    newCardSize.WIDTH = cardWidth;
+  }
+  if (window.innerWidth / newCardSize.WIDTH <= 1.2) {
+    newCardSize.GAP = window.innerWidth - newCardSize.WIDTH;
+    return { ...newCardSize, START: newCardSize.GAP / 2 };
+  }
+  return {
+    ...newCardSize,
+    START: newCardSize.GAP + Math.floor(newCardSize.WIDTH / 5),
+  };
+};
+
 const Carousel = ({
   line = 1,
   children,
@@ -44,23 +68,11 @@ const Carousel = ({
   const scrollRef = useRef<HTMLDivElement>(null);
   const totalChildren = Children.count(children);
 
-  const getCardSize = () => {
-    const cardSize =
-      line === 1 ? CAROUSEL_SLIDE_STYLE.inline : CAROUSEL_SLIDE_STYLE.multiline;
-    if (cardHeight) {
-      cardSize.HEIGHT = cardHeight;
-    }
-    if (cardWidth) {
-      cardSize.WIDTH = cardWidth;
-    }
-    if (window.innerWidth / cardSize.WIDTH <= 1.2) {
-      cardSize.GAP = window.innerWidth - cardSize.WIDTH;
-      return { ...cardSize, START: cardSize.GAP / 2 };
-    }
-    return { ...cardSize, START: cardSize.GAP + 60 };
-  };
-
-  const { WIDTH, GAP, HEIGHT, START } = getCardSize();
+  const { WIDTH, GAP, HEIGHT, START } = getCardSize({
+    line,
+    cardHeight,
+    cardWidth,
+  });
   const totalSlide =
     line === 1 ? totalChildren : Math.ceil(totalChildren / line);
 
