@@ -1,7 +1,7 @@
 import Container from '@components-layout/Container';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { DefaultProps } from '@util-types/DefaultProps';
+import { ChildrenProps } from '@util-types/ChildrenProps';
 import {
   createContext,
   Dispatch,
@@ -13,11 +13,12 @@ import {
   useState,
 } from 'react';
 
-interface DropdownProps extends DefaultProps<HTMLDivElement> {
+type DropdownProps = {
+  id: string;
+  dropdownLabel: string;
   collapseOnBlur: boolean;
-  dropdownLabel?: string;
   direction?: 'left' | 'right' | 'top' | 'bottom';
-}
+} & ChildrenProps;
 
 interface DropdownContextInterface {
   isOpen: boolean;
@@ -40,9 +41,9 @@ interface DropdownContextInterface {
 const DropdownContext = createContext<DropdownContextInterface | null>(null);
 
 const Dropdown = ({
-  collapseOnBlur = false,
-  dropdownLabel = '',
   id = '',
+  dropdownLabel = '',
+  collapseOnBlur = false,
   direction = 'bottom',
   children,
 }: DropdownProps) => {
@@ -79,7 +80,7 @@ const Dropdown = ({
   );
 };
 
-const Trigger = ({ children }: DefaultProps<HTMLDivElement>) => {
+const Trigger = ({ children }: ChildrenProps) => {
   const context = useContext(DropdownContext);
   const triggerRef = useRef<HTMLDivElement | null>(null);
 
@@ -112,7 +113,7 @@ const Trigger = ({ children }: DefaultProps<HTMLDivElement>) => {
   );
 };
 
-const Menu = ({ children }: DefaultProps<HTMLDivElement>) => {
+const Menu = ({ children }: ChildrenProps) => {
   const context = useContext(DropdownContext);
   const menuRef = useRef<HTMLDivElement | null>(null);
 
