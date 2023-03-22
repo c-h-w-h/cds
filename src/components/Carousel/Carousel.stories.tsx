@@ -71,7 +71,7 @@ InlineCustom.args = {
 
 export const Grid = Template.bind({});
 Grid.args = {
-  line: 4,
+  line: 2,
 };
 export const GridCustom = Template.bind({});
 GridCustom.args = {

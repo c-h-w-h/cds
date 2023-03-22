@@ -1,5 +1,6 @@
 import Center from '@components-layout/Center';
-import { CAROUSEL_SLIDE } from '@constants/carouselSlide';
+import Container from '@components-layout/Container';
+import { CAROUSEL_SLIDE_STYLE } from '@constants/carouselSlide';
 import styled from '@emotion/styled';
 import { pixelToRem } from '@utils/pixelToRem';
 import { DefaultPropsWithChildren } from '@utils/types/DefaultPropsWithChildren';
@@ -38,13 +39,13 @@ const Carousel = ({
   cardHeight,
 }: CarouselProps) => {
   const [currentPage, setCurrentPage] = useState(0);
-  const [totalPage, setTotalPage] = useState(1);
+  const [sliderWidth, setSliderWidth] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
   const totalChildren = Children.count(children);
 
   const getCardSize = () => {
     const defaultSize =
-      line === 1 ? CAROUSEL_SLIDE.inline : CAROUSEL_SLIDE.multiline;
+      line === 1 ? CAROUSEL_SLIDE_STYLE.inline : CAROUSEL_SLIDE_STYLE.multiline;
     if (cardWidth && cardHeight)
       return { ...defaultSize, WIDTH: cardWidth, HEIGHT: cardHeight };
     if (cardHeight) return { ...defaultSize, HEIGHT: cardHeight };
@@ -63,25 +64,19 @@ const Carousel = ({
     GAP,
   };
 
-  const isLastSlide = (currentLeft: number) => {
-    const sliderWidth = scrollRef.current ? scrollRef.current.offsetWidth : 0;
-    return currentLeft === (WIDTH + GAP) * totalSlide - sliderWidth;
-  };
-
   const scrollEventHandler = debounce(() => {
     const currentLeft = scrollRef.current ? scrollRef.current.scrollLeft : 0;
-    if (isLastSlide(currentLeft)) {
-      setCurrentPage(totalPage - 1);
+    if (currentLeft >= (totalSlide - 1) * (WIDTH + GAP)) {
+      setCurrentPage(totalSlide - 1);
+      scrollRef.current?.scrollTo((totalSlide - 1) * (WIDTH + GAP), 0);
       return;
     }
     setCurrentPage(Math.floor(currentLeft / (WIDTH + GAP)));
   }, 200);
 
   const initPageHandler = debounce(() => {
-    const sliderWidth = scrollRef.current ? scrollRef.current.offsetWidth : 0;
-    const total = totalSlide - Math.floor(sliderWidth / (WIDTH + GAP)) + 1;
-    setTotalPage(total <= 0 ? 1 : total);
     setCurrentPage(0);
+    setSliderWidth(scrollRef.current ? scrollRef.current.offsetWidth : 0);
   }, 200);
 
   useEffect(() => {
@@ -97,17 +92,39 @@ const Carousel = ({
   }, []);
   return (
     <CarouselContext.Provider value={contextValues}>
-      <CarouselWrapper>
-        <Slider>
-          {line === 1 ? (
-            <ItemList ref={scrollRef} onScroll={() => scrollEventHandler()}>
-              {children}
-            </ItemList>
-          ) : (
-            <ItemList ref={scrollRef} onScroll={() => scrollEventHandler()}>
-              <GridLayout {...{ HEIGHT, line }}>{children}</GridLayout>
-            </ItemList>
-          )}
+      <Container css={{ display: 'flex', flexDirection: 'column' }}>
+        <Container
+          css={{
+            position: 'relative',
+            margin: `0 ${pixelToRem('10px')}`,
+            display: 'flex',
+          }}
+        >
+          <ItemList ref={scrollRef} onScroll={() => scrollEventHandler()}>
+            {line === 1 ? (
+              <InlineLayout>
+                {children}
+                {Array.from({
+                  length: Math.floor(sliderWidth / (WIDTH + GAP)),
+                }).map((item, index) => (
+                  <Card key={`${JSON.stringify(item)}+${index}`}>
+                    <div />
+                  </Card>
+                ))}
+              </InlineLayout>
+            ) : (
+              <GridLayout {...{ HEIGHT, line }}>
+                {children}
+                {Array.from({
+                  length: Math.floor(sliderWidth / (WIDTH + GAP)) * line,
+                }).map((item, index) => (
+                  <Card key={`${JSON.stringify(item)}+${index}`}>
+                    <div />
+                  </Card>
+                ))}
+              </GridLayout>
+            )}
+          </ItemList>
           <NavigationContainer>
             <NavigationButton
               clickHandler={() => setCurrentPage(currentPage - 1)}
@@ -117,15 +134,15 @@ const Carousel = ({
             </NavigationButton>
             <NavigationButton
               clickHandler={() => setCurrentPage(currentPage + 1)}
-              disabled={currentPage === totalPage - 1 || totalPage === 0}
+              disabled={currentPage === totalSlide - 1 || totalSlide === 0}
             >
               <MdArrowForwardIos />
             </NavigationButton>
           </NavigationContainer>
-        </Slider>
+        </Container>
         {line === 1 && (
           <Center>
-            {Array.from({ length: totalPage }).map((item, index) => (
+            {Array.from({ length: totalSlide }).map((item, index) => (
               <Dot
                 key={`${JSON.stringify(item)}+${index}`}
                 current={index === currentPage}
@@ -133,7 +150,7 @@ const Carousel = ({
             ))}
           </Center>
         )}
-      </CarouselWrapper>
+      </Container>
     </CarouselContext.Provider>
   );
 };
@@ -142,24 +159,8 @@ const Card = ({ children }: DefaultPropsWithChildren<HTMLDivElement>) => {
   const context = useContext(CarouselContext);
   if (!context) return <></>;
   const { WIDTH, GAP, HEIGHT } = context;
-  return (
-    <Item>
-      <ItemView {...{ WIDTH, GAP, HEIGHT }}>{children}</ItemView>
-    </Item>
-  );
+  return <ItemView {...{ WIDTH, GAP, HEIGHT }}>{children}</ItemView>;
 };
-
-const CarouselWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const Slider = styled.div`
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  margin: 0 ${pixelToRem('10px')};
-`;
 
 const ItemList = styled.div`
   overflow-x: scroll;
@@ -169,13 +170,14 @@ const ItemList = styled.div`
   padding: ${pixelToRem('20px')} 0;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
+  scroll-snap-align: start;
+  -ms-overflow-style: none;
   &::-webkit-scrollbar {
     display: none;
   }
 `;
-
-const Item = styled.div`
-  display: inline-block;
+const InlineLayout = styled.div`
+  display: flex;
 `;
 
 const GridLayout = styled.div<

@@ -4,7 +4,7 @@ interface CarouselSlideStyle {
   GAP: number;
 }
 
-export const CAROUSEL_SLIDE: Record<
+export const CAROUSEL_SLIDE_STYLE: Record<
   CarouselSlideSizeVariant,
   CarouselSlideStyle
 > = {
