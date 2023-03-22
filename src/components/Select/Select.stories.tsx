@@ -11,14 +11,31 @@ export default {
   component: Select,
   parameters: {
     layout: 'fullscreen',
+    componentSubtitle: 'HTML select 태그의 기능을 제공합니다.',
+  },
+  argTypes: {
+    id: {
+      label: 'id',
+      type: {
+        name: 'string',
+        required: true,
+      },
+      description:
+        'select 요소의 id입니다. 어떤 값인지 드러나는 이름이면 좋습니다.',
+    },
+    setValue: {
+      label: 'setValue',
+      description:
+        'setState 함수입니다. 옵션 A가 선택되는 경우 setValue(A)가 실행됩니다. 옵셔널 props입니다.',
+    },
   },
 } as ComponentMeta<typeof Select>;
 
-export const UseState: ComponentStory<typeof Select> = () => {
+export const Template: ComponentStory<typeof Select> = (args) => {
   const [value, setValue] = useState('');
 
   return (
-    <Select id="test" setValue={setValue}>
+    <Select {...args} setValue={setValue}>
       <Select.Trigger>
         <Badge outline>{value ? value : 'click here'}</Badge>
       </Select.Trigger>
@@ -29,6 +46,20 @@ export const UseState: ComponentStory<typeof Select> = () => {
       </Select.Options>
     </Select>
   );
+};
+Template.args = {
+  id: 'template',
+};
+
+export const UseState = Template.bind({});
+UseState.args = {
+  id: 'useState',
+};
+UseState.parameters = {
+  docs: {
+    storyDescription:
+      '선택 결과를 상태에 반영하고 싶은 경우 props.setValue에 setState 함수를 전달합니다.',
+  },
 };
 
 const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
@@ -46,7 +77,7 @@ export const Form: ComponentStory<typeof Select> = () => {
 
   return (
     <form onSubmit={onSubmit} css={flexboxStyle()}>
-      <Select id="test" setValue={setValue}>
+      <Select id="form" setValue={setValue}>
         <Select.Trigger>
           <Badge outline>{value ? value : 'click here'}</Badge>
         </Select.Trigger>
@@ -60,6 +91,12 @@ export const Form: ComponentStory<typeof Select> = () => {
     </form>
   );
 };
+Form.parameters = {
+  docs: {
+    storyDescription:
+      'HTML form 요소 내부에서 사용하면 FormData API를 활용해 값을 가져올 수 있습니다. 이 때 select 요소는 props.id와 동일한 name을 가집니다.',
+  },
+};
 
 export const MultipleSelects: ComponentStory<typeof Select> = () => {
   const [value, setValue] = useState('');
@@ -67,7 +104,7 @@ export const MultipleSelects: ComponentStory<typeof Select> = () => {
 
   return (
     <form onSubmit={onSubmit} css={flexboxStyle()}>
-      <Select id="test" setValue={setValue}>
+      <Select id="select" setValue={setValue}>
         <Select.Trigger>
           <Badge outline>{value ? value : 'click here'}</Badge>
         </Select.Trigger>
@@ -92,4 +129,10 @@ export const MultipleSelects: ComponentStory<typeof Select> = () => {
       <Button text="submit" />
     </form>
   );
+};
+MultipleSelects.parameters = {
+  docs: {
+    storyDescription:
+      '서로 다른 id를 가지는 여러 개의 select를 사용할 수 있습니다.',
+  },
 };
