@@ -1,6 +1,6 @@
 import Dropdown, { DropdownContext } from '@components/Dropdown';
 import { css } from '@emotion/react';
-import { DefaultPropsWithChildren } from '@util-types/DefaultPropsWithChildren';
+import { ChildrenProps } from '@util-types/ChildrenProps';
 import {
   Dispatch,
   ReactNode,
@@ -37,7 +37,7 @@ const Select = ({ id, setValue, children }: SelectProps) => {
   );
 };
 
-const Options = ({ children }: DefaultPropsWithChildren<HTMLLIElement>) => {
+const Options = ({ children }: ChildrenProps) => {
   return (
     <Dropdown.Menu>
       <ul role="listbox">{children}</ul>
@@ -47,7 +47,7 @@ const Options = ({ children }: DefaultPropsWithChildren<HTMLLIElement>) => {
 
 type OptionProps = {
   value: string;
-} & DefaultPropsWithChildren<HTMLLIElement>;
+} & ChildrenProps;
 
 const Option = ({ value, children }: OptionProps) => {
   const context = useContext(SelectContext);
