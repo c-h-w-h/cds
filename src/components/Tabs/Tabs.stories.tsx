@@ -50,12 +50,14 @@ Default.args = {
 
 export const Rounded = Template.bind({});
 Rounded.args = {
+  label: '둥근 Tabs 목록',
   defaultValue: '1',
   variant: 'rounded',
 };
 
 export const UnderlineFitted = Template.bind({});
 UnderlineFitted.args = {
+  label: '밑줄이 있으면서 너비가 꽉 찬 Tabs 목록',
   defaultValue: '1',
   variant: 'underline',
   isFitted: true,
@@ -63,6 +65,7 @@ UnderlineFitted.args = {
 
 export const RoundedFitted = Template.bind({});
 RoundedFitted.args = {
+  label: '둥글면서 너비가 꽉 찬 Tabs 목록',
   defaultValue: '1',
   variant: 'rounded',
   isFitted: true,
@@ -70,6 +73,7 @@ RoundedFitted.args = {
 
 export const DefaultValue = Template.bind({});
 DefaultValue.args = {
+  label: '기본 값이 설정된 Tabs 목록',
   defaultValue: '3',
 };
 
