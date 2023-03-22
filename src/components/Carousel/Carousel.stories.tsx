@@ -51,31 +51,55 @@ const Template: ComponentStory<typeof Carousel> = (args) => {
         />
         <div>라떼 맛있어요. 라떼 드세요.</div>
       </Carousel.Card>
-      <Carousel.Card>
-        <img
-          src="https://user-images.githubusercontent.com/81913106/226325071-2d690efc-0274-4778-a5e6-36a9f35a43ba.png"
-          alt="item"
-        />
-        <Typography variant="body">라떼 맛있어요. 라떼 드세요.</Typography>
-      </Carousel.Card>
     </Carousel>
   );
 };
 
-export const InlineDefault = Template.bind({});
+const SlideTemplate: ComponentStory<typeof Carousel> = (args) => {
+  return (
+    <Carousel {...args}>
+      <Carousel.Slide>
+        <img
+          src="https://user-images.githubusercontent.com/81913106/226325428-7909f3c2-4790-4c8b-ba2c-6ada349cb33d.png"
+          alt="item"
+        />
+        <Typography variant="body">라떼 맛있어요. 라떼 드세요.</Typography>
+      </Carousel.Slide>
+      <Carousel.Slide>
+        <img
+          src="https://user-images.githubusercontent.com/81913106/226325359-61a46055-feca-4c9a-91f0-217f90b16bec.png"
+          alt="item"
+        />
+        <Typography variant="body">라떼 맛있어요. 라떼 드세요.</Typography>
+      </Carousel.Slide>
+    </Carousel>
+  );
+};
+
+export const Inline = Template.bind({});
 export const InlineCustom = Template.bind({});
 InlineCustom.args = {
   cardWidth: 300,
   cardHeight: 400,
 };
 
-export const Grid = Template.bind({});
-Grid.args = {
+export const TwoLine = Template.bind({});
+TwoLine.args = {
   line: 2,
 };
-export const GridCustom = Template.bind({});
-GridCustom.args = {
-  line: 3,
+export const TwoLineCustom = Template.bind({});
+TwoLineCustom.args = {
+  line: 2,
   cardWidth: 300,
   cardHeight: 400,
+};
+
+export const MultiLine = Template.bind({});
+MultiLine.args = {
+  line: 3,
+};
+
+export const Slide = SlideTemplate.bind({});
+Slide.args = {
+  slideHeight: 400,
 };
