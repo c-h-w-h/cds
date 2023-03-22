@@ -28,6 +28,7 @@ interface CarouselContextInterface {
   WIDTH: number;
   HEIGHT: number;
   GAP: number;
+  START: number;
 }
 
 const CarouselContext = createContext<CarouselContextInterface | null>(null);
@@ -44,16 +45,22 @@ const Carousel = ({
   const totalChildren = Children.count(children);
 
   const getCardSize = () => {
-    const defaultSize =
+    const cardSize =
       line === 1 ? CAROUSEL_SLIDE_STYLE.inline : CAROUSEL_SLIDE_STYLE.multiline;
-    if (cardWidth && cardHeight)
-      return { ...defaultSize, WIDTH: cardWidth, HEIGHT: cardHeight };
-    if (cardHeight) return { ...defaultSize, HEIGHT: cardHeight };
-    if (cardWidth) return { ...defaultSize, WIDTH: cardWidth };
-    return { ...defaultSize };
+    if (cardHeight) {
+      cardSize.HEIGHT = cardHeight;
+    }
+    if (cardWidth) {
+      cardSize.WIDTH = cardWidth;
+    }
+    if (window.innerWidth / cardSize.WIDTH <= 1.2) {
+      cardSize.GAP = window.innerWidth - cardSize.WIDTH;
+      return { ...cardSize, START: cardSize.GAP / 2 };
+    }
+    return { ...cardSize, START: cardSize.GAP + 60 };
   };
 
-  const { WIDTH, GAP, HEIGHT } = getCardSize();
+  const { WIDTH, GAP, HEIGHT, START } = getCardSize();
   const totalSlide =
     line === 1 ? totalChildren : Math.ceil(totalChildren / line);
 
@@ -62,6 +69,7 @@ const Carousel = ({
     WIDTH,
     HEIGHT,
     GAP,
+    START,
   };
 
   const scrollEventHandler = debounce(() => {
@@ -96,7 +104,6 @@ const Carousel = ({
         <Container
           css={{
             position: 'relative',
-            margin: `0 ${pixelToRem('10px')}`,
             display: 'flex',
           }}
         >
@@ -158,8 +165,8 @@ const Carousel = ({
 const Card = ({ children }: DefaultPropsWithChildren<HTMLDivElement>) => {
   const context = useContext(CarouselContext);
   if (!context) return <></>;
-  const { WIDTH, GAP, HEIGHT } = context;
-  return <ItemView {...{ WIDTH, GAP, HEIGHT }}>{children}</ItemView>;
+  const { WIDTH, GAP, HEIGHT, START } = context;
+  return <ItemView {...{ WIDTH, GAP, HEIGHT, START }}>{children}</ItemView>;
 };
 
 const ItemList = styled.div`
@@ -198,7 +205,7 @@ const ItemView = styled.div<Omit<CarouselContextInterface, 'line'>>`
   width: ${({ WIDTH }) => pixelToRem(`${WIDTH}px`)};
   height: ${({ HEIGHT }) => pixelToRem(`${HEIGHT}px`)};
   margin-right: ${({ GAP }) => pixelToRem(`${GAP}px`)};
-  transform: translateX(${pixelToRem('10px')});
+  transform: translateX(${({ START }) => pixelToRem(`${START}px`)});
   background-color: ${({ theme }) => theme.color.white};
   img {
     width: 100%;
