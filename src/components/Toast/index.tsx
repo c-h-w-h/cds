@@ -67,9 +67,9 @@ const Toast = ({ kind, title, message, vertical, horizontal }: ToastProps) => {
         </Typography>
         <Typography variant="desc">{message}</Typography>
       </Flexbox>
-      <TempButton onClick={() => alert('Clicked!')}>
+      <CloseButton mainColor={mainColor} onClick={() => alert('Clicked!')}>
         <MdOutlineCancel size={CLOSE_ICON_SIZE} color={mainColor} />
-      </TempButton>
+      </CloseButton>
     </Flexbox>
   );
 };
@@ -97,14 +97,29 @@ const bounce = (vertical: string) => keyframes`
   }
 `;
 
-const TempButton = styled.button`
-  display: flex;
-  outline: none;
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
+interface ClosebuttonProps {
+  mainColor: string;
+}
 
-  :hover {
-    background-color: red;
-  }
-`;
+const CloseButton = styled.button<ClosebuttonProps>(({ mainColor, theme }) => {
+  const { color: themeColor } = theme;
+  const { white } = themeColor;
+
+  return {
+    display: 'flex',
+    outline: 'none',
+    border: 'none',
+    padding: '0',
+    borderRadius: '50%',
+    backgroundColor: 'transparent',
+    cursor: 'pointer',
+
+    ':hover': {
+      backgroundColor: `${mainColor}`,
+
+      svg: {
+        fill: `${white}`,
+      },
+    },
+  };
+});
