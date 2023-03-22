@@ -19,8 +19,9 @@ import {
 type TabsVariant = 'underline' | 'rounded';
 
 interface TabsContextInterface {
-  isFitted: boolean;
+  label: string;
   variant: TabsVariant;
+  isFitted: boolean;
   selectedIndex: string;
   setSelectedIndex: Dispatch<SetStateAction<string>>;
 }
@@ -28,6 +29,7 @@ interface TabsContextInterface {
 const TabsContext = createContext<TabsContextInterface | null>(null);
 
 interface TabsProps {
+  label: string;
   defaultValue: string;
   children: ReactNode;
   variant?: TabsVariant;
@@ -35,14 +37,21 @@ interface TabsProps {
 }
 
 const Tabs = ({
-  isFitted = false,
-  variant = 'underline',
+  label,
   defaultValue,
   children,
+  variant = 'underline',
+  isFitted = false,
 }: TabsProps) => {
   const [selectedIndex, setSelectedIndex] = useState<string>(defaultValue);
 
-  const providerValue = { isFitted, variant, selectedIndex, setSelectedIndex };
+  const providerValue = {
+    isFitted,
+    variant,
+    label,
+    selectedIndex,
+    setSelectedIndex,
+  };
 
   return (
     <TabsContext.Provider value={providerValue}>
@@ -58,11 +67,10 @@ const Tabs = ({
 };
 
 interface TabListProps {
-  label: string;
   children: ReactNode;
 }
 
-const List = ({ label, children }: TabListProps) => {
+const List = ({ children }: TabListProps) => {
   const context = useContext(TabsContext);
   if (context === null) return <></>;
 
@@ -72,7 +80,7 @@ const List = ({ label, children }: TabListProps) => {
   return (
     <Container
       role={'tablist'}
-      aria-label={label}
+      aria-label={context.label}
       aria-orientation={'horizontal'}
       overflowX="auto"
       css={css`
@@ -183,12 +191,13 @@ const Trigger = ({ value, text, icon, disabled = false }: TabTriggerProps) => {
   return (
     <button
       ref={triggerRef}
-      id={`cds-tabs-trigger-${value}`}
+      id={`${context.label}-trigger-${value}`}
       role={'tab'}
       aria-selected={isActive}
-      aria-controls={`cds-tabs-panel-${value}`}
+      aria-controls={`${context.label}-panel-${value}`}
       tabIndex={isActive ? 0 : -1}
       disabled={disabled}
+      aria-disabled={disabled}
       onClick={handleTriggerEvent}
       onKeyDown={handleArrowKeys}
       data-trigger-value={value}
@@ -264,9 +273,9 @@ const Panel = ({ value, children }: TabPanelProps) => {
 
   return (
     <Container
-      id={`cds-tabs-panel-${value}`}
+      id={`${context.label}-panel-${value}`}
       role={'tabpanel'}
-      aria-labelledby={`cds-tabs-trigger-${value}`}
+      aria-labelledby={`${context.label}-trigger-${value}`}
       tabIndex={0}
       css={css`
         padding: 1rem;

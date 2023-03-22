@@ -22,7 +22,7 @@ const DUMMY_STR_3 =
 
 const Template: ComponentStory<typeof Tabs> = (args) => (
   <Tabs {...args}>
-    <Tabs.List label={'기본 Tabs 목록'}>
+    <Tabs.List>
       <Tabs.Trigger value="1" text="메인" />
       <Tabs.Trigger value="2" text="이벤트" />
       <Tabs.Trigger value="3" text="설정" />
@@ -44,6 +44,7 @@ const Template: ComponentStory<typeof Tabs> = (args) => (
 
 export const Default = Template.bind({});
 Default.args = {
+  label: '기본 Tabs 목록',
   defaultValue: '1',
 };
 
@@ -74,7 +75,7 @@ DefaultValue.args = {
 
 const WithIconsTemplate: ComponentStory<typeof Tabs> = (args) => (
   <Tabs {...args}>
-    <Tabs.List label={'아이콘 확인용 Tabs 목록'}>
+    <Tabs.List>
       <Tabs.Trigger value="1" icon={MdCelebration} text="축하" />
       <Tabs.Trigger value="2" icon={MdInfo} text="정보" />
       <Tabs.Trigger value="3" icon={MdCheckCircle} text="확인" />
@@ -84,12 +85,13 @@ const WithIconsTemplate: ComponentStory<typeof Tabs> = (args) => (
 
 export const WithIcons = WithIconsTemplate.bind({});
 WithIcons.args = {
+  label: '아이콘 확인용 Tabs 목록',
   defaultValue: '1',
 };
 
 const WithDisabledTemplate: ComponentStory<typeof Tabs> = (args) => (
   <Tabs {...args}>
-    <Tabs.List label={'비활성화 확인용 Tabs 목록'}>
+    <Tabs.List>
       <Tabs.Trigger value="1" icon={MdCelebration} text="축하" />
       <Tabs.Trigger value="2" icon={MdInfo} text="정보" disabled />
       <Tabs.Trigger value="3" icon={MdCheckCircle} text="확인" />
@@ -99,12 +101,13 @@ const WithDisabledTemplate: ComponentStory<typeof Tabs> = (args) => (
 
 export const WithDisabled = WithDisabledTemplate.bind({});
 WithDisabled.args = {
+  label: '비활성화 확인용 Tabs 목록',
   defaultValue: '1',
 };
 
 const ScrollableTemplate: ComponentStory<typeof Tabs> = (args) => (
   <Tabs {...args}>
-    <Tabs.List label={'스크롤이 생기는 Tabs 목록'}>
+    <Tabs.List>
       <Tabs.Trigger value="1" text="축하하는 탭을 띄우기 위한 트리거입니다." />
       <Tabs.Trigger
         value="2"
@@ -118,6 +121,7 @@ const ScrollableTemplate: ComponentStory<typeof Tabs> = (args) => (
 
 export const Scrollable = ScrollableTemplate.bind({});
 Scrollable.args = {
+  label: '스크롤이 생기는 Tabs 목록',
   defaultValue: '1',
 };
 
@@ -128,7 +132,7 @@ const FocusSelectedTemplate: ComponentStory<typeof Tabs> = (args) => (
     `}
   >
     <Tabs {...args}>
-      <Tabs.List label={''}>
+      <Tabs.List>
         <Tabs.Trigger value="1" text="New!!" />
         <Tabs.Trigger value="2" text="~Hot~" />
         <Tabs.Trigger value="3" text="상의" />
@@ -146,5 +150,6 @@ const FocusSelectedTemplate: ComponentStory<typeof Tabs> = (args) => (
 
 export const FocusSelected = FocusSelectedTemplate.bind({});
 FocusSelected.args = {
+  label: '너비가 좁은 Tabs 목록',
   defaultValue: '1',
 };
