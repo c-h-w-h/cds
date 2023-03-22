@@ -20,7 +20,7 @@ type SelectProps = {
 
 interface SelectContextInterface {
   selectValue: (value: string) => void;
-  registerOption: ($el: HTMLLIElement, value: string) => void;
+  registerOption: ($li: HTMLLIElement, value: string) => void;
 }
 const SelectContext = createContext<SelectContextInterface | null>(null);
 
@@ -55,14 +55,14 @@ const Option = ({ value, children }: OptionProps) => {
 
   const { selectValue, registerOption } = context;
 
-  const refCallback = ($el: HTMLLIElement | null) => {
-    if (!$el) return;
-    registerOption($el, value);
+  const refCallback = ($li: HTMLLIElement | null) => {
+    if (!$li) return;
+    registerOption($li, value);
   };
 
   const dropdownContext = useContext(DropdownContext);
   if (!dropdownContext) {
-    throw new Error('Select component must have its own Dropdown context');
+    return <></>;
   }
   const { setIsOpen } = dropdownContext;
 
@@ -77,9 +77,7 @@ const Option = ({ value, children }: OptionProps) => {
       ref={refCallback}
       onClick={onSelect}
       css={css`
-        &:hover {
-          cursor: pointer;
-        }
+        cursor: pointer;
       `}
     >
       {children}

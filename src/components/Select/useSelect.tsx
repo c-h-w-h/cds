@@ -13,10 +13,10 @@ const useSelect = (id: string, setValue?: Dispatch<SetStateAction<string>>) => {
 
     optionRefs.current.push($el);
 
-    const option = document.createElement('option');
-    option.id = optionId;
-    option.value = value;
-    selectRef.current.appendChild(option);
+    const $option = document.createElement('option');
+    $option.id = optionId;
+    $option.value = value;
+    selectRef.current.appendChild($option);
   };
 
   const selectValue = (value: string) => {
