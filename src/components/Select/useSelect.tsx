@@ -1,7 +1,6 @@
 import { Dispatch, SetStateAction, useRef } from 'react';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const useSelect = (id: string, setValue?: Dispatch<SetStateAction<any>>) => {
+const useSelect = (id: string, setValue?: Dispatch<SetStateAction<string>>) => {
   const selectRef = useRef<HTMLSelectElement>(null);
   const optionRefs = useRef<HTMLLIElement[]>([]);
 
@@ -26,7 +25,7 @@ const useSelect = (id: string, setValue?: Dispatch<SetStateAction<any>>) => {
     if (!selectRef.current) return;
 
     const $target = selectRef.current.querySelector(`#${id}-${value}`);
-    [...selectRef.current.childNodes].forEach(($option) => {
+    selectRef.current.childNodes.forEach(($option) => {
       if (!($option instanceof HTMLOptionElement)) return;
       $option.selected = $option === $target;
     });

@@ -15,12 +15,12 @@ export default {
 } as ComponentMeta<typeof Select>;
 
 export const UseState: ComponentStory<typeof Select> = () => {
-  const [value, setValue] = useState<string | null>(null);
+  const [value, setValue] = useState('');
 
   return (
     <Select id="test" setValue={setValue}>
       <Select.Trigger>
-        <Badge outline>{value ?? 'click here'}</Badge>
+        <Badge outline>{value ? value : 'click here'}</Badge>
       </Select.Trigger>
       <Select.Options>
         <Select.Option value="1">1</Select.Option>
@@ -42,13 +42,13 @@ const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
 };
 
 export const Form: ComponentStory<typeof Select> = () => {
-  const [value, setValue] = useState<string | null>(null);
+  const [value, setValue] = useState('');
 
   return (
     <form onSubmit={onSubmit} css={flexboxStyle()}>
       <Select id="test" setValue={setValue}>
         <Select.Trigger>
-          <Badge outline>{value ?? 'click here'}</Badge>
+          <Badge outline>{value ? value : 'click here'}</Badge>
         </Select.Trigger>
         <Select.Options>
           <Select.Option value="1">1</Select.Option>
@@ -62,14 +62,14 @@ export const Form: ComponentStory<typeof Select> = () => {
 };
 
 export const MultipleSelects: ComponentStory<typeof Select> = () => {
-  const [value, setValue] = useState<string | null>(null);
-  const [anotherValue, setAnotherValue] = useState<string | null>(null);
+  const [value, setValue] = useState('');
+  const [anotherValue, setAnotherValue] = useState('');
 
   return (
     <form onSubmit={onSubmit} css={flexboxStyle()}>
       <Select id="test" setValue={setValue}>
         <Select.Trigger>
-          <Badge outline>{value ?? 'click here'}</Badge>
+          <Badge outline>{value ? value : 'click here'}</Badge>
         </Select.Trigger>
         <Select.Options>
           <Select.Option value="1">1</Select.Option>
@@ -80,7 +80,7 @@ export const MultipleSelects: ComponentStory<typeof Select> = () => {
 
       <Select id="another" setValue={setAnotherValue}>
         <Select.Trigger>
-          <Badge outline>{anotherValue ?? 'click here'}</Badge>
+          <Badge outline>{anotherValue ? anotherValue : 'click here'}</Badge>
         </Select.Trigger>
         <Select.Options>
           <Select.Option value="first">first</Select.Option>

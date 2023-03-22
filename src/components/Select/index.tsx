@@ -14,8 +14,7 @@ import useSelect from './useSelect';
 
 type SelectProps = {
   id: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  setValue?: Dispatch<SetStateAction<any>>;
+  setValue?: Dispatch<SetStateAction<string>>;
   children: ReactNode;
 };
 
@@ -73,7 +72,16 @@ const Option = ({ value, children }: OptionProps) => {
   };
 
   return (
-    <li role="listitem" ref={refCallback} onClick={onSelect}>
+    <li
+      role="listitem"
+      ref={refCallback}
+      onClick={onSelect}
+      css={css`
+        &:hover {
+          cursor: pointer;
+        }
+      `}
+    >
       {children}
     </li>
   );
