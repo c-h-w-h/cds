@@ -252,6 +252,7 @@ const SlideView = styled.div<Pick<CarouselContextInterface, 'HEIGHT'>>`
     width: 100%;
     height: 100%;
     border: 1px solid ${({ theme }) => theme.color.gray100};
+    overflow: hidden;
   }
 `;
 

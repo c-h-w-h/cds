@@ -56,7 +56,6 @@ const SlideTemplate: ComponentStory<typeof Carousel> = (args) => {
       {DUMMY_DATA.map((item, index) => (
         <Carousel.Slide key={`${JSON.stringify(item) + index}`}>
           <img src={item.imgSrc} alt="item" />
-          <Typography variant="body">{item.content}</Typography>
         </Carousel.Slide>
       ))}
     </Carousel>
@@ -88,5 +87,5 @@ MultiLine.args = {
 
 export const Slide = SlideTemplate.bind({});
 Slide.args = {
-  slideHeight: 400,
+  slideHeight: 500,
 };
