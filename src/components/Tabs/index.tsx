@@ -193,13 +193,13 @@ const Trigger = ({ value, text, icon, disabled = false }: TabTriggerProps) => {
     inline: 'start',
   } as const;
 
-  const handleTriggerEvent = () => {
+  const onSelect = () => {
     if (disabled || !triggerRef.current) return;
     setSelectedIndex(value);
     triggerRef.current.scrollIntoView(scrollOptions);
   };
 
-  const handleArrowKeys = (e: KeyboardEvent) => {
+  const onPressArrow = (e: KeyboardEvent) => {
     e.preventDefault();
     const currentTrigger = e.target;
 
@@ -228,8 +228,8 @@ const Trigger = ({ value, text, icon, disabled = false }: TabTriggerProps) => {
       tabIndex={isActive ? 0 : -1}
       disabled={disabled}
       aria-disabled={disabled}
-      onClick={handleTriggerEvent}
-      onKeyDown={handleArrowKeys}
+      onClick={onSelect}
+      onKeyDown={onPressArrow}
       data-trigger-value={value}
       css={css`
         display: flex;
