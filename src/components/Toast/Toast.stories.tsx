@@ -111,7 +111,7 @@ Error.args = {
   horizontal: 'left',
 };
 
-const OpenToastTemplate: ComponentStory<typeof Toast> = (args) => {
+const ToastHookTemplate: ComponentStory<typeof Toast> = (args) => {
   const { open, handleOpen, handleClose } = useToast();
 
   return (
@@ -122,10 +122,19 @@ const OpenToastTemplate: ComponentStory<typeof Toast> = (args) => {
   );
 };
 
-export const WithToastHook = OpenToastTemplate.bind({});
+export const WithToastHook = ToastHookTemplate.bind({});
 WithToastHook.args = {
-  message: DUMMY_SHORT_MESSAGE,
+  message: 'X 버튼을 누르면 사라져요.',
   kind: 'info',
   vertical: 'top',
   horizontal: 'center',
+};
+
+export const CustomDuration = ToastHookTemplate.bind({});
+CustomDuration.args = {
+  message: '10초동안 보입니다.',
+  kind: 'info',
+  vertical: 'top',
+  horizontal: 'center',
+  duration: 10000,
 };
