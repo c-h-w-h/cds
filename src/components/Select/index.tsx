@@ -141,29 +141,29 @@ const Option = ({ value, children }: OptionProps) => {
       return;
     }
 
-    let nextOption, parentNode;
+    let $nextLi;
+    const $ul = target.closest('ul');
+    if (!$ul) return;
 
     if (['40', 'ArrowDown'].includes(key)) {
       e.preventDefault();
-      nextOption = target.nextElementSibling;
+      $nextLi = target.nextElementSibling;
 
-      if (!nextOption) {
-        parentNode = target.parentElement as HTMLUListElement;
-        nextOption = parentNode.firstElementChild;
+      if (!$nextLi) {
+        $nextLi = $ul.firstElementChild;
       }
     }
 
     if (['38', 'ArrowUp'].includes(key)) {
       e.preventDefault();
-      nextOption = target.previousElementSibling;
+      $nextLi = target.previousElementSibling;
 
-      if (!nextOption) {
-        parentNode = target.parentElement as HTMLUListElement;
-        nextOption = parentNode.lastElementChild;
+      if (!$nextLi) {
+        $nextLi = $ul.lastElementChild;
       }
     }
 
-    if (nextOption instanceof HTMLLIElement) nextOption.focus();
+    if ($nextLi instanceof HTMLLIElement) $nextLi.focus();
   };
 
   const { color } = useTheme();
