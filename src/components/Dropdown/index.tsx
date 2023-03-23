@@ -103,8 +103,8 @@ const Trigger = ({ children }: { children: ReactElement }) => {
   };
 
   const onKeyDown: KeyboardEventHandler = (e: KeyboardEvent) => {
-    e.preventDefault();
     if (e.key === ' ' || e.key === 'Enter') {
+      e.preventDefault();
       setIsOpen((prev) => !prev);
     }
   };
