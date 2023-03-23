@@ -16,8 +16,7 @@ import {
 } from 'react';
 
 type DropdownProps = {
-  id: string;
-  dropdownLabel: string;
+  label: string;
   collapseOnBlur: boolean;
   direction?: 'left' | 'right' | 'top' | 'bottom';
 } & ChildrenProps;
@@ -26,8 +25,7 @@ interface DropdownContextInterface {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   collapseOnBlur: boolean;
-  dropdownLabel: string;
-  id: string;
+  label: string;
   direction: 'left' | 'right' | 'top' | 'bottom';
   triggerSize: {
     width: number;
@@ -43,8 +41,7 @@ interface DropdownContextInterface {
 const DropdownContext = createContext<DropdownContextInterface | null>(null);
 
 const Dropdown = ({
-  id = '',
-  dropdownLabel = '',
+  label,
   collapseOnBlur = false,
   direction = 'bottom',
   children,
@@ -59,8 +56,7 @@ const Dropdown = ({
     isOpen,
     setIsOpen,
     collapseOnBlur,
-    dropdownLabel,
-    id,
+    label,
     direction,
     triggerSize,
     setTriggerSize,
@@ -84,14 +80,13 @@ const Dropdown = ({
 
 const Trigger = ({ Element }: { Element: ReactElement }) => {
   const context = useContext(DropdownContext);
-  const triggerRef = useRef<HTMLDivElement | null>(null);
 
   if (!context) return <></>;
 
-  const { isOpen, setIsOpen, dropdownLabel, id, setTriggerSize } = context;
+  const { isOpen, setIsOpen, label, setTriggerSize } = context;
 
   useEffect(() => {
-    const $trigger = document.getElementById(id);
+    const $trigger = document.getElementById(`${label}-Trigger`);
     if (!$trigger) return;
     setTriggerSize({
       width: $trigger.offsetWidth,
@@ -106,9 +101,9 @@ const Trigger = ({ Element }: { Element: ReactElement }) => {
     },
     'aria-expanded': isOpen,
     'aria-haspopup': 'true',
-    'aria-label': dropdownLabel,
-    id: id,
-    ref: triggerRef,
+    'aria-label': `Dropdown Trigger of ${label}`,
+    'aria-controls': `${label}-Dropdown`,
+    id: `${label}-Trigger`,
   });
 };
 
@@ -118,7 +113,7 @@ const Menu = ({ children }: ChildrenProps) => {
 
   if (!context) return <></>;
 
-  const { isOpen, setIsOpen, collapseOnBlur, id, direction, triggerSize } =
+  const { isOpen, setIsOpen, collapseOnBlur, label, direction, triggerSize } =
     context;
 
   const toggleEventHandler = (e: MouseEvent) => {
@@ -147,7 +142,8 @@ const Menu = ({ children }: ChildrenProps) => {
   return (
     <MenuWrapper
       ref={menuRef}
-      aria-labelledby={id}
+      aria-labelledby={`${label}-Trigger`}
+      id={`${label}-Dropdown`}
       direction={direction ?? 'bottom'}
       triggerSize={triggerSize ?? { width: 0, height: 0 }}
     >
