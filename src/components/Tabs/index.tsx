@@ -66,10 +66,10 @@ const Tabs = ({
   );
 };
 
-const useTabs = () => {
+const useTabsContext = () => {
   const context = useContext(TabsContext);
   if (context === null) {
-    throw new Error('useTabs should be used within Tabs');
+    throw new Error('useTabsContext should be used within Tabs');
   }
   return context;
 };
@@ -79,7 +79,7 @@ interface TabListProps {
 }
 
 const List = ({ children }: TabListProps) => {
-  const { label, isFitted } = useTabs();
+  const { label, isFitted } = useTabsContext();
   const { color: themeColor } = useTheme();
   const { white, gray100 } = themeColor;
 
@@ -142,7 +142,7 @@ const findFutureTrigger = (
 };
 
 const Trigger = ({ value, text, icon, disabled = false }: TabTriggerProps) => {
-  const { label, variant, selectedIndex, setSelectedIndex } = useTabs();
+  const { label, variant, selectedIndex, setSelectedIndex } = useTabsContext();
 
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const { color: themeColor } = useTheme();
@@ -289,7 +289,7 @@ interface TabPanelProps {
 }
 
 const Panel = ({ value, children }: TabPanelProps) => {
-  const { label, selectedIndex } = useTabs();
+  const { label, selectedIndex } = useTabsContext();
 
   return (
     <Container
