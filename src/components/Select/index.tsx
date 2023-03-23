@@ -181,13 +181,7 @@ const Option = ({ value, children }: OptionProps) => {
   `;
 
   return (
-    <li
-      role="listitem"
-      onClick={onSelect}
-      tabIndex={1}
-      onKeyDown={onKeyDown}
-      css={optionStyle}
-    >
+    <li onClick={onSelect} tabIndex={1} onKeyDown={onKeyDown} css={optionStyle}>
       {children}
     </li>
   );
