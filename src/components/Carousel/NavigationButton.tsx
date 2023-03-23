@@ -4,17 +4,13 @@ import { DefaultPropsWithChildren } from '@util-types/DefaultPropsWithChildren';
 import { MouseEventHandler } from 'react';
 
 interface NavButtonProps extends DefaultPropsWithChildren<HTMLDivElement> {
-  clickHandler: MouseEventHandler;
+  onClick: MouseEventHandler;
   disabled: boolean;
 }
 
-const NavigationButton = ({
-  clickHandler,
-  disabled,
-  children,
-}: NavButtonProps) => {
+const NavigationButton = ({ onClick, disabled, children }: NavButtonProps) => {
   return (
-    <Button onClick={clickHandler} {...{ disabled }}>
+    <Button {...{ onClick }} {...{ disabled }}>
       <Center>{children}</Center>
     </Button>
   );

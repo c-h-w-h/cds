@@ -86,3 +86,6 @@ MultiLine.args = {
 };
 
 export const Slide = SlideTemplate.bind({});
+Slide.args = {
+  height: 500,
+};

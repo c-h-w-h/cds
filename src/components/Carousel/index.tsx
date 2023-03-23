@@ -38,8 +38,7 @@ const getCardSize = ({
   height,
   width,
 }: Omit<CarouselProps, 'children'>) => {
-  const cardSize =
-    line === 1 ? CAROUSEL_SLIDE_STYLE.inline : CAROUSEL_SLIDE_STYLE.multiline;
+  const cardSize = CAROUSEL_SLIDE_STYLE[line === 1 ? 'inline' : 'multiline'];
   const newCardSize = { ...cardSize };
   if (height) {
     newCardSize.HEIGHT = height;
@@ -69,8 +68,7 @@ const Carousel = ({ line = 1, children, width, height }: CarouselProps) => {
     height,
     width: width ? width : cardsRef.current?.children[currentPage].clientWidth,
   });
-  const totalSlide =
-    line === 1 ? totalChildren : Math.ceil(totalChildren / line);
+  const totalSlide = Math.ceil(totalChildren / line);
 
   const contextValues = {
     line,
@@ -113,7 +111,7 @@ const Carousel = ({ line = 1, children, width, height }: CarouselProps) => {
             display: 'flex',
           }}
         >
-          <ItemList ref={scrollRef} onScroll={() => scrollEventHandler()}>
+          <ItemList ref={scrollRef} onScroll={scrollEventHandler}>
             {line === 1 ? (
               <InlineLayout ref={cardsRef}>
                 {children}
@@ -134,13 +132,13 @@ const Carousel = ({ line = 1, children, width, height }: CarouselProps) => {
           </ItemList>
           <NavigationContainer>
             <NavigationButton
-              clickHandler={() => setCurrentPage(currentPage - 1)}
+              onClick={() => setCurrentPage(currentPage - 1)}
               disabled={currentPage === 0}
             >
               <MdArrowBackIosNew />
             </NavigationButton>
             <NavigationButton
-              clickHandler={() => setCurrentPage(currentPage + 1)}
+              onClick={() => setCurrentPage(currentPage + 1)}
               disabled={currentPage === totalSlide - 1 || totalSlide === 0}
             >
               <MdArrowForwardIos />
