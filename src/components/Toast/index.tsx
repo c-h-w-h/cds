@@ -14,11 +14,13 @@ import {
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { DefaultProps } from '@utils/types/DefaultProps';
+import { useEffect } from 'react';
 import { MdOutlineCancel } from 'react-icons/md';
 
 import ToastIcon from './ToastIcon';
 
 export interface ToastProps extends DefaultProps<HTMLDivElement> {
+  duration?: number;
   kind?: ToastKind;
   title?: string;
   message: string;
@@ -37,12 +39,23 @@ const Toast = ({
   message,
   vertical,
   horizontal,
+  duration = 3000,
   open = false,
   onChangeOpen,
 }: ToastProps) => {
   const { color: themeColor } = theme;
   const { white, black } = themeColor;
   const mainColor = kind ? themeColor[kind] : black;
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onChangeOpen();
+    }, duration);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [open]);
 
   return (
     <Portal>
