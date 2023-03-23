@@ -6,6 +6,8 @@ import {
   cloneElement,
   createContext,
   Dispatch,
+  KeyboardEvent,
+  KeyboardEventHandler,
   MouseEvent as ReactMouseEvent,
   MouseEventHandler,
   ReactElement,
@@ -100,13 +102,21 @@ const Trigger = ({ children }: { children: ReactElement }) => {
     setIsOpen(!isOpen);
   };
 
+  const onKeyDown: KeyboardEventHandler = (e: KeyboardEvent) => {
+    e.preventDefault();
+    if (e.key === ' ' || e.key === 'Enter') {
+      setIsOpen((prev) => !prev);
+    }
+  };
+
   return cloneElement(children, {
     onClick,
+    onKeyDown,
     'aria-expanded': isOpen,
     'aria-haspopup': 'true',
     'aria-label': `Dropdown Trigger of ${label}`,
     'aria-controls': `${label}-Dropdown`,
-    tabindex: 0,
+    tabIndex: 0,
     id: `${label}-Trigger`,
   });
 };
