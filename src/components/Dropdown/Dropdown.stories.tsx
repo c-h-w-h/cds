@@ -31,9 +31,9 @@ const Template: ComponentStory<typeof Dropdown> = (args) => (
     `}
   >
     <Dropdown {...args}>
-      <Dropdown.Trigger
-        Element={<Button text="팀원 목록" icon={MdPeople} variant="light" />}
-      />
+      <Dropdown.Trigger>
+        <Button text="팀원 목록" icon={MdPeople} variant="light" />
+      </Dropdown.Trigger>
       <Dropdown.Menu>
         <List
           css={css`

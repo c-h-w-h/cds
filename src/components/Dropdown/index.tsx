@@ -78,7 +78,7 @@ const Dropdown = ({
   );
 };
 
-const Trigger = ({ Element }: { Element: ReactElement }) => {
+const Trigger = ({ children }: { children: ReactElement }) => {
   const context = useContext(DropdownContext);
 
   if (!context) return <></>;
@@ -94,7 +94,7 @@ const Trigger = ({ Element }: { Element: ReactElement }) => {
     });
   }, []);
 
-  return cloneElement(Element, {
+  return cloneElement(children, {
     onClick: (e: ReactMouseEvent) => {
       e.stopPropagation();
       setIsOpen(!isOpen);
