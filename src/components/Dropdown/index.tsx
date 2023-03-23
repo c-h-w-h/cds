@@ -69,7 +69,7 @@ const Dropdown = ({
     <DropdownContext.Provider value={contextValues}>
       <Container
         css={css`
-          width: auto;
+          width: 100%;
           height: auto;
           position: relative;
           overflow: visible;
@@ -188,6 +188,8 @@ const MenuWrapper = styled.div<MenuWrapperProps>`
         return `top: ${triggerSize.height}px; left:0;`;
     }
   }}
+  width: 100%;
+  z-index: 1;
 `;
 
 Dropdown.Trigger = Trigger;
