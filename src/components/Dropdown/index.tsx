@@ -3,9 +3,11 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { ChildrenProps } from '@util-types/ChildrenProps';
 import {
+  cloneElement,
   createContext,
   Dispatch,
   MouseEvent as ReactMouseEvent,
+  ReactElement,
   SetStateAction,
   useContext,
   useEffect,
@@ -80,7 +82,7 @@ const Dropdown = ({
   );
 };
 
-const Trigger = ({ children }: ChildrenProps) => {
+const Trigger = ({ Element }: { Element: ReactElement }) => {
   const context = useContext(DropdownContext);
   const triggerRef = useRef<HTMLDivElement | null>(null);
 
@@ -89,28 +91,25 @@ const Trigger = ({ children }: ChildrenProps) => {
   const { isOpen, setIsOpen, dropdownLabel, id, setTriggerSize } = context;
 
   useEffect(() => {
-    if (!triggerRef.current || !setTriggerSize) return;
+    const $trigger = document.getElementById(id);
+    if (!$trigger) return;
     setTriggerSize({
-      width: triggerRef.current.offsetWidth,
-      height: triggerRef.current.offsetHeight,
+      width: $trigger.offsetWidth,
+      height: $trigger.offsetHeight,
     });
-  }, [triggerRef.current]);
+  }, []);
 
-  return (
-    <div
-      onClick={(e: ReactMouseEvent) => {
-        e.stopPropagation();
-        setIsOpen(!isOpen);
-      }}
-      aria-expanded={isOpen}
-      aria-haspopup="true"
-      aria-label={dropdownLabel}
-      id={id}
-      ref={triggerRef}
-    >
-      {children}
-    </div>
-  );
+  return cloneElement(Element, {
+    onClick: (e: ReactMouseEvent) => {
+      e.stopPropagation();
+      setIsOpen(!isOpen);
+    },
+    'aria-expanded': isOpen,
+    'aria-haspopup': 'true',
+    'aria-label': dropdownLabel,
+    id: id,
+    ref: triggerRef,
+  });
 };
 
 const Menu = ({ children }: ChildrenProps) => {
