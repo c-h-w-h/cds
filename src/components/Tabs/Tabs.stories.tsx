@@ -138,7 +138,7 @@ const FocusSelectedTemplate: ComponentStory<typeof Tabs> = (args) => (
     <Tabs {...args}>
       <Tabs.List>
         <Tabs.Trigger value="1" text="New!!" />
-        <Tabs.Trigger value="2" text="~Hot~" />
+        <Tabs.Trigger value="2" text="Hot~~" />
         <Tabs.Trigger value="3" text="상의" />
         <Tabs.Trigger value="4" text="아우터" />
         <Tabs.Trigger value="5" text="맨투맨" />
