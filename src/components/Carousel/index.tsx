@@ -149,12 +149,14 @@ const Carousel = ({ line = 1, children, width, height }: CarouselProps) => {
         </Container>
         {line === 1 && (
           <Center>
-            {Array.from({ length: totalSlide }).map((item, index) => (
-              <Dot
-                key={`${JSON.stringify(item)}+${index}`}
-                current={index === currentPage}
-              />
-            ))}
+            <Progress isSlide={WIDTH === window.innerWidth}>
+              {Array.from({ length: totalSlide }).map((item, index) => (
+                <Dot
+                  key={`${JSON.stringify(item)}+${index}`}
+                  current={index === currentPage}
+                />
+              ))}
+            </Progress>
           </Center>
         )}
       </Container>
@@ -251,7 +253,18 @@ const NavigationContainer = styled.div`
   transform: translate(-50%, -50%);
 `;
 
+const Progress = styled.div<{ isSlide: boolean }>`
+  width: min-content;
+  padding: 0 1rem;
+  border-radius: 50px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  transform: translateY(${({ isSlide }) => (isSlide ? '-190%' : '0')});
+`;
+
 const Dot = styled.div<{ current: boolean }>`
+  margin: 0.7rem;
   background: ${({ theme, current }) =>
     current ? theme.color.primary100 : theme.color.gray100};
   border-radius: 100%;
