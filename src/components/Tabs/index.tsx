@@ -139,6 +139,21 @@ const findFutureTrigger = (key: string, currentTrigger: HTMLElement) => {
     futureTrigger = futureTrigger[siblingProp] as HTMLElement;
   }
 
+  if (futureTrigger) return futureTrigger;
+
+  const triggerParent = currentTrigger.parentElement;
+
+  if (triggerParent === null) return;
+
+  futureTrigger =
+    siblingProp === 'nextElementSibling'
+      ? (triggerParent.firstElementChild as HTMLElement)
+      : (triggerParent.lastElementChild as HTMLElement);
+
+  while (futureTrigger.hasAttribute('disabled')) {
+    futureTrigger = futureTrigger[siblingProp] as HTMLElement;
+  }
+
   return futureTrigger;
 };
 
