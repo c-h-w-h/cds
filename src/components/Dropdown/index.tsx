@@ -7,6 +7,7 @@ import {
   createContext,
   Dispatch,
   MouseEvent as ReactMouseEvent,
+  MouseEventHandler,
   ReactElement,
   SetStateAction,
   useContext,
@@ -94,15 +95,18 @@ const Trigger = ({ children }: { children: ReactElement }) => {
     });
   }, []);
 
+  const onClick: MouseEventHandler = (e: ReactMouseEvent) => {
+    e.stopPropagation();
+    setIsOpen(!isOpen);
+  };
+
   return cloneElement(children, {
-    onClick: (e: ReactMouseEvent) => {
-      e.stopPropagation();
-      setIsOpen(!isOpen);
-    },
+    onClick,
     'aria-expanded': isOpen,
     'aria-haspopup': 'true',
     'aria-label': `Dropdown Trigger of ${label}`,
     'aria-controls': `${label}-Dropdown`,
+    tabindex: 0,
     id: `${label}-Trigger`,
   });
 };
