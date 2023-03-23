@@ -1,6 +1,7 @@
 import { theme } from '@components/@common/CdsProvider/theme';
 import Flexbox from '@components/@layout/Flexbox';
 import Typography from '@components/Typography';
+import Portal from '@components-common/Portal';
 import {
   ToastKind,
   VerticalVariant,
@@ -23,54 +24,68 @@ export interface ToastProps extends DefaultProps<HTMLDivElement> {
   message: string;
   vertical: VerticalVariant;
   horizontal: HorizontalVariant;
+  open: boolean;
+  onChangeOpen: () => void;
 }
 
 const startWithCapitalLetter = (str: string) =>
   str[0].toUpperCase() + str.substring(1);
 
-const Toast = ({ kind, title, message, vertical, horizontal }: ToastProps) => {
+const Toast = ({
+  kind,
+  title,
+  message,
+  vertical,
+  horizontal,
+  open = false,
+  onChangeOpen,
+}: ToastProps) => {
   const { color: themeColor } = theme;
   const mainColor = kind ? themeColor[kind] : '';
 
   return (
-    <Flexbox
-      css={[
-        css`
-          position: absolute;
-          padding: 1rem;
-          border: 2px solid ${mainColor};
-          border-radius: 16px;
-          opacity: 0;
-          animation: ${fadeIn} 0.01s 1s linear forwards;
+    <Portal>
+      {open && (
+        <Flexbox
+          css={[
+            css`
+              position: absolute;
+              padding: 1rem;
+              border: 2px solid ${mainColor};
+              border-radius: 16px;
+              opacity: 0;
+              animation: ${fadeIn} 0.01s 0.1s linear forwards;
 
-          & * {
-            animation: ${bounce(vertical)} 0.6s 1s
-              cubic-bezier(0.34, 1.72, 0.58, 0.85) forwards;
-          }
-        `,
-        V_POSITION_MAP[vertical],
-        H_POSITION_MAP[horizontal],
-      ]}
-    >
-      <ToastIcon kind={kind} size={MAIN_ICON_SIZE} color={mainColor} />
-      <Flexbox
-        flexDirection="column"
-        alignItems={'flex-start'}
-        css={[
-          css`
-            max-width: 10vw;
-          `,
-        ]}
-      >
-        <Typography variant="subtitle2">
-          {title ?? (kind ? startWithCapitalLetter(kind) : 'Alarm')}
-        </Typography>
-        <Typography variant="desc">{message}</Typography>
-      </Flexbox>
-      <CloseButton mainColor={mainColor} onClick={() => alert('Clicked!')}>
-        <MdOutlineCancel size={CLOSE_ICON_SIZE} color={mainColor} />
-      </CloseButton>
-    </Flexbox>
+              & * {
+                animation: ${bounce(vertical)} 0.6s 0.1s
+                  cubic-bezier(0.34, 1.72, 0.58, 0.85) forwards;
+              }
+            `,
+            V_POSITION_MAP[vertical],
+            H_POSITION_MAP[horizontal],
+          ]}
+        >
+          <ToastIcon kind={kind} size={MAIN_ICON_SIZE} color={mainColor} />
+          <Flexbox
+            flexDirection="column"
+            alignItems={'flex-start'}
+            css={[
+              css`
+                max-width: 10vw;
+              `,
+            ]}
+          >
+            <Typography variant="subtitle2">
+              {title ?? (kind ? startWithCapitalLetter(kind) : 'Alarm')}
+            </Typography>
+            <Typography variant="desc">{message}</Typography>
+          </Flexbox>
+          <CloseButton mainColor={mainColor} onClick={onChangeOpen}>
+            <MdOutlineCancel size={CLOSE_ICON_SIZE} color={mainColor} />
+          </CloseButton>
+        </Flexbox>
+      )}
+    </Portal>
   );
 };
 
