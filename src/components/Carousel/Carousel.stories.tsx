@@ -65,8 +65,8 @@ const SlideTemplate: ComponentStory<typeof Carousel> = (args) => {
 export const Inline = Template.bind({});
 export const InlineCustom = Template.bind({});
 InlineCustom.args = {
-  cardWidth: 300,
-  cardHeight: 400,
+  width: 300,
+  height: 400,
 };
 
 export const TwoLine = Template.bind({});
@@ -76,8 +76,8 @@ TwoLine.args = {
 export const TwoLineCustom = Template.bind({});
 TwoLineCustom.args = {
   line: 2,
-  cardWidth: 300,
-  cardHeight: 400,
+  width: 300,
+  height: 400,
 };
 
 export const MultiLine = Template.bind({});
@@ -87,5 +87,5 @@ MultiLine.args = {
 
 export const Slide = SlideTemplate.bind({});
 Slide.args = {
-  slideHeight: 500,
+  layout: 'slide',
 };

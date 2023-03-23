@@ -19,9 +19,9 @@ import NavigationButton from './NavigationButton';
 
 interface CarouselProps extends DefaultPropsWithChildren<HTMLDivElement> {
   line: number;
-  cardWidth?: number | undefined;
-  cardHeight?: number | undefined;
-  slideHeight?: number | undefined;
+  width?: number | undefined;
+  height?: number | undefined;
+  layout: 'card' | 'slide';
 }
 
 interface CarouselContextInterface {
@@ -36,22 +36,21 @@ const CarouselContext = createContext<CarouselContextInterface | null>(null);
 
 const getCardSize = ({
   line,
-  cardHeight,
-  cardWidth,
-  slideHeight,
+  height,
+  width,
+  layout,
 }: Omit<CarouselProps, 'children'>) => {
   const cardSize =
     line === 1 ? CAROUSEL_SLIDE_STYLE.inline : CAROUSEL_SLIDE_STYLE.multiline;
   const newCardSize = { ...cardSize };
-  if (cardHeight) {
-    newCardSize.HEIGHT = cardHeight;
+  if (height) {
+    newCardSize.HEIGHT = height;
   }
-  if (cardWidth) {
-    newCardSize.WIDTH = cardWidth;
+  if (width) {
+    newCardSize.WIDTH = width;
   }
-  if (slideHeight) {
+  if (layout === 'slide') {
     newCardSize.WIDTH = window.innerWidth;
-    newCardSize.HEIGHT = slideHeight;
   }
   if (window.innerWidth / newCardSize.WIDTH <= 1.2) {
     newCardSize.GAP = window.innerWidth - newCardSize.WIDTH;
@@ -66,9 +65,9 @@ const getCardSize = ({
 const Carousel = ({
   line = 1,
   children,
-  cardWidth,
-  cardHeight,
-  slideHeight,
+  width,
+  height,
+  layout = 'card',
 }: CarouselProps) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [sliderWidth, setSliderWidth] = useState(0);
@@ -77,9 +76,9 @@ const Carousel = ({
 
   const { WIDTH, GAP, HEIGHT, START } = getCardSize({
     line,
-    cardHeight,
-    cardWidth,
-    slideHeight,
+    height,
+    width,
+    layout,
   });
   const totalSlide =
     line === 1 ? totalChildren : Math.ceil(totalChildren / line);
