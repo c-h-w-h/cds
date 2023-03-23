@@ -146,8 +146,11 @@ const Menu = ({ children }: ChildrenProps) => {
       id={`${label}-Dropdown`}
       direction={direction ?? 'bottom'}
       triggerSize={triggerSize ?? { width: 0, height: 0 }}
+      css={css`
+        display: ${isOpen ? 'flex' : 'none'};
+      `}
     >
-      {isOpen && children}
+      {children}
     </MenuWrapper>
   );
 };
