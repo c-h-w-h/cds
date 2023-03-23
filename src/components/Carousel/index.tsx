@@ -21,7 +21,6 @@ interface CarouselProps extends DefaultPropsWithChildren<HTMLDivElement> {
   line: number;
   width?: number | undefined;
   height?: number | undefined;
-  layout: 'card' | 'slide';
 }
 
 interface CarouselContextInterface {
@@ -38,7 +37,6 @@ const getCardSize = ({
   line,
   height,
   width,
-  layout,
 }: Omit<CarouselProps, 'children'>) => {
   const cardSize =
     line === 1 ? CAROUSEL_SLIDE_STYLE.inline : CAROUSEL_SLIDE_STYLE.multiline;
@@ -48,9 +46,6 @@ const getCardSize = ({
   }
   if (width) {
     newCardSize.WIDTH = width;
-  }
-  if (layout === 'slide') {
-    newCardSize.WIDTH = window.innerWidth;
   }
   if (window.innerWidth / newCardSize.WIDTH <= 1.2) {
     newCardSize.GAP = window.innerWidth - newCardSize.WIDTH;
@@ -62,23 +57,17 @@ const getCardSize = ({
   };
 };
 
-const Carousel = ({
-  line = 1,
-  children,
-  width,
-  height,
-  layout = 'card',
-}: CarouselProps) => {
+const Carousel = ({ line = 1, children, width, height }: CarouselProps) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [sliderWidth, setSliderWidth] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
   const totalChildren = Children.count(children);
 
   const { WIDTH, GAP, HEIGHT, START } = getCardSize({
     line,
     height,
-    width,
-    layout,
+    width: width ? width : cardsRef.current?.children[currentPage].clientWidth,
   });
   const totalSlide =
     line === 1 ? totalChildren : Math.ceil(totalChildren / line);
@@ -93,11 +82,6 @@ const Carousel = ({
 
   const scrollEventHandler = debounce(() => {
     const currentLeft = scrollRef.current ? scrollRef.current.scrollLeft : 0;
-    if (currentLeft >= (totalSlide - 1) * (WIDTH + GAP)) {
-      setCurrentPage(totalSlide - 1);
-      scrollRef.current?.scrollTo((totalSlide - 1) * (WIDTH + GAP), 0);
-      return;
-    }
     setCurrentPage(Math.floor(currentLeft / (WIDTH + GAP)));
   }, 200);
 
@@ -107,7 +91,10 @@ const Carousel = ({
   }, 200);
 
   useEffect(() => {
-    scrollRef.current?.scrollTo(currentPage * (WIDTH + GAP), 0);
+    cardsRef.current?.children[currentPage].scrollIntoView({
+      behavior: 'smooth',
+      inline: 'start',
+    });
   }, [currentPage]);
 
   useEffect(() => {
@@ -128,12 +115,12 @@ const Carousel = ({
         >
           <ItemList ref={scrollRef} onScroll={() => scrollEventHandler()}>
             {line === 1 ? (
-              <InlineLayout>
+              <InlineLayout ref={cardsRef}>
                 {children}
                 <DummySlide WIDTH={sliderWidth - WIDTH}></DummySlide>
               </InlineLayout>
             ) : (
-              <GridLayout {...{ HEIGHT, line }}>
+              <GridLayout {...{ HEIGHT, line }} ref={cardsRef}>
                 {children}
                 <DummySlide
                   WIDTH={
@@ -194,8 +181,6 @@ const ItemList = styled.div`
   vertical-align: top;
   display: inline-flex;
   scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  scroll-snap-align: start;
   -ms-overflow-style: none;
   &::-webkit-scrollbar {
     display: none;
@@ -229,8 +214,9 @@ const CardView = styled.div<Omit<CarouselContextInterface, 'line'>>`
   width: ${({ WIDTH }) => pixelToRem(`${WIDTH}px`)};
   height: ${({ HEIGHT }) => pixelToRem(`${HEIGHT}px`)};
   margin-right: ${({ GAP }) => pixelToRem(`${GAP}px`)};
-  transform: translateX(${({ START }) => pixelToRem(`${START}px`)});
   background-color: ${({ theme }) => theme.color.white};
+  transform: translateX(${({ START }) => pixelToRem(`${START}px`)});
+  scroll-margin-left: ${({ START }) => pixelToRem(`${START}px`)};
   img {
     width: 100%;
     height: ${({ WIDTH }) => pixelToRem(`${WIDTH}px`)};

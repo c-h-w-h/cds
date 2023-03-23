@@ -42,7 +42,7 @@ const DUMMY_DATA = [
 const Template: ComponentStory<typeof Carousel> = (args) => (
   <Carousel {...args}>
     {DUMMY_DATA.map((item, index) => (
-      <Carousel.Card key={`${JSON.stringify(item) + index}`}>
+      <Carousel.Card key={index}>
         <img src={item.imgSrc} alt="item" />
         <Typography variant="body">{item.content}</Typography>
       </Carousel.Card>
@@ -54,7 +54,7 @@ const SlideTemplate: ComponentStory<typeof Carousel> = (args) => {
   return (
     <Carousel {...args}>
       {DUMMY_DATA.map((item, index) => (
-        <Carousel.Slide key={`${JSON.stringify(item) + index}`}>
+        <Carousel.Slide key={index}>
           <img src={item.imgSrc} alt="item" />
         </Carousel.Slide>
       ))}
@@ -86,6 +86,3 @@ MultiLine.args = {
 };
 
 export const Slide = SlideTemplate.bind({});
-Slide.args = {
-  layout: 'slide',
-};
