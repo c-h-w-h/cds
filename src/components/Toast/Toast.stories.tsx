@@ -1,4 +1,7 @@
+import Button from '@components/Button';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
+
+import useToast from './useToast';
 
 import Toast from '.';
 
@@ -15,7 +18,9 @@ const DUMMY_SHORT_MESSAGE = '토스트 메세지입니다.';
 const DUMMY_LONG_MESSAGE =
   '긴 토스트 메세지입니다. 현재 토스트 메세지의 최대 길이는 10vw로 설정되어 있습니다.';
 
-const Template: ComponentStory<typeof Toast> = (args) => <Toast {...args} />;
+const Template: ComponentStory<typeof Toast> = (args) => (
+  <Toast {...args} open={true} />
+);
 
 export const TopLeft = Template.bind({});
 TopLeft.args = {
@@ -104,4 +109,23 @@ Error.args = {
   kind: 'error',
   vertical: 'top',
   horizontal: 'left',
+};
+
+const OpenToastTemplate: ComponentStory<typeof Toast> = (args) => {
+  const { open, handleOpen, handleClose } = useToast();
+
+  return (
+    <>
+      <Button text="열려라 참깨" onClick={handleOpen} />
+      <Toast {...args} open={open} onChangeOpen={handleClose} />
+    </>
+  );
+};
+
+export const WithToastHook = OpenToastTemplate.bind({});
+WithToastHook.args = {
+  message: DUMMY_SHORT_MESSAGE,
+  kind: 'info',
+  vertical: 'top',
+  horizontal: 'center',
 };
