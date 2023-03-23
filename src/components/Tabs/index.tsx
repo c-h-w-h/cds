@@ -124,14 +124,15 @@ interface TabTriggerProps {
   disabled?: boolean;
 }
 
-type KeyDirection = 'NEXT' | 'PREV';
+const findFutureTrigger = (key: string, currentTrigger: HTMLElement) => {
+  const siblingProp = (function (key) {
+    if (NEXT_KEY.includes(key)) return 'nextElementSibling';
+    if (PREV_KEY.includes(key)) return 'previousElementSibling';
+    return null;
+  })(key);
 
-const findFutureTrigger = (
-  direction: KeyDirection,
-  currentTrigger: HTMLElement,
-) => {
-  const siblingProp =
-    direction === 'NEXT' ? 'nextElementSibling' : 'previousElementSibling';
+  if (siblingProp === null) return;
+
   let futureTrigger = currentTrigger[siblingProp] as HTMLElement;
 
   while (futureTrigger && futureTrigger.hasAttribute('disabled')) {
@@ -189,15 +190,7 @@ const Trigger = ({ value, text, icon, disabled = false }: TabTriggerProps) => {
 
     if (!(currentTrigger instanceof HTMLElement)) return;
 
-    let futureTrigger;
-
-    if (NEXT_KEY.includes(e.key)) {
-      futureTrigger = findFutureTrigger('NEXT', currentTrigger);
-    }
-
-    if (PREV_KEY.includes(e.key)) {
-      futureTrigger = findFutureTrigger('PREV', currentTrigger);
-    }
+    const futureTrigger = findFutureTrigger(e.key, currentTrigger);
 
     if (!futureTrigger) return;
 
