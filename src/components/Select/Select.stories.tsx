@@ -1,5 +1,7 @@
 import Badge from '@components/Badge';
 import Button from '@components/Button';
+import Container from '@components-layout/Container';
+import { css } from '@emotion/react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { flexboxStyle } from '@styles/flex-box';
 import { FormEventHandler, useState } from 'react';
@@ -35,16 +37,18 @@ export const Template: ComponentStory<typeof Select> = (args) => {
   const [value, setValue] = useState('');
 
   return (
-    <Select {...args} setValue={setValue}>
-      <Select.Trigger>
-        <Badge outline>{value ? value : 'click here'}</Badge>
-      </Select.Trigger>
-      <Select.Options>
-        <Select.Option value="1">1</Select.Option>
-        <Select.Option value="2">2</Select.Option>
-        <Select.Option value="3">3</Select.Option>
-      </Select.Options>
-    </Select>
+    <Container css={containerStyle}>
+      <Select {...args} setValue={setValue}>
+        <Select.Trigger>
+          <Badge outline>{value ? value : 'click here'}</Badge>
+        </Select.Trigger>
+        <Select.OptionList>
+          <Select.Option value="1">1</Select.Option>
+          <Select.Option value="2">2</Select.Option>
+          <Select.Option value="3">3</Select.Option>
+        </Select.OptionList>
+      </Select>
+    </Container>
   );
 };
 Template.args = {
@@ -62,39 +66,31 @@ UseState.parameters = {
   },
 };
 
-const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
-  e.preventDefault();
-
-  const target = e.target as HTMLFormElement;
-  if (!target) return;
-
-  const formData = new FormData(target);
-  console.log(...formData.entries()); // 확인용 로그
-};
-
 export const Form: ComponentStory<typeof Select> = () => {
   const [value, setValue] = useState('');
 
   return (
-    <form onSubmit={onSubmit} css={flexboxStyle()}>
-      <Select id="form" setValue={setValue}>
-        <Select.Trigger>
-          <Badge outline>{value ? value : 'click here'}</Badge>
-        </Select.Trigger>
-        <Select.Options>
-          <Select.Option value="1">1</Select.Option>
-          <Select.Option value="2">2</Select.Option>
-          <Select.Option value="3">3</Select.Option>
-        </Select.Options>
-      </Select>
-      <Button text="submit" />
-    </form>
+    <Container css={containerStyle}>
+      <form onSubmit={onSubmit} css={formStyle}>
+        <Select id="form" setValue={setValue}>
+          <Select.Trigger>
+            <Badge outline>{value ? value : 'click here'}</Badge>
+          </Select.Trigger>
+          <Select.OptionList>
+            <Select.Option value="1">1</Select.Option>
+            <Select.Option value="2">2</Select.Option>
+            <Select.Option value="3">3</Select.Option>
+          </Select.OptionList>
+        </Select>
+        <Button text="submit" />
+      </form>
+    </Container>
   );
 };
 Form.parameters = {
   docs: {
-    storyDescription:
-      'HTML form 요소 내부에서 사용하면 FormData API를 활용해 값을 가져올 수 있습니다. 이 때 select 요소는 props.id와 동일한 name을 가집니다.',
+    storyDescription: `HTML form 요소 내부에서 사용하면 FormData API를 활용해 값을 가져올 수 있습니다. 이 때 select 요소는 props.id와 동일한 name을 가집니다.
+      <br />옵션을 선택한 뒤 submit 버튼을 누르면 콘솔에서 선택한 옵션 로그를 확인할 수 있습니다.`,
   },
 };
 
@@ -103,31 +99,33 @@ export const MultipleSelects: ComponentStory<typeof Select> = () => {
   const [anotherValue, setAnotherValue] = useState('');
 
   return (
-    <form onSubmit={onSubmit} css={flexboxStyle()}>
-      <Select id="select" setValue={setValue}>
-        <Select.Trigger>
-          <Badge outline>{value ? value : 'click here'}</Badge>
-        </Select.Trigger>
-        <Select.Options>
-          <Select.Option value="1">1</Select.Option>
-          <Select.Option value="2">2</Select.Option>
-          <Select.Option value="3">3</Select.Option>
-        </Select.Options>
-      </Select>
+    <Container css={containerStyle}>
+      <form onSubmit={onSubmit} css={formStyle}>
+        <Select id="select" setValue={setValue}>
+          <Select.Trigger>
+            <Badge outline>{value ? value : 'click here'}</Badge>
+          </Select.Trigger>
+          <Select.OptionList>
+            <Select.Option value="1">1</Select.Option>
+            <Select.Option value="2">2</Select.Option>
+            <Select.Option value="3">3</Select.Option>
+          </Select.OptionList>
+        </Select>
 
-      <Select id="another" setValue={setAnotherValue}>
-        <Select.Trigger>
-          <Badge outline>{anotherValue ? anotherValue : 'click here'}</Badge>
-        </Select.Trigger>
-        <Select.Options>
-          <Select.Option value="first">first</Select.Option>
-          <Select.Option value="second">second</Select.Option>
-          <Select.Option value="third">third</Select.Option>
-        </Select.Options>
-      </Select>
+        <Select id="another" setValue={setAnotherValue}>
+          <Select.Trigger>
+            <Badge outline>{anotherValue ? anotherValue : 'click here'}</Badge>
+          </Select.Trigger>
+          <Select.OptionList>
+            <Select.Option value="first">first</Select.Option>
+            <Select.Option value="second">second</Select.Option>
+            <Select.Option value="third">third</Select.Option>
+          </Select.OptionList>
+        </Select>
 
-      <Button text="submit" />
-    </form>
+        <Button text="submit" />
+      </form>
+    </Container>
   );
 };
 MultipleSelects.parameters = {
@@ -135,4 +133,34 @@ MultipleSelects.parameters = {
     storyDescription:
       '서로 다른 id를 가지는 여러 개의 select를 사용할 수 있습니다.',
   },
+};
+
+/**
+ * utils for story
+ */
+const flexColumn = flexboxStyle({
+  flexDirection: 'column',
+  justifyContent: 'flex-start',
+});
+
+const containerStyle = css`
+  width: 375px;
+  height: 375px;
+  padding: 0 20px;
+  ${flexColumn}
+`;
+
+const formStyle = css`
+  width: 100%;
+  ${flexColumn}
+`;
+
+const onSubmit: FormEventHandler = (e) => {
+  e.preventDefault();
+
+  const target = e.target as HTMLFormElement;
+  if (!target) return;
+
+  const formData = new FormData(target);
+  console.log(...formData.entries()); // 확인용 로그
 };
