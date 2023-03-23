@@ -91,7 +91,7 @@ const Carousel = ({ line = 1, children, width, height }: CarouselProps) => {
   }, 200);
 
   useEffect(() => {
-    cardsRef.current?.children[currentPage].scrollIntoView({
+    cardsRef.current?.children[currentPage * line].scrollIntoView({
       behavior: 'smooth',
       inline: 'start',
     });
