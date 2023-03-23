@@ -41,7 +41,8 @@ const Toast = ({
   onChangeOpen,
 }: ToastProps) => {
   const { color: themeColor } = theme;
-  const mainColor = kind ? themeColor[kind] : '';
+  const { white, black } = themeColor;
+  const mainColor = kind ? themeColor[kind] : black;
 
   return (
     <Portal>
@@ -53,6 +54,7 @@ const Toast = ({
               padding: 1rem;
               border: 2px solid ${mainColor};
               border-radius: 16px;
+              background-color: ${white};
               opacity: 0;
               animation: ${fadeIn} 0.01s 0.1s linear forwards;
 
