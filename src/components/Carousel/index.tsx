@@ -177,7 +177,13 @@ const Card = ({ children }: DefaultPropsWithChildren<HTMLDivElement>) => {
   const context = useContext(CarouselContext);
   if (!context) return <></>;
   const { WIDTH, GAP, HEIGHT, START } = context;
-  return <CardView {...{ WIDTH, GAP, HEIGHT, START }}>{children}</CardView>;
+  return (
+    <CardView {...{ WIDTH, GAP, HEIGHT, START }}>
+      <div style={{ transform: `translateX(${START}px)`, width: '100%' }}>
+        {children}
+      </div>
+    </CardView>
+  );
 };
 const Slide = ({ children }: DefaultPropsWithChildren<HTMLDivElement>) => {
   const context = useContext(CarouselContext);
@@ -189,6 +195,7 @@ const Slide = ({ children }: DefaultPropsWithChildren<HTMLDivElement>) => {
 const ItemList = styled.div`
   overflow-x: scroll;
   vertical-align: top;
+  width: 100%;
   display: inline-flex;
   scroll-snap-type: x mandatory;
   -ms-overflow-style: none;
@@ -218,6 +225,10 @@ const DummySlide = styled.div<{ WIDTH: number }>`
   height: 20px;
 `;
 
+const Wrapper = styled.div`
+  transform: translateX(50px);
+`;
+
 const CardView = styled.div<Omit<CarouselContextInterface, 'line'>>`
   display: flex;
   flex-direction: column;
@@ -242,6 +253,7 @@ const SlideView = styled.div<Pick<CarouselContextInterface, 'HEIGHT'>>`
   height: ${({ HEIGHT }) => pixelToRem(`${HEIGHT}px`)};
   background-color: ${({ theme }) => theme.color.white};
   overflow: hidden;
+  scroll-snap-align: start;
   img {
     width: 100%;
     height: 100%;
