@@ -18,9 +18,11 @@ const DUMMY_SHORT_MESSAGE = '토스트 메세지입니다.';
 const DUMMY_LONG_MESSAGE =
   '긴 토스트 메세지입니다. 현재 토스트 메세지의 최대 길이는 10vw로 설정되어 있습니다.';
 
-const Template: ComponentStory<typeof Toast> = (args) => (
-  <Toast {...args} open={true} />
-);
+const Template: ComponentStory<typeof Toast> = (args) => {
+  const { open, onCloseToast } = useToast(true);
+
+  return <Toast {...args} open={open} onClose={onCloseToast} />;
+};
 
 export const TopLeft = Template.bind({});
 TopLeft.args = {
@@ -112,12 +114,12 @@ Error.args = {
 };
 
 const ToastHookTemplate: ComponentStory<typeof Toast> = (args) => {
-  const { open, handleOpen, handleClose } = useToast();
+  const { open, onOpenToast, onCloseToast } = useToast();
 
   return (
     <>
-      <Button text="열려라 참깨" onClick={handleOpen} />
-      <Toast {...args} open={open} onClose={handleClose} />
+      <Button text="열려라 참깨" onClick={onOpenToast} />
+      <Toast {...args} open={open} onClose={onCloseToast} />
     </>
   );
 };

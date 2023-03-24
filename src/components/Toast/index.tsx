@@ -40,7 +40,7 @@ const Toast = ({
   vertical,
   horizontal,
   duration = 3000,
-  open = false,
+  open,
   onClose,
 }: ToastProps) => {
   const { color: themeColor } = theme;
