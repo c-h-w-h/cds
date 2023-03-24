@@ -79,9 +79,9 @@ interface TabListProps {
 }
 
 const List = ({ children }: TabListProps) => {
-  const { label, isFitted } = useTabsContext();
+  const { label } = useTabsContext();
   const { color: themeColor } = useTheme();
-  const { white, gray100 } = themeColor;
+  const { gray100 } = themeColor;
 
   return (
     <Container
@@ -103,12 +103,6 @@ const List = ({ children }: TabListProps) => {
           gap: 0;
           width: 100%;
           border-bottom: 2px solid ${gray100};
-
-          & > button {
-            width: ${isFitted === true && '100%'};
-            white-space: nowrap;
-            background-color: ${white};
-          }
         `}
       >
         {children}
@@ -158,7 +152,8 @@ const findFutureTrigger = (key: string, currentTrigger: HTMLElement) => {
 };
 
 const Trigger = ({ value, text, icon, disabled = false }: TabTriggerProps) => {
-  const { label, variant, selectedIndex, setSelectedIndex } = useTabsContext();
+  const { label, variant, isFitted, selectedIndex, setSelectedIndex } =
+    useTabsContext();
 
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const { color: themeColor } = useTheme();
@@ -236,6 +231,9 @@ const Trigger = ({ value, text, icon, disabled = false }: TabTriggerProps) => {
         justify-content: center;
         padding: 0.75rem;
         text-decoration: none;
+        white-space: nowrap;
+        width: ${isFitted === true && '100%'};
+        background-color: ${white};
         scroll-margin: ${pixelToRem('24px')};
         ${triggerStyles[variant]}
 
