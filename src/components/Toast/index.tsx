@@ -27,7 +27,7 @@ export interface ToastProps extends DefaultProps<HTMLDivElement> {
   vertical: VerticalVariant;
   horizontal: HorizontalVariant;
   open: boolean;
-  onChangeOpen: () => void;
+  onClose: () => void;
 }
 
 const startWithCapitalLetter = (str: string) =>
@@ -41,7 +41,7 @@ const Toast = ({
   horizontal,
   duration = 3000,
   open = false,
-  onChangeOpen,
+  onClose,
 }: ToastProps) => {
   const { color: themeColor } = theme;
   const { white, black } = themeColor;
@@ -49,7 +49,7 @@ const Toast = ({
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      onChangeOpen();
+      onClose();
     }, duration);
 
     return () => {
@@ -95,7 +95,7 @@ const Toast = ({
             </Typography>
             <Typography variant="desc">{message}</Typography>
           </Flexbox>
-          <CloseButton mainColor={mainColor} onClick={onChangeOpen}>
+          <CloseButton mainColor={mainColor} onClick={onClose}>
             <MdOutlineCancel size={CLOSE_ICON_SIZE} color={mainColor} />
           </CloseButton>
         </Flexbox>

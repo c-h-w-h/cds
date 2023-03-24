@@ -117,7 +117,7 @@ const ToastHookTemplate: ComponentStory<typeof Toast> = (args) => {
   return (
     <>
       <Button text="열려라 참깨" onClick={handleOpen} />
-      <Toast {...args} open={open} onChangeOpen={handleClose} />
+      <Toast {...args} open={open} onClose={handleClose} />
     </>
   );
 };
