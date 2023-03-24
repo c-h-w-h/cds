@@ -23,6 +23,7 @@ const Button = styled.button`
   background-color: ${({ theme }) => theme.color.black};
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 50%;
+  pointer-events: all;
   @media (hover: hover) {
     &:enabled:hover {
       background-color: ${({ theme }) => theme.color.black};

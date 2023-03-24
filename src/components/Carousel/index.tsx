@@ -4,7 +4,7 @@ import { CAROUSEL_SLIDE_STYLE } from '@constants/carouselSlide';
 import styled from '@emotion/styled';
 import { pixelToRem } from '@utils/pixelToRem';
 import { DefaultPropsWithChildren } from '@utils/types/DefaultPropsWithChildren';
-import { debounce } from 'lodash';
+import { debounce, throttle } from 'lodash';
 import {
   useState,
   useRef,
@@ -82,11 +82,18 @@ const Carousel = ({ line = 1, children, width, height }: CarouselProps) => {
     START,
   };
 
-  const setPage = (current: number) => {
-    setCurrentPage(current);
-    cardsRef.current?.children[current * line].scrollIntoView({
-      inline: 'start',
-    });
+  const scrollToPage = (current: number) => {
+    throttle(() => {
+      current < 0 ? (current = 0) : current;
+      current >= totalSlide ? (current = totalSlide - 1) : current;
+      setCurrentPage(current);
+    }, 200);
+    setTimeout(() => {
+      cardsRef.current?.children[current * line].scrollIntoView({
+        inline: 'start',
+        behavior: 'smooth',
+      });
+    }, 10);
   };
 
   const scrollEventHandler = debounce(() => {
@@ -119,7 +126,7 @@ const Carousel = ({ line = 1, children, width, height }: CarouselProps) => {
             {line === 1 ? (
               <InlineLayout ref={cardsRef}>
                 {children}
-                <DummySlide WIDTH={sliderWidth}></DummySlide>
+                <DummySlide WIDTH={sliderWidth - WIDTH} />
               </InlineLayout>
             ) : (
               <GridLayout {...{ HEIGHT, line }} ref={cardsRef}>
@@ -130,19 +137,19 @@ const Carousel = ({ line = 1, children, width, height }: CarouselProps) => {
                       ? sliderWidth - WIDTH + GAP
                       : sliderWidth + GAP
                   }
-                ></DummySlide>
+                />
               </GridLayout>
             )}
           </ItemList>
           <NavigationContainer>
             <NavigationButton
-              onClick={() => setPage(currentPage - 1)}
+              onClick={() => scrollToPage(currentPage - 1)}
               disabled={currentPage === 0}
             >
               <MdArrowBackIosNew />
             </NavigationButton>
             <NavigationButton
-              onClick={() => setPage(currentPage + 1)}
+              onClick={() => scrollToPage(currentPage + 1)}
               disabled={currentPage === totalSlide - 1 || totalSlide === 0}
             >
               <MdArrowForwardIos />
@@ -184,7 +191,6 @@ const ItemList = styled.div`
   vertical-align: top;
   display: inline-flex;
   scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
   -ms-overflow-style: none;
   &::-webkit-scrollbar {
     display: none;
@@ -220,8 +226,6 @@ const CardView = styled.div<Omit<CarouselContextInterface, 'line'>>`
   margin-right: ${({ GAP }) => pixelToRem(`${GAP}px`)};
   background-color: ${({ theme }) => theme.color.white};
   scroll-snap-align: start;
-  /* transform: translateX(${({ START }) => pixelToRem(`${START}px`)});
-  scroll-margin-left: ${({ START }) => pixelToRem(`${START}px`)}; */
   img {
     width: 100%;
     height: ${({ WIDTH }) => pixelToRem(`${WIDTH}px`)};
@@ -254,6 +258,7 @@ const NavigationContainer = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  pointer-events: none;
 `;
 
 const Progress = styled.div<{ isSlide: boolean }>`
@@ -273,7 +278,6 @@ const Dot = styled.div<{ current: boolean }>`
   border-radius: 100%;
   height: ${pixelToRem('8px')};
   width: ${pixelToRem('8px')};
-  transition: all 0.1s;
 `;
 
 Carousel.Card = Card;
