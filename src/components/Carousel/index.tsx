@@ -60,6 +60,14 @@ const getCardSize = ({
   };
 };
 
+const useCarouselContext = () => {
+  const context = useContext(CarouselContext);
+  if (context === null) {
+    throw new Error('useTabsContext should be used within Tabs');
+  }
+  return context;
+};
+
 const Carousel = ({ line = 1, children, width, height }: CarouselProps) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [sliderWidth, setSliderWidth] = useState(0);
@@ -93,7 +101,7 @@ const Carousel = ({ line = 1, children, width, height }: CarouselProps) => {
         inline: 'start',
         behavior: 'smooth',
       });
-    }, 10);
+    });
   };
 
   const scrollEventHandler = debounce(() => {
@@ -174,7 +182,7 @@ const Carousel = ({ line = 1, children, width, height }: CarouselProps) => {
 };
 
 const Card = ({ children }: DefaultPropsWithChildren<HTMLDivElement>) => {
-  const context = useContext(CarouselContext);
+  const context = useCarouselContext();
   if (!context) return <></>;
   const { WIDTH, GAP, HEIGHT, START } = context;
   return (
@@ -186,7 +194,7 @@ const Card = ({ children }: DefaultPropsWithChildren<HTMLDivElement>) => {
   );
 };
 const Slide = ({ children }: DefaultPropsWithChildren<HTMLDivElement>) => {
-  const context = useContext(CarouselContext);
+  const context = useCarouselContext();
   if (!context) return <></>;
   const { HEIGHT } = context;
   return <SlideView {...{ HEIGHT }}>{children}</SlideView>;
