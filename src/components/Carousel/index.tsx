@@ -25,10 +25,10 @@ interface CarouselProps extends DefaultPropsWithChildren<HTMLDivElement> {
 
 interface CarouselContextInterface {
   line: number;
-  WIDTH: number;
-  HEIGHT: number;
-  GAP: number;
-  START: number;
+  cardWidth: number;
+  cardHeight: number;
+  gap: number;
+  translateX: number;
 }
 
 const CarouselContext = createContext<CarouselContextInterface | null>(null);
@@ -44,19 +44,15 @@ const getCardSize = ({
 }: Omit<CarouselProps, 'children'>) => {
   const cardSize = CAROUSEL_SLIDE_STYLE[line === 1 ? 'inline' : 'multiline'];
   const newCardSize = { ...cardSize };
-  if (height) {
-    newCardSize.HEIGHT = height;
-  }
-  if (width) {
-    newCardSize.WIDTH = width;
-  }
-  if (isSmallViewPort(newCardSize.WIDTH)) {
-    newCardSize.GAP = window.innerWidth - newCardSize.WIDTH;
-    return { ...newCardSize, START: newCardSize.GAP / 2 };
+  height && (newCardSize.cardHeight = height);
+  width && (newCardSize.cardWidth = width);
+  if (isSmallViewPort(newCardSize.cardWidth)) {
+    newCardSize.gap = window.innerWidth - newCardSize.cardWidth;
+    return { ...newCardSize, translateX: newCardSize.gap / 2 };
   }
   return {
     ...newCardSize,
-    START: newCardSize.GAP + Math.floor(newCardSize.WIDTH / 5),
+    translateX: newCardSize.gap + Math.floor(newCardSize.cardWidth / 5),
   };
 };
 
@@ -75,7 +71,7 @@ const Carousel = ({ line = 1, children, width, height }: CarouselProps) => {
   const cardsRef = useRef<HTMLDivElement>(null);
   const totalChildren = Children.count(children);
 
-  const { WIDTH, GAP, HEIGHT, START } = getCardSize({
+  const { cardWidth, gap, cardHeight, translateX } = getCardSize({
     line,
     height,
     width: width ? width : cardsRef.current?.children[currentPage].clientWidth,
@@ -84,10 +80,10 @@ const Carousel = ({ line = 1, children, width, height }: CarouselProps) => {
 
   const contextValues = {
     line,
-    WIDTH,
-    HEIGHT,
-    GAP,
-    START,
+    cardWidth,
+    cardHeight,
+    gap,
+    translateX,
   };
 
   const scrollToPage = (current: number) => {
@@ -106,7 +102,7 @@ const Carousel = ({ line = 1, children, width, height }: CarouselProps) => {
 
   const scrollEventHandler = debounce(() => {
     const currentLeft = scrollRef.current ? scrollRef.current.scrollLeft : 0;
-    setCurrentPage(Math.floor(currentLeft / (WIDTH + GAP)));
+    setCurrentPage(Math.floor(currentLeft / (cardWidth + gap)));
   }, 200);
 
   const initPageHandler = debounce(() => {
@@ -134,16 +130,16 @@ const Carousel = ({ line = 1, children, width, height }: CarouselProps) => {
             {line === 1 ? (
               <InlineLayout ref={cardsRef}>
                 {children}
-                <DummySlide WIDTH={sliderWidth} />
+                <DummySlide cardWidth={sliderWidth} />
               </InlineLayout>
             ) : (
-              <GridLayout {...{ HEIGHT, line }} ref={cardsRef}>
+              <GridLayout {...{ cardHeight, line }} ref={cardsRef}>
                 {children}
                 <DummySlide
-                  WIDTH={
+                  cardWidth={
                     totalChildren % line === 0
-                      ? sliderWidth - WIDTH + GAP
-                      : sliderWidth + GAP
+                      ? sliderWidth - cardWidth + gap
+                      : sliderWidth + gap
                   }
                 />
               </GridLayout>
@@ -166,7 +162,7 @@ const Carousel = ({ line = 1, children, width, height }: CarouselProps) => {
         </Container>
         {line === 1 && (
           <Center>
-            <Progress isSlide={WIDTH === window.innerWidth}>
+            <Progress isSlide={cardWidth === window.innerWidth}>
               {Array.from({ length: totalSlide }).map((item, index) => (
                 <Dot
                   key={`${JSON.stringify(item)}+${index}`}
@@ -184,10 +180,10 @@ const Carousel = ({ line = 1, children, width, height }: CarouselProps) => {
 const Card = ({ children }: DefaultPropsWithChildren<HTMLDivElement>) => {
   const context = useCarouselContext();
   if (!context) return <></>;
-  const { WIDTH, GAP, HEIGHT, START } = context;
+  const { cardWidth, gap, cardHeight, translateX } = context;
   return (
-    <CardView {...{ WIDTH, GAP, HEIGHT, START }}>
-      <div style={{ transform: `translateX(${START}px)`, width: '100%' }}>
+    <CardView {...{ cardWidth, gap, cardHeight, translateX }}>
+      <div style={{ transform: `translateX(${translateX}px)`, width: '100%' }}>
         {children}
       </div>
     </CardView>
@@ -196,8 +192,8 @@ const Card = ({ children }: DefaultPropsWithChildren<HTMLDivElement>) => {
 const Slide = ({ children }: DefaultPropsWithChildren<HTMLDivElement>) => {
   const context = useCarouselContext();
   if (!context) return <></>;
-  const { HEIGHT } = context;
-  return <SlideView {...{ HEIGHT }}>{children}</SlideView>;
+  const { cardHeight } = context;
+  return <SlideView {...{ cardHeight }}>{children}</SlideView>;
 };
 
 const ItemList = styled.div`
@@ -217,44 +213,45 @@ const InlineLayout = styled.div`
 `;
 
 const GridLayout = styled.div<
-  Pick<CarouselContextInterface, 'HEIGHT' | 'line'>
+  Pick<CarouselContextInterface, 'cardHeight' | 'line'>
 >`
   display: flex;
   flex-flow: column wrap;
-  height: ${({ HEIGHT, line }) => pixelToRem(`${(HEIGHT + 10) * line}px`)};
+  height: ${({ cardHeight, line }) =>
+    pixelToRem(`${(cardHeight + 10) * line}px`)};
   justify-content: flex-start;
   div {
     margin-bottom: ${pixelToRem('10px')};
   }
 `;
 
-const DummySlide = styled.div<{ WIDTH: number }>`
-  width: ${({ WIDTH }) => pixelToRem(`${WIDTH}px`)};
+const DummySlide = styled.div<{ cardWidth: number }>`
+  width: ${({ cardWidth }) => pixelToRem(`${cardWidth}px`)};
   height: 20px;
 `;
 
 const CardView = styled.div<Omit<CarouselContextInterface, 'line'>>`
   display: flex;
   flex-direction: column;
-  width: ${({ WIDTH }) => pixelToRem(`${WIDTH}px`)};
-  height: ${({ HEIGHT }) => pixelToRem(`${HEIGHT}px`)};
-  margin-right: ${({ GAP }) => pixelToRem(`${GAP}px`)};
+  width: ${({ cardWidth }) => pixelToRem(`${cardWidth}px`)};
+  height: ${({ cardHeight }) => pixelToRem(`${cardHeight}px`)};
+  margin-right: ${({ gap }) => pixelToRem(`${gap}px`)};
   background-color: ${({ theme }) => theme.color.white};
   scroll-snap-align: start;
   img {
     width: 100%;
-    height: ${({ WIDTH }) => pixelToRem(`${WIDTH}px`)};
+    height: ${({ cardWidth }) => pixelToRem(`${cardWidth}px`)};
     border: 1px solid ${({ theme }) => theme.color.gray100};
     border-radius: 10px;
     margin-bottom: 10px;
   }
 `;
 
-const SlideView = styled.div<Pick<CarouselContextInterface, 'HEIGHT'>>`
+const SlideView = styled.div<Pick<CarouselContextInterface, 'cardHeight'>>`
   display: flex;
   flex-direction: column;
   width: 100vw;
-  height: ${({ HEIGHT }) => pixelToRem(`${HEIGHT}px`)};
+  height: ${({ cardHeight }) => pixelToRem(`${cardHeight}px`)};
   background-color: ${({ theme }) => theme.color.white};
   overflow: hidden;
   scroll-snap-align: start;

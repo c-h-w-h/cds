@@ -1,7 +1,7 @@
 interface CarouselSlideStyle {
-  WIDTH: number;
-  HEIGHT: number;
-  GAP: number;
+  cardWidth: number;
+  cardHeight: number;
+  gap: number;
 }
 
 export const CAROUSEL_SLIDE_STYLE: Record<
@@ -9,13 +9,13 @@ export const CAROUSEL_SLIDE_STYLE: Record<
   CarouselSlideStyle
 > = {
   multiline: {
-    WIDTH: 112,
-    HEIGHT: 160,
-    GAP: 20,
+    cardWidth: 112,
+    cardHeight: 160,
+    gap: 20,
   },
   inline: {
-    WIDTH: 160,
-    HEIGHT: 208,
-    GAP: 20,
+    cardWidth: 160,
+    cardHeight: 208,
+    gap: 20,
   },
 };
