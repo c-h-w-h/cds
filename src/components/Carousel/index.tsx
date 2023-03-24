@@ -225,10 +225,6 @@ const DummySlide = styled.div<{ WIDTH: number }>`
   height: 20px;
 `;
 
-const Wrapper = styled.div`
-  transform: translateX(50px);
-`;
-
 const CardView = styled.div<Omit<CarouselContextInterface, 'line'>>`
   display: flex;
   flex-direction: column;
