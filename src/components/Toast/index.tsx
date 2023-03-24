@@ -127,11 +127,11 @@ const bounce = (vertical: string) => keyframes`
   }
 `;
 
-interface ClosebuttonProps {
+interface CloseButtonProps {
   mainColor: string;
 }
 
-const CloseButton = styled.button<ClosebuttonProps>(({ mainColor, theme }) => {
+const CloseButton = styled.button<CloseButtonProps>(({ mainColor, theme }) => {
   const { color: themeColor } = theme;
   const { white } = themeColor;
 
