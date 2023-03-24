@@ -82,6 +82,13 @@ const Carousel = ({ line = 1, children, width, height }: CarouselProps) => {
     START,
   };
 
+  const setPage = (current: number) => {
+    setCurrentPage(current);
+    cardsRef.current?.children[current * line].scrollIntoView({
+      inline: 'start',
+    });
+  };
+
   const scrollEventHandler = debounce(() => {
     const currentLeft = scrollRef.current ? scrollRef.current.scrollLeft : 0;
     setCurrentPage(Math.floor(currentLeft / (WIDTH + GAP)));
@@ -91,13 +98,6 @@ const Carousel = ({ line = 1, children, width, height }: CarouselProps) => {
     setCurrentPage(0);
     setSliderWidth(scrollRef.current ? scrollRef.current.offsetWidth : 0);
   }, 200);
-
-  useEffect(() => {
-    cardsRef.current?.children[currentPage * line].scrollIntoView({
-      behavior: 'smooth',
-      inline: 'start',
-    });
-  }, [currentPage]);
 
   useEffect(() => {
     initPageHandler();
@@ -119,7 +119,7 @@ const Carousel = ({ line = 1, children, width, height }: CarouselProps) => {
             {line === 1 ? (
               <InlineLayout ref={cardsRef}>
                 {children}
-                <DummySlide WIDTH={sliderWidth - WIDTH}></DummySlide>
+                <DummySlide WIDTH={sliderWidth}></DummySlide>
               </InlineLayout>
             ) : (
               <GridLayout {...{ HEIGHT, line }} ref={cardsRef}>
@@ -136,13 +136,13 @@ const Carousel = ({ line = 1, children, width, height }: CarouselProps) => {
           </ItemList>
           <NavigationContainer>
             <NavigationButton
-              onClick={() => setCurrentPage(currentPage - 1)}
+              onClick={() => setPage(currentPage - 1)}
               disabled={currentPage === 0}
             >
               <MdArrowBackIosNew />
             </NavigationButton>
             <NavigationButton
-              onClick={() => setCurrentPage(currentPage + 1)}
+              onClick={() => setPage(currentPage + 1)}
               disabled={currentPage === totalSlide - 1 || totalSlide === 0}
             >
               <MdArrowForwardIos />
@@ -181,10 +181,10 @@ const Slide = ({ children }: DefaultPropsWithChildren<HTMLDivElement>) => {
 
 const ItemList = styled.div`
   overflow-x: scroll;
-  width: 100%;
   vertical-align: top;
   display: inline-flex;
   scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
   -ms-overflow-style: none;
   &::-webkit-scrollbar {
     display: none;
@@ -219,8 +219,9 @@ const CardView = styled.div<Omit<CarouselContextInterface, 'line'>>`
   height: ${({ HEIGHT }) => pixelToRem(`${HEIGHT}px`)};
   margin-right: ${({ GAP }) => pixelToRem(`${GAP}px`)};
   background-color: ${({ theme }) => theme.color.white};
-  transform: translateX(${({ START }) => pixelToRem(`${START}px`)});
-  scroll-margin-left: ${({ START }) => pixelToRem(`${START}px`)};
+  scroll-snap-align: start;
+  /* transform: translateX(${({ START }) => pixelToRem(`${START}px`)});
+  scroll-margin-left: ${({ START }) => pixelToRem(`${START}px`)}; */
   img {
     width: 100%;
     height: ${({ WIDTH }) => pixelToRem(`${WIDTH}px`)};
