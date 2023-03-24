@@ -33,6 +33,10 @@ interface CarouselContextInterface {
 
 const CarouselContext = createContext<CarouselContextInterface | null>(null);
 
+const isSmallViewPort = (cardWidth: number) => {
+  return window.innerWidth / cardWidth <= 1.2;
+};
+
 const getCardSize = ({
   line,
   height,
@@ -46,7 +50,7 @@ const getCardSize = ({
   if (width) {
     newCardSize.WIDTH = width;
   }
-  if (window.innerWidth / newCardSize.WIDTH <= 1.2) {
+  if (isSmallViewPort(newCardSize.WIDTH)) {
     newCardSize.GAP = window.innerWidth - newCardSize.WIDTH;
     return { ...newCardSize, START: newCardSize.GAP / 2 };
   }
