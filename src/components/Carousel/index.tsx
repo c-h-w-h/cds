@@ -126,7 +126,7 @@ const Carousel = ({ line = 1, children, width, height }: CarouselProps) => {
             {line === 1 ? (
               <InlineLayout ref={cardsRef}>
                 {children}
-                <DummySlide WIDTH={sliderWidth - WIDTH} />
+                <DummySlide WIDTH={sliderWidth} />
               </InlineLayout>
             ) : (
               <GridLayout {...{ HEIGHT, line }} ref={cardsRef}>
