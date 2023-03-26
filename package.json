@@ -1,15 +1,13 @@
 {
-  "name": "cds",
-  "private": true,
-  "version": "0.0.0",
+  "name": "cds-publication",
+  "version": "0.0.02--experimental",
+  "description": "This is a test publication",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
+    "dev": "yarn storybook",
+    "build": "tsc && vite build --config vite.publish.config.ts",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "postinstall": "husky install",
     "lint-staged": "lint-staged",
     "chromatic": "chromatic --exit-zero-on-changes"
   },
@@ -18,6 +16,18 @@
       "prettier --write",
       "eslint --config ./.eslintrc --fix"
     ]
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.umd.cjs",
+  "module": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.umd.cjs"
+    }
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -56,5 +66,25 @@
     "vite": "^4.1.0",
     "vite-plugin-dts": "^2.1.0",
     "vite-tsconfig-paths": "^4.0.5"
+  },
+  "homepage": "https://github.com/c-h-w-h/cds#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/c-h-w-h/cds.git",
+    "directory": "/"
+  },
+  "contributors": [
+    "이우재 <prayinforrain@naver.com> (https://prayinforrain.github.io/)",
+    "Hyunbin Lee <iyu88@naver.com> (https://iyu88.github.io/)",
+    "Seyoung Kim <se030.kim@gmail.com> (https://velog.io/@se030)",
+    "sunmin <polarlsm1231@gmail.com> (https://polarmin.tistory.com/)",
+    "dohun <dohun31@naver.com> (https://dohun31.tistory.com/)"
+  ],
+  "bugs": {
+    "url": "https://github.com/c-h-w-h/cds/issues"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
   }
 }
