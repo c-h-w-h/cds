@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "yarn storybook",
-    "build": "tsc && vite build --config vite.publish.config.ts",
+    "build": "tsc -p tsconfig.publish.json && vite build --config vite.publish.config.ts",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "lint-staged": "lint-staged",
