@@ -1,6 +1,6 @@
 export * from './pixelToRem';
 
-export type * from './types/ChildrenProps';
-export type * from './types/DefaultProps';
-export type * from './types/DefaultPropsWithChildren';
-export type * from './types/FlexContainerProps';
+export type { ChildrenProps } from './types/ChildrenProps';
+export type { DefaultProps } from './types/DefaultProps';
+export type { DefaultPropsWithChildren } from './types/DefaultPropsWithChildren';
+export type { FlexContainerProps } from './types/FlexContainerProps';
