@@ -1,4 +1,5 @@
 import Global from '@components-common/Global';
+import { PORTAL_ROOT_ID } from '@constants/portal';
 import { ThemeProvider } from '@emotion/react';
 import { ReactNode } from 'react';
 
@@ -14,7 +15,7 @@ const CdsProvider = ({ children }: CdsProviderProps) => {
       <Global />
       <ThemeProvider theme={theme}>
         {children}
-        <div id="cds-portal-root"></div>
+        <div id={PORTAL_ROOT_ID}></div>
       </ThemeProvider>
     </>
   );

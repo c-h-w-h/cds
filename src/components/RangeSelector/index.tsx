@@ -28,7 +28,7 @@ type RangeSelectorContextInterface = Omit<
 const RangeSelectorContext =
   createContext<RangeSelectorContextInterface | null>(null);
 
-interface RangeSelectorProps {
+export interface RangeSelectorProps {
   id: string;
   label: string;
   min: number;
@@ -268,4 +268,5 @@ const Thumb = styled.div<ThumbProps>`
 RangeSelector.Slider = Slider;
 RangeSelector.RangeDisplay = RangeDisplay;
 
-export { RangeSelectorContext, RangeSelector };
+export { RangeSelectorContext };
+export default RangeSelector;

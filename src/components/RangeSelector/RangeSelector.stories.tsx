@@ -1,6 +1,6 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { RangeSelector } from '.';
+import RangeSelector from '.';
 
 export default {
   title: 'RangeSelector',
