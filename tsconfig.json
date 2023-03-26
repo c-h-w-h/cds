@@ -14,11 +14,14 @@
     "moduleResolution": "Node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
     "jsx": "react-jsx",
     "jsxImportSource": "@emotion/react",
-    "typeRoots": ["src/@types"]
+    "outDir": "dist",
+    "noEmit": false,
+    "declaration": true,
+    "declarationDir": "dist"
   },
   "include": ["src"],
+  "exclude": [".storybook", "**/*.stories.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
