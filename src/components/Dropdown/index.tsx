@@ -20,7 +20,7 @@ import {
 
 type DropdownProps = {
   label: string;
-  collapseOnBlur: boolean;
+  collapseOnBlur?: boolean;
   direction?: 'left' | 'right' | 'top' | 'bottom';
 } & ChildrenProps;
 
