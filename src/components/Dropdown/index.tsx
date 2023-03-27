@@ -3,9 +3,14 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { ChildrenProps } from '@util-types/ChildrenProps';
 import {
+  cloneElement,
   createContext,
   Dispatch,
+  KeyboardEvent,
+  KeyboardEventHandler,
   MouseEvent as ReactMouseEvent,
+  MouseEventHandler,
+  ReactElement,
   SetStateAction,
   useContext,
   useEffect,
@@ -14,9 +19,8 @@ import {
 } from 'react';
 
 type DropdownProps = {
-  id: string;
-  dropdownLabel: string;
-  collapseOnBlur: boolean;
+  label: string;
+  collapseOnBlur?: boolean;
   direction?: 'left' | 'right' | 'top' | 'bottom';
 } & ChildrenProps;
 
@@ -24,8 +28,7 @@ interface DropdownContextInterface {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   collapseOnBlur: boolean;
-  dropdownLabel: string;
-  id: string;
+  label: string;
   direction: 'left' | 'right' | 'top' | 'bottom';
   triggerSize: {
     width: number;
@@ -41,8 +44,7 @@ interface DropdownContextInterface {
 const DropdownContext = createContext<DropdownContextInterface | null>(null);
 
 const Dropdown = ({
-  id = '',
-  dropdownLabel = '',
+  label,
   collapseOnBlur = false,
   direction = 'bottom',
   children,
@@ -57,8 +59,7 @@ const Dropdown = ({
     isOpen,
     setIsOpen,
     collapseOnBlur,
-    dropdownLabel,
-    id,
+    label,
     direction,
     triggerSize,
     setTriggerSize,
@@ -80,37 +81,44 @@ const Dropdown = ({
   );
 };
 
-const Trigger = ({ children }: ChildrenProps) => {
+const Trigger = ({ children }: { children: ReactElement }) => {
   const context = useContext(DropdownContext);
-  const triggerRef = useRef<HTMLDivElement | null>(null);
 
   if (!context) return <></>;
 
-  const { isOpen, setIsOpen, dropdownLabel, id, setTriggerSize } = context;
+  const { isOpen, setIsOpen, label, setTriggerSize } = context;
 
   useEffect(() => {
-    if (!triggerRef.current || !setTriggerSize) return;
+    const $trigger = document.getElementById(`${label}-Trigger`);
+    if (!$trigger) return;
     setTriggerSize({
-      width: triggerRef.current.offsetWidth,
-      height: triggerRef.current.offsetHeight,
+      width: $trigger.offsetWidth,
+      height: $trigger.offsetHeight,
     });
-  }, [triggerRef.current]);
+  }, []);
 
-  return (
-    <div
-      onClick={(e: ReactMouseEvent) => {
-        e.stopPropagation();
-        setIsOpen(!isOpen);
-      }}
-      aria-expanded={isOpen}
-      aria-haspopup="true"
-      aria-label={dropdownLabel}
-      id={id}
-      ref={triggerRef}
-    >
-      {children}
-    </div>
-  );
+  const onClick: MouseEventHandler = (e: ReactMouseEvent) => {
+    e.stopPropagation();
+    setIsOpen(!isOpen);
+  };
+
+  const onKeyDown: KeyboardEventHandler = (e: KeyboardEvent) => {
+    if (e.key === ' ' || e.key === 'Enter') {
+      e.preventDefault();
+      setIsOpen((prev) => !prev);
+    }
+  };
+
+  return cloneElement(children, {
+    onClick,
+    onKeyDown,
+    'aria-expanded': isOpen,
+    'aria-haspopup': 'true',
+    'aria-label': `Dropdown Trigger of ${label}`,
+    'aria-controls': `${label}-Dropdown`,
+    tabIndex: 0,
+    id: `${label}-Trigger`,
+  });
 };
 
 const Menu = ({ children }: ChildrenProps) => {
@@ -119,7 +127,7 @@ const Menu = ({ children }: ChildrenProps) => {
 
   if (!context) return <></>;
 
-  const { isOpen, setIsOpen, collapseOnBlur, id, direction, triggerSize } =
+  const { isOpen, setIsOpen, collapseOnBlur, label, direction, triggerSize } =
     context;
 
   const toggleEventHandler = (e: MouseEvent) => {
@@ -148,11 +156,15 @@ const Menu = ({ children }: ChildrenProps) => {
   return (
     <MenuWrapper
       ref={menuRef}
-      aria-labelledby={id}
+      aria-labelledby={`${label}-Trigger`}
+      id={`${label}-Dropdown`}
       direction={direction ?? 'bottom'}
       triggerSize={triggerSize ?? { width: 0, height: 0 }}
+      css={css`
+        display: ${isOpen ? 'flex' : 'none'};
+      `}
     >
-      {isOpen && children}
+      {children}
     </MenuWrapper>
   );
 };

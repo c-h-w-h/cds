@@ -54,34 +54,29 @@ const Template: ComponentStory<typeof Dropdown> = (args) => (
 
 export const Default = Template.bind({});
 Default.args = {
-  id: 'dropdown1',
-  dropdownLabel: 'Default dropdown',
+  label: 'dropdown1',
 };
 
-export const DirectonTop = Template.bind({});
-DirectonTop.args = {
-  id: 'dropdown2',
-  dropdownLabel: 'Default dropdown',
+export const DirectionTop = Template.bind({});
+DirectionTop.args = {
+  label: 'dropdown2',
   direction: 'top',
 };
 
-export const DirectonLeft = Template.bind({});
-DirectonLeft.args = {
-  id: 'dropdown3',
-  dropdownLabel: 'Default dropdown',
+export const DirectionLeft = Template.bind({});
+DirectionLeft.args = {
+  label: 'dropdown3',
   direction: 'left',
 };
 
-export const DirectonRight = Template.bind({});
-DirectonRight.args = {
-  id: 'dropdown4',
-  dropdownLabel: 'Default dropdown',
+export const DirectionRight = Template.bind({});
+DirectionRight.args = {
+  label: 'dropdown4',
   direction: 'right',
 };
 
 export const CollapseOnBlur = Template.bind({});
 CollapseOnBlur.args = {
-  id: 'dropdown5',
-  dropdownLabel: 'Default dropdown',
+  label: 'dropdown5',
   collapseOnBlur: true,
 };
