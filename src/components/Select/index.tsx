@@ -9,10 +9,10 @@ import {
   SetStateAction,
   createContext,
   forwardRef,
-  useContext,
   useEffect,
 } from 'react';
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
+import useSafeContext from 'src/hooks/useSafeContext';
 
 import useSelect from './useSelect';
 
@@ -42,11 +42,7 @@ const Select = ({ id, setValue, children }: SelectProps) => {
 };
 
 const Trigger = ({ children }: ChildrenProps) => {
-  const dropdownContext = useContext(DropdownContext);
-  if (!dropdownContext) {
-    return <></>;
-  }
-  const { isOpen } = dropdownContext;
+  const { isOpen } = useSafeContext(DropdownContext);
 
   const { color } = useTheme();
   const { gray200, white, black } = color;
@@ -106,20 +102,13 @@ type OptionProps = {
 } & ChildrenProps;
 
 const Option = ({ value, children }: OptionProps) => {
-  const context = useContext(SelectContext);
-  if (!context) return <></>;
-
-  const { selectValue, registerOption } = context;
+  const { selectValue, registerOption } = useSafeContext(SelectContext);
 
   useEffect(() => {
     registerOption(value);
   }, []);
 
-  const dropdownContext = useContext(DropdownContext);
-  if (!dropdownContext) {
-    return <></>;
-  }
-  const { setIsOpen } = dropdownContext;
+  const { setIsOpen } = useSafeContext(DropdownContext);
 
   const onSelect = () => {
     selectValue(value);
