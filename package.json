@@ -35,10 +35,13 @@
     }
   },
   "sideEffects": false,
+  "dependencies": {
+    "lodash": "^4.17.21"
+  },
   "peerDependencies": {
-    "lodash": "^4.17.21",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "react": "^18.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",
