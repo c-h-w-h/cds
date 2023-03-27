@@ -7,7 +7,7 @@ const useSafeContext: <T extends Context<any>>(
   const context = useContext(Context);
 
   if (!context) {
-    throw new Error('CDS 컴포넌트에 필요한 컨텍스트가 없어요 🥲');
+    throw new Error('CDS 컴포넌트에 필요한 컨텍스트가 없어요!');
   }
 
   return context;
