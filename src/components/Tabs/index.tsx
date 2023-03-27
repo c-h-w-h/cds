@@ -11,10 +11,10 @@ import {
   KeyboardEvent,
   ReactNode,
   SetStateAction,
-  useContext,
   useRef,
   useState,
 } from 'react';
+import useSafeContext from 'src/hooks/useSafeContext';
 
 type TabsVariant = 'underline' | 'rounded';
 
@@ -66,20 +66,12 @@ const Tabs = ({
   );
 };
 
-const useTabsContext = () => {
-  const context = useContext(TabsContext);
-  if (context === null) {
-    throw new Error('useTabsContext should be used within Tabs');
-  }
-  return context;
-};
-
 interface TabListProps {
   children: ReactNode;
 }
 
 const List = ({ children }: TabListProps) => {
-  const { label } = useTabsContext();
+  const { label } = useSafeContext(TabsContext);
   const { color: themeColor } = useTheme();
   const { gray100 } = themeColor;
 
@@ -153,7 +145,7 @@ const findFutureTrigger = (key: string, currentTrigger: HTMLElement) => {
 
 const Trigger = ({ value, text, icon, disabled = false }: TabTriggerProps) => {
   const { label, variant, isFitted, selectedIndex, setSelectedIndex } =
-    useTabsContext();
+    useSafeContext(TabsContext);
 
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const { color: themeColor } = useTheme();
@@ -295,7 +287,7 @@ interface TabPanelProps {
 }
 
 const Panel = ({ value, children }: TabPanelProps) => {
-  const { label, selectedIndex } = useTabsContext();
+  const { label, selectedIndex } = useSafeContext(TabsContext);
 
   return (
     <Container
