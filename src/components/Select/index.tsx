@@ -179,7 +179,7 @@ const Option = ({ value, children }: OptionProps) => {
   `;
 
   return (
-    <li onClick={onSelect} tabIndex={1} onKeyDown={onKeyDown} css={optionStyle}>
+    <li onClick={onSelect} tabIndex={0} onKeyDown={onKeyDown} css={optionStyle}>
       {children}
     </li>
   );
