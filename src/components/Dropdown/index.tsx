@@ -13,11 +13,11 @@ import {
   MouseEventHandler,
   ReactElement,
   SetStateAction,
-  useContext,
   useEffect,
   useRef,
   useState,
 } from 'react';
+import useSafeContext from 'src/hooks/useSafeContext';
 
 type DropdownProps = {
   label: string;
@@ -83,11 +83,8 @@ const Dropdown = ({
 };
 
 const Trigger = ({ children }: { children: ReactElement }) => {
-  const context = useContext(DropdownContext);
-
-  if (!context) return <></>;
-
-  const { isOpen, setIsOpen, label, setTriggerSize } = context;
+  const { isOpen, setIsOpen, label, setTriggerSize } =
+    useSafeContext(DropdownContext);
 
   useEffect(() => {
     const $trigger = document.getElementById(`${label}-trigger`);
@@ -123,13 +120,10 @@ const Trigger = ({ children }: { children: ReactElement }) => {
 };
 
 const Menu = ({ children }: ChildrenProps) => {
-  const context = useContext(DropdownContext);
   const menuRef = useRef<HTMLDivElement | null>(null);
 
-  if (!context) return <></>;
-
   const { isOpen, setIsOpen, collapseOnBlur, label, direction, triggerSize } =
-    context;
+    useSafeContext(DropdownContext);
 
   const toggleEventHandler = (e: MouseEvent) => {
     if (!isOpen) return;

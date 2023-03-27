@@ -5,15 +5,9 @@ import styled from '@emotion/styled';
 import { pixelToRem } from '@utils/pixelToRem';
 import { DefaultPropsWithChildren } from '@utils/types/DefaultPropsWithChildren';
 import { debounce, throttle } from 'lodash';
-import {
-  useState,
-  useRef,
-  useEffect,
-  useContext,
-  createContext,
-  Children,
-} from 'react';
+import { useState, useRef, useEffect, createContext, Children } from 'react';
 import { MdArrowBackIosNew, MdArrowForwardIos } from 'react-icons/md';
+import useSafeContext from 'src/hooks/useSafeContext';
 
 import NavigationButton from './NavigationButton';
 
@@ -54,14 +48,6 @@ const getCardSize = ({
     ...newCardSize,
     translateX: newCardSize.gap + Math.floor(newCardSize.cardWidth / 5),
   };
-};
-
-const useCarouselContext = () => {
-  const context = useContext(CarouselContext);
-  if (context === null) {
-    throw new Error('useTabsContext should be used within Tabs');
-  }
-  return context;
 };
 
 const Carousel = ({ line = 1, children, width, height }: CarouselProps) => {
@@ -173,8 +159,8 @@ const Carousel = ({ line = 1, children, width, height }: CarouselProps) => {
 };
 
 const Card = ({ children }: DefaultPropsWithChildren<HTMLDivElement>) => {
-  const context = useCarouselContext();
-  const { cardWidth, gap, cardHeight, translateX } = context;
+  const { cardWidth, gap, cardHeight, translateX } =
+    useSafeContext(CarouselContext);
   return (
     <CardView {...{ cardWidth, gap, cardHeight, translateX }}>
       <div style={{ transform: `translateX(${translateX}px)`, width: '100%' }}>
@@ -184,8 +170,7 @@ const Card = ({ children }: DefaultPropsWithChildren<HTMLDivElement>) => {
   );
 };
 const Slide = ({ children }: DefaultPropsWithChildren<HTMLDivElement>) => {
-  const context = useCarouselContext();
-  const { cardHeight } = context;
+  const { cardHeight } = useSafeContext(CarouselContext);
   return <SlideView {...{ cardHeight }}>{children}</SlideView>;
 };
 
