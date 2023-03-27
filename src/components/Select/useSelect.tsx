@@ -2,16 +2,13 @@ import { Dispatch, SetStateAction, useRef } from 'react';
 
 const useSelect = (id: string, setValue?: Dispatch<SetStateAction<string>>) => {
   const selectRef = useRef<HTMLSelectElement>(null);
-  const optionRefs = useRef<HTMLLIElement[]>([]);
 
-  const registerOption = ($el: HTMLLIElement, value: string) => {
+  const registerOption = (value: string) => {
     const optionId = `${id}-${value}`;
 
     if (!selectRef.current || selectRef.current.querySelector(`#${optionId}`)) {
       return;
     }
-
-    optionRefs.current.push($el);
 
     const $option = document.createElement('option');
     $option.id = optionId;

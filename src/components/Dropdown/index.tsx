@@ -1,4 +1,5 @@
 import Container from '@components-layout/Container';
+import { ENTER, SPACE } from '@constants/key';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { ChildrenProps } from '@util-types/ChildrenProps';
@@ -69,7 +70,7 @@ const Dropdown = ({
     <DropdownContext.Provider value={contextValues}>
       <Container
         css={css`
-          width: auto;
+          width: 100%;
           height: auto;
           position: relative;
           overflow: visible;
@@ -89,7 +90,7 @@ const Trigger = ({ children }: { children: ReactElement }) => {
   const { isOpen, setIsOpen, label, setTriggerSize } = context;
 
   useEffect(() => {
-    const $trigger = document.getElementById(`${label}-Trigger`);
+    const $trigger = document.getElementById(`${label}-trigger`);
     if (!$trigger) return;
     setTriggerSize({
       width: $trigger.offsetWidth,
@@ -103,7 +104,7 @@ const Trigger = ({ children }: { children: ReactElement }) => {
   };
 
   const onKeyDown: KeyboardEventHandler = (e: KeyboardEvent) => {
-    if (e.key === ' ' || e.key === 'Enter') {
+    if (e.key === SPACE || e.key === ENTER) {
       e.preventDefault();
       setIsOpen((prev) => !prev);
     }
@@ -115,9 +116,9 @@ const Trigger = ({ children }: { children: ReactElement }) => {
     'aria-expanded': isOpen,
     'aria-haspopup': 'true',
     'aria-label': `Dropdown Trigger of ${label}`,
-    'aria-controls': `${label}-Dropdown`,
+    'aria-controls': `${label}-dropdown`,
     tabIndex: 0,
-    id: `${label}-Trigger`,
+    id: `${label}-trigger`,
   });
 };
 
@@ -156,8 +157,8 @@ const Menu = ({ children }: ChildrenProps) => {
   return (
     <MenuWrapper
       ref={menuRef}
-      aria-labelledby={`${label}-Trigger`}
-      id={`${label}-Dropdown`}
+      aria-labelledby={`${label}-trigger`}
+      id={`${label}-dropdown`}
       direction={direction ?? 'bottom'}
       triggerSize={triggerSize ?? { width: 0, height: 0 }}
       css={css`
@@ -188,6 +189,8 @@ const MenuWrapper = styled.div<MenuWrapperProps>`
         return `top: ${triggerSize.height}px; left:0;`;
     }
   }}
+  width: 100%;
+  z-index: 1;
 `;
 
 Dropdown.Trigger = Trigger;
