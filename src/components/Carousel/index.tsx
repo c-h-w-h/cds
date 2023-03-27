@@ -101,7 +101,7 @@ const Carousel = ({ line = 1, children, width, height }: CarouselProps) => {
   }, 200);
 
   const initPageHandler = debounce(() => {
-    setCurrentPage(0);
+    scrollToPage(0);
     setSliderWidth(scrollRef.current ? scrollRef.current.offsetWidth : 0);
   }, 200);
 
