@@ -89,7 +89,7 @@ const Trigger = ({ children }: { children: ReactElement }) => {
   const { isOpen, setIsOpen, label, setTriggerSize } = context;
 
   useEffect(() => {
-    const $trigger = document.getElementById(`${label}-Trigger`);
+    const $trigger = document.getElementById(`${label}-trigger`);
     if (!$trigger) return;
     setTriggerSize({
       width: $trigger.offsetWidth,
@@ -115,9 +115,9 @@ const Trigger = ({ children }: { children: ReactElement }) => {
     'aria-expanded': isOpen,
     'aria-haspopup': 'true',
     'aria-label': `Dropdown Trigger of ${label}`,
-    'aria-controls': `${label}-Dropdown`,
+    'aria-controls': `${label}-dropdown`,
     tabIndex: 0,
-    id: `${label}-Trigger`,
+    id: `${label}-trigger`,
   });
 };
 
@@ -156,8 +156,8 @@ const Menu = ({ children }: ChildrenProps) => {
   return (
     <MenuWrapper
       ref={menuRef}
-      aria-labelledby={`${label}-Trigger`}
-      id={`${label}-Dropdown`}
+      aria-labelledby={`${label}-trigger`}
+      id={`${label}-dropdown`}
       direction={direction ?? 'bottom'}
       triggerSize={triggerSize ?? { width: 0, height: 0 }}
       css={css`

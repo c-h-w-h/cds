@@ -31,11 +31,7 @@ const Select = ({ id, setValue, children }: SelectProps) => {
   const { selectRef, selectValue, registerOption } = useSelect(id, setValue);
 
   return (
-    <Dropdown
-      id={`${id}_select_dropdown`}
-      dropdownLabel={`Opens ${id} select`}
-      collapseOnBlur={true}
-    >
+    <Dropdown label={`select-${id}`} collapseOnBlur={true}>
       <SelectContext.Provider value={{ selectValue, registerOption }}>
         {children}
       </SelectContext.Provider>
