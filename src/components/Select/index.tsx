@@ -1,4 +1,5 @@
 import Dropdown, { DropdownContext } from '@components/Dropdown';
+import { ARROW_DOWN, ARROW_UP, ENTER } from '@constants/key';
 import { css, useTheme } from '@emotion/react';
 import { ChildrenProps } from '@util-types/ChildrenProps';
 import {
@@ -131,8 +132,7 @@ const Option = ({ value, children }: OptionProps) => {
     const target = e.target;
     if (!(target instanceof HTMLLIElement)) return;
 
-    // TODO: #67 머지 이후에 constants/key.ts 반영할게요
-    if (key === 'Enter') {
+    if (key === ENTER) {
       onSelect();
       return;
     }
@@ -141,22 +141,24 @@ const Option = ({ value, children }: OptionProps) => {
     const $ul = target.closest('ul');
     if (!$ul) return;
 
-    if (['40', 'ArrowDown'].includes(key)) {
-      e.preventDefault();
-      $nextLi = target.nextElementSibling;
+    switch (key) {
+      case ARROW_DOWN:
+        e.preventDefault();
+        $nextLi = target.nextElementSibling;
 
-      if (!$nextLi) {
-        $nextLi = $ul.firstElementChild;
-      }
-    }
+        if (!$nextLi) {
+          $nextLi = $ul.firstElementChild;
+        }
+        break;
 
-    if (['38', 'ArrowUp'].includes(key)) {
-      e.preventDefault();
-      $nextLi = target.previousElementSibling;
+      case ARROW_UP:
+        e.preventDefault();
+        $nextLi = target.previousElementSibling;
 
-      if (!$nextLi) {
-        $nextLi = $ul.lastElementChild;
-      }
+        if (!$nextLi) {
+          $nextLi = $ul.lastElementChild;
+        }
+        break;
     }
 
     if ($nextLi instanceof HTMLLIElement) $nextLi.focus();

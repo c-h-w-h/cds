@@ -1,4 +1,5 @@
 import Container from '@components-layout/Container';
+import { ENTER, SPACE } from '@constants/key';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { ChildrenProps } from '@util-types/ChildrenProps';
@@ -103,7 +104,7 @@ const Trigger = ({ children }: { children: ReactElement }) => {
   };
 
   const onKeyDown: KeyboardEventHandler = (e: KeyboardEvent) => {
-    if (e.key === ' ' || e.key === 'Enter') {
+    if (e.key === SPACE || e.key === ENTER) {
       e.preventDefault();
       setIsOpen((prev) => !prev);
     }
