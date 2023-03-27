@@ -1,23 +1,27 @@
-import Button from '@components/Button';
-import { IconSource } from '@components/Icon';
+import Icon, { IconSource } from '@components/Icon';
+import Typography from '@components/Typography';
 import Container from '@components-layout/Container';
 import Flexbox from '@components-layout/Flexbox';
+import { NEXT_KEY, PREV_KEY } from '@constants/key';
 import { css, useTheme } from '@emotion/react';
 import { pixelToRem } from '@utils/pixelToRem';
 import {
   createContext,
   Dispatch,
+  KeyboardEvent,
   ReactNode,
   SetStateAction,
   useContext,
+  useRef,
   useState,
 } from 'react';
 
 type TabsVariant = 'underline' | 'rounded';
 
 interface TabsContextInterface {
-  isFitted: boolean;
+  label: string;
   variant: TabsVariant;
+  isFitted: boolean;
   selectedIndex: string;
   setSelectedIndex: Dispatch<SetStateAction<string>>;
 }
@@ -25,6 +29,7 @@ interface TabsContextInterface {
 const TabsContext = createContext<TabsContextInterface | null>(null);
 
 interface TabsProps {
+  label: string;
   defaultValue: string;
   children: ReactNode;
   variant?: TabsVariant;
@@ -32,14 +37,21 @@ interface TabsProps {
 }
 
 const Tabs = ({
-  isFitted = false,
-  variant = 'underline',
+  label,
   defaultValue,
   children,
+  variant = 'underline',
+  isFitted = false,
 }: TabsProps) => {
   const [selectedIndex, setSelectedIndex] = useState<string>(defaultValue);
 
-  const providerValue = { isFitted, variant, selectedIndex, setSelectedIndex };
+  const providerValue = {
+    isFitted,
+    variant,
+    label,
+    selectedIndex,
+    setSelectedIndex,
+  };
 
   return (
     <TabsContext.Provider value={providerValue}>
@@ -54,18 +66,28 @@ const Tabs = ({
   );
 };
 
+const useTabsContext = () => {
+  const context = useContext(TabsContext);
+  if (context === null) {
+    throw new Error('useTabsContext should be used within Tabs');
+  }
+  return context;
+};
+
 interface TabListProps {
   children: ReactNode;
 }
 
 const List = ({ children }: TabListProps) => {
-  const context = useContext(TabsContext);
+  const { label } = useTabsContext();
   const { color: themeColor } = useTheme();
-  const { white, gray100 } = themeColor;
+  const { gray100 } = themeColor;
 
-  if (context === null) return null;
   return (
     <Container
+      role={'tablist'}
+      aria-label={label}
+      aria-orientation={'horizontal'}
       overflowX="auto"
       css={css`
         -ms-overflow-style: none;
@@ -81,12 +103,6 @@ const List = ({ children }: TabListProps) => {
           gap: 0;
           width: 100%;
           border-bottom: 2px solid ${gray100};
-
-          & > button {
-            width: ${context.isFitted === true && '100%'};
-            white-space: nowrap;
-            background-color: ${white};
-          }
         `}
       >
         {children}
@@ -97,26 +113,55 @@ const List = ({ children }: TabListProps) => {
 
 interface TabTriggerProps {
   value: string;
-  children: ReactNode;
-  disabled?: boolean;
+  text?: string;
   icon?: IconSource;
+  disabled?: boolean;
 }
 
-const Trigger = ({
-  value,
-  disabled = false,
-  icon,
-  children,
-}: TabTriggerProps) => {
-  const context = useContext(TabsContext);
-  if (context === null) return null;
+const findFutureTrigger = (key: string, currentTrigger: HTMLElement) => {
+  const siblingProp = (function (key) {
+    if (NEXT_KEY.includes(key)) return 'nextElementSibling';
+    if (PREV_KEY.includes(key)) return 'previousElementSibling';
+    return null;
+  })(key);
 
+  if (siblingProp === null) return;
+
+  let futureTrigger = currentTrigger[siblingProp] as HTMLElement;
+
+  while (futureTrigger && futureTrigger.hasAttribute('disabled')) {
+    futureTrigger = futureTrigger[siblingProp] as HTMLElement;
+  }
+
+  if (futureTrigger) return futureTrigger;
+
+  const triggerParent = currentTrigger.parentElement;
+
+  if (triggerParent === null) return;
+
+  futureTrigger =
+    siblingProp === 'nextElementSibling'
+      ? (triggerParent.firstElementChild as HTMLElement)
+      : (triggerParent.lastElementChild as HTMLElement);
+
+  while (futureTrigger.hasAttribute('disabled')) {
+    futureTrigger = futureTrigger[siblingProp] as HTMLElement;
+  }
+
+  return futureTrigger;
+};
+
+const Trigger = ({ value, text, icon, disabled = false }: TabTriggerProps) => {
+  const { label, variant, isFitted, selectedIndex, setSelectedIndex } =
+    useTabsContext();
+
+  const triggerRef = useRef<HTMLButtonElement | null>(null);
   const { color: themeColor } = useTheme();
   const { primary100, gray100, black, white } = themeColor;
-  const isActive = context.selectedIndex === value;
+  const isActive = selectedIndex === value;
 
   const underlineStyle = {
-    borderColor: `${context.selectedIndex === value ? primary100 : gray100}`,
+    borderColor: `${selectedIndex === value ? primary100 : gray100}`,
     borderRadius: 0,
     borderBottomWidth: '2px',
     borderBottomStyle: 'solid',
@@ -124,7 +169,7 @@ const Trigger = ({
   } as const;
 
   const roundedStyle = {
-    border: `${context.selectedIndex === value && `2px ${gray100} solid`}`,
+    border: `${selectedIndex === value && `2px ${gray100} solid`}`,
     borderRadius: '10px',
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
@@ -137,15 +182,60 @@ const Trigger = ({
     rounded: roundedStyle,
   };
 
+  const scrollOptions = {
+    behavior: 'smooth',
+    block: 'nearest',
+    inline: 'start',
+  } as const;
+
+  const onSelect = () => {
+    if (disabled || !triggerRef.current) return;
+    setSelectedIndex(value);
+    triggerRef.current.scrollIntoView(scrollOptions);
+  };
+
+  const onPressArrow = (e: KeyboardEvent) => {
+    e.preventDefault();
+    const currentTrigger = e.target;
+
+    if (!(currentTrigger instanceof HTMLElement)) return;
+
+    const futureTrigger = findFutureTrigger(e.key, currentTrigger);
+
+    if (!futureTrigger) return;
+
+    const futureValue = futureTrigger.dataset['triggerValue'];
+
+    if (futureValue === undefined) return;
+
+    futureTrigger.focus();
+    futureTrigger.scrollIntoView(scrollOptions);
+    setSelectedIndex(futureValue);
+  };
+
   return (
-    <Button
-      text={children?.toString()}
+    <button
+      ref={triggerRef}
+      id={`${label}-trigger-${value}`}
+      role={'tab'}
+      aria-selected={isActive}
+      aria-controls={`${label}-panel-${value}`}
+      tabIndex={isActive ? 0 : -1}
       disabled={disabled}
-      icon={icon}
-      iconSize={pixelToRem('16px')}
-      onClick={() => !disabled && context.setSelectedIndex(value)}
+      aria-disabled={disabled}
+      onClick={onSelect}
+      onKeyDown={onPressArrow}
+      data-trigger-value={value}
       css={css`
-        ${triggerStyles[context.variant]}
+        display: flex;
+        justify-content: center;
+        padding: 0.75rem;
+        text-decoration: none;
+        white-space: nowrap;
+        width: ${isFitted === true && '100%'};
+        background-color: ${white};
+        scroll-margin: ${pixelToRem('24px')};
+        ${triggerStyles[variant]}
 
         & > p {
           color: ${isActive ? primary100 : black};
@@ -156,8 +246,17 @@ const Trigger = ({
         }
 
         &:hover {
-          background-color: ${primary100};
+          cursor: pointer;
+          background-color: ${isActive ? white : primary100};
           border-bottom-color: ${primary100};
+
+          & > * {
+            color: ${isActive ? primary100 : white};
+          }
+
+          & > svg {
+            fill: ${isActive ? primary100 : white};
+          }
         }
 
         &:disabled {
@@ -177,7 +276,16 @@ const Trigger = ({
           }
         }
       `}
-    />
+    >
+      {icon && (
+        <Icon
+          source={icon}
+          size={pixelToRem('16px')}
+          color={isActive ? primary100 : black}
+        />
+      )}
+      {text && <Typography variant="body">{text}</Typography>}
+    </button>
   );
 };
 
@@ -187,15 +295,17 @@ interface TabPanelProps {
 }
 
 const Panel = ({ value, children }: TabPanelProps) => {
-  const context = useContext(TabsContext);
-
-  if (context === null) return null;
+  const { label, selectedIndex } = useTabsContext();
 
   return (
     <Container
+      id={`${label}-panel-${value}`}
+      role={'tabpanel'}
+      aria-labelledby={`${label}-trigger-${value}`}
+      tabIndex={0}
       css={css`
         padding: 1rem;
-        display: ${context.selectedIndex === value ? 'block' : 'none'};
+        display: ${selectedIndex === value ? 'block' : 'none'};
       `}
     >
       {children}

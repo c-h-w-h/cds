@@ -1,3 +1,5 @@
+import Container from '@components-layout/Container';
+import { css } from '@emotion/react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { MdCelebration, MdInfo, MdCheckCircle } from 'react-icons/md';
 
@@ -21,9 +23,9 @@ const DUMMY_STR_3 =
 const Template: ComponentStory<typeof Tabs> = (args) => (
   <Tabs {...args}>
     <Tabs.List>
-      <Tabs.Trigger value="1">메인</Tabs.Trigger>
-      <Tabs.Trigger value="2">이벤트</Tabs.Trigger>
-      <Tabs.Trigger value="3">설정</Tabs.Trigger>
+      <Tabs.Trigger value="1" text="메인" />
+      <Tabs.Trigger value="2" text="이벤트" />
+      <Tabs.Trigger value="3" text="설정" />
     </Tabs.List>
     <Tabs.Panel value="1">
       <span>첫번째 탭</span>
@@ -42,17 +44,20 @@ const Template: ComponentStory<typeof Tabs> = (args) => (
 
 export const Default = Template.bind({});
 Default.args = {
+  label: '기본 Tabs 목록',
   defaultValue: '1',
 };
 
 export const Rounded = Template.bind({});
 Rounded.args = {
+  label: '둥근 Tabs 목록',
   defaultValue: '1',
   variant: 'rounded',
 };
 
 export const UnderlineFitted = Template.bind({});
 UnderlineFitted.args = {
+  label: '밑줄이 있으면서 너비가 꽉 찬 Tabs 목록',
   defaultValue: '1',
   variant: 'underline',
   isFitted: true,
@@ -60,6 +65,7 @@ UnderlineFitted.args = {
 
 export const RoundedFitted = Template.bind({});
 RoundedFitted.args = {
+  label: '둥글면서 너비가 꽉 찬 Tabs 목록',
   defaultValue: '1',
   variant: 'rounded',
   isFitted: true,
@@ -67,69 +73,87 @@ RoundedFitted.args = {
 
 export const DefaultValue = Template.bind({});
 DefaultValue.args = {
+  label: '기본 값이 설정된 Tabs 목록',
   defaultValue: '3',
 };
 
 const WithIconsTemplate: ComponentStory<typeof Tabs> = (args) => (
   <Tabs {...args}>
     <Tabs.List>
-      <Tabs.Trigger value="1" icon={MdCelebration}>
-        축하
-      </Tabs.Trigger>
-      <Tabs.Trigger value="2" icon={MdInfo}>
-        정보
-      </Tabs.Trigger>
-      <Tabs.Trigger value="3" icon={MdCheckCircle}>
-        확인
-      </Tabs.Trigger>
+      <Tabs.Trigger value="1" icon={MdCelebration} text="축하" />
+      <Tabs.Trigger value="2" icon={MdInfo} text="정보" />
+      <Tabs.Trigger value="3" icon={MdCheckCircle} text="확인" />
     </Tabs.List>
   </Tabs>
 );
 
 export const WithIcons = WithIconsTemplate.bind({});
 WithIcons.args = {
+  label: '아이콘 확인용 Tabs 목록',
   defaultValue: '1',
 };
 
 const WithDisabledTemplate: ComponentStory<typeof Tabs> = (args) => (
   <Tabs {...args}>
     <Tabs.List>
-      <Tabs.Trigger value="1" icon={MdCelebration}>
-        축하
-      </Tabs.Trigger>
-      <Tabs.Trigger value="2" icon={MdInfo} disabled>
-        정보
-      </Tabs.Trigger>
-      <Tabs.Trigger value="3" icon={MdCheckCircle}>
-        확인
-      </Tabs.Trigger>
+      <Tabs.Trigger value="1" icon={MdCelebration} text="축하" />
+      <Tabs.Trigger value="2" icon={MdInfo} text="정보" disabled />
+      <Tabs.Trigger value="3" icon={MdCheckCircle} text="확인" />
     </Tabs.List>
   </Tabs>
 );
 
 export const WithDisabled = WithDisabledTemplate.bind({});
 WithDisabled.args = {
+  label: '비활성화 확인용 Tabs 목록',
   defaultValue: '1',
 };
 
 const ScrollableTemplate: ComponentStory<typeof Tabs> = (args) => (
   <Tabs {...args}>
     <Tabs.List>
-      <Tabs.Trigger value="1">
-        축하하는 탭을 띄우기 위한 트리거입니다.
-      </Tabs.Trigger>
-      <Tabs.Trigger value="2">
-        정보를 표시하기 위해서 여기를 클릭하세요.
-      </Tabs.Trigger>
-      <Tabs.Trigger value="3">아무튼 길어지면 스크롤이 생기겠죠?</Tabs.Trigger>
-      <Tabs.Trigger value="4">
-        여기까지 보이시면 너비를 줄여주시겠어요?
-      </Tabs.Trigger>
+      <Tabs.Trigger value="1" text="축하하는 탭을 띄우기 위한 트리거입니다." />
+      <Tabs.Trigger
+        value="2"
+        text="정보를 표시하기 위해서 여기를 클릭하세요."
+      />
+      <Tabs.Trigger value="3" text="아무튼 길어지면 스크롤이 생기겠죠?" />
+      <Tabs.Trigger value="4" text="여기까지 보이시면 너비를 줄여주시겠어요?" />
     </Tabs.List>
   </Tabs>
 );
 
 export const Scrollable = ScrollableTemplate.bind({});
 Scrollable.args = {
+  label: '스크롤이 생기는 Tabs 목록',
+  defaultValue: '1',
+};
+
+const FocusSelectedTemplate: ComponentStory<typeof Tabs> = (args) => (
+  <Container
+    css={css`
+      width: 360px;
+    `}
+  >
+    <Tabs {...args}>
+      <Tabs.List>
+        <Tabs.Trigger value="1" text="New!!" />
+        <Tabs.Trigger value="2" text="Hot~~" />
+        <Tabs.Trigger value="3" text="상의" />
+        <Tabs.Trigger value="4" text="아우터" />
+        <Tabs.Trigger value="5" text="맨투맨" />
+        <Tabs.Trigger value="6" text="반팔" />
+        <Tabs.Trigger value="7" text="롱슬리브" />
+        <Tabs.Trigger value="8" text="하의" />
+        <Tabs.Trigger value="9" text="반바지" />
+        <Tabs.Trigger value="10" text="슬랙스" />
+      </Tabs.List>
+    </Tabs>
+  </Container>
+);
+
+export const FocusSelected = FocusSelectedTemplate.bind({});
+FocusSelected.args = {
+  label: '너비가 좁은 Tabs 목록',
   defaultValue: '1',
 };
