@@ -1,7 +1,12 @@
 {
-  "name": "cds-publication",
-  "version": "0.0.02--experimental",
-  "description": "This is a test publication",
+  "name": "@chwh/cds",
+  "version": "0.0.0",
+  "description": "cold design system for React apps",
+  "keywords": [
+    "React",
+    "ui",
+    "component"
+  ],
   "type": "module",
   "scripts": {
     "dev": "yarn storybook",
