@@ -137,10 +137,10 @@ const Option = ({ value, children }: OptionProps) => {
       return;
     }
 
-    let $nextLi;
     const $ul = target.closest('ul');
     if (!$ul) return;
 
+    let $nextLi;
     switch (key) {
       case ARROW_DOWN:
         e.preventDefault();
