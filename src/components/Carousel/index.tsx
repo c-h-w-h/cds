@@ -86,19 +86,14 @@ const Carousel = ({ line = 1, children, width, height }: CarouselProps) => {
     translateX,
   };
 
-  const scrollToPage = (current: number) => {
-    throttle(() => {
-      current < 0 ? (current = 0) : current;
-      current >= totalSlide ? (current = totalSlide - 1) : current;
-      setCurrentPage(current);
-    }, 200);
+  const scrollToPage = throttle((current: number) => {
     setTimeout(() => {
       cardsRef.current?.children[current * line].scrollIntoView({
         inline: 'start',
         behavior: 'smooth',
       });
     });
-  };
+  }, 500);
 
   const scrollEventHandler = debounce(() => {
     const currentLeft = scrollRef.current ? scrollRef.current.scrollLeft : 0;
