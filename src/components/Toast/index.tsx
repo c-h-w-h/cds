@@ -95,7 +95,7 @@ const Toast = ({
             </Typography>
             <Typography variant="desc">{message}</Typography>
           </Flexbox>
-          <CloseButton mainColor={mainColor} onClick={onClose}>
+          <CloseButton color={mainColor} onClick={onClose}>
             <MdOutlineCancel size={CLOSE_ICON_SIZE} color={mainColor} />
           </CloseButton>
         </Flexbox>
@@ -128,10 +128,10 @@ const bounce = (vertical: string) => keyframes`
 `;
 
 interface CloseButtonProps {
-  mainColor: string;
+  color: string;
 }
 
-const CloseButton = styled.button<CloseButtonProps>(({ mainColor, theme }) => {
+const CloseButton = styled.button<CloseButtonProps>(({ color, theme }) => {
   const { color: themeColor } = theme;
   const { white } = themeColor;
 
@@ -145,7 +145,7 @@ const CloseButton = styled.button<CloseButtonProps>(({ mainColor, theme }) => {
     cursor: 'pointer',
 
     ':hover': {
-      backgroundColor: `${mainColor}`,
+      backgroundColor: `${color}`,
 
       svg: {
         fill: `${white}`,
