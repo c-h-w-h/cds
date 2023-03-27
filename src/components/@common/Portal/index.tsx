@@ -1,3 +1,4 @@
+import { PORTAL_ROOT_ID } from '@constants/portal';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -9,7 +10,6 @@ interface PortalProps {
 const Portal = ({ id, children }: PortalProps) => {
   const ref = useRef<Element | null>();
   const [mounted, setMounted] = useState<boolean>(false);
-  const PORTAL_ROOT_ID = 'cds-portal-root';
 
   useEffect(() => {
     setMounted(true);
