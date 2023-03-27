@@ -1,17 +1,22 @@
 import { useState } from 'react';
 
-const useToast = (isOpen = false) => {
-  const [open, setOpen] = useState<boolean>(isOpen);
+const useToast = (initialState = false) => {
+  const [isOpen, setIsOpen] = useState<boolean>(initialState);
 
-  const onOpenToast = () => {
-    setOpen(true);
+  const openToast = () => {
+    setIsOpen(true);
   };
 
-  const onCloseToast = () => {
-    setOpen(false);
+  const closeToast = () => {
+    setIsOpen(false);
   };
 
-  return { open, setOpen, onOpenToast, onCloseToast };
+  const toastProps = {
+    open: isOpen,
+    onClose: closeToast,
+  };
+
+  return { openToast, closeToast, toastProps };
 };
 
 export default useToast;
