@@ -1,7 +1,7 @@
 import { Interpolation, Theme } from '@emotion/react';
 import { pixelToRem } from '@utils/pixelToRem';
 
-export type ToastKind = 'info' | 'success' | 'warning' | 'error';
+export type ToastKind = 'alert' | 'info' | 'success' | 'warning' | 'error';
 
 export type VerticalVariant = 'top' | 'bottom';
 

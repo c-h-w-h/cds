@@ -34,7 +34,7 @@ const startWithCapitalLetter = (str: string) =>
   str[0].toUpperCase() + str.substring(1);
 
 const Toast = ({
-  kind,
+  kind = 'alert',
   title,
   message,
   vertical,
@@ -44,8 +44,7 @@ const Toast = ({
   onClose,
 }: ToastProps) => {
   const { color: themeColor } = theme;
-  const { white, black } = themeColor;
-  const mainColor = kind ? themeColor[kind] : black;
+  const { white } = themeColor;
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -65,7 +64,7 @@ const Toast = ({
             css`
               position: absolute;
               padding: 1rem;
-              border: 2px solid ${mainColor};
+              border: 2px solid ${themeColor[kind]};
               border-radius: 16px;
               background-color: ${white};
               opacity: 0;
@@ -80,7 +79,11 @@ const Toast = ({
             H_POSITION_MAP[horizontal],
           ]}
         >
-          <ToastIcon kind={kind} size={MAIN_ICON_SIZE} color={mainColor} />
+          <ToastIcon
+            kind={kind}
+            size={MAIN_ICON_SIZE}
+            color={themeColor[kind]}
+          />
           <Flexbox
             flexDirection="column"
             alignItems={'flex-start'}
@@ -91,12 +94,12 @@ const Toast = ({
             ]}
           >
             <Typography variant="subtitle2">
-              {title ?? (kind ? startWithCapitalLetter(kind) : 'Alarm')}
+              {title ?? startWithCapitalLetter(kind)}
             </Typography>
             <Typography variant="desc">{message}</Typography>
           </Flexbox>
-          <CloseButton color={mainColor} onClick={onClose}>
-            <MdOutlineCancel size={CLOSE_ICON_SIZE} color={mainColor} />
+          <CloseButton color={themeColor[kind]} onClick={onClose}>
+            <MdOutlineCancel size={CLOSE_ICON_SIZE} color={themeColor[kind]} />
           </CloseButton>
         </Flexbox>
       )}
