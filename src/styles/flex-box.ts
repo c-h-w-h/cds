@@ -16,7 +16,7 @@ export const flexboxStyle = ({
   alignItems = 'center',
   justifyContent = 'center',
   gap = '1rem',
-}: FlexboxStyleProps) => {
+}: FlexboxStyleProps = {}) => {
   return {
     display: 'flex',
     flexDirection,
