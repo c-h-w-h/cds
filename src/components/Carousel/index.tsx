@@ -174,7 +174,6 @@ const Carousel = ({ line = 1, children, width, height }: CarouselProps) => {
 
 const Card = ({ children }: DefaultPropsWithChildren<HTMLDivElement>) => {
   const context = useCarouselContext();
-  if (!context) return <></>;
   const { cardWidth, gap, cardHeight, translateX } = context;
   return (
     <CardView {...{ cardWidth, gap, cardHeight, translateX }}>
@@ -186,7 +185,6 @@ const Card = ({ children }: DefaultPropsWithChildren<HTMLDivElement>) => {
 };
 const Slide = ({ children }: DefaultPropsWithChildren<HTMLDivElement>) => {
   const context = useCarouselContext();
-  if (!context) return <></>;
   const { cardHeight } = context;
   return <SlideView {...{ cardHeight }}>{children}</SlideView>;
 };
