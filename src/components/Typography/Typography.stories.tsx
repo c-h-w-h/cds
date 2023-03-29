@@ -6,27 +6,66 @@ import Highlight from './Highlight';
 import Typography from '.';
 
 export default {
-  title: 'Typography',
+  title: 'Design System/Components/Typography',
   component: Typography,
   parameters: {
     layout: 'fullscreen',
+    componentSubtitle:
+      'Typography는 텍스트의 역할에 따라 다양한 폰트 크기와 굵기를 설정할 수 있습니다.',
+  },
+  argTypes: {
+    children: {
+      name: 'children',
+      description: 'Typography로 나타낼 글 내용입니다.',
+      table: {
+        type: { summary: 'string' },
+      },
+    },
+    variant: {
+      name: 'variant',
+      description: '텍스트 역할을 선택합니다.',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: 'body' },
+      },
+      type: { name: 'string', required: true },
+      control: {
+        type: 'select',
+        options: ['title1', 'title2', 'subtitle1', 'subtitle2', 'body', 'desc'],
+      },
+    },
+    color: {
+      name: 'color',
+      description: '텍스트 색상을 지정합니다.',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: 'inherit' },
+      },
+      control: {
+        type: 'color',
+      },
+    },
   },
 } as ComponentMeta<typeof Typography>;
 
 const Template: ComponentStory<typeof Typography> = (args) => {
-  const { color } = useTheme();
-  const { black } = color;
-
   return (
-    <Typography color={black} {...args}>
-      안녕하세요. 콜드스터디 디자인 시스템입니다. 🧊
-    </Typography>
+    <Typography {...args}>안녕하세요. 콜드 디자인 시스템입니다. 🧊</Typography>
   );
 };
+
+export const Default = Template.bind({});
 
 export const Title1 = Template.bind({});
 Title1.args = {
   variant: 'title1',
+};
+
+Title1.parameters = {
+  docs: {
+    storyDescription:
+      '화면에서 가장 중요하고 핵심이 되는 텍스트일 경우 사용합니다.',
+  },
 };
 
 export const Title2 = Template.bind({});
@@ -34,9 +73,21 @@ Title2.args = {
   variant: 'title2',
 };
 
+Title2.parameters = {
+  docs: {
+    storyDescription: 'title1 다음으로 중요한 텍스트일 경우 사용합니다.',
+  },
+};
+
 export const Subtitle1 = Template.bind({});
 Subtitle1.args = {
   variant: 'subtitle1',
+};
+
+Subtitle1.parameters = {
+  docs: {
+    storyDescription: '세부사항 중에서 가장 중요한 텍스트일 경우 사용합니다.',
+  },
 };
 
 export const Subtitle2 = Template.bind({});
@@ -44,9 +95,22 @@ Subtitle2.args = {
   variant: 'subtitle2',
 };
 
+Subtitle2.parameters = {
+  docs: {
+    storyDescription:
+      '세부사항 중에서 subtitle1 다음으로 중요한 텍스트일 경우 사용합니다.',
+  },
+};
+
 export const Body = Template.bind({});
 Body.args = {
   variant: 'body',
+};
+
+Body.parameters = {
+  docs: {
+    storyDescription: '여러 문단으로 된 글이나 일반적인 텍스트에 사용합니다.',
+  },
 };
 
 export const Desc = Template.bind({});
@@ -54,32 +118,51 @@ Desc.args = {
   variant: 'desc',
 };
 
-export const Title1WithColor = Template.bind({});
-Title1WithColor.args = {
-  variant: 'title1',
+Desc.parameters = {
+  docs: {
+    storyDescription:
+      '세부 설명처럼 일반 텍스트보다 작은 크기의 텍스트에 사용합니다.',
+  },
+};
+
+export const WithColor = Template.bind({});
+WithColor.args = {
   color: 'blue',
 };
 
-export const Title1Highlighted: ComponentStory<typeof Typography> = () => {
-  const { color } = useTheme();
-  const { black } = color;
-
-  return (
-    <Typography variant="title1" color={black}>
-      안녕하세요. <Highlight>콜드스터디</Highlight> 디자인 시스템입니다. 🧊
-    </Typography>
-  );
+WithColor.parameters = {
+  docs: {
+    storyDescription: '사용자 지정 색상으로 텍스트 색상을 설정할 수 있습니다.',
+  },
 };
 
-export const Title1CustomHighlighted: ComponentStory<typeof Typography> =
-  () => {
-    const { color } = useTheme();
-    const { black } = color;
+const HighlightTemplate: ComponentStory<typeof Typography> = () => (
+  <Typography>
+    안녕하세요. <Highlight>콜드스터디</Highlight> 디자인 시스템입니다. 🧊
+  </Typography>
+);
 
-    return (
-      <Typography variant="title1" color={black}>
-        안녕하세요. <Highlight color="blue">콜드스터디</Highlight> 디자인
-        시스템입니다. 🧊
-      </Typography>
-    );
-  };
+export const WithHighlight = HighlightTemplate.bind({});
+
+WithHighlight.parameters = {
+  docs: {
+    storyDescription:
+      'Typography 내부에서 강조하고 싶은 단어에 Highlight 컴포넌트를 사용할 수 있습니다.',
+  },
+};
+
+const CustomHighlightTemplate: ComponentStory<typeof Typography> = () => (
+  <Typography>
+    안녕하세요. <Highlight color="orange">콜드스터디</Highlight> 디자인
+    시스템입니다. 🧊
+  </Typography>
+);
+
+export const WithCustomHighlight = CustomHighlightTemplate.bind({});
+
+WithCustomHighlight.parameters = {
+  docs: {
+    storyDescription:
+      '사용자 지정 색상으로 Highlight 컴포넌트의 강조 색상을 설정할 수 있습니다.',
+  },
+};
