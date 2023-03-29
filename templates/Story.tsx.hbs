@@ -1,0 +1,74 @@
+import { ComponentStory, ComponentMeta } from '@storybook/react';
+
+import {{pascalCase name}} from '.';
+
+export default {
+  title: 'Design System/Components/{{pascalCase name}}',
+  component: {{pascalCase name}},
+  parameters: {
+    layout: 'fullscreen',
+    componentSubtitle:
+      '컴포넌트에 대한 간단한 설명을 적습니다.',
+  },
+  argTypes: {
+    // default, required 명시
+    // control에 options 제공
+    props1: {
+      name: 'props1',
+      description: 'props1은 default 값이 있는 필수적인 속성입니다.',
+      table: {
+        type: { summary: 'string', required: true },
+        defaultValue: { summary: '기본 값이 있으면 여기에 적습니다.' },
+      },
+      control: {
+        type: 'select',
+        options: ['선택지1', '선택지2'],
+      },
+    },
+    // control type이 text
+    props2: {
+      name: 'props2',
+      description: 'props2는 control이 text로 나타납니다.',
+      table: {
+        type: { summary: 'string' },
+      },
+      control: {
+        type: 'text',
+      },
+    },
+    // control에 별도의 동작을 추가하지 않을 때
+    props3: {
+      name: 'props3',
+      description: 'props3는 control이 불가능한 고정된 속성입니다.',
+      table: {
+        type: { summary: 'number' },
+      },
+      control: false,
+    },
+  },
+  // decorators: 공통적으로 적용하고 싶은 컴포넌트를 설정합니다. (필요 없을 경우 삭제합니다.)
+  decorators: [
+    (Story) => (
+      <Story />
+    ),
+  ],
+} as ComponentMeta<typeof {{pascalCase name}}>;
+
+const Template: ComponentStory<typeof {{pascalCase name}}> = (args) => {
+  return (
+    <{{pascalCase name}} {...args}></{{pascalCase name}}>
+  );
+};
+
+// Default는 고정해주세요! 필요시 args를 전달합니다.
+export const Default = Template.bind({});
+
+
+export const Example = Template.bind({});
+Example.args = {};
+Example.parameters = {
+  docs: {
+    storyDescription:
+      '스토리에 대한 설명을 적습니다.',
+  },
+};
