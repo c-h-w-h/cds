@@ -26,10 +26,10 @@ type SelectProps = {
 };
 
 interface SelectContextInterface {
-  optionRefs: MutableRefObject<Map<string, HTMLLIElement>>;
+  optionRefs: MutableRefObject<Map<string, HTMLDivElement>>;
   triggerRef: RefObject<HTMLDivElement>;
   selectValue: (value: string) => void;
-  registerOption: ($li: HTMLLIElement, value: string) => void;
+  registerOption: ($div: HTMLDivElement, value: string) => void;
   selectedOption: string | null;
 }
 const SelectContext = createContext<SelectContextInterface | null>(null);
@@ -119,9 +119,9 @@ const OptionList = ({ children }: ChildrenProps) => {
 
   return (
     <Dropdown.Menu>
-      <ul role="listbox" css={listStyle}>
+      <div role="listbox" css={listStyle}>
         {children}
-      </ul>
+      </div>
     </Dropdown.Menu>
   );
 };
@@ -154,8 +154,8 @@ const Option = ({ value, children }: OptionProps) => {
   const onKeyDown: KeyboardEventHandler = (e) => {
     const { key } = e;
 
-    const $li = optionRefs.current.get(value);
-    if (!$li) return;
+    const $div = optionRefs.current.get(value);
+    if (!$div) return;
 
     if (key === ENTER) {
       onSelect();
@@ -167,12 +167,12 @@ const Option = ({ value, children }: OptionProps) => {
       case TAB:
       case ARROW_DOWN:
         e.preventDefault();
-        getNextElement(options, options.indexOf($li)).focus();
+        getNextElement(options, options.indexOf($div)).focus();
         return;
 
       case ARROW_UP:
         e.preventDefault();
-        getNextElement(options, options.indexOf($li), -1).focus();
+        getNextElement(options, options.indexOf($div), -1).focus();
         return;
 
       case ESC:
@@ -197,8 +197,8 @@ const Option = ({ value, children }: OptionProps) => {
   `;
 
   return (
-    <li
-      ref={($li: HTMLLIElement | null) => $li && registerOption($li, value)}
+    <div
+      ref={($div: HTMLDivElement | null) => $div && registerOption($div, value)}
       onClick={onSelect}
       tabIndex={0}
       onKeyDown={onKeyDown}
@@ -207,7 +207,7 @@ const Option = ({ value, children }: OptionProps) => {
       aria-selected={selectedOption === value}
     >
       {children}
-    </li>
+    </div>
   );
 };
 
