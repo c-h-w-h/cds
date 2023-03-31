@@ -25,15 +25,21 @@ type SelectProps = {
 interface SelectContextInterface {
   selectValue: (value: string) => void;
   registerOption: (value: string) => void;
+  selectedOption: string | null;
 }
 const SelectContext = createContext<SelectContextInterface | null>(null);
 
 const Select = ({ id, setValue, children }: SelectProps) => {
-  const { selectRef, selectValue, registerOption } = useSelect(id, setValue);
+  const { selectRef, selectValue, registerOption, selectedOption } = useSelect(
+    id,
+    setValue,
+  );
 
   return (
     <Dropdown label={`select-${id}`} collapseOnBlur={true}>
-      <SelectContext.Provider value={{ selectValue, registerOption }}>
+      <SelectContext.Provider
+        value={{ selectValue, registerOption, selectedOption }}
+      >
         {children}
       </SelectContext.Provider>
       <HiddenSelect id={id} ref={selectRef} />
@@ -108,7 +114,8 @@ type OptionProps = {
 } & ChildrenProps;
 
 const Option = ({ value, children }: OptionProps) => {
-  const { selectValue, registerOption } = useSafeContext(SelectContext);
+  const { selectValue, registerOption, selectedOption } =
+    useSafeContext(SelectContext);
 
   useEffect(() => {
     registerOption(value);
@@ -160,7 +167,7 @@ const Option = ({ value, children }: OptionProps) => {
   };
 
   const { color } = useTheme();
-  const { gray200 } = color;
+  const { white, gray200 } = color;
   const optionStyle = css`
     width: 100%;
     height: 100%;
@@ -169,12 +176,20 @@ const Option = ({ value, children }: OptionProps) => {
 
     &:focus {
       outline: none;
+      color: ${white};
       background-color: ${gray200};
     }
   `;
 
   return (
-    <li onClick={onSelect} tabIndex={0} onKeyDown={onKeyDown} css={optionStyle}>
+    <li
+      onClick={onSelect}
+      tabIndex={0}
+      onKeyDown={onKeyDown}
+      css={optionStyle}
+      role={'option'}
+      aria-selected={selectedOption === value}
+    >
       {children}
     </li>
   );

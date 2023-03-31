@@ -1,7 +1,8 @@
-import { Dispatch, SetStateAction, useRef } from 'react';
+import { Dispatch, SetStateAction, useRef, useState } from 'react';
 
 const useSelect = (id: string, setValue?: Dispatch<SetStateAction<string>>) => {
   const selectRef = useRef<HTMLSelectElement>(null);
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
   const registerOption = (value: string) => {
     const optionId = `${id}-${value}`;
@@ -17,9 +18,10 @@ const useSelect = (id: string, setValue?: Dispatch<SetStateAction<string>>) => {
   };
 
   const selectValue = (value: string) => {
-    if (setValue) setValue(value);
-
     if (!selectRef.current) return;
+
+    if (setValue) setValue(value);
+    setSelectedOption(value);
 
     const $target = selectRef.current.querySelector(`#${id}-${value}`);
     selectRef.current.childNodes.forEach(($option) => {
@@ -32,6 +34,7 @@ const useSelect = (id: string, setValue?: Dispatch<SetStateAction<string>>) => {
     selectRef,
     registerOption,
     selectValue,
+    selectedOption,
   };
 };
 
