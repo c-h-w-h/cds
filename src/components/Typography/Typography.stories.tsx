@@ -1,4 +1,3 @@
-import { useTheme } from '@emotion/react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import Highlight from './Highlight';
