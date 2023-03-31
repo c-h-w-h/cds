@@ -1,4 +1,5 @@
 import Dropdown, { DropdownContext } from '@components/Dropdown';
+import Typography from '@components/Typography';
 import { ARROW_DOWN, ARROW_UP, ENTER, ESC, TAB } from '@constants/key';
 import { css, useTheme } from '@emotion/react';
 import { ChildrenProps } from '@util-types/ChildrenProps';
@@ -126,6 +127,36 @@ const OptionList = ({ children }: ChildrenProps) => {
   );
 };
 
+type OptGroupProps = {
+  label: string;
+} & ChildrenProps;
+
+const OptGroup = ({ label, children }: OptGroupProps) => {
+  const optGroupStyle = css`
+    & > p {
+      padding: 12px 24px;
+    }
+
+    & > div {
+      padding-left: calc(24px + 1rem);
+    }
+  `;
+
+  return (
+    <div css={optGroupStyle}>
+      <Typography
+        color={
+          '#555F6D' // TODO: theme color로 변경
+        }
+        bold
+      >
+        {label}
+      </Typography>
+      {children}
+    </div>
+  );
+};
+
 type OptionProps = {
   value: string;
 } & ChildrenProps;
@@ -226,6 +257,7 @@ HiddenSelect.displayName = 'HiddenSelect';
 
 Select.Trigger = Trigger;
 Select.OptionList = OptionList;
+Select.OptGroup = OptGroup;
 Select.Option = Option;
 
 export default Select;

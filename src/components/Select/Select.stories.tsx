@@ -135,6 +135,40 @@ MultipleSelects.parameters = {
   },
 };
 
+export const OptGroup: ComponentStory<typeof Select> = () => {
+  const [value, setValue] = useState('');
+
+  return (
+    <Container css={containerStyle}>
+      <form onSubmit={onSubmit} css={formStyle}>
+        <Select id="select" setValue={setValue}>
+          <Select.Trigger>
+            <Badge outline>{value ? value : 'click here'}</Badge>
+          </Select.Trigger>
+          <Select.OptionList>
+            <Select.OptGroup label="Group 1">
+              <Select.Option value="1">1</Select.Option>
+              <Select.Option value="2">2</Select.Option>
+              <Select.Option value="3">3</Select.Option>
+            </Select.OptGroup>
+            <Select.OptGroup label="Group 2">
+              <Select.Option value="4">4</Select.Option>
+              <Select.Option value="5">5</Select.Option>
+              <Select.Option value="6">6</Select.Option>
+            </Select.OptGroup>
+          </Select.OptionList>
+        </Select>
+        <Button text="submit" />
+      </form>
+    </Container>
+  );
+};
+OptGroup.parameters = {
+  docs: {
+    storyDescription: 'OptGroup 요소를 사용하면 옵션을 그루핑 할 수 있습니다.',
+  },
+};
+
 /**
  * utils for story
  */
@@ -145,7 +179,7 @@ const flexColumn = flexboxStyle({
 
 const containerStyle = css`
   width: 375px;
-  height: 375px;
+  height: 406px;
   padding: 0 20px;
   ${flexColumn}
 `;
