@@ -1,5 +1,6 @@
 import { TYPOGRAPHY } from '@constants/typography';
 import { css, jsx } from '@emotion/react';
+import { DefaultProps } from '@util-types/DefaultProps';
 import { CSSProperties, ReactNode, ReactPortal } from 'react';
 
 type TextNode = Exclude<
@@ -7,7 +8,7 @@ type TextNode = Exclude<
   number | boolean | ReactPortal | null | undefined
 >;
 
-interface TypographyProps {
+interface TypographyProps extends DefaultProps<HTMLParagraphElement> {
   children: TextNode;
   variant?: TypographyVariant;
   color?: CSSProperties['color'];
@@ -34,6 +35,7 @@ const Typography = ({
   variant = 'body',
   color,
   bold,
+  ...props
 }: TypographyProps) => {
   const typography = getTypography(variant);
 
@@ -46,6 +48,7 @@ const Typography = ({
         font-size: ${TYPOGRAPHY[variant].size};
         font-weight: ${TYPOGRAPHY[variant].weight + (bold ? 300 : 0)};
       `,
+      ...props,
     },
     children,
   );

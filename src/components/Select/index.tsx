@@ -153,6 +153,7 @@ const OptGroup = ({ label, children }: OptGroupProps) => {
           '#555F6D' // TODO: theme color로 변경
         }
         bold
+        aria-hidden={true}
       >
         {label}
       </Typography>
