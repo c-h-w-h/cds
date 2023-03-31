@@ -11,6 +11,7 @@ interface TypographyProps {
   children: TextNode;
   variant?: TypographyVariant;
   color?: CSSProperties['color'];
+  bold?: boolean;
 }
 
 const getTypography = (variant: TypographyVariant): string => {
@@ -28,7 +29,12 @@ const getTypography = (variant: TypographyVariant): string => {
   }
 };
 
-const Typography = ({ children, variant = 'body', color }: TypographyProps) => {
+const Typography = ({
+  children,
+  variant = 'body',
+  color,
+  bold,
+}: TypographyProps) => {
   const typography = getTypography(variant);
 
   return jsx(
@@ -38,7 +44,7 @@ const Typography = ({ children, variant = 'body', color }: TypographyProps) => {
         margin: 0;
         color: ${color ?? 'inherit'};
         font-size: ${TYPOGRAPHY[variant].size};
-        font-weight: ${TYPOGRAPHY[variant].weight};
+        font-weight: ${TYPOGRAPHY[variant].weight + (bold ? 300 : 0)};
       `,
     },
     children,
