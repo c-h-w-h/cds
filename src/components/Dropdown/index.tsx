@@ -101,6 +101,10 @@ const Trigger = ({ children }: { children: ReactElement }) => {
   };
 
   const onKeyDown: KeyboardEventHandler = (e: KeyboardEvent) => {
+    if (children.props.onKeyDown) {
+      children.props.onKeyDown(e);
+    }
+
     if (e.key === SPACE || e.key === ENTER) {
       e.preventDefault();
       setIsOpen((prev) => !prev);
