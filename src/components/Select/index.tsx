@@ -8,9 +8,11 @@ import {
   KeyboardEventHandler,
   MutableRefObject,
   ReactNode,
+  RefObject,
   SetStateAction,
   createContext,
   forwardRef,
+  useRef,
 } from 'react';
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 import useSafeContext from 'src/hooks/useSafeContext';
@@ -25,6 +27,7 @@ type SelectProps = {
 
 interface SelectContextInterface {
   optionRefs: MutableRefObject<Map<string, HTMLLIElement>>;
+  triggerRef: RefObject<HTMLDivElement>;
   selectValue: (value: string) => void;
   registerOption: ($li: HTMLLIElement, value: string) => void;
   selectedOption: string | null;
@@ -32,14 +35,21 @@ interface SelectContextInterface {
 const SelectContext = createContext<SelectContextInterface | null>(null);
 
 const Select = ({ id, setValue, children }: SelectProps) => {
+  const triggerRef = useRef<HTMLDivElement>(null);
   const { selectRef, optionRefs, selectValue, registerOption, selectedOption } =
     useSelect(id, setValue);
 
+  const providerValue = {
+    optionRefs,
+    triggerRef,
+    selectValue,
+    registerOption,
+    selectedOption,
+  };
+
   return (
     <Dropdown label={`select-${id}`} collapseOnBlur={true}>
-      <SelectContext.Provider
-        value={{ optionRefs, selectValue, registerOption, selectedOption }}
-      >
+      <SelectContext.Provider value={providerValue}>
         {children}
       </SelectContext.Provider>
       <HiddenSelect id={id} ref={selectRef} />
@@ -50,7 +60,7 @@ const Select = ({ id, setValue, children }: SelectProps) => {
 const Trigger = ({ children }: ChildrenProps) => {
   const { isOpen } = useSafeContext(DropdownContext);
 
-  const { optionRefs } = useSafeContext(SelectContext);
+  const { optionRefs, triggerRef } = useSafeContext(SelectContext);
   const onKeyDown: KeyboardEventHandler<HTMLDivElement> = (e) => {
     if (e.key === ARROW_DOWN) {
       [...optionRefs.current.values()][0].focus();
@@ -83,7 +93,7 @@ const Trigger = ({ children }: ChildrenProps) => {
 
   return (
     <Dropdown.Trigger>
-      <div css={triggerStyle} onKeyDown={onKeyDown}>
+      <div ref={triggerRef} css={triggerStyle} onKeyDown={onKeyDown}>
         {children}
         {isOpen ? (
           <FiChevronUp size={20} css={chevronStyle} />
@@ -121,14 +131,24 @@ type OptionProps = {
 } & ChildrenProps;
 
 const Option = ({ value, children }: OptionProps) => {
-  const { optionRefs, selectValue, registerOption, selectedOption } =
-    useSafeContext(SelectContext);
+  const {
+    optionRefs,
+    triggerRef,
+    selectValue,
+    registerOption,
+    selectedOption,
+  } = useSafeContext(SelectContext);
 
   const { setIsOpen } = useSafeContext(DropdownContext);
 
+  const closeOptionList = () => {
+    setIsOpen(false);
+    triggerRef.current?.focus();
+  };
+
   const onSelect = () => {
     selectValue(value);
-    setIsOpen(false);
+    closeOptionList();
   };
 
   const onKeyDown: KeyboardEventHandler = (e) => {
@@ -156,7 +176,7 @@ const Option = ({ value, children }: OptionProps) => {
         return;
 
       case ESC:
-        setIsOpen(false);
+        closeOptionList();
         return;
     }
   };
