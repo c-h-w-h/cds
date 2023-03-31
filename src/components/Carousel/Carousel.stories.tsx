@@ -4,10 +4,46 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Carousel from '.';
 
 export default {
-  title: 'Carousel',
+  title: 'Design System/Components/Carousel',
   component: Carousel,
   parameters: {
     layout: 'fullscreen',
+    componentSubtitle:
+      'Carousel은 내부에 있는 요소들을 수평으로 배치하여 좌우로 넘기면서 확인할 수 있는 컴포넌트입니다.',
+    docs: {
+      description: {
+        component: `- 다음과 같은 컴포넌트를 children으로 사용할 수 있습니다.  
+        - \\<Carousel.Card\\> : 여러 개의 카드를 \\<Carousel\\>에 표시하고 좌우로 넘길 수 있습니다.
+        - \\<Carousel.Slide\\> : 한 번에 하나의 요소가 \\<Carousel\\> 내부를 채우도록 만들 때 적용합니다.
+        `,
+      },
+    },
+  },
+  argTypes: {
+    line: {
+      name: 'line',
+      description: 'Carousel 내부 열 개수를 설정합니다.',
+      table: {
+        type: { summary: 'number' },
+        defaultValue: { summary: 1 },
+      },
+    },
+    width: {
+      name: 'width',
+      description: 'Carousel 아이템의 너비를 px 단위로 설정합니다.',
+      table: {
+        type: { summary: 'number' },
+      },
+      control: false,
+    },
+    height: {
+      name: 'height',
+      description: 'Carousel 아이템의 높이를 px 단위로 설정합니다.',
+      table: {
+        type: { summary: 'number' },
+      },
+      control: false,
+    },
   },
 } as ComponentMeta<typeof Carousel>;
 
@@ -50,6 +86,55 @@ const Template: ComponentStory<typeof Carousel> = (args) => (
   </Carousel>
 );
 
+export const Default = Template.bind({});
+
+export const WithCarouselCard = Template.bind({});
+
+WithCarouselCard.parameters = {
+  docs: {
+    storyDescription:
+      '<Carousel.Card>를 사용한 Card 형식의 기본 Carousel입니다.',
+  },
+};
+
+export const WithCustomLine = Template.bind({});
+WithCustomLine.args = {
+  line: 2,
+};
+
+WithCustomLine.parameters = {
+  docs: {
+    storyDescription: '사용자 지정 line 값으로 열 개수를 설정할 수 있습니다.',
+  },
+};
+
+export const WithCustomSize = Template.bind({});
+WithCustomSize.args = {
+  width: 300,
+  height: 400,
+};
+
+WithCustomSize.parameters = {
+  docs: {
+    storyDescription:
+      '사용자 지정 width와 height로 내부에 표시할 아이템의 크기를 지정할 수 있습니다.',
+  },
+};
+
+export const WithCustomLineAndSize = Template.bind({});
+WithCustomLineAndSize.args = {
+  line: 2,
+  width: 300,
+  height: 400,
+};
+
+WithCustomLineAndSize.parameters = {
+  docs: {
+    storyDescription:
+      'line, width, height 값을 모두 사용자가 지정할 수 있습니다.',
+  },
+};
+
 const SlideTemplate: ComponentStory<typeof Carousel> = (args) => {
   return (
     <Carousel {...args}>
@@ -62,30 +147,14 @@ const SlideTemplate: ComponentStory<typeof Carousel> = (args) => {
   );
 };
 
-export const Inline = Template.bind({});
-export const InlineCustom = Template.bind({});
-InlineCustom.args = {
-  width: 300,
-  height: 400,
-};
-
-export const TwoLine = Template.bind({});
-TwoLine.args = {
-  line: 2,
-};
-export const TwoLineCustom = Template.bind({});
-TwoLineCustom.args = {
-  line: 2,
-  width: 300,
-  height: 400,
-};
-
-export const MultiLine = Template.bind({});
-MultiLine.args = {
-  line: 3,
-};
-
-export const Slide = SlideTemplate.bind({});
-Slide.args = {
+export const WithCarouselSlide = SlideTemplate.bind({});
+WithCarouselSlide.args = {
   height: 500,
+};
+
+WithCarouselSlide.parameters = {
+  docs: {
+    storyDescription:
+      '<Carousel.Slide>를 사용한 Slide 형식의 기본 Carousel입니다.',
+  },
 };
