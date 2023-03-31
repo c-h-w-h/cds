@@ -1,15 +1,16 @@
 import Dropdown, { DropdownContext } from '@components/Dropdown';
-import { ARROW_DOWN, ARROW_UP, ENTER } from '@constants/key';
+import { ARROW_DOWN, ARROW_UP, ENTER, ESC, TAB } from '@constants/key';
 import { css, useTheme } from '@emotion/react';
 import { ChildrenProps } from '@util-types/ChildrenProps';
+import { getNextElement } from '@utils/getNextElement';
 import {
   Dispatch,
   KeyboardEventHandler,
+  MutableRefObject,
   ReactNode,
   SetStateAction,
   createContext,
   forwardRef,
-  useEffect,
 } from 'react';
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 import useSafeContext from 'src/hooks/useSafeContext';
@@ -23,22 +24,21 @@ type SelectProps = {
 };
 
 interface SelectContextInterface {
+  optionRefs: MutableRefObject<Map<string, HTMLLIElement>>;
   selectValue: (value: string) => void;
-  registerOption: (value: string) => void;
+  registerOption: ($li: HTMLLIElement, value: string) => void;
   selectedOption: string | null;
 }
 const SelectContext = createContext<SelectContextInterface | null>(null);
 
 const Select = ({ id, setValue, children }: SelectProps) => {
-  const { selectRef, selectValue, registerOption, selectedOption } = useSelect(
-    id,
-    setValue,
-  );
+  const { selectRef, optionRefs, selectValue, registerOption, selectedOption } =
+    useSelect(id, setValue);
 
   return (
     <Dropdown label={`select-${id}`} collapseOnBlur={true}>
       <SelectContext.Provider
-        value={{ selectValue, registerOption, selectedOption }}
+        value={{ optionRefs, selectValue, registerOption, selectedOption }}
       >
         {children}
       </SelectContext.Provider>
@@ -49,6 +49,13 @@ const Select = ({ id, setValue, children }: SelectProps) => {
 
 const Trigger = ({ children }: ChildrenProps) => {
   const { isOpen } = useSafeContext(DropdownContext);
+
+  const { optionRefs } = useSafeContext(SelectContext);
+  const onKeyDown: KeyboardEventHandler<HTMLDivElement> = (e) => {
+    if (e.key === ARROW_DOWN) {
+      [...optionRefs.current.values()][0].focus();
+    }
+  };
 
   const { color } = useTheme();
   const { gray200, white, black } = color;
@@ -76,7 +83,7 @@ const Trigger = ({ children }: ChildrenProps) => {
 
   return (
     <Dropdown.Trigger>
-      <div css={triggerStyle}>
+      <div css={triggerStyle} onKeyDown={onKeyDown}>
         {children}
         {isOpen ? (
           <FiChevronUp size={20} css={chevronStyle} />
@@ -114,12 +121,8 @@ type OptionProps = {
 } & ChildrenProps;
 
 const Option = ({ value, children }: OptionProps) => {
-  const { selectValue, registerOption, selectedOption } =
+  const { optionRefs, selectValue, registerOption, selectedOption } =
     useSafeContext(SelectContext);
-
-  useEffect(() => {
-    registerOption(value);
-  }, []);
 
   const { setIsOpen } = useSafeContext(DropdownContext);
 
@@ -131,39 +134,31 @@ const Option = ({ value, children }: OptionProps) => {
   const onKeyDown: KeyboardEventHandler = (e) => {
     const { key } = e;
 
-    const target = e.target;
-    if (!(target instanceof HTMLLIElement)) return;
+    const $li = optionRefs.current.get(value);
+    if (!$li) return;
 
     if (key === ENTER) {
       onSelect();
       return;
     }
 
-    const $ul = target.closest('ul');
-    if (!$ul) return;
-
-    let $nextLi;
+    const options = [...optionRefs.current.values()];
     switch (key) {
+      case TAB:
       case ARROW_DOWN:
         e.preventDefault();
-        $nextLi = target.nextElementSibling;
-
-        if (!$nextLi) {
-          $nextLi = $ul.firstElementChild;
-        }
-        break;
+        getNextElement(options, options.indexOf($li)).focus();
+        return;
 
       case ARROW_UP:
         e.preventDefault();
-        $nextLi = target.previousElementSibling;
+        getNextElement(options, options.indexOf($li), -1).focus();
+        return;
 
-        if (!$nextLi) {
-          $nextLi = $ul.lastElementChild;
-        }
-        break;
+      case ESC:
+        setIsOpen(false);
+        return;
     }
-
-    if ($nextLi instanceof HTMLLIElement) $nextLi.focus();
   };
 
   const { color } = useTheme();
@@ -183,6 +178,7 @@ const Option = ({ value, children }: OptionProps) => {
 
   return (
     <li
+      ref={($li: HTMLLIElement | null) => $li && registerOption($li, value)}
       onClick={onSelect}
       tabIndex={0}
       onKeyDown={onKeyDown}

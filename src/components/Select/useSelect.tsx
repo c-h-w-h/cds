@@ -4,7 +4,11 @@ const useSelect = (id: string, setValue?: Dispatch<SetStateAction<string>>) => {
   const selectRef = useRef<HTMLSelectElement>(null);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
-  const registerOption = (value: string) => {
+  const optionRefs = useRef<Map<string, HTMLLIElement>>(new Map());
+
+  const registerOption = ($li: HTMLLIElement, value: string) => {
+    optionRefs.current.set(value, $li);
+
     const optionId = `${id}-${value}`;
 
     if (!selectRef.current || selectRef.current.querySelector(`#${optionId}`)) {
@@ -32,6 +36,7 @@ const useSelect = (id: string, setValue?: Dispatch<SetStateAction<string>>) => {
 
   return {
     selectRef,
+    optionRefs,
     registerOption,
     selectValue,
     selectedOption,
