@@ -56,6 +56,12 @@ const Trigger = ({ children }: ChildrenProps) => {
     padding: 12px 24px;
     background-color: ${white};
     border: 1.2px solid ${isOpen ? black : gray200};
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+      border: 1.5px solid ${black};
+    }
   `;
   const chevronStyle = css`
     position: absolute;
