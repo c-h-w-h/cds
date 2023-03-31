@@ -143,7 +143,11 @@ const OptGroup = ({ label, children }: OptGroupProps) => {
   `;
 
   return (
-    <div css={optGroupStyle}>
+    <div
+      css={optGroupStyle}
+      role="group"
+      aria-details={`${label} option group`}
+    >
       <Typography
         color={
           '#555F6D' // TODO: theme color로 변경
