@@ -15,6 +15,14 @@ export default {
     layout: 'fullscreen',
     componentSubtitle:
       'Toast는 다양한 알림 유형을 제공하여 사용자에게 정보를 전달할 때 사용합니다.',
+    docs: {
+      description: {
+        component:
+          `- kind 값으로 "alert" | "info" | "success" | "warning" | "error" 중 하나를 선택할 수 있습니다. \n` +
+          `- vertical 값으로 "top" | "bottom" 중 하나를 선택할 수 있습니다. \n` +
+          `- horizontal 값으로 "left" | "right" | "center" 중 하나를 선택할 수 있습니다.`,
+      },
+    },
   },
   argTypes: {
     message: {
@@ -28,7 +36,7 @@ export default {
       name: 'vertical',
       description: '수직 방향의 위치를 결정합니다.',
       table: {
-        type: { summary: 'string', required: true },
+        type: { summary: 'VerticalVariant', required: true },
       },
       control: {
         type: 'select',
@@ -39,7 +47,7 @@ export default {
       name: 'horizontal',
       description: '수평 방향의 위치를 결정합니다.',
       table: {
-        type: { summary: 'string', required: true },
+        type: { summary: 'HorizontalVariant', required: true },
       },
       control: {
         type: 'select',
@@ -76,7 +84,7 @@ export default {
       name: 'kind',
       description: 'Toast의 유형을 결정합니다.',
       table: {
-        type: { summary: 'string' },
+        type: { summary: 'ToastKind' },
         defaultValue: { summary: 'alert' },
       },
       control: {
@@ -149,7 +157,7 @@ Alert.args = {
 Alert.parameters = {
   docs: {
     storyDescription:
-      'Alert는 기본 Toast 유형입니다. 색상은 검정색을 사용합니다.',
+      '"alert"는 기본 Toast 유형입니다. 색상은 검정색을 사용합니다.',
   },
 };
 
@@ -164,7 +172,7 @@ Info.args = {
 Info.parameters = {
   docs: {
     storyDescription:
-      'Info는 정보를 알리기 위한 Toast 유형입니다. 색상은 파란색을 사용합니다.',
+      '"info"는 정보를 알리기 위한 Toast 유형입니다. 색상은 파란색을 사용합니다.',
   },
 };
 
@@ -179,7 +187,7 @@ Success.args = {
 Success.parameters = {
   docs: {
     storyDescription:
-      'Success는 성공을 알리기 위한 Toast 유형입니다. 색상은 초록색을 사용합니다.',
+      '"success"는 성공을 알리기 위한 Toast 유형입니다. 색상은 초록색을 사용합니다.',
   },
 };
 
@@ -194,7 +202,7 @@ Warning.args = {
 Warning.parameters = {
   docs: {
     storyDescription:
-      'Warning은 경고를 알리기 위한 Toast 유형입니다. 색상은 노란색을 사용합니다.',
+      '"warning"은 경고를 알리기 위한 Toast 유형입니다. 색상은 노란색을 사용합니다.',
   },
 };
 
@@ -209,7 +217,7 @@ Error.args = {
 Error.parameters = {
   docs: {
     storyDescription:
-      'Error는 에러를 알리기 위한 Toast 유형입니다. 색상은 빨간색을 사용합니다.',
+      '"error"는 에러를 알리기 위한 Toast 유형입니다. 색상은 빨간색을 사용합니다.',
   },
 };
 
@@ -223,7 +231,8 @@ WithTitle.args = {
 
 WithTitle.parameters = {
   docs: {
-    storyDescription: '사용자가 명시적으로 Toast의 제목을 설정할 수 있습니다.',
+    storyDescription:
+      'title 속성으로 사용자가 Toast의 제목을 설정할 수 있습니다.',
   },
 };
 
