@@ -22,45 +22,27 @@ export default {
     overflowX: {
       name: 'overflowX',
       description:
-        '너비를 초과하는 요소가 존재할 경우 어떻게 처리할 것인지 결정합니다.',
+        '너비를 초과하는 요소가 존재할 경우 어떻게 보여줄 것인지 결정합니다.',
       table: {
-        type: { summary: 'string' },
+        type: { summary: "CSSProperties['overflowX']" },
+        defaultValue: { summary: 'hidden' },
       },
-      type: { name: 'string', required: true },
-      defaultValue: 'hidden',
       control: {
         type: 'select',
-        options: [
-          'hidden',
-          'visible',
-          'clip',
-          'auto',
-          'inherit',
-          'initial',
-          'unset',
-        ],
+        options: ['hidden', 'visible', 'clip', 'scroll', 'auto'],
       },
     },
     overflowY: {
       name: 'overflowY',
       description:
-        '높이를 초과하는 요소가 존재할 경우 어떻게 처리할 것인지 결정합니다.',
+        '높이를 초과하는 요소가 존재할 경우 어떻게 보여줄 것인지 결정합니다.',
       table: {
-        type: { summary: 'string' },
+        type: { summary: "CSSProperties['overflowY']" },
+        defaultValue: { summary: 'hidden' },
       },
-      type: { name: 'string', required: true },
-      defaultValue: 'hidden',
       control: {
         type: 'select',
-        options: [
-          'hidden',
-          'visible',
-          'clip',
-          'auto',
-          'inherit',
-          'initial',
-          'unset',
-        ],
+        options: ['hidden', 'visible', 'clip', 'scroll', 'auto'],
       },
     },
   },
@@ -133,6 +115,6 @@ Scrollable.args = {
 Scrollable.parameters = {
   docs: {
     storyDescription:
-      'Container보다 children의 크기가 클 경우 overflow 속성을 scroll로 설정하여 넘치는 부분을 스크롤로 확인할 수 있습니다.',
+      '\\<Container\\>보다 children의 크기가 클 경우 overflow 속성을 "scroll"로 설정하여 넘치는 부분을 스크롤로 확인할 수 있습니다.',
   },
 };
