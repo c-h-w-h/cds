@@ -23,47 +23,32 @@ export default {
       name: 'flexDirection',
       description: '요소가 배치되는 방향을 결정합니다.',
       table: {
-        type: { summary: 'string' },
+        type: { summary: "CSSProperties['flexDirection']" },
         defaultValue: { summary: 'row' },
       },
       control: {
         type: 'select',
-        options: [
-          'row',
-          'row-reverse',
-          'column',
-          'column-reverse',
-          'inherit',
-          'initial',
-          'unset',
-        ],
+        options: ['row', 'row-reverse', 'column', 'column-reverse'],
       },
     },
     flexWrap: {
       name: 'flexWrap',
       description: '줄바꿈 속성을 설정합니다.',
       table: {
-        type: { summary: 'string' },
+        type: { summary: "CSSProperties['flexWrap']" },
         defaultValue: { summary: 'nowrap' },
       },
       control: {
         type: 'select',
-        options: [
-          'wrap',
-          'wrap-reverse',
-          'nowrap',
-          'inherit',
-          'initial',
-          'unset',
-        ],
+        options: ['wrap', 'wrap-reverse', 'nowrap'],
       },
     },
     alignContent: {
       name: 'alignContent',
       description:
-        'flex의 교차축을 따라 요소와 주변 공간 배치 방식을 결정합니다.',
+        'flex의 교차축을 따라 요소와 간격 배치 방식을 결정합니다. 줄바꿈이 일어나는 경우 적용되며 이 경우 alignItems 속성은 무시됩니다.',
       table: {
-        type: { summary: 'string' },
+        type: { summary: "CSSProperties['alignContent']" },
         defaultValue: { summary: 'normal' },
       },
       control: {
@@ -80,9 +65,6 @@ export default {
           'space-around',
           'space-evenly',
           'stretch',
-          'inherit',
-          'initial',
-          'unset',
         ],
       },
     },
@@ -90,7 +72,7 @@ export default {
       name: 'alignItems',
       description: 'flex의 교차축에 대한 요소 배치 방식을 결정합니다.',
       table: {
-        type: { summary: 'string' },
+        type: { summary: "CSSProperties['alignItems']" },
         defaultValue: { summary: 'center' },
       },
       control: {
@@ -107,9 +89,6 @@ export default {
           'space-around',
           'space-evenly',
           'stretch',
-          'inherit',
-          'initial',
-          'unset',
         ],
       },
     },
@@ -118,7 +97,7 @@ export default {
       description:
         'flex의 주축을 따라 요소와 주변 공간 배치 방식을 결정합니다.',
       table: {
-        type: { summary: 'string' },
+        type: { summary: "CSSProperties['justifyContent']" },
         defaultValue: { summary: 'center' },
       },
       control: {
@@ -136,10 +115,6 @@ export default {
           'space-around',
           'space-evenly',
           'stretch',
-          'inherit',
-          'initial',
-          'revert',
-          'unset',
         ],
       },
     },
@@ -147,7 +122,7 @@ export default {
       name: 'gap',
       description: '행과 열 사이의 간격을 설정합니다.',
       table: {
-        type: { summary: 'string' },
+        type: { summary: "CSSProperties['gap']" },
         defaultValue: { summary: '1rem' },
       },
       control: {
@@ -184,7 +159,7 @@ Row.args = {
 Row.parameters = {
   docs: {
     storyDescription:
-      'flexDirection 속성을 Row로 설정하면 주축이 가로 방향으로 설정됩니다.',
+      'flexDirection 속성을 "row"로 설정하면 주축이 가로 방향으로 설정됩니다.',
   },
 };
 
@@ -196,7 +171,7 @@ Column.args = {
 Column.parameters = {
   docs: {
     storyDescription:
-      'flexDirection 속성을 Column으로 설정하면 주축이 세로 방향으로 설정됩니다.',
+      'flexDirection 속성을 "column"으로 설정하면 주축이 세로 방향으로 설정됩니다.',
   },
 };
 
@@ -209,7 +184,7 @@ SpaceBetween.args = {
 SpaceBetween.parameters = {
   docs: {
     storyDescription:
-      'justifyContent를 space-between으로 설정하면 처음과 마지막 요소는 양끝에 배치되며 나머지 요소들이 남은 영역에 고른 간격으로 배치됩니다.',
+      'justifyContent를 "space-between"으로 설정하면 처음과 마지막 요소는 양끝에 배치되며 나머지 요소들이 남은 영역에 고른 간격으로 배치됩니다.',
   },
 };
 
@@ -233,6 +208,6 @@ WithWrap.args = {
 WithWrap.parameters = {
   docs: {
     storyDescription:
-      'flexWrap 속성을 wrap으로 설정하면 지정된 너비 안에 위치할 수 없는 요소들이 줄바꿈 처리됩니다.',
+      'flexWrap 속성을 "wrap"으로 설정하면 지정된 너비 안에 위치할 수 없는 요소들이 줄바꿈 처리됩니다.',
   },
 };
