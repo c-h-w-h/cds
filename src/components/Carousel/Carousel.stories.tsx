@@ -156,12 +156,12 @@ WithCarouselSlide.parameters = {
   },
 };
 
-export const WithCustomSlideHeight = SlideTemplate.bind({});
-WithCustomSlideHeight.args = {
+export const WidthCustomHeight = SlideTemplate.bind({});
+WidthCustomHeight.args = {
   height: 500,
 };
 
-WithCustomSlideHeight.parameters = {
+WidthCustomHeight.parameters = {
   docs: {
     storyDescription:
       '<Carousel.Slide>와 함께 height에 사용자 지정 값을 전달하여 Carousel 높이를 설정할 수 있습니다.',
