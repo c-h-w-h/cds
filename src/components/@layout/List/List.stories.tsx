@@ -23,39 +23,24 @@ export default {
       name: 'flexDirection',
       description: '요소가 배치되는 방향을 결정합니다.',
       table: {
-        type: { summary: 'string' },
+        type: { summary: "CSSProperties['flexDirection']" },
         defaultValue: { summary: 'column' },
       },
       control: {
         type: 'select',
-        options: [
-          'row',
-          'row-reverse',
-          'column',
-          'column-reverse',
-          'inherit',
-          'initial',
-          'unset',
-        ],
+        options: ['row', 'row-reverse', 'column', 'column-reverse'],
       },
     },
     flexWrap: {
       name: 'flexWrap',
       description: '줄바꿈 속성을 설정합니다.',
       table: {
-        type: { summary: 'string' },
+        type: { summary: "CSSProperties['flexWrap']" },
         defaultValue: { summary: 'nowrap' },
       },
       control: {
         type: 'select',
-        options: [
-          'wrap',
-          'wrap-reverse',
-          'nowrap',
-          'inherit',
-          'initial',
-          'unset',
-        ],
+        options: ['wrap', 'wrap-reverse', 'nowrap'],
       },
     },
     css: { table: { disable: true } },
@@ -86,7 +71,8 @@ Column.args = {};
 
 Column.parameters = {
   docs: {
-    storyDescription: '목록이 세로 방향으로 배치됩니다.',
+    storyDescription:
+      'flexDirection을 설정하지 않거나 "column"일 경우 목록이 세로 방향으로 배치됩니다.',
   },
 };
 
@@ -97,7 +83,8 @@ Row.args = {
 
 Row.parameters = {
   docs: {
-    storyDescription: '목록이 가로 방향으로 배치됩니다.',
+    storyDescription:
+      'flexDirection이 "row"일 경우 목록이 가로 방향으로 배치됩니다.',
   },
 };
 
@@ -114,6 +101,6 @@ WithWrap.args = {
 WithWrap.parameters = {
   docs: {
     storyDescription:
-      'flexWrap 속성을 wrap으로 설정하여 제한된 높이 안에서 다중 목록을 표현할 수 있습니다.',
+      'flexWrap 속성을 "wrap"으로 설정하여 제한된 높이 안에서 다중 목록을 표현할 수 있습니다.',
   },
 };
