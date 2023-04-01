@@ -148,13 +148,22 @@ const SlideTemplate: ComponentStory<typeof Carousel> = (args) => {
 };
 
 export const WithCarouselSlide = SlideTemplate.bind({});
-WithCarouselSlide.args = {
-  height: 500,
-};
 
 WithCarouselSlide.parameters = {
   docs: {
     storyDescription:
       '<Carousel.Slide>를 사용한 Slide 형식의 기본 Carousel입니다.',
+  },
+};
+
+export const WithCustomSlideHeight = SlideTemplate.bind({});
+WithCustomSlideHeight.args = {
+  height: 500,
+};
+
+WithCustomSlideHeight.parameters = {
+  docs: {
+    storyDescription:
+      '<Carousel.Slide>와 함께 height에 사용자 지정 값을 전달하여 Carousel 높이를 설정할 수 있습니다.',
   },
 };
