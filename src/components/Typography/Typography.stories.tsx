@@ -11,34 +11,44 @@ export default {
     layout: 'fullscreen',
     componentSubtitle:
       'Typography는 텍스트의 역할에 따라 다양한 폰트 크기와 굵기를 설정할 수 있습니다.',
-  },
-  argTypes: {
-    children: {
-      name: 'children',
-      description: 'Typography로 나타낼 글 내용입니다.',
-      table: {
-        type: { summary: 'string' },
+    docs: {
+      description: {
+        component:
+          `- variant 값으로 "title1" | "title2" | "subtitle1" | "subtitle2" | "body" | "desc" 를 사용할 수 있습니다. \n` +
+          `- 텍스트 부분 하이라이팅을 위해 \\<Highlight\\> 컴포넌트를 함께 사용할 수 있습니다.`,
       },
     },
+  },
+  argTypes: {
     variant: {
       name: 'variant',
       description: '텍스트 역할을 선택합니다.',
       table: {
-        type: { summary: 'string' },
+        type: { summary: 'TypographyVariant' },
         defaultValue: { summary: 'body' },
+        category: 'Typography',
       },
-      type: { name: 'string', required: true },
       control: {
         type: 'select',
         options: ['title1', 'title2', 'subtitle1', 'subtitle2', 'body', 'desc'],
+      },
+    },
+    children: {
+      name: 'children',
+      description:
+        'Typography로 나타낼 글 내용입니다. 문자로 평가되는 모든 노드가 올 수 있습니다.',
+      table: {
+        type: { summary: 'string' },
+        category: ['Typography', 'Highlight'],
       },
     },
     color: {
       name: 'color',
       description: '텍스트 색상을 지정합니다.',
       table: {
-        type: { summary: 'string' },
+        type: { summary: "CSSProperties['color']" },
         defaultValue: { summary: 'inherit' },
+        category: ['Typography', 'Highlight'],
       },
       control: {
         type: 'color',
@@ -74,7 +84,7 @@ Title2.args = {
 
 Title2.parameters = {
   docs: {
-    storyDescription: 'title1 다음으로 중요한 텍스트일 경우 사용합니다.',
+    storyDescription: '"title1" 다음으로 중요한 텍스트일 경우 사용합니다.',
   },
 };
 
@@ -97,7 +107,7 @@ Subtitle2.args = {
 Subtitle2.parameters = {
   docs: {
     storyDescription:
-      '세부사항 중에서 subtitle1 다음으로 중요한 텍스트일 경우 사용합니다.',
+      '세부사항 중에서 "subtitle1" 다음으로 중요한 텍스트일 경우 사용합니다.',
   },
 };
 
@@ -146,7 +156,7 @@ export const WithHighlight = HighlightTemplate.bind({});
 WithHighlight.parameters = {
   docs: {
     storyDescription:
-      'Typography 내부에서 강조하고 싶은 단어에 Highlight 컴포넌트를 사용할 수 있습니다.',
+      '\\<Typography\\> 내부에서 강조하고 싶은 단어에 \\<Highlight\\> 컴포넌트를 사용할 수 있습니다.',
   },
 };
 
@@ -162,6 +172,6 @@ export const WithCustomHighlight = CustomHighlightTemplate.bind({});
 WithCustomHighlight.parameters = {
   docs: {
     storyDescription:
-      '사용자 지정 색상으로 Highlight 컴포넌트의 강조 색상을 설정할 수 있습니다.',
+      '사용자 지정 색상으로 \\<Highlight\\> 컴포넌트의 강조 색상을 설정할 수 있습니다.',
   },
 };
