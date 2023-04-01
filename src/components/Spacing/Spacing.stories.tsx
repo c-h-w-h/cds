@@ -9,13 +9,20 @@ export default {
     layout: 'fullscreen',
     componentSubtitle:
       'Spacing은 선언적으로 사용할 수 있는 다양한 크기의 여백을 제공합니다.',
+    docs: {
+      description: {
+        component:
+          `- size 값으로 5 | 10 | 15 | 20 | 30 | 40 | 60 | 80 | 100 중 하나를 선택할 수 있습니다. \n` +
+          `- 선택한 size 값은 px 단위로 적용됩니다.`,
+      },
+    },
   },
   argTypes: {
     size: {
       name: 'size',
       description: '여백의 크기를 설정합니다.',
       table: {
-        type: { summary: 'number' },
+        type: { summary: 'SpacingVariant' },
       },
       control: {
         type: 'select',
