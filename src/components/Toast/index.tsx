@@ -1,7 +1,6 @@
 import { theme } from '@components/@common/CdsProvider/theme';
 import Flexbox from '@components/@layout/Flexbox';
 import Typography from '@components/Typography';
-import Portal from '@components-common/Portal';
 import {
   ToastKind,
   VerticalVariant,
@@ -57,7 +56,7 @@ const Toast = ({
   }, [open]);
 
   return (
-    <Portal>
+    <>
       {open && (
         <Flexbox
           css={[
@@ -103,7 +102,7 @@ const Toast = ({
           </CloseButton>
         </Flexbox>
       )}
-    </Portal>
+    </>
   );
 };
 
