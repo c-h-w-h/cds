@@ -6,10 +6,86 @@ import { MdCelebration, MdInfo, MdCheckCircle } from 'react-icons/md';
 import Tabs from '.';
 
 export default {
-  title: 'Tabs',
+  title: 'Design System/Components/Tabs',
   component: Tabs,
   parameters: {
     layout: 'fullscreen',
+    componentSubtitle:
+      'Tabs는 다양한 컨텐츠를 버튼으로 전환할 수 있는 컴포넌트입니다.',
+    docs: {
+      description: {
+        component: `- 다음과 같은 컴포넌트를 children으로 사용할 수 있습니다.  
+        - \\<Tabs.List\\> : Tab을 전환할 수 있는 \\<Tabs.Trigger\\>들을 감싸는 컴포넌트입니다.
+        - \\<Tabs.Trigger\\> : 눌렀을 때 해당 컴포넌트에 대응하는 \\<Tabs.Panel\\>로 화면이 전환됩니다.
+        - \\<Tabs.Panel\\> : \\<Tabs.Trigger\\>를 눌렀을 때 화면에 나타나는 컴포넌트를 감싸는 컴포넌트입니다.
+        `,
+      },
+    },
+  },
+  argTypes: {
+    label: {
+      name: 'label',
+      description: '고유한 값으로 접근성 속성에 사용됩니다.',
+      table: {
+        category: 'Tabs',
+      },
+    },
+    defaultValue: {
+      name: 'defaultValue',
+      description: '초기에 활성화되어 있을 Trigger의 value를 입력합니다.',
+      table: {
+        category: 'Tabs',
+      },
+    },
+    variant: {
+      name: 'variant',
+      description: 'Tabs의 디자인을 선택할 수 있습니다.',
+      table: {
+        defaultValue: { summary: 'underline' },
+        category: 'Tabs',
+      },
+    },
+    isFitted: {
+      name: 'isFitted',
+      description: 'Trigger들이 List의 너비를 꽉 채울지 결정합니다.',
+      table: {
+        defaultValue: { summary: false },
+        category: 'Tabs',
+      },
+    },
+    value: {
+      name: 'value',
+      description: '각각의 Trigger와 Panel을 짝짓기 위한 값입니다.',
+      table: {
+        type: { summary: 'string', required: true },
+        category: ['Tabs.Trigger', 'Tabs.Panel'],
+      },
+    },
+    text: {
+      name: 'text',
+      description: 'Trigger에 표시할 제목을 설정합니다.',
+      table: {
+        type: { summary: 'string' },
+        category: 'Tabs.Trigger',
+      },
+    },
+    icon: {
+      name: 'icon',
+      description: 'Trigger에 표시할 아이콘을 설정합니다.',
+      table: {
+        type: { summary: 'string' },
+        category: 'Tabs.Trigger',
+      },
+    },
+    disabled: {
+      name: 'disabled',
+      description: 'Trigger의 비활성화 여부를 결정합니다.',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: false },
+        category: 'Tabs.Trigger',
+      },
+    },
   },
 } as ComponentMeta<typeof Tabs>;
 
@@ -48,6 +124,20 @@ Default.args = {
   defaultValue: '1',
 };
 
+export const Underline = Template.bind({});
+Underline.args = {
+  label: '밑줄 있는 Tabs 목록',
+  defaultValue: '1',
+  variant: 'underline',
+};
+
+Underline.parameters = {
+  docs: {
+    storyDescription:
+      'variant가 underline일 경우 선택한 <Tabs.Trigger>에 밑줄이 표시되는 디자인을 적용합니다.',
+  },
+};
+
 export const Rounded = Template.bind({});
 Rounded.args = {
   label: '둥근 Tabs 목록',
@@ -55,26 +145,38 @@ Rounded.args = {
   variant: 'rounded',
 };
 
-export const UnderlineFitted = Template.bind({});
-UnderlineFitted.args = {
-  label: '밑줄이 있으면서 너비가 꽉 찬 Tabs 목록',
+Rounded.parameters = {
+  docs: {
+    storyDescription:
+      'variant가 rounded일 경우 선택한 <Tabs.Trigger>의 상단 모서리가 둥근 디자인을 적용합니다.',
+  },
+};
+
+export const IsFitted = Template.bind({});
+IsFitted.args = {
+  label: '너비가 꽉 찬 Tabs 목록',
   defaultValue: '1',
-  variant: 'underline',
   isFitted: true,
 };
 
-export const RoundedFitted = Template.bind({});
-RoundedFitted.args = {
-  label: '둥글면서 너비가 꽉 찬 Tabs 목록',
-  defaultValue: '1',
-  variant: 'rounded',
-  isFitted: true,
+IsFitted.parameters = {
+  docs: {
+    storyDescription:
+      'isFitted가 true이면 <Tabs.Trigger>들의 너비가 <Tabs.List>를 꽉 채우도록 늘어납니다.',
+  },
 };
 
 export const DefaultValue = Template.bind({});
 DefaultValue.args = {
   label: '기본 값이 설정된 Tabs 목록',
   defaultValue: '3',
+};
+
+DefaultValue.parameters = {
+  docs: {
+    storyDescription:
+      'defaultValue는 처음에 활성화시키고 싶은 <Tabs.Panel>의 value를 전달받아 초기 화면으로 렌더링합니다.',
+  },
 };
 
 const WithIconsTemplate: ComponentStory<typeof Tabs> = (args) => (
@@ -93,6 +195,13 @@ WithIcons.args = {
   defaultValue: '1',
 };
 
+WithIcons.parameters = {
+  docs: {
+    storyDescription:
+      '<Tabs.Trigger>의 icon 속성으로 적절한 react-icons 값을 설정하면 해당 아이콘이 표시됩니다.',
+  },
+};
+
 const WithDisabledTemplate: ComponentStory<typeof Tabs> = (args) => (
   <Tabs {...args}>
     <Tabs.List>
@@ -107,6 +216,13 @@ export const WithDisabled = WithDisabledTemplate.bind({});
 WithDisabled.args = {
   label: '비활성화 확인용 Tabs 목록',
   defaultValue: '1',
+};
+
+WithDisabled.parameters = {
+  docs: {
+    storyDescription:
+      '<Tabs.Trigger>의 disabled 값을 true로 설정하면 해당 Trigger를 선택할 수 없게 됩니다.',
+  },
 };
 
 const ScrollableTemplate: ComponentStory<typeof Tabs> = (args) => (
@@ -127,6 +243,13 @@ export const Scrollable = ScrollableTemplate.bind({});
 Scrollable.args = {
   label: '스크롤이 생기는 Tabs 목록',
   defaultValue: '1',
+};
+
+Scrollable.parameters = {
+  docs: {
+    storyDescription:
+      '<Tabs.Trigger>들의 너비가 <Tabs.List>를 초과하면 좌우로 스크롤할 수 있습니다.',
+  },
 };
 
 const FocusSelectedTemplate: ComponentStory<typeof Tabs> = (args) => (
@@ -156,4 +279,11 @@ export const FocusSelected = FocusSelectedTemplate.bind({});
 FocusSelected.args = {
   label: '너비가 좁은 Tabs 목록',
   defaultValue: '1',
+};
+
+FocusSelected.parameters = {
+  docs: {
+    storyDescription:
+      '<Tabs.List>에 스크롤이 생기면 선택한 <Tabs.Trigger>로 스크롤합니다.',
+  },
 };
