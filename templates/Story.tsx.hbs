@@ -9,47 +9,49 @@ export default {
     layout: 'fullscreen',
     componentSubtitle:
       '컴포넌트에 대한 간단한 설명을 적습니다.',
+    // docs-description-component (Optional) 
+    // 세부 설명을 적습니다. 
+    docs: {
+      description: {
+        component: '마크다운 문법이 적용됩니다.' + '\n' + '줄바꿈된 두번째 문장입니다.'
+      }
+    }
   },
   argTypes: {
-    // default, required 명시
-    // control에 options 제공
     props1: {
       name: 'props1',
       description: 'props1은 default 값이 있는 필수적인 속성입니다.',
       table: {
+        // type
+        // 필수가 아닐 경우 required를 삭제합니다.
         type: { summary: 'string', required: true },
+        // defaultValue (Optional)
+        // ex) true, 'string' 등등
         defaultValue: { summary: '기본 값이 있으면 여기에 적습니다.' },
       },
       control: {
+        // Args Table에서 사용자가 조작할 수 있는 타입입니다.
+        // select일 경우 options를 배열로 제공합니다.
+        // 그 외 text, number, boolean, color, check, radio 등 존재합니다.
+        // control 불가능하게 하고 싶을 경우 객체가 아니라 false로 설정합니다.
+        // ex) control: false, 
+        // 참고 : https://storybook.js.org/docs/react/essentials/controls
         type: 'select',
         options: ['선택지1', '선택지2'],
       },
-    },
-    // control type이 text
-    props2: {
-      name: 'props2',
-      description: 'props2는 control이 text로 나타납니다.',
-      table: {
-        type: { summary: 'string' },
-      },
-      control: {
-        type: 'text',
-      },
-    },
-    // control에 별도의 동작을 추가하지 않을 때
-    props3: {
-      name: 'props3',
-      description: 'props3는 control이 불가능한 고정된 속성입니다.',
-      table: {
-        type: { summary: 'number' },
-      },
-      control: false,
+      // category (Optional)
+      // Props의 카테고리가 필요할 때 사용합니다.
+      // 하나면 문자열, 여러 개면 배열로 전달합니다. 
+      category: ['Compound1', 'Compound2'],
     },
   },
-  // decorators: 공통적으로 적용하고 싶은 컴포넌트를 설정합니다. (필요 없을 경우 삭제합니다.)
+  // decorators (Optional)
+  // 공통적으로 적용하고 싶은 컴포넌트를 설정합니다.
   decorators: [
     (Story) => (
-      <Story />
+      <>
+        {Story()}
+      </>
     ),
   ],
 } as ComponentMeta<typeof {{pascalCase name}}>;
