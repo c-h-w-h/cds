@@ -6,13 +6,6 @@ import { pixelToRem } from '@utils/pixelToRem';
 import { DefaultProps } from '@utils/types/DefaultProps';
 import { CSSProperties } from 'react';
 
-type ButtonShapeVariant = 'round' | 'square';
-type ButtonThemeVariant = 'light';
-type ButtonVariant =
-  | ButtonShapeVariant
-  | ButtonThemeVariant
-  | `${ButtonShapeVariant} ${ButtonThemeVariant}`;
-
 interface ButtonProps extends DefaultProps<HTMLButtonElement> {
   variant?: ButtonVariant;
   text?: string;

@@ -1,3 +1,10 @@
+type ButtonShapeVariant = 'round' | 'square';
+type ButtonThemeVariant = 'light';
+declare type ButtonVariant =
+  | ButtonShapeVariant
+  | ButtonThemeVariant
+  | `${ButtonShapeVariant} ${ButtonThemeVariant}`;
+
 declare type TypographyVariant =
   | 'title1'
   | 'title2'
