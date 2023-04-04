@@ -5,17 +5,21 @@ import { flexboxStyle } from '@styles/flex-box';
 import { DefaultProps } from '@utils/types/DefaultProps';
 import { CSSProperties } from 'react';
 
-import PlainButton from './PlainButton';
 import { buttonContainerCss, buttonContentCss } from './style';
 
 interface ButtonProps extends DefaultProps<HTMLButtonElement> {
   variant?: ButtonVariant;
   text?: string;
+
   icon?: IconSource;
   iconSize?: CSSProperties['width'];
   iconPosition?: 'left' | 'right';
   iconTranslateY?: CSSProperties['translate'];
+
   href?: string;
+
+  // react.HTMLAttributes에 정의되지 않은 standard button attributes
+  type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
 }
 
@@ -27,11 +31,14 @@ const Button = ({
   iconPosition = 'left',
   iconTranslateY = 0,
   href,
+  type,
   disabled,
   ...props
 }: ButtonProps) => {
   const { color } = useTheme();
-  const hasBackground = !variant.includes('light');
+
+  const isPlain = variant === 'plain';
+  const hasBackground = !variant.includes('light') && !isPlain;
   const isSquare = variant.includes('square');
   const isIconOnly = !!icon && !text;
 
@@ -41,6 +48,7 @@ const Button = ({
     isSquare,
     isIconOnly,
   );
+  const contentStyle = buttonContentCss(color, hasBackground, iconTranslateY);
 
   const { white, primary200 } = color;
   const children = (
@@ -66,8 +74,8 @@ const Button = ({
   const commonProps: Record<string, unknown> = {
     css: [
       flexboxStyle({ gap: '0.125rem' }),
-      containerStyle,
-      href && buttonContentCss(color, hasBackground, iconTranslateY),
+      contentStyle,
+      !isPlain && containerStyle,
     ],
     ...props,
   };
@@ -81,9 +89,9 @@ const Button = ({
   }
 
   return (
-    <PlainButton {...commonProps} {...{ disabled, hasBackground }}>
+    <button {...commonProps} {...{ type, disabled }}>
       {children}
-    </PlainButton>
+    </button>
   );
 };
 
