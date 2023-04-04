@@ -1,17 +1,21 @@
 {
-  "name": "cds",
-  "private": true,
+  "name": "@chwh/cds",
   "version": "0.0.0",
+  "description": "cold design system for React apps",
+  "keywords": [
+    "React",
+    "ui",
+    "component"
+  ],
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
+    "dev": "yarn storybook",
+    "build": "tsc -p tsconfig.publish.json && vite build --config vite.publish.config.ts",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "postinstall": "husky install",
     "lint-staged": "lint-staged",
-    "chromatic": "chromatic --exit-zero-on-changes"
+    "chromatic": "chromatic --exit-zero-on-changes",
+    "generate": "plop"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
@@ -19,15 +23,32 @@
       "eslint --config ./.eslintrc --fix"
     ]
   },
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.umd.cjs",
+  "module": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.umd.cjs"
+    }
+  },
+  "sideEffects": false,
   "dependencies": {
+    "lodash": "^4.17.21"
+  },
+  "peerDependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
-    "@react-icons/all-files": "^4.1.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^18.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@react-icons/all-files": "^4.1.0",
     "@storybook/addon-actions": "^6.5.16",
     "@storybook/addon-essentials": "^6.5.16",
     "@storybook/addon-interactions": "^6.5.16",
@@ -47,12 +68,37 @@
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-import-order": "^2.1.4",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.2",
     "husky": "^8.0.3",
     "lint-staged": "^13.1.1",
+    "plop": "^3.1.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "typescript": "^4.9.3",
     "vite": "^4.1.0",
+    "vite-plugin-dts": "^2.1.0",
     "vite-tsconfig-paths": "^4.0.5"
+  },
+  "homepage": "https://github.com/c-h-w-h/cds#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/c-h-w-h/cds.git",
+    "directory": "/"
+  },
+  "contributors": [
+    "이우재 <prayinforrain@naver.com> (https://prayinforrain.github.io/)",
+    "Hyunbin Lee <iyu88@naver.com> (https://iyu88.github.io/)",
+    "Seyoung Kim <se030.kim@gmail.com> (https://velog.io/@se030)",
+    "sunmin <polarlsm1231@gmail.com> (https://polarmin.tistory.com/)",
+    "dohun <dohun31@naver.com> (https://dohun31.tistory.com/)"
+  ],
+  "bugs": {
+    "url": "https://github.com/c-h-w-h/cds/issues"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
   }
 }

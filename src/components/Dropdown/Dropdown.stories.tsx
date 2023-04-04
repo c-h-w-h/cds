@@ -1,80 +1,170 @@
+import Button from '@components/Button';
+import Center from '@components-layout/Center';
+import Flexbox from '@components-layout/Flexbox';
+import List from '@components-layout/List';
 import { css } from '@emotion/react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { MdAccessibility } from 'react-icons/md';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { MdPeople } from 'react-icons/md';
 
-import { Dropdown, DropdownCustomItem, DropdownItem } from '.';
+import Dropdown from '.';
 
 export default {
-  title: 'Dropdown',
+  title: 'Design System/Components/Dropdown',
   component: Dropdown,
   parameters: {
     layout: 'fullscreen',
-  },
-  argTypes: {
-    align: {
-      options: ['left', 'right', 'center'],
-      control: { type: 'radio' },
+    componentSubtitle:
+      'Dropdown은 추가적인 메뉴를 담은 컴포넌트가 화면에 나타나도록 제어할 수 있는 트리거를 가지고 있습니다.',
+    docs: {
+      description: {
+        component: `- 다음과 같은 컴포넌트를 children으로 사용할 수 있습니다.  
+        - \\<Dropdown.Trigger\\> : \\<Dropdown.Menu\\>를 열기 위한 이벤트를 제어하는 컴포넌트입니다.
+        - \\<Dropdown.Menu\\> : 사용자가 선택할 수 있는 선택지의 종류를 렌더링하는 컴포넌트입니다.
+        `,
+      },
     },
   },
+  argTypes: {
+    label: {
+      name: 'label',
+      description: '고유한 값으로 접근성 속성에 사용됩니다.',
+      table: {
+        type: { summary: 'string' },
+      },
+      control: {
+        type: 'string',
+      },
+    },
+    collapseOnBlur: {
+      name: 'collapseOnBlur',
+      description:
+        '메뉴가 열렸을 때 메뉴 이외의 영역을 눌렀을 때 메뉴를 닫을 것인지 여부를 설정합니다.',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: false },
+      },
+      control: {
+        type: 'boolean',
+      },
+    },
+    direction: {
+      name: 'direction',
+      description: '메뉴가 열리는 방향을 선택합니다.',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: 'bottom' },
+      },
+      control: {
+        type: 'select',
+        options: ['left', 'right', 'top', 'bottom'],
+      },
+    },
+  },
+  decorators: [
+    (Story) => (
+      <Flexbox
+        justifyContent={'center'}
+        alignItems={'center'}
+        css={css`
+          height: 500px;
+        `}
+      >
+        <Center>
+          <Story />
+        </Center>
+      </Flexbox>
+    ),
+  ],
 } as ComponentMeta<typeof Dropdown>;
 
-const DUMMY_TOGGLE = () => {
-  return (
-    <div
-      style={{
-        border: `1px solid #dedede`,
-        borderRadius: '5px',
-        padding: '.5rem',
-      }}
-    >
-      드롭다운토글은커스텀엘레먼트로자유롭게서식을적용할수있습니다테스트를위해아주긴토글을만들었어요
-    </div>
-  );
-};
-
-const DUMMY_CUSTOM_ITEM = css`
-  font-weight: 700;
-  background-color: aqua;
-  padding: 0.5rem;
-`;
-
 const Template: ComponentStory<typeof Dropdown> = (args) => (
-  <Dropdown {...args} toggleElement={<DUMMY_TOGGLE />}>
-    <DropdownItem title="첫 번째 아이템" leftIcon={MdAccessibility} />
-    <DropdownItem title="두 번째 아이템" description="저는 설명이 있는데용" />
-    <DropdownItem
-      title="세 번째 아이템"
-      description="저는 설명과 아이콘도 있어용"
-      leftIcon={MdAccessibility}
-    />
-    <DropdownItem
-      title="세 번째 아이템(무료 alert 포함)"
-      onClick={() => {
-        alert('무료로 제공해드리는 alert입니다');
-      }}
-    />
-    <DropdownItem
-      title="네 번째 아이템"
-      description="저는 오른쪽에 아이콘이 있어용"
-      rightIcon={MdAccessibility}
-    />
-    <DropdownCustomItem css={DUMMY_CUSTOM_ITEM}>
-      저는 커스텀 아이템 이에용
-    </DropdownCustomItem>
+  <Dropdown {...args}>
+    <Dropdown.Trigger>
+      <Button text="팀원 목록" icon={MdPeople} variant="light" />
+    </Dropdown.Trigger>
+    <Dropdown.Menu>
+      <List
+        css={css`
+          width: max-content;
+        `}
+      >
+        <li>김세영</li>
+        <li>백도훈</li>
+        <li>이선민</li>
+        <li>이우재</li>
+        <li>이현빈</li>
+        <li>정주연</li>
+      </List>
+    </Dropdown.Menu>
   </Dropdown>
 );
 
-export const Left = Template.bind({});
-Left.args = {
-  align: 'left',
+export const Default = Template.bind({});
+Default.args = {
+  label: 'dropdown0',
 };
 
-export const Right = Template.bind({});
-Right.args = {
-  align: 'right',
+export const DirectionBottom = Template.bind({});
+DirectionBottom.args = {
+  label: 'dropdown1',
+  direction: 'bottom',
 };
 
-export const Center = Template.bind({});
-Center.args = {
-  align: 'center',
+DirectionBottom.parameters = {
+  docs: {
+    storyDescription:
+      '<Dropdown.Menu>가 열렸을 때 나타나는 방향의 기본값은 하단(bottom)입니다.',
+  },
+};
+
+export const DirectionTop = Template.bind({});
+DirectionTop.args = {
+  label: 'dropdown2',
+  direction: 'top',
+};
+
+DirectionTop.parameters = {
+  docs: {
+    storyDescription:
+      'direction을 "top"으로 설정하면 <Dropdown.Menu>가 상단에 열립니다.',
+  },
+};
+
+export const DirectionLeft = Template.bind({});
+DirectionLeft.args = {
+  label: 'dropdown3',
+  direction: 'left',
+};
+
+DirectionLeft.parameters = {
+  docs: {
+    storyDescription:
+      'direction을 "left"로 설정하면 <Dropdown.Menu>가 좌측에 열립니다.',
+  },
+};
+
+export const DirectionRight = Template.bind({});
+DirectionRight.args = {
+  label: 'dropdown4',
+  direction: 'right',
+};
+
+DirectionRight.parameters = {
+  docs: {
+    storyDescription:
+      'direction을 "right"로 설정하면 <Dropdown.Menu>가 우측에 열립니다.',
+  },
+};
+
+export const CollapseOnBlur = Template.bind({});
+CollapseOnBlur.args = {
+  label: 'dropdown5',
+  collapseOnBlur: true,
+};
+
+CollapseOnBlur.parameters = {
+  docs: {
+    storyDescription:
+      'collapseOnBlur를 true로 설정하면 <Dropdown.Menu>가 열렸을 때 메뉴 이외의 영역을 클릭했을 경우 메뉴가 닫히도록 설정합니다.',
+  },
 };

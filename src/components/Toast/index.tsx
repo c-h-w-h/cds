@@ -1,6 +1,7 @@
 import { theme } from '@components/@common/CdsProvider/theme';
 import Flexbox from '@components/@layout/Flexbox';
 import Typography from '@components/Typography';
+import Portal from '@components-common/Portal';
 import {
   ToastKind,
   VerticalVariant,
@@ -13,64 +14,96 @@ import {
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { DefaultProps } from '@utils/types/DefaultProps';
+import { useEffect } from 'react';
 import { MdOutlineCancel } from 'react-icons/md';
 
 import ToastIcon from './ToastIcon';
 
 export interface ToastProps extends DefaultProps<HTMLDivElement> {
+  duration?: number;
   kind?: ToastKind;
   title?: string;
   message: string;
   vertical: VerticalVariant;
   horizontal: HorizontalVariant;
+  open: boolean;
+  onClose: () => void;
 }
 
 const startWithCapitalLetter = (str: string) =>
   str[0].toUpperCase() + str.substring(1);
 
-const Toast = ({ kind, title, message, vertical, horizontal }: ToastProps) => {
+const Toast = ({
+  kind = 'alert',
+  title,
+  message,
+  vertical,
+  horizontal,
+  duration = 3000,
+  open,
+  onClose,
+}: ToastProps) => {
   const { color: themeColor } = theme;
-  const mainColor = kind ? themeColor[kind] : '';
+  const { white } = themeColor;
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onClose();
+    }, duration);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [open]);
 
   return (
-    <Flexbox
-      css={[
-        css`
-          position: absolute;
-          padding: 1rem;
-          border: 2px solid ${mainColor};
-          border-radius: 16px;
-          opacity: 0;
-          animation: ${fadeIn} 0.01s 1s linear forwards;
+    <Portal>
+      {open && (
+        <Flexbox
+          css={[
+            css`
+              position: absolute;
+              padding: 1rem;
+              border: 2px solid ${themeColor[kind]};
+              border-radius: 16px;
+              background-color: ${white};
+              opacity: 0;
+              animation: ${fadeIn} 0.01s 0.1s linear forwards;
 
-          & * {
-            animation: ${bounce(vertical)} 0.6s 1s
-              cubic-bezier(0.34, 1.72, 0.58, 0.85) forwards;
-          }
-        `,
-        V_POSITION_MAP[vertical],
-        H_POSITION_MAP[horizontal],
-      ]}
-    >
-      <ToastIcon kind={kind} size={MAIN_ICON_SIZE} color={mainColor} />
-      <Flexbox
-        flexDirection="column"
-        alignItems={'flex-start'}
-        css={[
-          css`
-            max-width: 10vw;
-          `,
-        ]}
-      >
-        <Typography variant="subtitle2">
-          {title ?? (kind ? startWithCapitalLetter(kind) : 'Alarm')}
-        </Typography>
-        <Typography variant="desc">{message}</Typography>
-      </Flexbox>
-      <TempButton onClick={() => alert('Clicked!')}>
-        <MdOutlineCancel size={CLOSE_ICON_SIZE} color={mainColor} />
-      </TempButton>
-    </Flexbox>
+              & * {
+                animation: ${bounce(vertical)} 0.6s 0.1s
+                  cubic-bezier(0.34, 1.72, 0.58, 0.85) forwards;
+              }
+            `,
+            V_POSITION_MAP[vertical],
+            H_POSITION_MAP[horizontal],
+          ]}
+        >
+          <ToastIcon
+            kind={kind}
+            size={MAIN_ICON_SIZE}
+            color={themeColor[kind]}
+          />
+          <Flexbox
+            flexDirection="column"
+            alignItems={'flex-start'}
+            css={[
+              css`
+                max-width: 10vw;
+              `,
+            ]}
+          >
+            <Typography variant="subtitle2">
+              {title ?? startWithCapitalLetter(kind)}
+            </Typography>
+            <Typography variant="desc">{message}</Typography>
+          </Flexbox>
+          <CloseButton color={themeColor[kind]} onClick={onClose}>
+            <MdOutlineCancel size={CLOSE_ICON_SIZE} color={themeColor[kind]} />
+          </CloseButton>
+        </Flexbox>
+      )}
+    </Portal>
   );
 };
 
@@ -97,14 +130,29 @@ const bounce = (vertical: string) => keyframes`
   }
 `;
 
-const TempButton = styled.button`
-  display: flex;
-  outline: none;
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
+interface CloseButtonProps {
+  color: string;
+}
 
-  :hover {
-    background-color: red;
-  }
-`;
+const CloseButton = styled.button<CloseButtonProps>(({ color, theme }) => {
+  const { color: themeColor } = theme;
+  const { white } = themeColor;
+
+  return {
+    display: 'flex',
+    outline: 'none',
+    border: 'none',
+    padding: '0',
+    borderRadius: '50%',
+    backgroundColor: 'transparent',
+    cursor: 'pointer',
+
+    ':hover': {
+      backgroundColor: `${color}`,
+
+      svg: {
+        fill: `${white}`,
+      },
+    },
+  };
+});
