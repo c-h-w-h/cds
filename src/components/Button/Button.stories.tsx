@@ -43,6 +43,13 @@ export default {
         type: { summary: 'string' },
       },
     },
+    label: {
+      description:
+        'aria-label 속성으로 사용되는 값입니다. 요소의 역할을 간단히 설명합니다.',
+      table: {
+        type: { summary: 'string' },
+      },
+    },
     icon: {
       description:
         '버튼 내부에 들어갈 아이콘입니다. `react-icons` 라이브러리 아이콘 또는 URL string을 사용할 수 있습니다.',
@@ -95,7 +102,7 @@ export default {
 } as ComponentMeta<typeof Button>;
 
 const Template: ComponentStory<typeof Button> = (args) => (
-  <Button icon={MdCelebration} text="상장하기" {...args} />
+  <Button icon={MdCelebration} text="상장하기" {...args} label="상장하기" />
 );
 
 export const Default = Template.bind({});
@@ -164,6 +171,7 @@ export const Width100: ComponentStory<typeof Button> = (args) => (
       width: 100%;
     `}
     {...args}
+    label="상장하기"
   />
 );
 Width100.parameters = {

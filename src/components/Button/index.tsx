@@ -10,6 +10,7 @@ import { buttonContainerCss, buttonContentCss } from './style';
 interface ButtonProps extends DefaultProps<HTMLButtonElement> {
   variant?: ButtonVariant;
   text?: string;
+  label: string;
 
   icon?: IconSource;
   iconSize?: CSSProperties['width'];
@@ -26,6 +27,7 @@ interface ButtonProps extends DefaultProps<HTMLButtonElement> {
 const Button = ({
   variant = 'square',
   text,
+  label,
   icon,
   iconSize = '1.5rem',
   iconPosition = 'left',
@@ -72,6 +74,7 @@ const Button = ({
   );
 
   const commonProps: Record<string, unknown> = {
+    'aria-label': label,
     css: [
       flexboxStyle({ gap: '0.125rem' }),
       contentStyle,
