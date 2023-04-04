@@ -7,10 +7,21 @@ import { useRef } from 'react';
 import { RadioButton } from '.';
 
 export default {
-  title: 'RadioButton',
+  title: 'Design System/Components/RadioButton',
   component: RadioButton,
   parameters: {
     layout: 'fullscreen',
+    componentSubtitle: `RadioButton은 여러 가지 옵션 중 하나를 선택하는 <input type='radio'/>과 같은 동작을 합니다.`,
+    docs: {
+      description: {
+        component: `- 같은 name 속성 값을 갖는 RadioButton 중 하나만이 선택될 수 있습니다.  
+        - value, checked, disabled 등의 일반적인 속성을 지정할 수 있습니다.
+        - size로 버튼의 크기를 지정하고, 이보다 넓은 클릭 영역을 갖게 하려는 경우 outerSize 값을 지정할 수 있습니다.
+        - color 값으로 기본 RadioButton의 색을 지정할 수 있습니다.
+        - inputRef로 useRef를 위한 RefObject를 넘겨줄 수 있습니다. 이 경우 ref는 input 태그에 전달됩니다.
+        `,
+      },
+    },
   },
   args: {
     size: '16px',
@@ -19,6 +30,33 @@ export default {
     outerSize: '30px',
   },
   argTypes: {
+    size: {
+      name: 'size',
+      description: '버튼의 크기를 지정합니다.',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: '16px' },
+      },
+    },
+    outerSize: {
+      name: 'outerSize',
+      description: '버튼의 클릭 영역 크기를 지정합니다.',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: 'size의 값을 따름' },
+      },
+    },
+    color: {
+      name: 'color',
+      description: '기본 버튼의 색상을 지정합니다.',
+      control: {
+        type: 'color',
+      },
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: 'theme.primary100' },
+      },
+    },
     name: {
       table: {
         disable: true,
@@ -35,6 +73,21 @@ export default {
       },
     },
     label: {
+      table: {
+        disable: true,
+      },
+    },
+    disabled: {
+      table: {
+        disable: true,
+      },
+    },
+    id: {
+      table: {
+        disable: true,
+      },
+    },
+    customButton: {
       table: {
         disable: true,
       },
@@ -158,4 +211,24 @@ Disabled.args = {
 export const CustomButton = Template.bind({});
 CustomButton.args = {
   customButton: <DummyFlag />,
+};
+CustomButton.parameters = {
+  docs: {
+    storyDescription: `버튼을 커스터마이징할 수 있습니다.  
+    완성된 ReactNode를 \`customButton\` 값으로 넘겨주고, 체크 상태에 대한 컨트롤은 다음과 같이 css로 스타일링합니다.   
+    
+    input:checked ~ & {
+      // styles when input checked...
+    }
+      
+    input:disabled ~ & {
+      // styles when input disabled...
+    }  
+      
+    // usage
+    <RadioButton customButton={<MyButton/>} />
+    
+    만약 customButton에 \`position: absolute;\`를 사용하는 경우, \`z-index\`값이 1을 넘지 않도록 구현합니다.
+    `,
+  },
 };
