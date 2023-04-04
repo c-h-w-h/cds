@@ -1,8 +1,6 @@
 import { theme } from '@components/@common/CdsProvider/theme';
-import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { useRef } from 'react';
 
 import { RadioButton } from '.';
 
@@ -142,7 +140,7 @@ const FieldSet = styled.fieldset`
   gap: 10px;
 `;
 
-const Leg = styled.legend`
+const Legend = styled.legend`
   font-weight: bold;
   padding: 0px 10px;
 `;
@@ -150,7 +148,7 @@ const Leg = styled.legend`
 const Template: ComponentStory<typeof RadioButton> = (args) => {
   return (
     <FieldSet>
-      <Leg>팀장뽑기</Leg>
+      <Legend>팀장뽑기</Legend>
       <DummyLabel>
         <RadioButton {...args} name="leader" value="김세영" checked />
         <span>김세영</span>
