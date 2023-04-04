@@ -1,7 +1,10 @@
+import Button from '@components/Button';
+import Flexbox from '@components-layout/Flexbox';
+import { css } from '@emotion/react';
 import { useArgs } from '@storybook/client-api';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import Modal, { Button } from '.';
+import Modal from '.';
 
 export default {
   title: 'Modal',
@@ -11,73 +14,35 @@ export default {
   },
 } as ComponentMeta<typeof Modal>;
 
-const SimpleTemplate: ComponentStory<typeof Modal> = (args) => {
+const Template: ComponentStory<typeof Modal> = (args) => {
   const [{ isOpen }, updateArgs] = useArgs();
   const toggleHandler = () => {
     updateArgs({ isOpen: !isOpen });
   };
   return (
     <div>
-      <Button onClick={toggleHandler}>Show Modal</Button>
-      <Modal {...args} onClose={toggleHandler} />
+      <Button onClick={toggleHandler} text="Show Modal" />
+      <Modal {...args} onClose={toggleHandler}>
+        <div>
+          <p>Content1</p>
+          <p>Content2</p>
+          <p>Content3</p>
+        </div>
+        <Flexbox
+          justifyContent="space-evenly"
+          css={css`
+            height: 100px;
+          `}
+        >
+          <Button text="확인" onClick={toggleHandler} />
+          <Button text="취소" onClick={toggleHandler} />
+        </Flexbox>
+      </Modal>
     </div>
   );
 };
 
-const WithFooterTemplate: ComponentStory<typeof Modal> = (args) => {
-  const [{ isOpen }, updateArgs] = useArgs();
-  const toggleHandler = () => {
-    updateArgs({ isOpen: !isOpen });
-  };
-  const footerButtons = [
-    {
-      key: 'Confirm',
-      handler: () => {
-        return;
-      },
-    },
-    { key: 'Cancel', handler: toggleHandler },
-  ];
-  return (
-    <div>
-      <Button onClick={toggleHandler}>Show Modal</Button>
-      <Modal {...args} onClose={toggleHandler} actions={footerButtons} />
-    </div>
-  );
-};
-
-const dummyContent = () => {
-  return (
-    <div>
-      <p>Content1</p>
-      <p>Content2</p>
-      <p>Content3</p>
-    </div>
-  );
-};
-
-export const OnlyContent = SimpleTemplate.bind({});
-OnlyContent.args = {
+export const Default = Template.bind({});
+Default.args = {
   isOpen: false,
-  children: dummyContent(),
-};
-
-export const WithTitle = SimpleTemplate.bind({});
-WithTitle.args = {
-  title: 'Title',
-  isOpen: false,
-  children: dummyContent(),
-};
-
-export const WithFooter = WithFooterTemplate.bind({});
-WithFooter.args = {
-  isOpen: false,
-  children: dummyContent(),
-};
-
-export const WithTitleAndFooter = WithFooterTemplate.bind({});
-WithTitleAndFooter.args = {
-  title: 'Title',
-  isOpen: false,
-  children: dummyContent(),
 };
