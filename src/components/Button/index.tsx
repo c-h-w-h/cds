@@ -1,10 +1,12 @@
 import Icon, { IconSource } from '@components/Icon';
 import Typography from '@components/Typography';
-import { css, useTheme } from '@emotion/react';
+import { useTheme } from '@emotion/react';
 import { flexboxStyle } from '@styles/flex-box';
-import { pixelToRem } from '@utils/pixelToRem';
 import { DefaultProps } from '@utils/types/DefaultProps';
 import { CSSProperties } from 'react';
+
+import PlainButton from './PlainButton';
+import { buttonContainerCss, buttonContentCss } from './style';
 
 interface ButtonProps extends DefaultProps<HTMLButtonElement> {
   variant?: ButtonVariant;
@@ -28,65 +30,26 @@ const Button = ({
   disabled,
   ...props
 }: ButtonProps) => {
-  const { color: themeColor } = useTheme();
-  const { white, primary200, primary400, gray200 } = themeColor;
-
-  const isLight = variant.includes('light');
+  const { color } = useTheme();
+  const hasBackground = !variant.includes('light');
   const isSquare = variant.includes('square');
   const isIconOnly = !!icon && !text;
 
-  const buttonStyle = css`
-    width: fit-content;
-    padding: 0.75rem;
-    border-radius: ${getBorderRadius(isSquare, isIconOnly)};
-    color: ${isLight ? primary200 : white};
-    background-color: ${isLight ? white : primary200};
-    ${isLight ? `border: 0.125rem solid ${primary200};` : ''}
-    text-decoration: none;
+  const containerStyle = buttonContainerCss(
+    color,
+    hasBackground,
+    isSquare,
+    isIconOnly,
+  );
 
-    & > svg,
-    & > img {
-      transform: translateY(${pixelToRem(`${iconTranslateY}`)});
-    }
-
-    &:hover {
-      cursor: pointer;
-      background-color: ${isLight ? white : primary400};
-      ${isLight ? `border: 0.125rem solid ${primary400};` : ''}
-
-      & > * {
-        color: ${isLight ? primary400 : white};
-      }
-
-      & > svg {
-        fill: ${isLight ? primary400 : white};
-      }
-    }
-
-    &:disabled,
-    &.disabled {
-      color: ${isLight ? gray200 : white};
-      background-color: ${isLight ? white : gray200};
-      ${isLight ? `border: 0.125rem solid ${gray200};` : ''}
-
-      & > svg {
-        fill: ${isLight ? gray200 : white};
-      }
-    }
-  `;
-
-  const commonProps: Record<string, unknown> = {
-    css: [flexboxStyle({ gap: '0.125rem' }), buttonStyle],
-    ...props,
-  };
-
+  const { white, primary200 } = color;
   const children = (
     <>
       {icon && iconPosition === 'left' && (
         <Icon
           source={icon}
           size={iconSize}
-          color={isLight ? primary200 : white}
+          color={hasBackground ? white : primary200}
         />
       )}
       {text && <Typography variant="body">{text}</Typography>}
@@ -94,11 +57,20 @@ const Button = ({
         <Icon
           source={icon}
           size={iconSize}
-          color={isLight ? primary200 : white}
+          color={hasBackground ? white : primary200}
         />
       )}
     </>
   );
+
+  const commonProps: Record<string, unknown> = {
+    css: [
+      flexboxStyle({ gap: '0.125rem' }),
+      containerStyle,
+      href && buttonContentCss(color, hasBackground, iconTranslateY),
+    ],
+    ...props,
+  };
 
   if (href) {
     return (
@@ -109,17 +81,10 @@ const Button = ({
   }
 
   return (
-    <button {...commonProps} disabled={disabled}>
+    <PlainButton {...commonProps} {...{ disabled, hasBackground }}>
       {children}
-    </button>
+    </PlainButton>
   );
-};
-
-const getBorderRadius = (isSquare: boolean, isIconOnly: boolean) => {
-  const percentage = isSquare ? '30%' : '50%';
-  const rem = isSquare ? '1rem' : '2.25rem';
-
-  return isIconOnly ? percentage : rem;
 };
 
 export default Button;
