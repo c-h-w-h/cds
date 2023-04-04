@@ -133,36 +133,26 @@ const DummyFlag = () => (
   </DummyCustomFlag>
 );
 
-const Template: ComponentStory<typeof RadioButton> = (args) => {
-  const test = useRef<HTMLInputElement>(null);
+const FieldSet = styled.fieldset`
+  border: 1px solid black;
+  padding: 15px;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
 
+const Leg = styled.legend`
+  font-weight: bold;
+  padding: 0px 10px;
+`;
+
+const Template: ComponentStory<typeof RadioButton> = (args) => {
   return (
-    <fieldset
-      css={css`
-        border: 1px solid black;
-        padding: 15px;
-        width: fit-content;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-      `}
-    >
-      <legend
-        css={css`
-          font-weight: bold;
-          padding: 0px 10px;
-        `}
-      >
-        팀장뽑기
-      </legend>
+    <FieldSet>
+      <Leg>팀장뽑기</Leg>
       <DummyLabel>
-        <RadioButton
-          {...args}
-          name="leader"
-          value="김세영"
-          checked
-          inputRef={test}
-        />
+        <RadioButton {...args} name="leader" value="김세영" checked />
         <span>김세영</span>
       </DummyLabel>
       <DummyLabel>
@@ -185,7 +175,7 @@ const Template: ComponentStory<typeof RadioButton> = (args) => {
         <RadioButton {...args} name="leader" value="정주연" />
         <span>정주연</span>
       </DummyLabel>
-    </fieldset>
+    </FieldSet>
   );
 };
 
