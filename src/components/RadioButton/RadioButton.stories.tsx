@@ -55,6 +55,17 @@ export default {
         defaultValue: { summary: 'theme.primary100' },
       },
     },
+    inputRef: {
+      name: 'inputRef',
+      description: '`useRef`를 사용하기 위한 RefObject를 지정합니다.',
+      table: {
+        type: { summary: 'RefObject<HTMLInputElement>' },
+        defaultValue: { summary: 'null' },
+      },
+      control: {
+        disable: true,
+      },
+    },
     name: {
       table: {
         disable: true,
@@ -203,7 +214,7 @@ CustomButton.args = {
 CustomButton.parameters = {
   docs: {
     storyDescription: `버튼을 커스터마이징할 수 있습니다.  
-    완성된 ReactNode를 \`customButton\` 값으로 넘겨주고, 체크 상태에 대한 컨트롤은 다음과 같이 css로 스타일링합니다.   
+    완성된 ReactNode를 \`customButton\` 값으로 넘겨주고, 체크 상태에 대한 컨트롤은 다음과 같이 css로 스타일링합니다.  
     
     input:checked ~ & {
       // styles when input checked...
@@ -216,7 +227,8 @@ CustomButton.parameters = {
     // usage
     <RadioButton customButton={<MyButton/>} />
     
-    만약 customButton에 \`position: absolute;\`를 사용하는 경우, \`z-index\`값이 1을 넘지 않도록 구현합니다.
+만약 customButton에 \`position: absolute;\`를 사용하는 경우, \`z-index\`값이 1을 넘지 않도록 구현합니다.  
+또한, 접근성 권고사항으로서 실제 라디오버튼의 역할을 하지 않는 customButton에 \`aria-hidden\` 속성을 추가할 것을 권장합니다.
     `,
   },
 };

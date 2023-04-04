@@ -47,7 +47,7 @@ const RadioButton = ({
       {customButton ? (
         customButton
       ) : (
-        <Button>
+        <Button aria-hidden>
           <svg viewBox="0 0 30 30" width={size} height={size}>
             <circle
               cx="15"
