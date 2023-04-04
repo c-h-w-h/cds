@@ -122,6 +122,7 @@ const ActualButton = styled.input`
   top: 0;
   margin: 0;
   opacity: 0;
+  z-index: 1;
   pointer-events: none;
 `;
 
