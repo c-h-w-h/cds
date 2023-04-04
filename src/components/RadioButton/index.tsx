@@ -1,7 +1,7 @@
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { DefaultProps } from '@utils/types/DefaultProps';
-import { CSSProperties, ReactNode } from 'react';
+import { CSSProperties, ReactNode, RefObject } from 'react';
 
 interface RadioButtonProps extends DefaultProps<HTMLInputElement> {
   name: string;
@@ -13,6 +13,7 @@ interface RadioButtonProps extends DefaultProps<HTMLInputElement> {
   disabled?: boolean;
   customButton?: ReactNode;
   id?: string;
+  inputRef?: RefObject<HTMLInputElement>;
 }
 
 const RadioButton = ({
@@ -20,11 +21,12 @@ const RadioButton = ({
   value = '',
   checked = false,
   color,
-  size = '1rem',
-  outerSize = '1.5rem',
+  size = '16px',
+  outerSize = size,
   disabled = false,
   customButton,
   id,
+  inputRef,
   ...props
 }: RadioButtonProps) => {
   const { color: themeColor } = useTheme();
@@ -38,24 +40,27 @@ const RadioButton = ({
         value={value}
         defaultChecked={checked}
         disabled={disabled}
-        {...props}
         id={id ?? ''}
+        ref={inputRef}
+        {...props}
       />
       {customButton ? (
         customButton
       ) : (
-        <Button viewBox="0 0 30 30" width={size} height={size}>
-          <circle
-            cx="15"
-            cy="15"
-            r="12"
-            stroke={color}
-            strokeWidth="3"
-            fill="white"
-            width="30"
-            height="30"
-          />
-          <circle cx="15" cy="15" r="7" fill={color} width="30" height="30" />
+        <Button>
+          <svg viewBox="0 0 30 30" width={size} height={size}>
+            <circle
+              cx="15"
+              cy="15"
+              r="12"
+              stroke={color}
+              strokeWidth="3"
+              fill="white"
+              width="30"
+              height="30"
+            />
+            <circle cx="15" cy="15" r="7" fill={color} width="30" height="30" />
+          </svg>
         </Button>
       )}
     </RadioButtonWrapper>
@@ -66,38 +71,58 @@ interface WrapperProps {
   size: CSSProperties['width'];
 }
 
-const RadioButtonWrapper = styled.label<WrapperProps>`
+const RadioButtonWrapper = styled.div<WrapperProps>`
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
+  position: relative;
 
   ${({ size }) => `width:${size}; height:${size};`}
-
-  &:hover {
-    filter: brightness(0.9);
-  }
-
-  &:active {
-    filter: brightness(1.1);
-  }
 `;
 
-const Button = styled.svg`
-  & > circle:nth-of-type(2) {
+const Button = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+
+  & > svg > circle:nth-of-type(2) {
     display: none;
   }
 
-  input[type='radio']:checked + & > circle:nth-of-type(2) {
+  input[type='radio']:checked + & > svg > circle:nth-of-type(2) {
     display: inline;
   }
 
-  input[type='radio']:disabled + & {
+  input[type='radio']:disabled + & > svg {
     filter: grayscale(100%);
+  }
+
+  input[type='radio']:not(:disabled) + & {
+    cursor: pointer;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+    &:active {
+      filter: brightness(0.9);
+      background-color: rgba(0, 0, 0, 0.1);
+    }
   }
 `;
 
 const ActualButton = styled.input`
-  display: none; ;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
 `;
 
 export { RadioButton };

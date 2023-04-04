@@ -2,6 +2,7 @@ import { theme } from '@components/@common/CdsProvider/theme';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { useRef } from 'react';
 
 import { RadioButton } from '.';
 
@@ -12,10 +13,10 @@ export default {
     layout: 'fullscreen',
   },
   args: {
-    size: '1rem',
+    size: '16px',
     disabled: false,
     color: theme.color.primary100,
-    outerSize: '1.5rem',
+    outerSize: '30px',
   },
   argTypes: {
     name: {
@@ -64,11 +65,11 @@ const DummyCustomFlag = styled.div`
     display: none;
   }
 
-  input[type='radio']:checked + & > div {
+  input:checked ~ & > div {
     display: inline;
   }
 
-  input[type='radio']:disabled + & {
+  input:disabled ~ & {
     filter: grayscale(100%);
   }
 `;
@@ -79,51 +80,61 @@ const DummyFlag = () => (
   </DummyCustomFlag>
 );
 
-const Template: ComponentStory<typeof RadioButton> = (args) => (
-  <fieldset
-    css={css`
-      border: 1px solid black;
-      padding: 15px;
-      width: fit-content;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    `}
-  >
-    <legend
+const Template: ComponentStory<typeof RadioButton> = (args) => {
+  const test = useRef<HTMLInputElement>(null);
+
+  return (
+    <fieldset
       css={css`
-        font-weight: bold;
-        padding: 0px 10px;
+        border: 1px solid black;
+        padding: 15px;
+        width: fit-content;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
       `}
     >
-      팀장뽑기
-    </legend>
-    <DummyLabel>
-      <RadioButton {...args} name="leader" value="김세영" checked />
-      <span>김세영</span>
-    </DummyLabel>
-    <DummyLabel>
-      <RadioButton {...args} name="leader" value="백도훈" />
-      <span>백도훈</span>
-    </DummyLabel>
-    <DummyLabel>
-      <RadioButton {...args} name="leader" value="이선민" />
-      <span>이선민</span>
-    </DummyLabel>
-    <DummyLabel>
-      <RadioButton {...args} name="leader" value="이우재" />
-      <span>이우재</span>
-    </DummyLabel>
-    <DummyLabel>
-      <RadioButton {...args} name="leader" value="이현빈" />
-      <span>이현빈</span>
-    </DummyLabel>
-    <DummyLabel>
-      <RadioButton {...args} name="leader" value="정주연" />
-      <span>정주연</span>
-    </DummyLabel>
-  </fieldset>
-);
+      <legend
+        css={css`
+          font-weight: bold;
+          padding: 0px 10px;
+        `}
+      >
+        팀장뽑기
+      </legend>
+      <DummyLabel>
+        <RadioButton
+          {...args}
+          name="leader"
+          value="김세영"
+          checked
+          inputRef={test}
+        />
+        <span>김세영</span>
+      </DummyLabel>
+      <DummyLabel>
+        <RadioButton {...args} name="leader" value="백도훈" />
+        <span>백도훈</span>
+      </DummyLabel>
+      <DummyLabel>
+        <RadioButton {...args} name="leader" value="이선민" />
+        <span>이선민</span>
+      </DummyLabel>
+      <DummyLabel>
+        <RadioButton {...args} name="leader" value="이우재" />
+        <span>이우재</span>
+      </DummyLabel>
+      <DummyLabel>
+        <RadioButton {...args} name="leader" value="이현빈" />
+        <span>이현빈</span>
+      </DummyLabel>
+      <DummyLabel>
+        <RadioButton {...args} name="leader" value="정주연" />
+        <span>정주연</span>
+      </DummyLabel>
+    </fieldset>
+  );
+};
 
 export const Default = Template.bind({});
 Default.args = {};
