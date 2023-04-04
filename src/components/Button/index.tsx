@@ -24,7 +24,7 @@ interface ButtonProps extends DefaultProps<HTMLButtonElement> {
 }
 
 const Button = ({
-  variant = 'round',
+  variant = 'square',
   text,
   icon,
   iconSize = '1.5rem',
@@ -39,7 +39,7 @@ const Button = ({
 
   const isPlain = variant === 'plain';
   const hasBackground = !variant.includes('light') && !isPlain;
-  const isSquare = variant.includes('square');
+  const isSquare = !variant.includes('round');
   const isIconOnly = !!icon && !text;
 
   const containerStyle = buttonContainerCss(

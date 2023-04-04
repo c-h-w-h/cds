@@ -34,8 +34,8 @@ export const buttonContainerCss = (
 };
 
 const getBorderRadius = (isSquare: boolean, isIconOnly: boolean) => {
-  const percentage = isSquare ? '30%' : '50%';
-  const rem = isSquare ? '1rem' : '2.25rem';
+  const percentage = isSquare ? '8px' : '50%';
+  const rem = isSquare ? '8px' : '2.25rem';
 
   return isIconOnly ? percentage : rem;
 };
