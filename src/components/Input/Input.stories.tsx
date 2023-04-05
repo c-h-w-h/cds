@@ -1,6 +1,8 @@
+import Button from '@components/Button';
 import { css } from '@emotion/react';
 import { useRef, useState } from '@storybook/addons';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { MdSearch } from 'react-icons/md';
 
 import Input from '.';
 
@@ -19,15 +21,19 @@ export const UncontrolledDefaultStyle: ComponentStory<typeof Input> = (
   const [inputValue, setInputValue] = useState<string>('');
   return (
     <>
-      <Input {...args} forwordRef={inputRef} />
-      <button
-        type="submit"
-        onClick={() =>
-          setInputValue(inputRef.current ? inputRef.current.value : '')
-        }
+      <div
+        css={css`
+          display: flex;
+        `}
       >
-        제출
-      </button>
+        <Input {...args} forwordRef={inputRef} />
+        <Button
+          onClick={() =>
+            setInputValue(inputRef.current ? inputRef.current.value : '')
+          }
+          text="제출"
+        ></Button>
+      </div>
       <div>{inputValue}</div>
     </>
   );
@@ -43,26 +49,27 @@ export const UncontrolledCustomStyle: ComponentStory<typeof Input> = (args) => {
   const [inputValue, setInputValue] = useState<string>('');
   return (
     <>
-      <Input
-        {...args}
-        forwordRef={inputRef}
+      <div
         css={css`
-          width: 300px;
-          height: 34px;
-          &::placeholder {
-            color: violet;
-            font-style: italic;
-          }
+          display: flex;
         `}
-      />
-      <button
-        type="submit"
-        onClick={() =>
-          setInputValue(inputRef.current ? inputRef.current.value : '')
-        }
       >
-        제출
-      </button>
+        <Input
+          {...args}
+          forwordRef={inputRef}
+          css={css`
+            width: 400px;
+            height: 50px;
+            font-size: 2rem;
+          `}
+        />
+        <Button
+          onClick={() =>
+            setInputValue(inputRef.current ? inputRef.current.value : '')
+          }
+          text="제출"
+        ></Button>
+      </div>
       <div>{inputValue}</div>
     </>
   );
@@ -70,6 +77,8 @@ export const UncontrolledCustomStyle: ComponentStory<typeof Input> = (args) => {
 UncontrolledCustomStyle.args = {
   placeholder: '입력하세요',
   id: 'uncontrolled',
+  leadingIcon: MdSearch,
+  leadingIconSize: 30,
 };
 
 export const Controlled: ComponentStory<typeof Input> = (args) => {
@@ -90,8 +99,10 @@ export const Controlled: ComponentStory<typeof Input> = (args) => {
     <>
       <Input
         {...args}
-        onChange={({ target }) => changeHandler(target)}
+        onInputChange={({ target }) => changeHandler(target)}
+        onCancelClick={() => setInputValue('')}
         isValid={isValidate}
+        value={inputValue}
       />
       {!isValidate && (
         <div style={{ color: 'red', fontSize: '10px' }}>
@@ -106,4 +117,6 @@ export const Controlled: ComponentStory<typeof Input> = (args) => {
 Controlled.args = {
   placeholder: '입력하세요',
   id: 'controlled',
+  leadingIcon: MdSearch,
+  cancel: true,
 };

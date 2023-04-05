@@ -11,13 +11,14 @@ interface IconProps {
   color: CSSProperties['fill'];
 }
 
-const Icon = ({ source: Source, size, color }: IconProps) => {
+const Icon = ({ source: Source, size, color, ...props }: IconProps) => {
   if (typeof Source === 'string') {
     return (
       <IconContainer
         src={Source}
         width={pixelToRem(`${size}`)}
         height={pixelToRem(`${size}`)}
+        {...{ ...props }}
       />
     );
   }
