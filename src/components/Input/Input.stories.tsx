@@ -59,9 +59,7 @@ export const UncontrolledCustomStyle: ComponentStory<typeof Input> = (args) => {
           {...args}
           forwardRef={inputRef}
           css={css`
-            width: 400px;
-            height: 50px;
-            font-size: 2rem;
+            font-size: 1.5rem;
           `}
         />
         <Button
@@ -79,7 +77,6 @@ UncontrolledCustomStyle.args = {
   placeholder: '입력하세요',
   id: 'uncontrolled',
   leadingIcon: MdSearch,
-  leadingIconSize: 30,
 };
 
 export const Controlled: ComponentStory<typeof Input> = (args) => {
@@ -100,7 +97,7 @@ export const Controlled: ComponentStory<typeof Input> = (args) => {
     <>
       <Input
         {...args}
-        onInputChange={(e) => changeHandler(e)}
+        onChange={(e) => changeHandler(e)}
         onCancelClick={() => setInputValue('')}
         isValid={isValidate}
         value={inputValue}
