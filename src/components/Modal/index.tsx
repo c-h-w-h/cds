@@ -15,7 +15,9 @@ const Modal = ({ children, isOpen, onClose }: ModalProps) => {
       <ModalWrapper {...{ isOpen }}>
         <BackGround onClick={onClose}></BackGround>
         <Center>
-          <ModalBox>{children}</ModalBox>
+          <ModalBox role="dialog" aria-modal="true">
+            {children}
+          </ModalBox>
         </Center>
       </ModalWrapper>
     </Portal>
