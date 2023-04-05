@@ -38,7 +38,6 @@ export default {
           summary: 'string',
           required: true,
         },
-        control: { type: 'text' },
       },
     },
     setValue: {
