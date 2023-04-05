@@ -27,6 +27,7 @@ export default {
       description: '버튼의 형태를 결정합니다.',
       table: {
         type: { summary: 'ButtonVariant' },
+        defaultValue: { summary: '"square"' },
       },
       control: {
         type: 'select',
@@ -90,25 +91,38 @@ export default {
     href: {
       description: '버튼을 클릭했을 때 이동할 링크입니다.',
       table: {
-        type: { summary: 'ButtonVariant' },
+        type: { summary: 'string' },
       },
     },
     type: {
       description:
         'HTML 기본 속성입니다. href props가 주어지는 경우 사용되지 않습니다.',
+      table: {
+        defaultValue: { summary: '"button"' },
+      },
     },
     disabled: {
       description:
         'HTML 기본 속성입니다. href props가 주어지는 경우 사용되지 않습니다.',
+      table: {
+        defaultValue: { summary: false },
+      },
     },
   },
 } as ComponentMeta<typeof Button>;
 
+export const Default: ComponentStory<typeof Button> = (args) => (
+  <Button {...args} />
+);
+Default.args = {
+  icon: MdCelebration,
+  text: '상장하기',
+  label: '상장하기',
+};
+
 const Template: ComponentStory<typeof Button> = (args) => (
   <Button icon={MdCelebration} text="상장하기" {...args} label="상장하기" />
 );
-
-export const Default = Template.bind({});
 
 export const AsLink: ComponentStory<typeof Button> = (args) => (
   <Button
