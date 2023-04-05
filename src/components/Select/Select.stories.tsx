@@ -48,6 +48,7 @@ export default {
           summary: 'Dispatch<SetStateAction<string>>',
         },
       },
+      control: false,
     },
   },
   decorators: [
