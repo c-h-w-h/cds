@@ -27,7 +27,7 @@ export const UncontrolledDefaultStyle: ComponentStory<typeof Input> = (
           display: flex;
         `}
       >
-        <Input {...args} forwardRef={inputRef} />
+        <Input {...args} ref={inputRef} />
         <Button
           onClick={() =>
             setInputValue(inputRef.current ? inputRef.current.value : '')
@@ -57,7 +57,7 @@ export const UncontrolledCustomStyle: ComponentStory<typeof Input> = (args) => {
       >
         <Input
           {...args}
-          forwardRef={inputRef}
+          ref={inputRef}
           css={css`
             font-size: 1.5rem;
           `}
