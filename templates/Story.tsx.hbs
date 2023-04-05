@@ -13,7 +13,7 @@ export default {
     // 세부 설명을 적습니다. 
     docs: {
       description: {
-        component: '마크다운 문법이 적용됩니다.' + '\n' + '줄바꿈된 두번째 문장입니다.'
+        component: '마크다운 문법이 적용됩니다. \n' + '줄바꿈된 두번째 문장입니다.'
       }
     }
   },
@@ -28,6 +28,10 @@ export default {
         // defaultValue (Optional)
         // ex) true, 'string' 등등
         defaultValue: { summary: '기본 값이 있으면 여기에 적습니다.' },
+        // category (Optional)
+        // Props의 카테고리가 필요할 때 사용합니다.
+        // 하나면 문자열, 여러 개면 배열로 전달합니다. 
+        category: ['Compound1', 'Compound2'],
       },
       control: {
         // Args Table에서 사용자가 조작할 수 있는 타입입니다.
@@ -37,12 +41,8 @@ export default {
         // ex) control: false, 
         // 참고 : https://storybook.js.org/docs/react/essentials/controls
         type: 'select',
-        options: ['선택지1', '선택지2'],
+        options: ['option1', 'option2'],
       },
-      // category (Optional)
-      // Props의 카테고리가 필요할 때 사용합니다.
-      // 하나면 문자열, 여러 개면 배열로 전달합니다. 
-      category: ['Compound1', 'Compound2'],
     },
   },
   // decorators (Optional)
@@ -68,6 +68,7 @@ export const Default = Template.bind({});
 
 export const Example = Template.bind({});
 Example.args = {};
+Example.storyName = '표시되는 스토리 이름을 변경할 수 있습니다. (변수 이름이 너무 꼬이면 사용해요)';
 Example.parameters = {
   docs: {
     storyDescription:
