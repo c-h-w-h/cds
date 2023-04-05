@@ -35,8 +35,8 @@ const Button = ({
   disabled,
   ...props
 }: ButtonProps) => {
-  const { color } = useTheme();
-  const { white, primary200, primary400, gray200 } = color;
+  const { color: themeColor } = useTheme();
+  const { white, primary200, primary400, gray200 } = themeColor;
 
   const isPlain = variant === 'plain';
   const hasBackground = !variant.includes('light') && !isPlain;
