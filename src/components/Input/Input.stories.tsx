@@ -118,5 +118,4 @@ Controlled.args = {
   placeholder: '입력하세요',
   id: 'controlled',
   leadingIcon: MdSearch,
-  cancel: true,
 };

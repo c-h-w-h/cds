@@ -20,7 +20,6 @@ interface InputProps extends DefaultProps<HTMLInputElement> {
   onCancelClick?: MouseEventHandler<HTMLButtonElement>;
   isValid?: boolean;
   leadingIcon?: IconSource;
-  cancel?: boolean;
   leadingIconSize?: number;
   cancelIconSize: number;
 }
@@ -36,7 +35,6 @@ const Input = ({
   onCancelClick,
   isValid = true,
   leadingIcon,
-  cancel,
   leadingIconSize,
   cancelIconSize,
   ...props
@@ -52,16 +50,15 @@ const Input = ({
     border: 1px solid ${isValid ? black : error};
     border-radius: 50px;
     padding-left: 0.8%;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   `;
   const inputStyle = css`
     flex: 1;
     pointer-events: all;
-    height: 100%;
     border: 0px;
     border-radius: 50px;
     outline: none;
-    padding-left: 0.8%;
+    padding: 5px 0.8%;
     font-size: 1em;
     &::placeholder {
       color: ${gray200};
@@ -114,7 +111,7 @@ const Input = ({
           css={inputStyle}
         />
       )}
-      {cancel && (
+      {typeof value === 'string' && (
         <button css={cancelButtonStyle} onClick={onCancelClick}>
           <Icon
             source={MdCancel}
