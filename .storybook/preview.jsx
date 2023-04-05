@@ -10,6 +10,26 @@ export const parameters = {
       date: /Date$/,
     },
   },
+  previewTabs: {
+    canvas: {
+      hidden: true,
+    },
+  },
+  viewMode: 'docs',
+  options: {
+    storySort: {
+      method: 'configure',
+      includeNames: true,
+      order: [
+        'Design System', 
+        [
+          'Layout', ['Container', 'Flexbox', 'Center', 'List', '*'],
+          'Components', ['Spacing', 'Typography', 'Badge', 'Image', 'Button', 'Input', 'Table', 'RangeSelector', 'Dropdown', 'Select', 'Tabs', 'Carousel', '*', 'Spinner', 'Modal', 'Toast'],
+          '*'
+        ]
+      ],
+    },
+  },
 };
 
 export const decorators = [
