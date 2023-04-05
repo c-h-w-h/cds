@@ -32,7 +32,7 @@ export interface ToastProps extends DefaultProps<HTMLDivElement> {
 const startWithCapitalLetter = (str: string) =>
   str[0].toUpperCase() + str.substring(1);
 
-const ToastOrigin = ({
+const ToastCore = ({
   kind = 'alert',
   title,
   message,
@@ -106,7 +106,7 @@ const ToastOrigin = ({
   );
 };
 
-export default ToastOrigin;
+export default ToastCore;
 
 const fadeIn = keyframes`
   from {

@@ -1,10 +1,11 @@
 import Portal from '@components-common/Portal';
+import { PORTAL_TOAST_ROOT_ID } from '@constants/portal';
 
-import ToastOrigin, { ToastProps } from './ToastOrigin';
+import ToastOrigin, { ToastProps } from './ToastCore';
 
 const Toast = (props: ToastProps) => {
   return (
-    <Portal>
+    <Portal id={PORTAL_TOAST_ROOT_ID}>
       <ToastOrigin {...props} />
     </Portal>
   );
