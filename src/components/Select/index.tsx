@@ -19,7 +19,7 @@ import {
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 import useSafeContext from 'src/hooks/useSafeContext';
 
-import useSelect from './useSelect';
+import useSelect, { SelectedOption } from './useSelect';
 
 type SelectProps = {
   id: string;
@@ -32,7 +32,7 @@ interface SelectContextInterface {
   triggerRef: RefObject<HTMLDivElement>;
   selectValue: (value: string) => void;
   registerOption: ($div: HTMLDivElement, value: string) => void;
-  selectedOption: string | null;
+  selectedOption: SelectedOption | null;
 }
 const SelectContext = createContext<SelectContextInterface | null>(null);
 
@@ -62,7 +62,8 @@ const Select = ({ id, setValue, children }: SelectProps) => {
 const Trigger = ({ children }: ChildrenProps) => {
   const { isOpen, setIsOpen } = useSafeContext(DropdownContext);
 
-  const { optionRefs, triggerRef } = useSafeContext(SelectContext);
+  const { optionRefs, triggerRef, selectedOption } =
+    useSafeContext(SelectContext);
   const onKeyDown: KeyboardEventHandler<HTMLDivElement> = (e) => {
     if (e.key === ARROW_DOWN) {
       e.preventDefault();
@@ -71,7 +72,7 @@ const Trigger = ({ children }: ChildrenProps) => {
   };
 
   useEffect(() => {
-    [...optionRefs.current.values()][0].focus();
+    [...optionRefs.current.values()][selectedOption?.index ?? 0].focus();
   }, [isOpen]);
 
   const { color } = useTheme();
@@ -252,7 +253,7 @@ const Option = ({ value, children }: OptionProps) => {
       onKeyDown={onKeyDown}
       css={optionStyle}
       role={'option'}
-      aria-selected={selectedOption === value}
+      aria-selected={selectedOption?.value === value}
     >
       {children}
     </div>

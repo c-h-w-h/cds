@@ -1,8 +1,14 @@
 import { Dispatch, SetStateAction, useRef, useState } from 'react';
 
+export interface SelectedOption {
+  index: number;
+  value: string;
+}
+
 const useSelect = (id: string, setValue?: Dispatch<SetStateAction<string>>) => {
   const selectRef = useRef<HTMLSelectElement>(null);
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [selectedOption, setSelectedOption] =
+    useState<SelectedOption | null>(null);
 
   const optionRefs = useRef<Map<string, HTMLDivElement>>(new Map());
 
@@ -25,12 +31,18 @@ const useSelect = (id: string, setValue?: Dispatch<SetStateAction<string>>) => {
     if (!selectRef.current) return;
 
     if (setValue) setValue(value);
-    setSelectedOption(value);
 
     const $target = selectRef.current.querySelector(`#${id}-${value}`);
-    selectRef.current.childNodes.forEach(($option) => {
+    selectRef.current.childNodes.forEach(($option, index) => {
       if (!($option instanceof HTMLOptionElement)) return;
-      $option.selected = $option === $target;
+
+      if ($option !== $target) {
+        $option.selected = false;
+        return;
+      }
+
+      $option.selected = true;
+      setSelectedOption({ index, value });
     });
   };
 
