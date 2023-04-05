@@ -1,9 +1,8 @@
 import Button from '@components/Button';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
+import { default as Toast } from './ToastOrigin';
 import useToast from './useToast';
-
-import Toast from '.';
 
 export default {
   title: 'Toast',
