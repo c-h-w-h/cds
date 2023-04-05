@@ -2,7 +2,7 @@ import Button from '@components/Button';
 import { css } from '@emotion/react';
 import { useRef, useState } from '@storybook/addons';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { ChangeEvent, useEffect } from 'react';
+import { useEffect } from 'react';
 import { MdSearch } from 'react-icons/md';
 
 import Input from '.';
@@ -83,9 +83,6 @@ export const Controlled: ComponentStory<typeof Input> = (args) => {
   const [inputValue, setInputValue] = useState<string>('');
   const [isValidate, setIsValidate] = useState<boolean>(true);
 
-  const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-  };
   useEffect(() => {
     if (inputValue.length < 5) {
       setIsValidate(false);
@@ -97,8 +94,7 @@ export const Controlled: ComponentStory<typeof Input> = (args) => {
     <>
       <Input
         {...args}
-        onChange={(e) => changeHandler(e)}
-        onCancelClick={() => setInputValue('')}
+        {...{ setInputValue }}
         isValid={isValidate}
         value={inputValue}
       />

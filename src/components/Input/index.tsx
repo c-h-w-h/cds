@@ -2,19 +2,18 @@ import Icon, { IconSource } from '@components/Icon';
 import { useTheme, css } from '@emotion/react';
 import {
   InputHTMLAttributes,
-  ChangeEventHandler,
   RefObject,
-  MouseEventHandler,
   forwardRef,
   Ref,
+  Dispatch,
+  SetStateAction,
 } from 'react';
 import { MdCancel } from 'react-icons/md';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   id: string;
   forwardRef?: RefObject<HTMLInputElement>;
-  onChange?: ChangeEventHandler<HTMLInputElement>;
-  onCancelClick?: MouseEventHandler<HTMLButtonElement>;
+  setInputValue: Dispatch<SetStateAction<string>>;
   isValid?: boolean;
   leadingIcon?: IconSource;
 }
@@ -27,8 +26,7 @@ const Input = forwardRef(
       name,
       type = 'text',
       value,
-      onChange,
-      onCancelClick,
+      setInputValue,
       isValid = true,
       leadingIcon,
       ...props
@@ -87,12 +85,12 @@ const Input = forwardRef(
         <input
           ref={ref}
           name={name ? name : id}
-          onChange={onChange}
+          onChange={(e) => setInputValue(e.target.value)}
           {...{ type, id, placeholder, value }}
           css={inputStyle}
         />
         {typeof value === 'string' ? (
-          <button css={cancelButtonStyle} onClick={onCancelClick}>
+          <button css={cancelButtonStyle} onClick={() => setInputValue('')}>
             <Icon source={MdCancel} size={15} color={gray100} />
           </button>
         ) : (
