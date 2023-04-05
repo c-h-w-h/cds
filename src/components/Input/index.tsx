@@ -89,23 +89,13 @@ const Input = forwardRef(
     return (
       <div css={inputContainerStyle} {...props}>
         {leadingIcon && <Icon source={leadingIcon} size={24} color={black} />}
-        {typeof value === 'string' ? (
-          <input
-            ref={ref}
-            name={name ? name : id}
-            onChange={onChange}
-            {...{ type, id, placeholder, value }}
-            css={inputStyle}
-          />
-        ) : (
-          <input
-            ref={ref}
-            name={name ? name : id}
-            onChange={onChange}
-            {...{ type, id, placeholder }}
-            css={inputStyle}
-          />
-        )}
+        <input
+          ref={ref}
+          name={name ? name : id}
+          onChange={onChange}
+          {...{ type, id, placeholder, value }}
+          css={inputStyle}
+        />
         {typeof value === 'string' ? (
           <button css={cancelButtonStyle} onClick={onCancelClick}>
             <Icon source={MdCancel} size={15} color={gray100} />
