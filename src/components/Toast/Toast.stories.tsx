@@ -26,14 +26,12 @@ export default {
   },
   argTypes: {
     message: {
-      name: 'message',
       description: 'Toast에서 표시할 내용입니다.',
       table: {
         type: { summary: 'string', required: true },
       },
     },
     vertical: {
-      name: 'vertical',
       description: '수직 방향의 위치를 결정합니다.',
       table: {
         type: { summary: 'VerticalVariant', required: true },
@@ -44,7 +42,6 @@ export default {
       },
     },
     horizontal: {
-      name: 'horizontal',
       description: '수평 방향의 위치를 결정합니다.',
       table: {
         type: { summary: 'HorizontalVariant', required: true },
@@ -55,7 +52,6 @@ export default {
       },
     },
     open: {
-      name: 'open',
       description: 'Toast가 화면에 나타나는지 여부를 결정합니다.',
       table: {
         type: { summary: 'boolean', required: true },
@@ -63,7 +59,6 @@ export default {
       control: false,
     },
     onClose: {
-      name: 'onClose',
       description: '닫기 버튼을 눌렀을 때 동작하는 함수입니다.',
       table: {
         type: { summary: 'function', required: true },
@@ -71,7 +66,6 @@ export default {
       control: false,
     },
     title: {
-      name: 'title',
       description: 'Toast에서 표시할 내용 중 제목을 전달합니다.',
       table: {
         type: { summary: 'string' },
@@ -81,7 +75,6 @@ export default {
       },
     },
     kind: {
-      name: 'kind',
       description: 'Toast의 유형을 결정합니다.',
       table: {
         type: { summary: 'ToastKind' },
@@ -93,7 +86,6 @@ export default {
       },
     },
     duration: {
-      name: 'duration',
       description: '지속시간을 설정합니다.',
       table: {
         type: { summary: 'number' },

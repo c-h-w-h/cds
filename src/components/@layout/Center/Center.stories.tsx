@@ -11,7 +11,6 @@ export default {
   },
   argTypes: {
     children: {
-      name: 'children',
       description: '중앙에 위치시키고자 하는 요소입니다.',
       table: {
         type: { summary: 'ReactNode' },

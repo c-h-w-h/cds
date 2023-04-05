@@ -21,7 +21,6 @@ export default {
   },
   argTypes: {
     line: {
-      name: 'line',
       description: 'Carousel 내부 열 개수를 설정합니다.',
       table: {
         type: { summary: 'number' },
@@ -29,7 +28,6 @@ export default {
       },
     },
     width: {
-      name: 'width',
       description: 'Carousel 아이템의 너비를 px 단위로 설정합니다.',
       table: {
         type: { summary: 'number' },
@@ -37,7 +35,6 @@ export default {
       control: false,
     },
     height: {
-      name: 'height',
       description: 'Carousel 아이템의 높이를 px 단위로 설정합니다.',
       table: {
         type: { summary: 'number' },

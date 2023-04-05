@@ -19,7 +19,6 @@ export default {
   },
   argTypes: {
     size: {
-      name: 'size',
       description: '여백의 크기를 설정합니다.',
       table: {
         type: { summary: 'SpacingVariant' },

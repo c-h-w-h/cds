@@ -12,7 +12,6 @@ export default {
   },
   argTypes: {
     size: {
-      name: 'size',
       description: 'Spinner의 크기를 결정합니다.',
       table: {
         type: { summary: 'string' },
