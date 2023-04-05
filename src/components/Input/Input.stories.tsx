@@ -2,6 +2,7 @@ import Button from '@components/Button';
 import { css } from '@emotion/react';
 import { useRef, useState } from '@storybook/addons';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { ChangeEvent, useEffect } from 'react';
 import { MdSearch } from 'react-icons/md';
 
 import Input from '.';
@@ -26,7 +27,7 @@ export const UncontrolledDefaultStyle: ComponentStory<typeof Input> = (
           display: flex;
         `}
       >
-        <Input {...args} forwordRef={inputRef} />
+        <Input {...args} forwardRef={inputRef} />
         <Button
           onClick={() =>
             setInputValue(inputRef.current ? inputRef.current.value : '')
@@ -56,7 +57,7 @@ export const UncontrolledCustomStyle: ComponentStory<typeof Input> = (args) => {
       >
         <Input
           {...args}
-          forwordRef={inputRef}
+          forwardRef={inputRef}
           css={css`
             width: 400px;
             height: 50px;
@@ -84,22 +85,22 @@ UncontrolledCustomStyle.args = {
 export const Controlled: ComponentStory<typeof Input> = (args) => {
   const [inputValue, setInputValue] = useState<string>('');
   const [isValidate, setIsValidate] = useState<boolean>(true);
-  const validateHandler = (target: EventTarget & HTMLInputElement) => {
-    if (target.value.length < 5) {
+
+  const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+  useEffect(() => {
+    if (inputValue.length < 5) {
       setIsValidate(false);
     } else {
       setIsValidate(true);
     }
-  };
-  const changeHandler = (target: EventTarget & HTMLInputElement) => {
-    validateHandler(target);
-    setInputValue(target.value);
-  };
+  }, [inputValue]);
   return (
     <>
       <Input
         {...args}
-        onInputChange={({ target }) => changeHandler(target)}
+        onInputChange={(e) => changeHandler(e)}
         onCancelClick={() => setInputValue('')}
         isValid={isValidate}
         value={inputValue}

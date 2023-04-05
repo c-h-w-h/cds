@@ -15,7 +15,7 @@ interface InputProps extends DefaultProps<HTMLInputElement> {
   name?: string;
   type: HTMLInputTypeAttribute;
   value?: string;
-  forwordRef?: RefObject<HTMLInputElement>;
+  forwardRef?: RefObject<HTMLInputElement>;
   onInputChange?: ChangeEventHandler<HTMLInputElement>;
   onCancelClick?: MouseEventHandler<HTMLButtonElement>;
   isValid?: boolean;
@@ -30,7 +30,7 @@ const Input = ({
   name,
   type = 'text',
   value,
-  forwordRef,
+  forwardRef,
   onInputChange,
   onCancelClick,
   isValid = true,
@@ -96,7 +96,7 @@ const Input = ({
       )}
       {typeof value === 'string' ? (
         <input
-          ref={forwordRef}
+          ref={forwardRef}
           name={name ? name : id}
           onChange={onInputChange}
           {...{ type, id, placeholder, value }}
@@ -104,7 +104,7 @@ const Input = ({
         />
       ) : (
         <input
-          ref={forwordRef}
+          ref={forwardRef}
           name={name ? name : id}
           onChange={onInputChange}
           {...{ type, id, placeholder }}
