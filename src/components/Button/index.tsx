@@ -13,7 +13,6 @@ interface ButtonProps extends DefaultProps<HTMLButtonElement> {
   icon?: IconSource;
   iconSize?: CSSProperties['width'];
   iconPosition?: 'left' | 'right';
-  iconTranslateY?: CSSProperties['translate'];
 
   href?: string;
 
@@ -29,7 +28,6 @@ const Button = ({
   icon,
   iconSize = '1.5rem',
   iconPosition = 'left',
-  iconTranslateY = 0,
   href,
   type,
   disabled,
@@ -73,11 +71,6 @@ const Button = ({
     padding: 0.75rem;
     color: ${hasBackground ? white : primary200};
     text-decoration: none;
-
-    & > svg,
-    & > img {
-      transform: translateY(${iconTranslateY});
-    }
 
     &:hover {
       color: ${hasBackground ? white : primary400};

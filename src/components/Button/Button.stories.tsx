@@ -77,15 +77,6 @@ export default {
         type: { summary: '"left" | "right"' },
       },
     },
-    iconTranslateY: {
-      description: '아이콘의 y축 위치 조정이 필요한 경우 사용합니다.',
-      table: {
-        type: { summary: "CSSProperties['translate']" },
-      },
-      control: {
-        type: 'number',
-      },
-    },
     href: {
       description: '버튼을 클릭했을 때 이동할 링크입니다.',
       table: {
@@ -151,7 +142,6 @@ export const IconInUrl = Template.bind({});
 IconInUrl.args = {
   icon: 'https://user-images.githubusercontent.com/63814960/220829587-f305856c-b7bc-4dd0-a199-40735c9da5dc.png',
   iconSize: '500px',
-  iconTranslateY: '-1px',
 };
 IconInUrl.parameters = {
   docs: {
