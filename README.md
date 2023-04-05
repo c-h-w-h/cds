@@ -1,3 +1,3 @@
-# CDS
+# cds
 
 Cold Design System

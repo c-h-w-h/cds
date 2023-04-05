@@ -5,6 +5,10 @@ export const COLOR = {
   primary400: '#003D99',
   primary500: '#002579',
 
+  alert: '#333333',
+  info: '#1493FF',
+  success: '#36B37E',
+  warning: '#FFAB00',
   error: '#E6382F',
 
   gray100: '#E0E0E0',

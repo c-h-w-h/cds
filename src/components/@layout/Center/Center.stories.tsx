@@ -3,25 +3,69 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Center from '.';
 
 export default {
-  title: 'Center',
+  title: 'Design System/Layout/Center',
   component: Center,
   parameters: {
     layout: 'fullscreen',
+    componentSubtitle: 'Center는 하위에 있는 children들을 가운데로 정렬합니다.',
+  },
+  argTypes: {
+    children: {
+      name: 'children',
+      description: '중앙에 위치시키고자 하는 요소입니다.',
+      table: {
+        type: { summary: 'ReactNode' },
+      },
+      control: {
+        type: 'select',
+        options: {
+          WithChild: <p>안녕하세요</p>,
+          WithChildren: (
+            <div>
+              <div>hi</div>
+              <div>hello</div>
+              <div>안녕</div>
+            </div>
+          ),
+        },
+      },
+    },
   },
 } as ComponentMeta<typeof Center>;
 
-const Template: ComponentStory<typeof Center> = (args) => <Center {...args} />;
+const Template: ComponentStory<typeof Center> = (args) => {
+  return <Center>{args.children}</Center>;
+};
 
-export const Basic = Template.bind({});
-Basic.args = {
+export const Default = Template.bind({});
+Default.args = {
+  children: 'Cold Design System',
+};
+
+export const WithChild = Template.bind({});
+WithChild.args = {
   children: <p>안녕하세요</p>,
 };
 
-export const MultipleLines = Template.bind({});
-MultipleLines.args = {
+WithChild.parameters = {
+  docs: {
+    storyDescription: 'children에 하나의 요소가 존재하는 경우입니다.',
+  },
+};
+
+export const WithChildren = Template.bind({});
+WithChildren.args = {
   children: (
     <div>
-      hi <div>hi</div> <div>ㅗㅑ</div>
+      <div>hi</div>
+      <div>hello</div>
+      <div>안녕</div>
     </div>
   ),
+};
+
+WithChildren.parameters = {
+  docs: {
+    storyDescription: 'children에 여러 요소가 존재하는 경우입니다.',
+  },
 };

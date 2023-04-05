@@ -1,8 +1,5 @@
-import { ReactNode } from 'react';
-
+import { ChildrenProps } from './ChildrenProps';
 import { DefaultProps } from './DefaultProps';
 
-export type DefaultPropsWithChildren<T extends HTMLElement> =
-  DefaultProps<T> & {
-    children: ReactNode;
-  };
+export type DefaultPropsWithChildren<T extends HTMLElement> = DefaultProps<T> &
+  ChildrenProps;
