@@ -55,7 +55,7 @@ export default {
           height: 200px;
         `}
       >
-        <Story />
+        {Story()}
       </Flexbox>
     ),
   ],

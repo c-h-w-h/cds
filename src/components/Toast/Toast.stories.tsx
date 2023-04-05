@@ -116,7 +116,7 @@ export default {
             height: 300px;
           `}
         >
-          <Story />
+          {Story()}
         </Flexbox>
       </Container>
     ),

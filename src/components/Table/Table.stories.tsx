@@ -85,9 +85,7 @@ export default {
           height: 300px;
         `}
       >
-        <Center>
-          <Story />
-        </Center>
+        <Center>{Story()}</Center>
       </Flexbox>
     ),
   ],

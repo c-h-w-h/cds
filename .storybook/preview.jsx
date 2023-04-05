@@ -15,7 +15,7 @@ export const parameters = {
 export const decorators = [
   (Story) => (
     <CdsProvider>
-      <Story />
+      {Story()}
     </CdsProvider>
   ),
 ];
