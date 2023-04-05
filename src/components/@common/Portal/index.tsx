@@ -1,9 +1,8 @@
-import { PORTAL_ROOT_ID } from '@constants/portal';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 interface PortalProps {
-  id?: string;
+  id: string;
   children: ReactNode;
 }
 
@@ -13,7 +12,7 @@ const Portal = ({ id, children }: PortalProps) => {
 
   useEffect(() => {
     setMounted(true);
-    const portalRoot = document.getElementById(id ?? PORTAL_ROOT_ID);
+    const portalRoot = document.getElementById(id);
     ref.current = portalRoot;
   }, []);
 
