@@ -9,13 +9,16 @@ export default {
   component: Button,
   parameters: {
     layout: 'fullscreen',
-    componentSubtitle: 'Button 컴포넌트입니다.',
+    componentSubtitle:
+      'Button은 클릭 이벤트에 실행할 동작이 있는 경우 사용하는 컴포넌트입니다.',
     docs: {
       description: {
         component:
           '- variant 값으로 "round" | "square" | "light" | "round light" | "square light" | "plain" 중 하나를 선택할 수 있습니다.\n' +
-          '\t- plain 버튼은 인터랙션에 필요한 기본적인 스타일링을 제공합니다. UI 개발 중 시맨틱 마크업을 위해 사용할 수 있습니다.\n' +
-          '- text, icon 값은 요구사항에 따라 선택적으로 사용이 가능합니다.',
+          '\t- plain 버튼은 UI 개발 중 시맨틱 마크업을 위해 사용할 수 있습니다. background, border를 제외하고 인터랙션에 필요한 기본적인 스타일링을 제공합니다. \n' +
+          '- text, icon 값은 요구사항에 따라 선택적으로 사용이 가능합니다.\n' +
+          '- 링크 역할을 하는 버튼은 href props를 전달합니다.\n' +
+          '\t- 이 경우 버튼 컴포넌트의 디자인이 동일하게 적용되지만 시맨틱 마크업과 접근성을 위해 a 태그를 사용합니다.',
       },
     },
   },
@@ -85,7 +88,7 @@ export default {
       },
     },
     href: {
-      description: '링크 역할을 하는 버튼은 href 속성을 전달합니다.',
+      description: '버튼을 클릭했을 때 이동할 링크입니다.',
       table: {
         type: { summary: 'ButtonVariant' },
       },
@@ -107,14 +110,18 @@ const Template: ComponentStory<typeof Button> = (args) => (
 
 export const Default = Template.bind({});
 
-export const AsLink = Template.bind({});
-AsLink.args = {
-  href: 'http://localhost:6006/?path=/story/button--link',
-};
+export const AsLink: ComponentStory<typeof Button> = (args) => (
+  <Button
+    href="https://github.com/c-h-w-h/cds"
+    icon={MdCelebration}
+    text="상장하기"
+    {...args}
+    label="차가운 디자인 시스템 레포지토리 링크"
+  />
+);
 AsLink.parameters = {
   docs: {
-    storyDescription:
-      '시맨틱 마크업과 접근성을 위해 a 태그를 사용합니다. 버튼 컴포넌트의 디자인이 동일하게 적용됩니다. ',
+    storyDescription: '링크의 역할을 하는 버튼입니다.',
   },
 };
 
@@ -124,7 +131,7 @@ Disabled.args = {
 };
 Disabled.parameters = {
   docs: {
-    storyDescription: 'disabled 상태에 적용되는 스타일입니다.',
+    storyDescription: 'disabled 상태에 적용되는 디자인입니다.',
   },
 };
 
