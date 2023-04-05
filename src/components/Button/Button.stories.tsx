@@ -60,9 +60,7 @@ export default {
       table: {
         type: { summary: 'IconType | string' },
       },
-      control: {
-        type: 'text',
-      },
+      control: false,
     },
     iconSize: {
       description: '아이콘이 있는 경우 그 크기를 결정합니다.',
