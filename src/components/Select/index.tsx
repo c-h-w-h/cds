@@ -72,11 +72,12 @@ const Trigger = ({ children }: ChildrenProps) => {
   };
 
   useEffect(() => {
-    [...optionRefs.current.values()][selectedOption?.index ?? 0].focus();
+    const indexToFocus = selectedOption?.index ?? 0;
+    [...optionRefs.current.values()][indexToFocus].focus();
   }, [isOpen]);
 
-  const { color } = useTheme();
-  const { gray200, white, black } = color;
+  const { color: themeColor } = useTheme();
+  const { gray200, white, black } = themeColor;
 
   const triggerStyle = css`
     display: flex;
