@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import List from '.';
 
 export default {
-  title: 'Design System/Layout/List',
+  title: 'Layout/List',
   component: List,
   parameters: {
     layout: 'fullscreen',

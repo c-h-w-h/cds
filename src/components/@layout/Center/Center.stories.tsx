@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Center from '.';
 
 export default {
-  title: 'Design System/Layout/Center',
+  title: 'Layout/Center',
   component: Center,
   parameters: {
     layout: 'fullscreen',

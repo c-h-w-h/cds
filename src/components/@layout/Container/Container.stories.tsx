@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Container from '.';
 
 export default {
-  title: 'Design System/Layout/Container',
+  title: 'Layout/Container',
   component: Container,
   parameters: {
     layout: 'fullscreen',

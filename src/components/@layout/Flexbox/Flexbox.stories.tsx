@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Flexbox from '.';
 
 export default {
-  title: 'Design System/Layout/Flexbox',
+  title: 'Layout/Flexbox',
   component: Flexbox,
   parameters: {
     layout: 'fullscreen',
