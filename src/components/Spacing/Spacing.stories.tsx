@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Spacing from '.';
 
 export default {
-  title: 'Design System/Components/Spacing',
+  title: 'Components/Spacing',
   component: Spacing,
   parameters: {
     layout: 'fullscreen',

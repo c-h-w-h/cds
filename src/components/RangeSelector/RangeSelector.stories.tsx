@@ -5,7 +5,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import RangeSelector from '.';
 
 export default {
-  title: 'Design System/Components/RangeSelector',
+  title: 'Components/RangeSelector',
   component: RangeSelector,
   parameters: {
     layout: 'fullscreen',

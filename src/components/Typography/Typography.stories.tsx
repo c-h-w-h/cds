@@ -5,7 +5,7 @@ import Highlight from './Highlight';
 import Typography from '.';
 
 export default {
-  title: 'Design System/Components/Typography',
+  title: 'Components/Typography',
   component: Typography,
   parameters: {
     layout: 'fullscreen',

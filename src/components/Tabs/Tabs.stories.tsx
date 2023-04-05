@@ -6,7 +6,7 @@ import { MdCelebration, MdInfo, MdCheckCircle } from 'react-icons/md';
 import Tabs from '.';
 
 export default {
-  title: 'Design System/Components/Tabs',
+  title: 'Components/Tabs',
   component: Tabs,
   parameters: {
     layout: 'fullscreen',

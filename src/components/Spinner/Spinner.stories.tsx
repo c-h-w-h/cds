@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Spinner from '.';
 
 export default {
-  title: 'Design System/Components/Spinner',
+  title: 'Components/Spinner',
   component: Spinner,
   parameters: {
     layout: 'fullscreen',

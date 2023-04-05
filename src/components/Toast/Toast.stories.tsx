@@ -9,7 +9,7 @@ import useToast from './useToast';
 import Toast from '.';
 
 export default {
-  title: 'Design System/Components/Toast',
+  title: 'Components/Toast',
   component: Toast,
   parameters: {
     layout: 'fullscreen',

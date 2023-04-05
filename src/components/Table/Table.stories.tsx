@@ -12,7 +12,7 @@ import Table, {
 } from '.';
 
 export default {
-  title: 'Design System/Components/Table',
+  title: 'Components/Table',
   component: Table,
   parameters: {
     layout: 'fullscreen',

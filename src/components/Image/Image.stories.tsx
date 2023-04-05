@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Image from '.';
 
 export default {
-  title: 'Design System/Components/Image',
+  title: 'Components/Image',
   component: Image,
   parameters: {
     layout: 'fullscreen',

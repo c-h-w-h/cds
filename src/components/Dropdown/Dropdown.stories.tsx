@@ -9,7 +9,7 @@ import { MdPeople } from 'react-icons/md';
 import Dropdown from '.';
 
 export default {
-  title: 'Design System/Components/Dropdown',
+  title: 'Components/Dropdown',
   component: Dropdown,
   parameters: {
     layout: 'fullscreen',

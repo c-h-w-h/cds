@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Carousel from '.';
 
 export default {
-  title: 'Design System/Components/Carousel',
+  title: 'Components/Carousel',
   component: Carousel,
   parameters: {
     layout: 'fullscreen',
