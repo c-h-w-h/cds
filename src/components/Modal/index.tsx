@@ -1,4 +1,5 @@
 import Center from '@components/@layout/Center';
+import Portal from '@components-common/Portal';
 import styled from '@emotion/styled';
 import { DefaultPropsWithChildren } from '@utils/types/DefaultPropsWithChildren';
 import { MouseEventHandler } from 'react';
@@ -10,12 +11,14 @@ interface ModalProps extends DefaultPropsWithChildren<HTMLDivElement> {
 
 const Modal = ({ children, isOpen, onClose }: ModalProps) => {
   return (
-    <ModalWrapper {...{ isOpen }}>
-      <BackGround onClick={onClose}></BackGround>
-      <Center>
-        <ModalBox>{children}</ModalBox>
-      </Center>
-    </ModalWrapper>
+    <Portal>
+      <ModalWrapper {...{ isOpen }}>
+        <BackGround onClick={onClose}></BackGround>
+        <Center>
+          <ModalBox>{children}</ModalBox>
+        </Center>
+      </ModalWrapper>
+    </Portal>
   );
 };
 
@@ -25,6 +28,7 @@ const ModalWrapper = styled.div<Pick<ModalProps, 'isOpen'>>`
   left: 0;
   top: 0;
   position: fixed;
+  z-index: 997;
   display: ${({ isOpen }) => (isOpen ? 'flex' : 'none')};
   justify-content: center;
 `;
@@ -39,17 +43,6 @@ const ModalBox = styled.div`
   box-shadow: rgb(0 0 0 / 20%) 0px 2px 5px 1px;
   border-radius: 1rem;
   background-color: ${({ theme }) => theme.color.white};
-`;
-
-const Content = styled.div`
-  height: min-content;
-  margin: 1rem 0;
-`;
-
-const Footer = styled.div`
-  width: 100%;
-  margin-top: 2rem;
-  justify-content: space-between;
 `;
 
 const BackGround = styled.div`

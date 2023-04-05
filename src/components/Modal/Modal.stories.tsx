@@ -1,8 +1,8 @@
 import Button from '@components/Button';
 import Flexbox from '@components-layout/Flexbox';
 import { css } from '@emotion/react';
-import { useArgs } from '@storybook/client-api';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { useState } from 'react';
 
 import Modal from '.';
 
@@ -19,25 +19,26 @@ export default {
       name: 'isOpen',
       description: 'Modal을 띄울지 여부를 나타내는 상태입니다.',
       table: {
-        type: { summary: false, required: true },
+        type: { summary: 'boolean', required: true },
       },
     },
     onClose: {
       name: 'onClose',
       description: 'Modal을 닫는 setState 함수입니다.',
+      control: false,
     },
   },
 } as ComponentMeta<typeof Modal>;
 
-const Template: ComponentStory<typeof Modal> = (args) => {
-  const [{ isOpen }, updateArgs] = useArgs();
+const Template: ComponentStory<typeof Modal> = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const toggleHandler = () => {
-    updateArgs({ isOpen: !isOpen });
+    setIsOpen(!isOpen);
   };
   return (
-    <div>
+    <>
       <Button onClick={toggleHandler} text="Show Modal" />
-      <Modal {...args} onClose={toggleHandler}>
+      <Modal {...{ isOpen }} onClose={toggleHandler}>
         <div>
           <p>Content1</p>
           <p>Content2</p>
@@ -53,11 +54,8 @@ const Template: ComponentStory<typeof Modal> = (args) => {
           <Button text="취소" onClick={toggleHandler} />
         </Flexbox>
       </Modal>
-    </div>
+    </>
   );
 };
 
 export const Default = Template.bind({});
-Default.args = {
-  isOpen: false,
-};
