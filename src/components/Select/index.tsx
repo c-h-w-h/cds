@@ -64,6 +64,7 @@ const Trigger = ({ children }: ChildrenProps) => {
   const { optionRefs, triggerRef } = useSafeContext(SelectContext);
   const onKeyDown: KeyboardEventHandler<HTMLDivElement> = (e) => {
     if (e.key === ARROW_DOWN) {
+      e.preventDefault();
       [...optionRefs.current.values()][0].focus();
     }
   };
