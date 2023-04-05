@@ -202,6 +202,12 @@ const Option = ({ value, children }: OptionProps) => {
     const options = [...optionRefs.current.values()];
     switch (key) {
       case TAB:
+        if (e.shiftKey) {
+          e.preventDefault();
+          getNextElement(options, options.indexOf($div), -1).focus();
+          break;
+        }
+      // eslint-disable-next-line no-fallthrough
       case ARROW_DOWN:
         e.preventDefault();
         getNextElement(options, options.indexOf($div)).focus();
