@@ -1,11 +1,9 @@
 import Icon, { IconSource } from '@components/Icon';
 import Typography from '@components/Typography';
-import { useTheme } from '@emotion/react';
+import { css, useTheme } from '@emotion/react';
 import { flexboxStyle } from '@styles/flex-box';
 import { DefaultProps } from '@utils/types/DefaultProps';
 import { CSSProperties } from 'react';
-
-import { buttonContainerCss, buttonContentCss } from './style';
 
 interface ButtonProps extends DefaultProps<HTMLButtonElement> {
   variant?: ButtonVariant;
@@ -38,21 +36,67 @@ const Button = ({
   ...props
 }: ButtonProps) => {
   const { color } = useTheme();
+  const { white, primary200, primary400, gray200 } = color;
 
   const isPlain = variant === 'plain';
   const hasBackground = !variant.includes('light') && !isPlain;
   const isSquare = !variant.includes('round');
   const isIconOnly = !!icon && !text;
 
-  const containerStyle = buttonContainerCss(
-    color,
-    hasBackground,
-    isSquare,
-    isIconOnly,
-  );
-  const contentStyle = buttonContentCss(color, hasBackground, iconTranslateY);
+  const containerStyle = isPlain
+    ? css`
+        cursor: pointer;
+        width: fit-content;
+        background: transparent;
+      `
+    : css`
+        cursor: pointer;
+        width: fit-content;
+        border-radius: ${getBorderRadius(isSquare, isIconOnly)};
+        background-color: ${hasBackground ? primary200 : white};
+        border: 0.125rem solid ${primary200};
 
-  const { white, primary200 } = color;
+        &:hover {
+          background-color: ${hasBackground ? primary400 : white};
+          border: 0.125rem solid ${primary400};
+        }
+
+        &:disabled,
+        &.disabled {
+          cursor: not-allowed;
+          background-color: ${hasBackground ? gray200 : white};
+          border: 0.125rem solid ${gray200};
+        }
+      `;
+
+  const contentStyle = css`
+    padding: 0.75rem;
+    color: ${hasBackground ? white : primary200};
+    text-decoration: none;
+
+    & > svg,
+    & > img {
+      transform: translateY(${iconTranslateY});
+    }
+
+    &:hover {
+      color: ${hasBackground ? white : primary400};
+
+      & > svg {
+        fill: ${hasBackground ? white : primary400};
+      }
+    }
+
+    &:disabled,
+    &.disabled {
+      color: ${hasBackground ? white : gray200};
+
+      & > svg {
+        fill: ${hasBackground ? white : gray200};
+      }
+    }
+  `;
+
   const children = (
     <>
       {icon && iconPosition === 'left' && (
@@ -75,11 +119,7 @@ const Button = ({
 
   const commonProps: Record<string, unknown> = {
     'aria-label': label,
-    css: [
-      flexboxStyle({ gap: '0.125rem' }),
-      contentStyle,
-      !isPlain && containerStyle,
-    ],
+    css: [flexboxStyle({ gap: '0.125rem' }), containerStyle, contentStyle],
     ...props,
   };
 
@@ -99,3 +139,10 @@ const Button = ({
 };
 
 export default Button;
+
+const getBorderRadius = (isSquare: boolean, isIconOnly: boolean) => {
+  const percentage = isSquare ? '8px' : '50%';
+  const rem = isSquare ? '8px' : '2.25rem';
+
+  return isIconOnly ? percentage : rem;
+};
