@@ -4,7 +4,6 @@ import {
   InputHTMLAttributes,
   ChangeEventHandler,
   RefObject,
-  HTMLInputTypeAttribute,
   MouseEventHandler,
   forwardRef,
   Ref,
@@ -12,11 +11,7 @@ import {
 import { MdCancel } from 'react-icons/md';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  placeholder?: string;
   id: string;
-  name?: string;
-  type: HTMLInputTypeAttribute;
-  value?: string;
   forwardRef?: RefObject<HTMLInputElement>;
   onChange?: ChangeEventHandler<HTMLInputElement>;
   onCancelClick?: MouseEventHandler<HTMLButtonElement>;
