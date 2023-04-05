@@ -13,6 +13,7 @@ import {
   SetStateAction,
   createContext,
   forwardRef,
+  useEffect,
   useRef,
 } from 'react';
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
@@ -59,15 +60,19 @@ const Select = ({ id, setValue, children }: SelectProps) => {
 };
 
 const Trigger = ({ children }: ChildrenProps) => {
-  const { isOpen } = useSafeContext(DropdownContext);
+  const { isOpen, setIsOpen } = useSafeContext(DropdownContext);
 
   const { optionRefs, triggerRef } = useSafeContext(SelectContext);
   const onKeyDown: KeyboardEventHandler<HTMLDivElement> = (e) => {
     if (e.key === ARROW_DOWN) {
       e.preventDefault();
-      [...optionRefs.current.values()][0].focus();
+      setIsOpen(true);
     }
   };
+
+  useEffect(() => {
+    [...optionRefs.current.values()][0].focus();
+  }, [isOpen]);
 
   const { color } = useTheme();
   const { gray200, white, black } = color;
