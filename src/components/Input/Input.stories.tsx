@@ -84,7 +84,7 @@ export const Controlled: ComponentStory<typeof Input> = (args) => {
   const [isValidate, setIsValidate] = useState<boolean>(true);
 
   useEffect(() => {
-    if (inputValue.length < 5) {
+    if (inputValue.length < 5 && inputValue.length > 0) {
       setIsValidate(false);
     } else {
       setIsValidate(true);
