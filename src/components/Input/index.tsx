@@ -7,6 +7,8 @@ import {
   Ref,
   Dispatch,
   SetStateAction,
+  useState,
+  useEffect,
 } from 'react';
 import { MdCancel } from 'react-icons/md';
 
@@ -79,18 +81,30 @@ const Input = forwardRef(
         filter: brightness(0.7);
       }
     `;
+    const [localInput, setLocalInput] = useState<string>(
+      value ? String(value) : '',
+    );
+    const onChangeHandler = (target: EventTarget & HTMLInputElement) => {
+      setLocalInput(target.value);
+    };
+
+    useEffect(() => {
+      setInputValue(localInput);
+    }, [localInput]);
+
     return (
       <div css={inputContainerStyle} {...props}>
         {leadingIcon && <Icon source={leadingIcon} size={24} color={black} />}
         <input
           ref={ref}
           name={name ? name : id}
-          onChange={(e) => setInputValue(e.target.value)}
-          {...{ type, id, placeholder, value }}
+          onChange={({ target }) => onChangeHandler(target)}
+          value={localInput}
+          {...{ type, id, placeholder }}
           css={inputStyle}
         />
         {typeof value === 'string' ? (
-          <button css={cancelButtonStyle} onClick={() => setInputValue('')}>
+          <button css={cancelButtonStyle} onClick={() => setLocalInput('')}>
             <Icon source={MdCancel} size={15} color={gray100} />
           </button>
         ) : (
