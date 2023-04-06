@@ -21,12 +21,9 @@ export const parameters = {
       method: 'configure',
       includeNames: true,
       order: [
-        'Design System', 
-        [
-          'Layout', ['Container', 'Flexbox', 'Center', 'List', '*'],
-          'Components', ['Spacing', 'Typography', 'Badge', 'Image', 'Button', 'Input', 'Table', 'RangeSelector', 'Dropdown', 'Select', 'Tabs', 'Carousel', '*', 'Spinner', 'Modal', 'Toast'],
-          '*'
-        ]
+        'Layout', ['Container', 'Flexbox', 'Center', 'List', '*'],
+        'Components', ['Spacing', 'Typography', 'Badge', 'Image', 'Button', 'Input', 'Table', 'RangeSelector', 'Dropdown', 'Select', 'Tabs', 'Carousel', '*', 'Spinner', 'Modal', 'Toast'],
+        '*'
       ],
     },
   },
