@@ -92,12 +92,7 @@ export const Controlled: ComponentStory<typeof Input> = (args) => {
   }, [inputValue]);
   return (
     <>
-      <Input
-        {...args}
-        {...{ setInputValue }}
-        isValid={isValidate}
-        value={inputValue}
-      />
+      <Input {...args} {...{ setInputValue }} isValid={isValidate} />
       {!isValidate && (
         <div style={{ color: 'red', fontSize: '10px' }}>
           5글자 이상 입력하세요.

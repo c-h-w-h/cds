@@ -15,7 +15,7 @@ import { MdCancel } from 'react-icons/md';
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   id: string;
   forwardRef?: RefObject<HTMLInputElement>;
-  setInputValue: Dispatch<SetStateAction<string>>;
+  setInputValue?: Dispatch<SetStateAction<string>>;
   isValid?: boolean;
   leadingIcon?: IconSource;
 }
@@ -27,7 +27,6 @@ const Input = forwardRef(
       id,
       name,
       type = 'text',
-      value,
       setInputValue,
       isValid = true,
       leadingIcon,
@@ -81,29 +80,38 @@ const Input = forwardRef(
         filter: brightness(0.7);
       }
     `;
-    const [localInput, setLocalInput] = useState<string>(
-      value ? String(value) : '',
-    );
+    const [localInput, setLocalInput] = useState<string>('');
     const onChangeHandler = (target: EventTarget & HTMLInputElement) => {
       setLocalInput(target.value);
     };
 
     useEffect(() => {
-      setInputValue(localInput);
+      if (setInputValue) {
+        setInputValue(localInput);
+      }
     }, [localInput]);
 
     return (
       <div css={inputContainerStyle} {...props}>
         {leadingIcon && <Icon source={leadingIcon} size={24} color={black} />}
-        <input
-          ref={ref}
-          name={name ? name : id}
-          onChange={({ target }) => onChangeHandler(target)}
-          value={localInput}
-          {...{ type, id, placeholder }}
-          css={inputStyle}
-        />
-        {typeof value === 'string' ? (
+        {setInputValue ? (
+          <input
+            ref={ref}
+            name={name ? name : id}
+            onChange={({ target }) => onChangeHandler(target)}
+            value={localInput}
+            {...{ type, id, placeholder }}
+            css={inputStyle}
+          />
+        ) : (
+          <input
+            ref={ref}
+            name={name ? name : id}
+            {...{ type, id, placeholder }}
+            css={inputStyle}
+          />
+        )}
+        {setInputValue ? (
           <button css={cancelButtonStyle} onClick={() => setLocalInput('')}>
             <Icon source={MdCancel} size={15} color={gray100} />
           </button>
