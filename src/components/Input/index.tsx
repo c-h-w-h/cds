@@ -81,6 +81,7 @@ const Input = forwardRef(
       }
     `;
     const [localInput, setLocalInput] = useState<string>('');
+    const isControlled = setInputValue && true;
     const onChangeHandler = (target: EventTarget & HTMLInputElement) => {
       setLocalInput(target.value);
     };
@@ -94,24 +95,17 @@ const Input = forwardRef(
     return (
       <div css={inputContainerStyle} {...props}>
         {leadingIcon && <Icon source={leadingIcon} size={24} color={black} />}
-        {setInputValue ? (
-          <input
-            ref={ref}
-            name={name ? name : id}
-            onChange={({ target }) => onChangeHandler(target)}
-            value={localInput}
-            {...{ type, id, placeholder }}
-            css={inputStyle}
-          />
-        ) : (
-          <input
-            ref={ref}
-            name={name ? name : id}
-            {...{ type, id, placeholder }}
-            css={inputStyle}
-          />
-        )}
-        {setInputValue ? (
+        <input
+          ref={ref}
+          name={name ?? id}
+          onChange={
+            isControlled ? ({ target }) => onChangeHandler(target) : undefined
+          }
+          value={isControlled && localInput}
+          {...{ type, id, placeholder }}
+          css={inputStyle}
+        />
+        {isControlled ? (
           <button css={cancelButtonStyle} onClick={() => setLocalInput('')}>
             <Icon source={MdCancel} size={15} color={gray100} />
           </button>
