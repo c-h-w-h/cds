@@ -1,11 +1,6 @@
 import { TYPOGRAPHY } from '@constants/typography';
 import { css, jsx } from '@emotion/react';
-import { CSSProperties, ReactNode, ReactPortal } from 'react';
-
-type TextNode = Exclude<
-  ReactNode,
-  number | boolean | ReactPortal | null | undefined
->;
+import { CSSProperties } from 'react';
 
 interface TypographyProps {
   children: TextNode;
