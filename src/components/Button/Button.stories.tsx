@@ -19,6 +19,7 @@ export default {
         component:
           '- variant 값으로 "round" | "square" | "light" | "round light" | "square light" | "plain" 중 하나를 선택할 수 있습니다.\n' +
           '\t- plain 버튼은 UI 개발 중 시맨틱 마크업을 위해 사용할 수 있습니다. background, border를 제외하고 인터랙션에 필요한 기본적인 스타일링을 제공합니다. \n' +
+          '- type, disabled 등 HTML `<button>` 태그의 속성을 사용할 수 있습니다.\n' +
           '- 링크 역할을 하는 버튼은 `ButtonLink` 컴포넌트 사용을 권장합니다.\n' +
           '\t- 동일한 스타일링이 적용되지만 시맨틱 마크업 및 접근성을 포함한 네이티브 엘레먼트 기능 활용을 위해 `<a>` 태그를 사용합니다.',
       },
@@ -48,26 +49,6 @@ export default {
         'aria-label 속성으로 사용되는 값입니다. 요소의 역할을 간단히 설명합니다.',
       table: {
         type: { summary: 'string' },
-      },
-    },
-    href: {
-      description: '버튼을 클릭했을 때 이동할 링크입니다.',
-      table: {
-        type: { summary: 'string' },
-      },
-    },
-    type: {
-      description:
-        'HTML 기본 속성입니다. href props가 주어지는 경우 사용되지 않습니다.',
-      table: {
-        defaultValue: { summary: '"button"' },
-      },
-    },
-    disabled: {
-      description:
-        'HTML 기본 속성입니다. href props가 주어지는 경우 사용되지 않습니다.',
-      table: {
-        defaultValue: { summary: false },
       },
     },
   },
