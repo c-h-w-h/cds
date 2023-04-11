@@ -1,36 +1,24 @@
-import Icon, { IconSource } from '@components/Icon';
-import Typography from '@components/Typography';
 import { css, useTheme } from '@emotion/react';
 import { flexboxStyle } from '@styles/flex-box';
 import { DefaultProps } from '@utils/types/DefaultProps';
-import { CSSProperties } from 'react';
 
 interface ButtonProps extends DefaultProps<HTMLButtonElement> {
   variant?: ButtonVariant;
-  text?: string;
   label: string;
-
-  icon?: IconSource;
-  iconSize?: CSSProperties['width'];
-  iconPosition?: 'left' | 'right';
-
   href?: string;
-
   // react.HTMLAttributes에 정의되지 않은 standard button attributes
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
+  children: TextNode;
 }
 
 const Button = ({
   variant = 'square',
-  text,
   label,
-  icon,
-  iconSize = '1.5rem',
-  iconPosition = 'left',
   href,
   type,
   disabled,
+  children,
   ...props
 }: ButtonProps) => {
   const { color: themeColor } = useTheme();
@@ -39,76 +27,67 @@ const Button = ({
   const isPlain = variant === 'plain';
   const hasBackground = !variant.includes('light') && !isPlain;
   const isSquare = !variant.includes('round');
-  const isIconOnly = !!icon && !text;
 
-  const containerStyle = isPlain
-    ? css`
-        cursor: pointer;
-        width: fit-content;
-        background: transparent;
-      `
-    : css`
-        cursor: pointer;
-        width: fit-content;
-        border-radius: ${getBorderRadius(isSquare, isIconOnly)};
-        background-color: ${hasBackground ? primary200 : white};
-        border: 0.125rem solid ${primary200};
+  const containerStyle = css`
+    cursor: pointer;
+    width: fit-content;
 
-        &:hover {
-          background-color: ${hasBackground ? primary400 : white};
-          border: 0.125rem solid ${primary400};
-        }
+    &:disabled,
+    &.disabled {
+      cursor: not-allowed;
+    }
 
-        &:disabled,
-        &.disabled {
-          cursor: not-allowed;
-          background-color: ${hasBackground ? gray200 : white};
-          border: 0.125rem solid ${gray200};
-        }
-      `;
+    &,
+    * {
+      font-size: 1rem;
+      font-weight: 400;
+    }
+
+    svg,
+    img {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+
+    ${isPlain
+      ? css`
+          background: transparent;
+        `
+      : css`
+          border-radius: ${isSquare ? '8px' : '2.25rem'};
+          background-color: ${hasBackground ? primary200 : white};
+          border: 0.125rem solid ${primary200};
+
+          &:hover {
+            background-color: ${hasBackground ? primary400 : white};
+            border: 0.125rem solid ${primary400};
+          }
+
+          &:disabled,
+          &.disabled {
+            background-color: ${hasBackground ? gray200 : white};
+            border: 0.125rem solid ${gray200};
+          }
+        `}
+  `;
 
   const contentStyle = css`
     padding: 0.75rem;
     color: ${hasBackground ? white : primary200};
     text-decoration: none;
 
-    &:hover {
-      color: ${hasBackground ? white : primary400};
-
-      & > svg {
-        fill: ${hasBackground ? white : primary400};
+    ${!hasBackground &&
+    css`
+      &:hover {
+        color: ${primary400};
       }
-    }
 
-    &:disabled,
-    &.disabled {
-      color: ${hasBackground ? white : gray200};
-
-      & > svg {
-        fill: ${hasBackground ? white : gray200};
+      &:disabled,
+      &.disabled {
+        color: ${gray200};
       }
-    }
+    `}
   `;
-
-  const children = (
-    <>
-      {icon && iconPosition === 'left' && (
-        <Icon
-          source={icon}
-          size={iconSize}
-          color={hasBackground ? white : primary200}
-        />
-      )}
-      {text && <Typography variant="body">{text}</Typography>}
-      {icon && iconPosition === 'right' && (
-        <Icon
-          source={icon}
-          size={iconSize}
-          color={hasBackground ? white : primary200}
-        />
-      )}
-    </>
-  );
 
   const commonProps: Record<string, unknown> = {
     'aria-label': label,
@@ -132,10 +111,3 @@ const Button = ({
 };
 
 export default Button;
-
-const getBorderRadius = (isSquare: boolean, isIconOnly: boolean) => {
-  const percentage = isSquare ? '8px' : '50%';
-  const rem = isSquare ? '8px' : '2.25rem';
-
-  return isIconOnly ? percentage : rem;
-};
