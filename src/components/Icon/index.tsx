@@ -7,11 +7,15 @@ export type IconSource = string | IconType;
 
 interface IconProps {
   source: IconSource;
-  size: CSSProperties['width'];
-  color: CSSProperties['fill'];
+  size?: CSSProperties['width'];
+  color?: CSSProperties['fill'];
 }
 
-const Icon = ({ source: Source, size, color }: IconProps) => {
+const Icon = ({
+  source: Source,
+  size = '1.5rem',
+  color = 'none',
+}: IconProps) => {
   if (typeof Source === 'string') {
     return (
       <IconContainer
