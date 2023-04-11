@@ -1,11 +1,13 @@
 import { TYPOGRAPHY } from '@constants/typography';
 import { css, jsx } from '@emotion/react';
+import { DefaultProps } from '@util-types/DefaultProps';
 import { CSSProperties } from 'react';
 
-interface TypographyProps {
+interface TypographyProps extends DefaultProps<HTMLParagraphElement> {
   children: TextNode;
   variant?: TypographyVariant;
   color?: CSSProperties['color'];
+  bold?: boolean;
 }
 
 const getTypography = (variant: TypographyVariant): string => {
@@ -23,7 +25,13 @@ const getTypography = (variant: TypographyVariant): string => {
   }
 };
 
-const Typography = ({ children, variant = 'body', color }: TypographyProps) => {
+const Typography = ({
+  children,
+  variant = 'body',
+  color,
+  bold,
+  ...props
+}: TypographyProps) => {
   const typography = getTypography(variant);
 
   return jsx(
@@ -33,8 +41,9 @@ const Typography = ({ children, variant = 'body', color }: TypographyProps) => {
         margin: 0;
         color: ${color ?? 'inherit'};
         font-size: ${TYPOGRAPHY[variant].size};
-        font-weight: ${TYPOGRAPHY[variant].weight};
+        font-weight: ${TYPOGRAPHY[variant].weight + (bold ? 300 : 0)};
       `,
+      ...props,
     },
     children,
   );
