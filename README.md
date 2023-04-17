@@ -40,8 +40,7 @@ const App = () => {
 ## Documentation
 
 [Storybook 문서](https://640054c53834f08f15bbad68-vfrhgmjiak.chromatic.com/) 에
-서 제공하는 컴포넌트의 종류와 용례를 확인해보세요.  
-_(4/17 기준 모든 컴포넌트 작업이 완료되지는 않은 상태입니다.)_
+서 제공하는 컴포넌트의 종류와 용례를 확인해보세요.
 
 ## Contributors
 
