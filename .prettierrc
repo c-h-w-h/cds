@@ -5,5 +5,14 @@
   "tabWidth": 2,
   "bracketSpacing": true,
   "singleQuote": true,
-  "endOfLine": "lf"
+  "endOfLine": "lf",
+  "overrides": [
+    {
+      "files": "*.md",
+      "options": {
+        "parser": "markdown",
+        "embeddedLanguageFormatting": "off"
+      }
+    }
+  ]
 }
