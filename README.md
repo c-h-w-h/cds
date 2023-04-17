@@ -25,17 +25,22 @@ yarn add @chwh/cds
 
 ```jsx
 const App = () => {
-  return <CdsProvider>// ... your components</CdsProvider>;
+  return (
+    <CdsProvider>
+      // ... your components
+    </CdsProvider>
+  );
 };
 ```
 
 ## Documentation
 
-[Storybook 문서](https://640054c53834f08f15bbad68-vfrhgmjiak.chromatic.com/) 에서 제공하는 컴포넌트의 종류와 용례를 확인해보세요.  
+[Storybook 문서](https://640054c53834f08f15bbad68-vfrhgmjiak.chromatic.com/) 에
+서 제공하는 컴포넌트의 종류와 용례를 확인해보세요.  
 _(4/17 기준 모든 컴포넌트 작업이 완료되지는 않은 상태입니다.)_
 
 ## Contributors
 
-|                     [@prayinforrain](https://github.com/prayinforrain)                      |                             [@iyu88](https://github.com/iyu88)                              |                                [@se030](https://github.com/se030)                                |                     [@leesunmin1231](https://github.com/leesunmin1231)                      |                           [@dohun31](https://github.com/dohun31)                            |
-| :-----------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------: |
+|             [@prayinforrain](https://github.com/prayinforrain)              |                 [@iyu88](https://github.com/iyu88)                  |                 [@se030](https://github.com/se030)                  |             [@leesunmin1231](https://github.com/leesunmin1231)              |                [@dohun31](https://github.com/dohun31)                 |
+| :-------------------------------------------------------------------------: | :-----------------------------------------------------------------: | :-----------------------------------------------------------------: | :-------------------------------------------------------------------------: | :-------------------------------------------------------------------: |
 | <img src="https://github.com/prayinforrain.png" width="100" height="100" /> | <img src="https://github.com/iyu88.png" width="100" height="100" /> | <img src="https://github.com/se030.png" width="100" height="100" /> | <img src="https://github.com/leesunmin1231.png" width="100" height="100" /> | <img src="https://github.com/dohun31.png" width="100" height="100" /> |
