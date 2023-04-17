@@ -19,6 +19,7 @@ export default {
     isOpen: {
       name: 'isOpen',
       description: 'Modal을 띄울지 여부를 나타내는 상태입니다.',
+      defaultValue: true,
       table: {
         type: { summary: 'boolean', required: true },
       },
