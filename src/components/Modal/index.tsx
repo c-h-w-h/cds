@@ -1,5 +1,6 @@
 import Center from '@components/@layout/Center';
 import Portal from '@components-common/Portal';
+import { PORTAL_MODAL_ROOT_ID } from '@constants/portal';
 import styled from '@emotion/styled';
 import { DefaultPropsWithChildren } from '@utils/types/DefaultPropsWithChildren';
 import { MouseEventHandler } from 'react';
@@ -11,7 +12,7 @@ interface ModalProps extends DefaultPropsWithChildren<HTMLDivElement> {
 
 const Modal = ({ children, isOpen, onClose }: ModalProps) => {
   return (
-    <Portal>
+    <Portal id={PORTAL_MODAL_ROOT_ID}>
       <ModalWrapper {...{ isOpen }}>
         <BackGround onClick={onClose}></BackGround>
         <Center>
