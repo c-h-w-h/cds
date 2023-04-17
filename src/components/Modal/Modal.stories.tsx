@@ -40,20 +40,32 @@ const Template: ComponentStory<typeof Modal> = () => {
       <Button onClick={toggleHandler} text="Show Modal" />
       <Modal {...{ isOpen }} onClose={toggleHandler}>
         <Modal.TobBar title="헤더" />
-        <div>
+        <Modal.Content>
           <p>Content1</p>
           <p>Content2</p>
           <p>Content3</p>
-        </div>
-        <Flexbox
-          justifyContent="space-evenly"
-          css={css`
-            height: 100px;
-          `}
-        >
-          <Button text="확인" onClick={toggleHandler} />
-          <Button text="취소" onClick={toggleHandler} />
-        </Flexbox>
+          <Flexbox
+            justifyContent="space-evenly"
+            css={css`
+              height: 50px;
+            `}
+          >
+            <Button
+              css={css`
+                height: 30px;
+              `}
+              text="확인"
+              onClick={toggleHandler}
+            />
+            <Button
+              css={css`
+                height: 30px;
+              `}
+              text="취소"
+              onClick={toggleHandler}
+            />
+          </Flexbox>
+        </Modal.Content>
       </Modal>
     </>
   );

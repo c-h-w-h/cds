@@ -56,7 +56,7 @@ const TobBar = ({ title }: TobBarProps) => {
 };
 
 const Content = ({ children }: DefaultPropsWithChildren<HTMLDivElement>) => {
-  return <>{children}</>;
+  return <ContentWrapper>{children}</ContentWrapper>;
 };
 
 const ModalWrapper = styled.div<Pick<ModalProps, 'isOpen'>>`
@@ -102,7 +102,7 @@ const TobBarWrapper = styled.div`
 `;
 
 const Title = styled.div`
-  margin-left: 20px;
+  margin-left: 10px;
 `;
 
 const Button = styled.button`
@@ -124,6 +124,10 @@ const Button = styled.button`
   &:disabled {
     opacity: 0;
   }
+`;
+
+const ContentWrapper = styled.div`
+  padding: 20px;
 `;
 
 Modal.TobBar = TobBar;
