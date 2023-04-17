@@ -1,8 +1,9 @@
 import Button from '@components/Button';
+import Container from '@components-layout/Container';
 import Flexbox from '@components-layout/Flexbox';
 import { css } from '@emotion/react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { useState } from 'react';
+import { MouseEventHandler, useState } from 'react';
 
 import Modal from '.';
 
@@ -28,7 +29,57 @@ export default {
       control: false,
     },
   },
+  decorators: [
+    (Story) => (
+      <Container>
+        <Flexbox
+          justifyContent={'center'}
+          alignItems={'center'}
+          css={css`
+            height: 300px;
+          `}
+        >
+          <Story />
+        </Flexbox>
+      </Container>
+    ),
+  ],
 } as ComponentMeta<typeof Modal>;
+
+const ModalContent = ({
+  toggleHandler,
+}: {
+  toggleHandler: MouseEventHandler;
+}) => {
+  return (
+    <>
+      <p>Content1</p>
+      <p>Content2</p>
+      <p>Content3</p>
+      <Flexbox
+        justifyContent="space-evenly"
+        css={css`
+          height: 50px;
+        `}
+      >
+        <Button
+          css={css`
+            height: 30px;
+          `}
+          text="확인"
+          onClick={toggleHandler}
+        />
+        <Button
+          css={css`
+            height: 30px;
+          `}
+          text="취소"
+          onClick={toggleHandler}
+        />
+      </Flexbox>
+    </>
+  );
+};
 
 const Template: ComponentStory<typeof Modal> = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,32 +90,26 @@ const Template: ComponentStory<typeof Modal> = () => {
     <>
       <Button onClick={toggleHandler} text="Show Modal" />
       <Modal {...{ isOpen }} onClose={toggleHandler}>
+        <Modal.Content>
+          <ModalContent {...{ toggleHandler }} />
+        </Modal.Content>
+      </Modal>
+    </>
+  );
+};
+
+const TobBarTemplate: ComponentStory<typeof Modal> = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const toggleHandler = () => {
+    setIsOpen(!isOpen);
+  };
+  return (
+    <>
+      <Button onClick={toggleHandler} text="Show Modal" />
+      <Modal {...{ isOpen }} onClose={toggleHandler}>
         <Modal.TobBar title="헤더" />
         <Modal.Content>
-          <p>Content1</p>
-          <p>Content2</p>
-          <p>Content3</p>
-          <Flexbox
-            justifyContent="space-evenly"
-            css={css`
-              height: 50px;
-            `}
-          >
-            <Button
-              css={css`
-                height: 30px;
-              `}
-              text="확인"
-              onClick={toggleHandler}
-            />
-            <Button
-              css={css`
-                height: 30px;
-              `}
-              text="취소"
-              onClick={toggleHandler}
-            />
-          </Flexbox>
+          <ModalContent {...{ toggleHandler }} />
         </Modal.Content>
       </Modal>
     </>
@@ -72,3 +117,11 @@ const Template: ComponentStory<typeof Modal> = () => {
 };
 
 export const Default = Template.bind({});
+export const WithTobBar = TobBarTemplate.bind({});
+
+WithTobBar.parameters = {
+  docs: {
+    storyDescription:
+      'TobBar를 포함한 Modal 입니다. Title을 지정해줄 수 있습니다.',
+  },
+};
