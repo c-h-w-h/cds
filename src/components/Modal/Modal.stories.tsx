@@ -39,6 +39,7 @@ const Template: ComponentStory<typeof Modal> = () => {
     <>
       <Button onClick={toggleHandler} text="Show Modal" />
       <Modal {...{ isOpen }} onClose={toggleHandler}>
+        <Modal.TobBar title="헤더" />
         <div>
           <p>Content1</p>
           <p>Content2</p>

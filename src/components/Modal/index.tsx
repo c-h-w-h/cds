@@ -3,26 +3,60 @@ import Portal from '@components-common/Portal';
 import { PORTAL_MODAL_ROOT_ID } from '@constants/portal';
 import styled from '@emotion/styled';
 import { DefaultPropsWithChildren } from '@utils/types/DefaultPropsWithChildren';
-import { MouseEventHandler } from 'react';
+import { MouseEventHandler, createContext } from 'react';
+import { MdArrowBackIosNew } from 'react-icons/md';
+import useSafeContext from 'src/hooks/useSafeContext';
 
 interface ModalProps extends DefaultPropsWithChildren<HTMLDivElement> {
   isOpen: boolean;
   onClose: MouseEventHandler;
 }
 
+interface TobBarProps {
+  title: string;
+}
+interface ModalContextInterface {
+  onClose: MouseEventHandler;
+}
+
+const ModalContext = createContext<ModalContextInterface | null>(null);
+
 const Modal = ({ children, isOpen, onClose }: ModalProps) => {
+  const contextValues = {
+    onClose,
+  };
   return (
     <Portal id={PORTAL_MODAL_ROOT_ID}>
-      <ModalWrapper {...{ isOpen }}>
-        <BackGround onClick={onClose}></BackGround>
-        <Center>
-          <ModalBox role="dialog" aria-modal="true">
-            {children}
-          </ModalBox>
-        </Center>
-      </ModalWrapper>
+      <ModalContext.Provider value={contextValues}>
+        <ModalWrapper {...{ isOpen }}>
+          <BackGround onClick={onClose} />
+          <Center>
+            <ModalBox role="dialog" aria-modal="true">
+              {children}
+            </ModalBox>
+          </Center>
+        </ModalWrapper>
+      </ModalContext.Provider>
     </Portal>
   );
+};
+
+const TobBar = ({ title }: TobBarProps) => {
+  const { onClose } = useSafeContext(ModalContext);
+  return (
+    <TobBarWrapper>
+      <Button onClick={onClose}>
+        <Center>
+          <MdArrowBackIosNew />
+        </Center>
+      </Button>
+      <Title>{title}</Title>
+    </TobBarWrapper>
+  );
+};
+
+const Content = ({ children }: DefaultPropsWithChildren<HTMLDivElement>) => {
+  return <>{children}</>;
 };
 
 const ModalWrapper = styled.div<Pick<ModalProps, 'isOpen'>>`
@@ -42,7 +76,6 @@ const ModalBox = styled.div`
   height: min-content;
   position: relative;
   z-index: 999;
-  padding: 1rem;
   box-shadow: rgb(0 0 0 / 20%) 0px 2px 5px 1px;
   border-radius: 1rem;
   background-color: ${({ theme }) => theme.color.white};
@@ -57,5 +90,43 @@ const BackGround = styled.div`
   opacity: 0.4;
   background-color: ${({ theme }) => theme.color.black};
 `;
+
+const TobBarWrapper = styled.div`
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  height: 50px;
+  line-height: 50px;
+  padding: 20px;
+  border-bottom: 1px solid ${({ theme }) => theme.color.gray100};
+`;
+
+const Title = styled.div`
+  margin-left: 20px;
+`;
+
+const Button = styled.button`
+  width: 30px;
+  height: 30px;
+  color: ${({ theme }) => theme.color.black};
+  background-color: ${({ theme }) => theme.color.white};
+  border-radius: 50%;
+  pointer-events: all;
+  @media (hover: hover) {
+    &:enabled:hover {
+      filter: brightness(0.9);
+      cursor: pointer;
+    }
+  }
+  &:enabled:active {
+    filter: brightness(0.7);
+  }
+  &:disabled {
+    opacity: 0;
+  }
+`;
+
+Modal.TobBar = TobBar;
+Modal.Content = Content;
 
 export default Modal;
