@@ -8,6 +8,9 @@ import {
   Dispatch,
   ReactNode,
   useState,
+  useEffect,
+  useRef,
+  useLayoutEffect,
 } from 'react';
 import useSafeContext from 'src/hooks/useSafeContext';
 
@@ -157,9 +160,15 @@ interface ThumbProps {
 }
 
 const Thumb = ({ index, color, children }: ThumbProps) => {
-  const { orientation } = useSafeContext(RangeSelectorContext);
+  const { value, setValue, min, max, orientation } =
+    useSafeContext(RangeSelectorContext);
+  const thumbRef = useRef<HTMLDivElement | null>(null);
+  const initialPosRef = useRef<number | null>(null);
+  const [movable, setMovable] = useState<boolean>(false);
   const { color: themeColor } = theme;
   const { primary100 } = themeColor;
+
+  const isHorizontal = orientation === 'horizontal';
 
   const initialPos = {
     horizontal: css`
@@ -170,9 +179,66 @@ const Thumb = ({ index, color, children }: ThumbProps) => {
     `,
   };
 
+  const handleThumbPosition = (e: globalThis.MouseEvent) => {
+    if (thumbRef.current === null || initialPosRef.current === null) return;
+    const dist = isHorizontal
+      ? e.clientX - initialPosRef.current
+      : -(e.clientY - initialPosRef.current);
+    const ratio = Math.round((dist / (max - min)) * 100) + min;
+
+    if (isHorizontal) {
+      thumbRef.current.style.left = dist + 'px';
+    } else {
+      thumbRef.current.style.bottom = dist + 'px';
+    }
+    setValue(ratio);
+  };
+
+  useLayoutEffect(() => {
+    if (initialPosRef.current === null && thumbRef.current) {
+      const thumbRect = thumbRef.current.getBoundingClientRect();
+      initialPosRef.current = isHorizontal ? thumbRect.left : thumbRect.bottom;
+    }
+  }, []);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const { signal } = controller;
+
+    if (!movable) return;
+
+    window.addEventListener(
+      'mousemove',
+      (e) => {
+        window.addEventListener(
+          'mouseup',
+          () => {
+            setMovable(false);
+            controller.abort();
+          },
+          { signal },
+        );
+
+        if (!movable) return;
+        if (initialPosRef.current === null) return;
+
+        // if (isHorizontal) {
+        //   if (e.clientX < initialPosRef.current) return;
+        // } else {
+        //   if (e.clientY < initialPosRef.current) return;
+        // }
+
+        handleThumbPosition(e);
+      },
+      { signal },
+    );
+  }, [movable]);
+
   return (
     <div
+      ref={thumbRef}
       tabIndex={0}
+      onMouseDown={() => setMovable(true)}
       css={css`
         position: absolute;
         user-select: none;
@@ -191,7 +257,9 @@ const Thumb = ({ index, color, children }: ThumbProps) => {
             transform: translate(-50%, -50%);
             background-color: ${color ?? primary100};
           `}
-        />
+        >
+          {value}
+        </div>
       )}
     </div>
   );
