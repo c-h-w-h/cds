@@ -1,18 +1,12 @@
 import { theme } from '@components/@common/CdsProvider/theme';
 import Flexbox from '@components/@layout/Flexbox';
-import Typography from '@components/Typography';
 import { css } from '@emotion/react';
-import styled from '@emotion/styled';
+import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import {
   SetStateAction,
   createContext,
   Dispatch,
-  MouseEvent,
-  MouseEventHandler,
   ReactNode,
-  useEffect,
-  useLayoutEffect,
-  useRef,
   useState,
 } from 'react';
 import useSafeContext from 'src/hooks/useSafeContext';
@@ -33,7 +27,7 @@ export interface RangeSelectorProps {
   min: number;
   max: number;
   init: number;
-  trackWidth: number;
+  size: number;
   orientation: 'horizontal' | 'vertical';
   children: ReactNode;
 }
@@ -43,7 +37,7 @@ const RangeSelector = ({
   min,
   max,
   init,
-  trackWidth,
+  size,
   orientation = 'horizontal',
   children,
 }: RangeSelectorProps) => {
@@ -55,8 +49,17 @@ const RangeSelector = ({
     setValue,
     min,
     max,
-    trackWidth,
+    size,
     orientation,
+  };
+
+  const orientationStyle = {
+    horizontal: css`
+      width: ${size}px;
+    `,
+    vertical: css`
+      height: ${size}px;
+    `,
   };
 
   return (
@@ -66,7 +69,7 @@ const RangeSelector = ({
         role={'slider'}
         aria-label={label}
         css={css`
-          width: ${trackWidth}px;
+          ${orientationStyle[orientation]};
           padding: 1rem;
         `}
       >
@@ -76,203 +79,76 @@ const RangeSelector = ({
   );
 };
 
-const RangeDisplay = () => {
-  const context = useSafeContext(RangeSelectorContext);
+interface TrackProps {
+  color?: string;
+  children: EmotionJSX.Element;
+}
 
-  return (
-    <Flexbox
-      justifyContent={'space-between'}
-      css={css`
-        position: relative;
-        width: inherit;
-        user-select: none;
-      `}
-    >
-      <Typography variant={'desc'} aria-valuemin={context.min}>
-        {context.min.toString()}
-      </Typography>
-      <Typography variant={'desc'} aria-valuemax={context.max}>
-        {context.max.toString()}
-      </Typography>
-    </Flexbox>
-  );
-};
-
-const fixInt = (float: number) => Number(float.toFixed(0));
-
-const calcRangeValue = (
-  trackWidth: number,
-  max: number,
-  min: number,
-  maxPos: number,
-  mousePos: number,
-  offset = 0,
-) =>
-  max -
-  min -
-  fixInt((Math.round(maxPos - mousePos) / (trackWidth - offset)) * (max - min));
-
-const setSliderPos = (
-  trackWidth: number,
-  max: number,
-  min: number,
-  value: number,
-  offset = 0,
-) => ((trackWidth - offset) / (max - min)) * (value - min);
-
-const Slider = () => {
-  const context = useSafeContext(RangeSelectorContext);
-  const [movable, setMovable] = useState<boolean>(false);
-  const minPosRef = useRef<number>(0);
-  const maxPosRef = useRef<number>(0);
-  const offsetRef = useRef<number>(0);
-  const trackRef = useRef<HTMLDivElement | null>(null);
-  const thumbRef = useRef<HTMLDivElement | null>(null);
+const Track = ({ color, children }: TrackProps) => {
+  const { label, size, orientation } = useSafeContext(RangeSelectorContext);
   const { color: themeColor } = theme;
-  const { primary100, gray100 } = themeColor;
+  const { gray100 } = themeColor;
 
-  const handleThumbPosition = (
-    e: MouseEvent<HTMLDivElement> | globalThis.MouseEvent,
-  ) => {
-    if (!thumbRef.current || !trackRef.current || !context) return;
-
-    const { trackWidth, max, min, setValue } = context;
-    let clickedPos = e.clientX;
-
-    if (clickedPos > maxPosRef.current) {
-      clickedPos = maxPosRef.current;
-    } else if (clickedPos < minPosRef.current) {
-      clickedPos = minPosRef.current;
-    }
-
-    const rangeValue = calcRangeValue(
-      trackWidth,
-      max,
-      min,
-      maxPosRef.current,
-      clickedPos,
-      offsetRef.current,
-    );
-    const rangePos = setSliderPos(trackWidth, max, min, rangeValue + min);
-
-    thumbRef.current.style.left = `${clickedPos - offsetRef.current / 2}px`;
-    trackRef.current.style.setProperty('--filled', `${rangePos}px`);
-    setValue(min + rangeValue);
+  const orientationStyle = {
+    horizontal: css`
+      width: ${size}px;
+      height: 3px;
+    `,
+    vertical: css`
+      height: ${size}px;
+      width: 3px;
+    `,
   };
 
-  useLayoutEffect(() => {
-    if (!thumbRef.current || !trackRef.current || !context) return;
-
-    const { trackWidth, max, min, value } = context;
-    const { left, right } = trackRef.current.getBoundingClientRect();
-    const { width: offset } = thumbRef.current.getBoundingClientRect();
-
-    minPosRef.current = fixInt(left) + offset / 2;
-    maxPosRef.current = fixInt(right) - offset / 2;
-    offsetRef.current = offset;
-
-    const thumbPos = setSliderPos(trackWidth, max, min, value, offset);
-    const filledTrackPos = setSliderPos(trackWidth, max, min, value);
-
-    thumbRef.current.style.left = `${thumbPos}px`;
-    trackRef.current.style.setProperty('--filled', `${filledTrackPos}px`);
-  }, []);
-
-  useEffect(() => {
-    const controller = new AbortController();
-    const { signal } = controller;
-
-    if (!movable) return;
-
-    window.addEventListener(
-      'mousemove',
-      (e) => {
-        window.addEventListener(
-          'mouseup',
-          () => {
-            setMovable(false);
-            controller.abort();
-          },
-          { signal },
-        );
-
-        if (!movable) return;
-        if (e.clientX > maxPosRef.current) return;
-        if (e.clientX < minPosRef.current) return;
-        handleThumbPosition(e);
-      },
-      { signal },
-    );
-  }, [movable]);
-
   return (
-    <Flexbox>
-      <Track
-        id={`${context.label}_track`}
-        ref={trackRef}
-        trackWidth={context.trackWidth}
-        trackColor={gray100}
-        filledColor={primary100}
-        onClick={handleThumbPosition}
-        aria-orientation={'horizontal'}
-      />
-      <Thumb
-        ref={thumbRef}
-        thumbColor={primary100}
-        onMouseDown={() => setMovable(true)}
-        aria-controls={`${context.label}_track`}
-      >
-        <Flexbox justifyContent={'center'} alignItems={'center'}>
-          <Typography variant={'desc'} aria-valuenow={context.value}>
-            {context.value.toString()}
-          </Typography>
-        </Flexbox>
-      </Thumb>
-    </Flexbox>
+    <div
+      id={`${label}_track`}
+      aria-orientation={orientation}
+      css={css`
+        ${orientationStyle[orientation]}
+        background-color: ${color ?? gray100};
+        cursor: pointer;
+      `}
+    >
+      {children}
+    </div>
   );
 };
 
-interface TrackProps {
-  trackWidth: number;
-  trackColor: string;
-  filledColor: string;
-  onClick: MouseEventHandler<HTMLDivElement>;
+interface FilledProps {
+  color?: string;
 }
 
-const Track = styled.div<TrackProps>`
-  width: ${({ trackWidth }) => trackWidth + 'px'};
-  height: 3px;
-  background-color: ${({ trackColor }) => trackColor};
-  cursor: pointer;
+const Filled = ({ color }: FilledProps) => {
+  const { orientation } = useSafeContext(RangeSelectorContext);
+  const { color: themeColor } = theme;
+  const { primary100 } = themeColor;
 
-  ::after {
-    content: '';
-    position: absolute;
-    width: var(--filled);
-    height: 3px;
-    display: inline-block;
-    background-color: ${({ filledColor }) => filledColor};
-    cursor: pointer;
-  }
-`;
+  const filledOrientationStyle = {
+    horizontal: css`
+      width: var(--filled);
+      height: 3px;
+    `,
+    vertical: css`
+      height: var(--filled);
+      width: 3px;
+    `,
+  };
 
-interface ThumbProps {
-  thumbColor: string;
-}
+  return (
+    <div
+      css={css`
+        position: absolute;
+        display: inline-block;
+        background-color: ${color ?? primary100};
+        ${filledOrientationStyle[orientation]};
+      `}
+    />
+  );
+};
 
-const Thumb = styled.div<ThumbProps>`
-  position: absolute;
-  left: 0;
-  width: 1rem;
-  height: 1rem;
-  border-radius: 2rem;
-  background-color: ${({ thumbColor }) => thumbColor};
-  user-select: none;
-  cursor: pointer;
-`;
-
-RangeSelector.Slider = Slider;
-RangeSelector.RangeDisplay = RangeDisplay;
+RangeSelector.Track = Track;
+RangeSelector.Filled = Filled;
 
 export { RangeSelectorContext };
 export default RangeSelector;
