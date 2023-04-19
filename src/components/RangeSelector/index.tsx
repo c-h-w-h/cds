@@ -69,8 +69,9 @@ const RangeSelector = ({
         role={'slider'}
         aria-label={label}
         css={css`
+          position: relative;
+          margin: 1rem;
           ${orientationStyle[orientation]};
-          padding: 1rem;
         `}
       >
         {children}
@@ -105,9 +106,10 @@ const Track = ({ color, children }: TrackProps) => {
       id={`${label}_track`}
       aria-orientation={orientation}
       css={css`
-        ${orientationStyle[orientation]}
-        background-color: ${color ?? gray100};
+        position: absolute;
         cursor: pointer;
+        background-color: ${color ?? gray100};
+        ${orientationStyle[orientation]}
       `}
     >
       {children}
@@ -126,11 +128,11 @@ const Filled = ({ color }: FilledProps) => {
 
   const filledOrientationStyle = {
     horizontal: css`
-      width: var(--filled);
+      width: 100px;
       height: 3px;
     `,
     vertical: css`
-      height: var(--filled);
+      height: 100px;
       width: 3px;
     `,
   };
@@ -139,7 +141,8 @@ const Filled = ({ color }: FilledProps) => {
     <div
       css={css`
         position: absolute;
-        display: inline-block;
+        left: 0;
+        bottom: 0;
         background-color: ${color ?? primary100};
         ${filledOrientationStyle[orientation]};
       `}
@@ -154,19 +157,39 @@ interface ThumbProps {
 }
 
 const Thumb = ({ index, color, children }: ThumbProps) => {
+  const { orientation } = useSafeContext(RangeSelectorContext);
   const { color: themeColor } = theme;
   const { primary100 } = themeColor;
 
+  const initialPos = {
+    horizontal: css`
+      left: 0;
+    `,
+    vertical: css`
+      bottom: 0;
+    `,
+  };
+
   return (
-    <div tabIndex={index}>
+    <div
+      tabIndex={0}
+      css={css`
+        position: absolute;
+        user-select: none;
+        cursor: pointer;
+        transform: translate(-50%, 50%);
+        ${initialPos[orientation]}
+      `}
+    >
       {children ?? (
         <div
           css={css`
+            position: absolute;
             width: 1rem;
             height: 1rem;
             border-radius: 2rem;
+            transform: translate(-50%, -50%);
             background-color: ${color ?? primary100};
-            cursor: pointer;
           `}
         />
       )}
