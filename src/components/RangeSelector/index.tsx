@@ -10,12 +10,12 @@ import {
   MouseEvent,
   MouseEventHandler,
   ReactNode,
-  useContext,
   useEffect,
   useLayoutEffect,
   useRef,
   useState,
 } from 'react';
+import useSafeContext from 'src/hooks/useSafeContext';
 
 type RangeSelectorContextInterface = Omit<
   RangeSelectorProps,
@@ -77,9 +77,8 @@ const RangeSelector = ({
 };
 
 const RangeDisplay = () => {
-  const context = useContext(RangeSelectorContext);
+  const context = useSafeContext(RangeSelectorContext);
 
-  if (context === null) return <></>;
   return (
     <Flexbox
       justifyContent={'space-between'}
@@ -122,7 +121,7 @@ const setSliderPos = (
 ) => ((trackWidth - offset) / (max - min)) * (value - min);
 
 const Slider = () => {
-  const context = useContext(RangeSelectorContext);
+  const context = useSafeContext(RangeSelectorContext);
   const [movable, setMovable] = useState<boolean>(false);
   const minPosRef = useRef<number>(0);
   const maxPosRef = useRef<number>(0);
@@ -206,7 +205,6 @@ const Slider = () => {
     );
   }, [movable]);
 
-  if (context === null) return <></>;
   return (
     <Flexbox>
       <Track
