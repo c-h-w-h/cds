@@ -147,8 +147,36 @@ const Filled = ({ color }: FilledProps) => {
   );
 };
 
+interface ThumbProps {
+  index: number;
+  color?: string;
+  children?: ReactNode;
+}
+
+const Thumb = ({ index, color, children }: ThumbProps) => {
+  const { color: themeColor } = theme;
+  const { primary100 } = themeColor;
+
+  return (
+    <div tabIndex={index}>
+      {children ?? (
+        <div
+          css={css`
+            width: 1rem;
+            height: 1rem;
+            border-radius: 2rem;
+            background-color: ${color ?? primary100};
+            cursor: pointer;
+          `}
+        />
+      )}
+    </div>
+  );
+};
+
 RangeSelector.Track = Track;
 RangeSelector.Filled = Filled;
+RangeSelector.Thumb = Thumb;
 
 export { RangeSelectorContext };
 export default RangeSelector;
