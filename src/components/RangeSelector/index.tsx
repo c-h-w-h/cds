@@ -29,27 +29,35 @@ const RangeSelectorContext =
   createContext<RangeSelectorContextInterface | null>(null);
 
 export interface RangeSelectorProps {
-  id: string;
   label: string;
   min: number;
   max: number;
   init: number;
   trackWidth: number;
+  orientation: 'horizontal' | 'vertical';
   children: ReactNode;
 }
 
 const RangeSelector = ({
-  id,
   label,
   min,
   max,
   init,
   trackWidth,
+  orientation = 'horizontal',
   children,
 }: RangeSelectorProps) => {
   const [value, setValue] = useState<number>(init);
 
-  const providerValue = { id, label, value, setValue, min, max, trackWidth };
+  const providerValue = {
+    label,
+    value,
+    setValue,
+    min,
+    max,
+    trackWidth,
+    orientation,
+  };
 
   return (
     <RangeSelectorContext.Provider value={providerValue}>
@@ -202,7 +210,7 @@ const Slider = () => {
   return (
     <Flexbox>
       <Track
-        id={`${context.id}_track`}
+        id={`${context.label}_track`}
         ref={trackRef}
         trackWidth={context.trackWidth}
         trackColor={gray100}
@@ -214,7 +222,7 @@ const Slider = () => {
         ref={thumbRef}
         thumbColor={primary100}
         onMouseDown={() => setMovable(true)}
-        aria-controls={`${context.id}_track`}
+        aria-controls={`${context.label}_track`}
       >
         <Flexbox justifyContent={'center'} alignItems={'center'}>
           <Typography variant={'desc'} aria-valuenow={context.value}>
