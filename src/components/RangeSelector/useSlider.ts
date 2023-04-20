@@ -24,43 +24,10 @@ const useSlider = ({
 
   const isHorizontal = orientation === 'horizontal';
 
-  const handleThumbPosition = (
+  const onMoveSlider = (
     e: MouseEvent<HTMLDivElement> | globalThis.MouseEvent,
   ) => {
-    if (!trackRef.current || !thumbRef.current) return;
-    const { left, bottom } = trackRef.current.getBoundingClientRect();
-    const dist = Math.round(
-      isHorizontal ? e.clientX - left : -(e.clientY - bottom),
-    );
-    const ratio = (dist / size) * 100;
-    const value = ((max - min) * ratio) / 100 + min;
-    const stepValue = Math.round((value - min) / step) * step + min;
-    const stepRatio = ((stepValue - min) / (max - min)) * 100;
-
-    setValue(stepValue);
-    setThumbPosition(stepRatio);
-  };
-
-  const handleFilledPosition = (
-    e: MouseEvent<HTMLDivElement> | globalThis.MouseEvent,
-  ) => {
-    if (!trackRef.current || !filledRef.current) return;
-    const { left, bottom } = trackRef.current.getBoundingClientRect();
-    const dist = Math.round(
-      isHorizontal ? e.clientX - left : -(e.clientY - bottom),
-    );
-    const ratio = (dist / size) * 100;
-    const value = ((max - min) * ratio) / 100 + min;
-    const stepValue = Math.round((value - min) / step) * step + min;
-    const stepRatio = ((stepValue - min) / (max - min)) * 100;
-
-    setFilledRatio(stepRatio);
-  };
-
-  const handleSliderValue = (
-    e: MouseEvent<HTMLDivElement> | globalThis.MouseEvent,
-  ) => {
-    if (!trackRef.current) return;
+    if (!trackRef.current || !filledRef.current || !thumbRef.current) return;
     const { left, right, bottom, top } =
       trackRef.current.getBoundingClientRect();
 
@@ -70,8 +37,17 @@ const useSlider = ({
       if (e.clientY > bottom || e.clientY < top) return;
     }
 
-    handleThumbPosition(e);
-    handleFilledPosition(e);
+    const dist = Math.round(
+      isHorizontal ? e.clientX - left : -(e.clientY - bottom),
+    );
+    const ratio = (dist / size) * 100;
+    const value = ((max - min) * ratio) / 100 + min;
+    const stepValue = Math.round((value - min) / step) * step + min;
+    const stepRatio = ((stepValue - min) / (max - min)) * 100;
+
+    setValue(stepValue);
+    setFilledRatio(stepRatio);
+    setThumbPosition(stepRatio);
   };
 
   const onPressArrow = (e: KeyboardEvent) => {
@@ -163,9 +139,7 @@ const useSlider = ({
     thumbRef,
     getValue,
     getStyles,
-    handleSliderValue,
-    handleThumbPosition,
-    handleFilledPosition,
+    onMoveSlider,
     onPressArrow,
   };
 };
