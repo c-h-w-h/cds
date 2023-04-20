@@ -7,6 +7,7 @@ const useSlider = ({
   max,
   init,
   size,
+  step,
   orientation,
 }: Omit<RangeSelectorProps, 'label' | 'children'>) => {
   const [value, setValue] = useState<number>(init);
@@ -30,11 +31,13 @@ const useSlider = ({
     const dist = Math.round(
       isHorizontal ? e.clientX - left : -(e.clientY - bottom),
     );
-    const ratio = Math.round((dist / size) * 100);
-    const value = Math.round(((max - min) * ratio) / 100 + min);
+    const ratio = (dist / size) * 100;
+    const value = ((max - min) * ratio) / 100 + min;
+    const stepValue = Math.round((value - min) / step) * step + min;
+    const stepRatio = ((stepValue - min) / (max - min)) * 100;
 
-    setValue(value);
-    setThumbPosition(ratio);
+    setValue(stepValue);
+    setThumbPosition(stepRatio);
   };
 
   const handleFilledPosition = (
@@ -45,9 +48,12 @@ const useSlider = ({
     const dist = Math.round(
       isHorizontal ? e.clientX - left : -(e.clientY - bottom),
     );
-    const ratio = Math.round((dist / size) * 100);
+    const ratio = (dist / size) * 100;
+    const value = ((max - min) * ratio) / 100 + min;
+    const stepValue = Math.round((value - min) / step) * step + min;
+    const stepRatio = ((stepValue - min) / (max - min)) * 100;
 
-    setFilledRatio(ratio);
+    setFilledRatio(stepRatio);
   };
 
   const handleSliderValue = (
