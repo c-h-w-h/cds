@@ -10,8 +10,12 @@ const useSlider = ({
   orientation,
 }: Omit<RangeSelectorProps, 'label' | 'children'>) => {
   const [value, setValue] = useState<number>(init);
-  const [thumbPosition, setThumbPosition] = useState<number>(0);
-  const [filledRatio, setFilledRatio] = useState<number>(0);
+  const [thumbPosition, setThumbPosition] = useState<number>(
+    Math.round(((init - min) / (max - min)) * 100),
+  );
+  const [filledRatio, setFilledRatio] = useState<number>(
+    Math.round(((init - min) / (max - min)) * 100),
+  );
   const trackRef = useRef<HTMLDivElement | null>(null);
   const filledRef = useRef<HTMLDivElement | null>(null);
   const thumbRef = useRef<HTMLDivElement | null>(null);
@@ -23,11 +27,14 @@ const useSlider = ({
   ) => {
     if (!trackRef.current || !thumbRef.current) return;
     const { left, bottom } = trackRef.current.getBoundingClientRect();
-    const dist = isHorizontal ? e.clientX - left : -(e.clientY - bottom);
-    const ratio = Math.round((dist / size) * (max - min)) + min;
+    const dist = Math.round(
+      isHorizontal ? e.clientX - left : -(e.clientY - bottom),
+    );
+    const ratio = Math.round((dist / size) * 100);
+    const value = Math.round(((max - min) * ratio) / 100 + min);
 
-    setValue(ratio);
-    setThumbPosition(dist);
+    setValue(value);
+    setThumbPosition(ratio);
   };
 
   const handleFilledPosition = (
@@ -35,8 +42,10 @@ const useSlider = ({
   ) => {
     if (!trackRef.current || !filledRef.current) return;
     const { left, bottom } = trackRef.current.getBoundingClientRect();
-    const dist = isHorizontal ? e.clientX - left : -(e.clientY - bottom);
-    const ratio = Math.round((dist / size) * (max - min));
+    const dist = Math.round(
+      isHorizontal ? e.clientX - left : -(e.clientY - bottom),
+    );
+    const ratio = Math.round((dist / size) * 100);
 
     setFilledRatio(ratio);
   };
@@ -84,10 +93,10 @@ const useSlider = ({
 
     const thumbStyle = {
       horizontal: {
-        left: `${thumbPosition}px`,
+        left: `${thumbPosition}%`,
       },
       vertical: {
-        bottom: `${thumbPosition}px`,
+        bottom: `${thumbPosition}%`,
       },
     };
 
