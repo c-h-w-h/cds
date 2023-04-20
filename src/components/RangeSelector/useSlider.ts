@@ -53,6 +53,16 @@ const useSlider = ({
   const handleSliderValue = (
     e: MouseEvent<HTMLDivElement> | globalThis.MouseEvent,
   ) => {
+    if (!trackRef.current) return;
+    const { left, right, bottom, top } =
+      trackRef.current.getBoundingClientRect();
+
+    if (isHorizontal) {
+      if (e.clientX < left || e.clientX > right) return;
+    } else {
+      if (e.clientY > bottom || e.clientY < top) return;
+    }
+
     handleThumbPosition(e);
     handleFilledPosition(e);
   };
