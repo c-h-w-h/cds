@@ -10,6 +10,8 @@ const useSlider = ({
   orientation,
 }: Omit<RangeSelectorProps, 'label' | 'children'>) => {
   const [value, setValue] = useState<number>(init);
+  const [thumbPosition, setThumbPosition] = useState<number>(0);
+  const [filledRatio, setFilledRatio] = useState<number>(0);
   const trackRef = useRef<HTMLDivElement | null>(null);
   const filledRef = useRef<HTMLDivElement | null>(null);
   const thumbRef = useRef<HTMLDivElement | null>(null);
@@ -24,12 +26,8 @@ const useSlider = ({
     const dist = isHorizontal ? e.clientX - left : -(e.clientY - bottom);
     const ratio = Math.round((dist / size) * (max - min)) + min;
 
-    if (isHorizontal) {
-      thumbRef.current.style.left = dist + 'px';
-    } else {
-      thumbRef.current.style.bottom = dist + 'px';
-    }
     setValue(ratio);
+    setThumbPosition(dist);
   };
 
   const handleFilledPosition = (
@@ -40,11 +38,7 @@ const useSlider = ({
     const dist = isHorizontal ? e.clientX - left : -(e.clientY - bottom);
     const ratio = Math.round((dist / size) * (max - min));
 
-    if (isHorizontal) {
-      filledRef.current.style.width = ratio + '%';
-    } else {
-      filledRef.current.style.height = ratio + '%';
-    }
+    setFilledRatio(ratio);
   };
 
   const handleSliderValue = (
@@ -56,14 +50,64 @@ const useSlider = ({
 
   const getValue = () => value;
 
+  const getStyles = () => {
+    const rootStyle = {
+      horizontal: {
+        width: `${size}px`,
+      },
+      vertical: {
+        height: `${size}px`,
+      },
+    };
+
+    const trackStyle = {
+      horizontal: {
+        width: `${size}px`,
+        height: '4px',
+      },
+      vertical: {
+        height: `${size}px`,
+        width: '4px',
+      },
+    };
+
+    const filledStyle = {
+      horizontal: {
+        width: `${filledRatio}%`,
+        height: '4px',
+      },
+      vertical: {
+        height: `${filledRatio}%`,
+        width: '4px',
+      },
+    };
+
+    const thumbStyle = {
+      horizontal: {
+        left: `${thumbPosition}px`,
+      },
+      vertical: {
+        bottom: `${thumbPosition}px`,
+      },
+    };
+
+    return {
+      rootStyle: rootStyle[orientation],
+      trackStyle: trackStyle[orientation],
+      filledStyle: filledStyle[orientation],
+      thumbStyle: thumbStyle[orientation],
+    };
+  };
+
   return {
-    handleSliderValue,
-    handleThumbPosition,
-    handleFilledPosition,
-    getValue,
     trackRef,
     filledRef,
     thumbRef,
+    getValue,
+    getStyles,
+    handleSliderValue,
+    handleThumbPosition,
+    handleFilledPosition,
   };
 };
 
