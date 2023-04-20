@@ -1,4 +1,5 @@
-import { MouseEvent, useRef, useState } from 'react';
+import { ARROW_DOWN, ARROW_LEFT, ARROW_RIGHT, ARROW_UP } from '@constants/key';
+import { KeyboardEvent, MouseEvent, useRef, useState } from 'react';
 
 import { RangeSelectorProps } from '.';
 
@@ -73,6 +74,38 @@ const useSlider = ({
     handleFilledPosition(e);
   };
 
+  const onPressArrow = (e: KeyboardEvent) => {
+    e.preventDefault();
+    const currentValue = value;
+    let nextValue = currentValue;
+
+    if (isHorizontal) {
+      if (e.key === ARROW_LEFT) {
+        nextValue = currentValue - step;
+      } else if (e.key === ARROW_RIGHT) {
+        nextValue = currentValue + step;
+      }
+    } else {
+      if (e.key === ARROW_DOWN) {
+        nextValue = currentValue - step;
+      } else if (e.key === ARROW_UP) {
+        nextValue = currentValue + step;
+      }
+    }
+
+    if (nextValue < min) {
+      nextValue = min;
+    } else if (nextValue > max) {
+      nextValue = max;
+    }
+
+    const stepRatio = ((nextValue - min) / (max - min)) * 100;
+
+    setValue(nextValue);
+    setThumbPosition(stepRatio);
+    setFilledRatio(stepRatio);
+  };
+
   const getValue = () => value;
 
   const getStyles = () => {
@@ -133,6 +166,7 @@ const useSlider = ({
     handleSliderValue,
     handleThumbPosition,
     handleFilledPosition,
+    onPressArrow,
   };
 };
 
