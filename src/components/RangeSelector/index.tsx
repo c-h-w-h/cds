@@ -93,15 +93,15 @@ const Track = ({ color, children }: TrackProps) => {
   const { color: themeColor } = theme;
   const { gray100 } = themeColor;
 
-  const orientationStyle = {
-    horizontal: css`
-      width: ${size}px;
-      height: 3px;
-    `,
-    vertical: css`
-      height: ${size}px;
-      width: 3px;
-    `,
+  const trackSizeStyle = {
+    horizontal: {
+      width: `${size}px`,
+      height: `3px`,
+    },
+    vertical: {
+      height: `${size}px`,
+      width: `3px`,
+    },
   };
 
   return (
@@ -112,7 +112,7 @@ const Track = ({ color, children }: TrackProps) => {
         position: absolute;
         cursor: pointer;
         background-color: ${color ?? gray100};
-        ${orientationStyle[orientation]}
+        ${trackSizeStyle[orientation]}
       `}
     >
       {children}
@@ -125,29 +125,31 @@ interface FilledProps {
 }
 
 const Filled = ({ color }: FilledProps) => {
+  const filledRef = useRef<HTMLDivElement | null>(null);
   const { orientation } = useSafeContext(RangeSelectorContext);
   const { color: themeColor } = theme;
   const { primary100 } = themeColor;
 
-  const filledOrientationStyle = {
-    horizontal: css`
-      width: 100px;
-      height: 3px;
-    `,
-    vertical: css`
-      height: 100px;
-      width: 3px;
-    `,
+  const filledSizeStyle = {
+    horizontal: {
+      width: `100px`,
+      height: `3px`,
+    },
+    vertical: {
+      height: `100px`,
+      width: `3px`,
+    },
   };
 
   return (
     <div
+      ref={filledRef}
       css={css`
         position: absolute;
         left: 0;
         bottom: 0;
         background-color: ${color ?? primary100};
-        ${filledOrientationStyle[orientation]};
+        ${filledSizeStyle[orientation]};
       `}
     />
   );
@@ -170,13 +172,13 @@ const Thumb = ({ index, color, children }: ThumbProps) => {
 
   const isHorizontal = orientation === 'horizontal';
 
-  const initialPos = {
-    horizontal: css`
-      left: 0;
-    `,
-    vertical: css`
-      bottom: 0;
-    `,
+  const thumbPosStyle = {
+    horizontal: {
+      left: 0,
+    },
+    vertical: {
+      bottom: 0,
+    },
   };
 
   const handleThumbPosition = (e: globalThis.MouseEvent) => {
@@ -244,7 +246,7 @@ const Thumb = ({ index, color, children }: ThumbProps) => {
         user-select: none;
         cursor: pointer;
         transform: translate(-50%, 50%);
-        ${initialPos[orientation]}
+        ${thumbPosStyle[orientation]}
       `}
     >
       {children ?? (
