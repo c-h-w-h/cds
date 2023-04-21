@@ -11,7 +11,6 @@ import {
   MouseEventHandler,
   ChangeEvent,
 } from 'react';
-import { MdCancel } from 'react-icons/md';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   id: string;
@@ -21,6 +20,8 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   value?: string;
   isValid?: boolean;
   leadingIcon?: IconSource;
+  cancelIcon?: IconSource;
+  isControlled?: boolean;
 }
 
 const Input = forwardRef(
@@ -36,6 +37,8 @@ const Input = forwardRef(
       value,
       isValid = true,
       leadingIcon,
+      cancelIcon,
+      isControlled = false,
       ...props
     }: InputProps,
     ref: Ref<HTMLInputElement>,
@@ -90,7 +93,6 @@ const Input = forwardRef(
         filter: brightness(0.7);
       }
     `;
-    const isControlled = onChange && true;
 
     const [localValue, setLocalValue] = useState(value || '');
     const [inputChangeEvent, setInputChangeEvent] =
@@ -107,25 +109,34 @@ const Input = forwardRef(
     };
 
     useEffect(() => {
-      if (isControlled && inputChangeEvent) {
+      if (isControlled && onChange && inputChangeEvent) {
         onChange(inputChangeEvent);
       }
     }, [localValue]);
-
     return (
       <div css={inputContainerStyle} {...props}>
         {leadingIcon && <Icon source={leadingIcon} size={24} color={black} />}
-        <input
-          ref={ref}
-          name={name ?? id}
-          onChange={isControlled ? onLocalChange : undefined}
-          value={localValue}
-          {...{ type, id, placeholder, defaultValue }}
-          css={inputStyle}
-        />
-        {onCancel ? (
+        {isControlled ? (
+          <input
+            ref={ref}
+            name={name ?? id}
+            onChange={isControlled ? onLocalChange : undefined}
+            value={localValue}
+            {...{ type, id, placeholder, defaultValue }}
+            css={inputStyle}
+          />
+        ) : (
+          <input
+            ref={ref}
+            name={name ?? id}
+            onChange={isControlled ? onLocalChange : undefined}
+            {...{ type, id, placeholder, defaultValue }}
+            css={inputStyle}
+          />
+        )}
+        {cancelIcon ? (
           <button css={cancelButtonStyle} onClick={onLocalCancel}>
-            <Icon source={MdCancel} size={15} color={gray100} />
+            <Icon source={cancelIcon} size={15} color={gray100} />
           </button>
         ) : (
           <div css={cancelButtonStyle} />
