@@ -29,7 +29,7 @@ const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
       disabled = false,
       customButton,
       id,
-      children = <>{value}</>,
+      children = <span>{value}</span>,
       direction = 'right',
       ...props
     }: RadioButtonProps,
@@ -94,6 +94,10 @@ const RadioButtonWrapper = styled.label<WrapperProps>`
   align-items: center;
   justify-content: center;
   position: relative;
+
+  & > input[type='radio']:not(:disabled) ~ * {
+    cursor: pointer;
+  }
 `;
 
 interface ButtonProps {
@@ -136,21 +140,15 @@ const Button = styled.div<ButtonProps>`
   }
 
   input[type='radio']:focus ~ & {
-    outline: 1px solid ${({ color }) => color};
+    background-color: rgba(0, 0, 0, 0.1);
   }
 `;
 
 const ActualButton = styled.input`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  aspect-ratio: 1;
-  left: 0;
-  top: 0;
+  width: 0px;
+  height: 0px;
   margin: 0;
-  opacity: 0;
-  z-index: 1;
-  pointer-events: none;
+  opacity: 0.5;
 `;
 
 RadioButton.displayName = 'RadioButton';
