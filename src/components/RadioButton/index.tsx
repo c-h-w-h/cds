@@ -29,7 +29,7 @@ const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
       disabled = false,
       customButton,
       id,
-      children,
+      children = <>{value}</>,
       direction = 'right',
       ...props
     }: RadioButtonProps,
