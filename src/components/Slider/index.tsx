@@ -197,6 +197,14 @@ const Thumb = ({ color, children }: ThumbProps) => {
         ${thumbStyle}
       `}
     >
+      <input
+        id={`${label}-slider-value`}
+        type="range"
+        defaultValue={valueNow}
+        css={css`
+          display: none;
+        `}
+      />
       {children ?? (
         <Flexbox
           justifyContent="center"
