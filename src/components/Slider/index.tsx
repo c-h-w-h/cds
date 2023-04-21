@@ -48,9 +48,14 @@ const Slider = ({
   return (
     <SliderContext.Provider
       value={{
-        ...contextValue,
+        label,
+        min,
+        max,
+        size,
+        step,
+        orientation,
         getStyles,
-        ...{ label, min, max, size, step, orientation },
+        ...contextValue,
       }}
     >
       <Flexbox
@@ -80,13 +85,11 @@ const Track = ({ color, children }: TrackProps) => {
   const { trackStyle } = getStyles();
 
   return (
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
     <div
       id={`${label}-slider-track`}
       ref={trackRef}
       onClick={onMoveSlider}
-      onKeyDown={() => {
-        return;
-      }}
       css={css`
         position: absolute;
         cursor: pointer;
@@ -173,6 +176,7 @@ const Thumb = ({ color, children }: ThumbProps) => {
       { signal },
     );
   }, [isDraggable]);
+
   return (
     <div
       id={`${label}-slider-thumb`}
@@ -200,7 +204,7 @@ const Thumb = ({ color, children }: ThumbProps) => {
           css={css`
             width: 24px;
             height: 24px;
-            border-radius: 2rem;
+            border-radius: 50%;
             color: ${white};
             background-color: ${color ?? primary100};
           `}
