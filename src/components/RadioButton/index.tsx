@@ -1,7 +1,7 @@
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { DefaultProps } from '@utils/types/DefaultProps';
-import { CSSProperties, ReactNode, RefObject, forwardRef } from 'react';
+import { CSSProperties, ReactNode, forwardRef } from 'react';
 
 interface RadioButtonProps extends DefaultProps<HTMLInputElement> {
   name: string;
@@ -13,6 +13,8 @@ interface RadioButtonProps extends DefaultProps<HTMLInputElement> {
   disabled?: boolean;
   customButton?: ReactNode;
   id?: string;
+  direction?: 'left' | 'right' | 'top' | 'bottom';
+  children?: ReactNode;
 }
 
 const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
@@ -27,6 +29,8 @@ const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
       disabled = false,
       customButton,
       id,
+      children,
+      direction = 'right',
       ...props
     }: RadioButtonProps,
     ref,
@@ -35,21 +39,22 @@ const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
     if (!color) color = themeColor.primary100;
 
     return (
-      <RadioButtonWrapper size={outerSize}>
+      <RadioButtonWrapper direction={direction}>
+        {(direction === 'left' || direction === 'top') && children}
         <ActualButton
           type="radio"
           name={name}
           value={value}
           defaultChecked={checked}
           disabled={disabled}
-          id={id ?? ''}
+          id={id}
           ref={ref}
           {...props}
         />
         {customButton ? (
           customButton
         ) : (
-          <Button aria-hidden>
+          <Button size={outerSize} aria-hidden>
             <svg viewBox="0 0 30 30" width={size} height={size}>
               <circle
                 cx="15"
@@ -72,47 +77,53 @@ const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
             </svg>
           </Button>
         )}
+        {(direction === 'right' || direction === 'bottom') && children}
       </RadioButtonWrapper>
     );
   },
 );
 
 interface WrapperProps {
-  size: CSSProperties['width'];
+  direction: 'left' | 'right' | 'top' | 'bottom';
 }
 
-const RadioButtonWrapper = styled.div<WrapperProps>`
+const RadioButtonWrapper = styled.label<WrapperProps>`
   display: flex;
-  flex-direction: row;
+  flex-direction: ${({ direction }) =>
+    direction === 'left' || direction === 'right' ? 'row' : 'column'};
   align-items: center;
   justify-content: center;
   position: relative;
-
-  ${({ size }) => `width:${size}; height:${size};`}
 `;
 
-const Button = styled.div`
+interface ButtonProps {
+  size: CSSProperties['width'];
+}
+
+const Button = styled.div<ButtonProps>`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: 100%;
+  aspect-ratio: 1;
   border-radius: 100%;
+  ${({ size }) => `width:${size}; height:${size};`}
 
   & > svg > circle:nth-of-type(2) {
     display: none;
   }
 
-  input[type='radio']:checked + & > svg > circle:nth-of-type(2) {
+  input[type='radio']:checked ~ & > svg > circle:nth-of-type(2) {
     display: inline;
   }
 
-  input[type='radio']:disabled + & > svg {
+  input[type='radio']:disabled ~ & > svg {
     filter: grayscale(100%);
   }
 
-  input[type='radio']:not(:disabled) + & {
+  input[type='radio']:not(:disabled) ~ & {
     cursor: pointer;
     &:hover {
       background-color: rgba(0, 0, 0, 0.1);
@@ -128,6 +139,7 @@ const ActualButton = styled.input`
   position: absolute;
   width: 100%;
   height: 100%;
+  aspect-ratio: 1;
   left: 0;
   top: 0;
   margin: 0;

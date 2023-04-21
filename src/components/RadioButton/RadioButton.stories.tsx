@@ -26,6 +26,7 @@ export default {
     disabled: false,
     color: theme.color.primary100,
     outerSize: '30px',
+    direction: 'right',
   },
   argTypes: {
     size: {
@@ -55,7 +56,7 @@ export default {
         defaultValue: { summary: 'theme.primary100' },
       },
     },
-    inputRef: {
+    ref: {
       name: 'ref',
       description: '`useRef`를 사용하기 위한 RefObject를 지정합니다.',
       table: {
@@ -64,6 +65,18 @@ export default {
       },
       control: {
         disable: true,
+      },
+    },
+    direction: {
+      name: 'direction',
+      description: '버튼에 대한 라벨의 위치를 지정합니다.',
+      table: {
+        type: { summary: `'left' | 'right' | 'bottom' | 'top'` },
+        defaultValue: { summary: 'right' },
+      },
+      control: {
+        type: 'select',
+        options: ['left', 'right', 'top', 'bottom'],
       },
     },
     name: {
@@ -103,13 +116,6 @@ export default {
     },
   },
 } as ComponentMeta<typeof RadioButton>;
-
-const DummyLabel = styled.label`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-`;
 
 const DummyCustomFlag = styled.div`
   border: 1px solid black;
@@ -160,30 +166,30 @@ const Template: ComponentStory<typeof RadioButton> = (args) => {
   return (
     <FieldSet>
       <Legend>팀장뽑기</Legend>
-      <DummyLabel>
-        <RadioButton {...args} name="leader" value="김세영" checked />
+
+      <RadioButton {...args} name="leader" value="김세영" checked>
         <span>김세영</span>
-      </DummyLabel>
-      <DummyLabel>
-        <RadioButton {...args} name="leader" value="백도훈" />
+      </RadioButton>
+
+      <RadioButton {...args} name="leader" value="백도훈">
         <span>백도훈</span>
-      </DummyLabel>
-      <DummyLabel>
-        <RadioButton {...args} name="leader" value="이선민" />
+      </RadioButton>
+
+      <RadioButton {...args} name="leader" value="이선민">
         <span>이선민</span>
-      </DummyLabel>
-      <DummyLabel>
-        <RadioButton {...args} name="leader" value="이우재" />
+      </RadioButton>
+
+      <RadioButton {...args} name="leader" value="이우재">
         <span>이우재</span>
-      </DummyLabel>
-      <DummyLabel>
-        <RadioButton {...args} name="leader" value="이현빈" />
+      </RadioButton>
+
+      <RadioButton {...args} name="leader" value="이현빈">
         <span>이현빈</span>
-      </DummyLabel>
-      <DummyLabel>
-        <RadioButton {...args} name="leader" value="정주연" />
+      </RadioButton>
+
+      <RadioButton {...args} name="leader" value="정주연">
         <span>정주연</span>
-      </DummyLabel>
+      </RadioButton>
     </FieldSet>
   );
 };
