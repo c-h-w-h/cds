@@ -1,4 +1,13 @@
-import { ARROW_DOWN, ARROW_LEFT, ARROW_RIGHT, ARROW_UP } from '@constants/key';
+import {
+  ARROW_DOWN,
+  ARROW_LEFT,
+  ARROW_RIGHT,
+  ARROW_UP,
+  END,
+  HOME,
+  PAGE_DOWN,
+  PAGE_UP,
+} from '@constants/key';
 import { KeyboardEvent, MouseEvent, useRef, useState } from 'react';
 
 import { SliderProps } from '.';
@@ -110,22 +119,26 @@ const useSlider = ({
   const onPressArrow = (e: KeyboardEvent) => {
     e.preventDefault();
 
-    const currentValue = value;
-    let nextValue = currentValue;
+    let nextValue = (function (key: string, currentValue: number) {
+      if (key === ARROW_LEFT || key === ARROW_DOWN) {
+        return currentValue - step;
+      } else if (key === ARROW_RIGHT || key === ARROW_UP) {
+        return currentValue + step;
+      } else if (key === PAGE_DOWN) {
+        // decrease 10%
+        return currentValue - (max - min) / 10;
+      } else if (key === PAGE_UP) {
+        // increase 10%
+        return currentValue + (max - min) / 10;
+      } else if (key === HOME) {
+        return min;
+      } else if (key === END) {
+        return max;
+      }
+      return null;
+    })(e.key, value);
 
-    if (isHorizontal) {
-      if (e.key === ARROW_LEFT) {
-        nextValue = currentValue - step;
-      } else if (e.key === ARROW_RIGHT) {
-        nextValue = currentValue + step;
-      }
-    } else {
-      if (e.key === ARROW_DOWN) {
-        nextValue = currentValue - step;
-      } else if (e.key === ARROW_UP) {
-        nextValue = currentValue + step;
-      }
-    }
+    if (nextValue === null) return;
 
     if (nextValue < min) {
       nextValue = min;
