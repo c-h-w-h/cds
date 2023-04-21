@@ -54,7 +54,6 @@ const Slider = ({
       }}
     >
       <Flexbox
-        flexDirection="column"
         role={'slider'}
         aria-label={label}
         css={css`
