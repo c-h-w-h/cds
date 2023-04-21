@@ -1,7 +1,7 @@
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { DefaultProps } from '@utils/types/DefaultProps';
-import { CSSProperties, ReactNode, RefObject } from 'react';
+import { CSSProperties, ReactNode, RefObject, forwardRef } from 'react';
 
 interface RadioButtonProps extends DefaultProps<HTMLInputElement> {
   name: string;
@@ -13,59 +13,69 @@ interface RadioButtonProps extends DefaultProps<HTMLInputElement> {
   disabled?: boolean;
   customButton?: ReactNode;
   id?: string;
-  inputRef?: RefObject<HTMLInputElement>;
 }
 
-const RadioButton = ({
-  name,
-  value = '',
-  checked = false,
-  color,
-  size = '16px',
-  outerSize = size,
-  disabled = false,
-  customButton,
-  id,
-  inputRef,
-  ...props
-}: RadioButtonProps) => {
-  const { color: themeColor } = useTheme();
-  if (!color) color = themeColor.primary100;
+const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
+  (
+    {
+      name,
+      value = '',
+      checked = false,
+      color,
+      size = '16px',
+      outerSize = size,
+      disabled = false,
+      customButton,
+      id,
+      ...props
+    }: RadioButtonProps,
+    ref,
+  ) => {
+    const { color: themeColor } = useTheme();
+    if (!color) color = themeColor.primary100;
 
-  return (
-    <RadioButtonWrapper size={outerSize}>
-      <ActualButton
-        type="radio"
-        name={name}
-        value={value}
-        defaultChecked={checked}
-        disabled={disabled}
-        id={id ?? ''}
-        ref={inputRef}
-        {...props}
-      />
-      {customButton ? (
-        customButton
-      ) : (
-        <Button aria-hidden>
-          <svg viewBox="0 0 30 30" width={size} height={size}>
-            <circle
-              cx="15"
-              cy="15"
-              r="12"
-              stroke={color}
-              strokeWidth="3"
-              fill="white"
-              width="30"
-              height="30"
-            />
-            <circle cx="15" cy="15" r="7" fill={color} width="30" height="30" />
-          </svg>
-        </Button>
-      )}
-    </RadioButtonWrapper>
-  );
-};
+    return (
+      <RadioButtonWrapper size={outerSize}>
+        <ActualButton
+          type="radio"
+          name={name}
+          value={value}
+          defaultChecked={checked}
+          disabled={disabled}
+          id={id ?? ''}
+          ref={ref}
+          {...props}
+        />
+        {customButton ? (
+          customButton
+        ) : (
+          <Button aria-hidden>
+            <svg viewBox="0 0 30 30" width={size} height={size}>
+              <circle
+                cx="15"
+                cy="15"
+                r="12"
+                stroke={color}
+                strokeWidth="3"
+                fill="white"
+                width="30"
+                height="30"
+              />
+              <circle
+                cx="15"
+                cy="15"
+                r="7"
+                fill={color}
+                width="30"
+                height="30"
+              />
+            </svg>
+          </Button>
+        )}
+      </RadioButtonWrapper>
+    );
+  },
+);
 
 interface WrapperProps {
   size: CSSProperties['width'];
@@ -125,5 +135,7 @@ const ActualButton = styled.input`
   z-index: 1;
   pointer-events: none;
 `;
+
+RadioButton.displayName = 'RadioButton';
 
 export { RadioButton };
