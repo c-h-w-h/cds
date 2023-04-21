@@ -54,7 +54,7 @@ const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
         {customButton ? (
           customButton
         ) : (
-          <Button size={outerSize} aria-hidden>
+          <Button size={outerSize} color={color} aria-hidden>
             <svg viewBox="0 0 30 30" width={size} height={size}>
               <circle
                 cx="15"
@@ -98,6 +98,7 @@ const RadioButtonWrapper = styled.label<WrapperProps>`
 
 interface ButtonProps {
   size: CSSProperties['width'];
+  color: CSSProperties['color'];
 }
 
 const Button = styled.div<ButtonProps>`
@@ -132,6 +133,10 @@ const Button = styled.div<ButtonProps>`
       filter: brightness(0.9);
       background-color: rgba(0, 0, 0, 0.1);
     }
+  }
+
+  input[type='radio']:focus ~ & {
+    outline: 1px solid ${({ color }) => color};
   }
 `;
 
