@@ -1,36 +1,93 @@
 import { ARROW_DOWN, ARROW_LEFT, ARROW_RIGHT, ARROW_UP } from '@constants/key';
 import { KeyboardEvent, MouseEvent, useRef, useState } from 'react';
 
-import { RangeSelectorProps } from '.';
+import { SliderProps } from '.';
 
 const useSlider = ({
   min,
   max,
-  init,
+  defaultValue,
   size,
   step,
   orientation,
-}: Omit<RangeSelectorProps, 'label' | 'children'>) => {
-  const [value, setValue] = useState<number>(init);
-  const [thumbPosition, setThumbPosition] = useState<number>(
-    Math.round(((init - min) / (max - min)) * 100),
-  );
-  const [filledRatio, setFilledRatio] = useState<number>(
-    Math.round(((init - min) / (max - min)) * 100),
-  );
+}: Omit<SliderProps, 'label' | 'children'>) => {
+  const [value, setValue] = useState<number>(defaultValue);
+
+  const defaultRatio = Math.round(((defaultValue - min) / (max - min)) * 100);
+  const [thumbPosition, setThumbPosition] = useState<number>(defaultRatio);
+  const [filledRatio, setFilledRatio] = useState<number>(defaultRatio);
+
   const trackRef = useRef<HTMLDivElement | null>(null);
   const filledRef = useRef<HTMLDivElement | null>(null);
   const thumbRef = useRef<HTMLDivElement | null>(null);
 
   const isHorizontal = orientation === 'horizontal';
 
+  const getValue = () => value;
+
+  const getStyles = () => {
+    const SLIDER_THICKNESS = 4;
+
+    const rootStyle = {
+      horizontal: {
+        width: `${size}px`,
+      },
+      vertical: {
+        height: `${size}px`,
+      },
+    };
+
+    const trackStyle = {
+      horizontal: {
+        width: `${size}px`,
+        height: `${SLIDER_THICKNESS}px`,
+      },
+      vertical: {
+        height: `${size}px`,
+        width: `${SLIDER_THICKNESS}px`,
+      },
+    };
+
+    const filledStyle = {
+      horizontal: {
+        width: `${filledRatio}%`,
+        height: `${SLIDER_THICKNESS}px`,
+      },
+      vertical: {
+        height: `${filledRatio}%`,
+        width: `${SLIDER_THICKNESS}px`,
+      },
+    };
+
+    const thumbStyle = {
+      horizontal: {
+        left: `${thumbPosition}%`,
+        transform: 'translateX(-50%)',
+      },
+      vertical: {
+        bottom: `${thumbPosition}%`,
+        transform: 'translateY(50%)',
+      },
+    };
+
+    return {
+      rootStyle: rootStyle[orientation],
+      trackStyle: trackStyle[orientation],
+      filledStyle: filledStyle[orientation],
+      thumbStyle: thumbStyle[orientation],
+    };
+  };
+
   const onMoveSlider = (
     e: MouseEvent<HTMLDivElement> | globalThis.MouseEvent,
   ) => {
+    e.preventDefault();
+
     if (!trackRef.current || !filledRef.current || !thumbRef.current) return;
     const { left, right, bottom, top } =
       trackRef.current.getBoundingClientRect();
 
+    // Verify that the event point is valid
     if (isHorizontal) {
       if (e.clientX < left || e.clientX > right) return;
     } else {
@@ -52,6 +109,7 @@ const useSlider = ({
 
   const onPressArrow = (e: KeyboardEvent) => {
     e.preventDefault();
+
     const currentValue = value;
     let nextValue = currentValue;
 
@@ -80,57 +138,7 @@ const useSlider = ({
     setValue(nextValue);
     setThumbPosition(stepRatio);
     setFilledRatio(stepRatio);
-  };
-
-  const getValue = () => value;
-
-  const getStyles = () => {
-    const rootStyle = {
-      horizontal: {
-        width: `${size}px`,
-      },
-      vertical: {
-        height: `${size}px`,
-      },
-    };
-
-    const trackStyle = {
-      horizontal: {
-        width: `${size}px`,
-        height: '4px',
-      },
-      vertical: {
-        height: `${size}px`,
-        width: '4px',
-      },
-    };
-
-    const filledStyle = {
-      horizontal: {
-        width: `${filledRatio}%`,
-        height: '4px',
-      },
-      vertical: {
-        height: `${filledRatio}%`,
-        width: '4px',
-      },
-    };
-
-    const thumbStyle = {
-      horizontal: {
-        left: `${thumbPosition}%`,
-      },
-      vertical: {
-        bottom: `${thumbPosition}%`,
-      },
-    };
-
-    return {
-      rootStyle: rootStyle[orientation],
-      trackStyle: trackStyle[orientation],
-      filledStyle: filledStyle[orientation],
-      thumbStyle: thumbStyle[orientation],
-    };
+    if (thumbRef.current) thumbRef.current.focus();
   };
 
   return {
