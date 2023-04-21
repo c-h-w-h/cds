@@ -61,7 +61,7 @@ export default {
       },
     },
     size: {
-      description: 'px단위로 <Slider.Track> 길이를 설정합니다.',
+      description: 'px 단위로 <Slider.Track> 길이를 설정합니다.',
       table: {
         type: { summary: 'number', required: true },
       },
@@ -70,7 +70,8 @@ export default {
       },
     },
     step: {
-      description: '<Slider.Thumb>가 이동할 수 있는 px단위를 설정합니다.',
+      description:
+        '<Slider.Thumb>가 한 번에 이동할 수 있는 px단위를 설정합니다.',
       table: {
         type: { summary: 'number' },
         defaultValue: { summary: 1 },
@@ -80,7 +81,7 @@ export default {
       },
     },
     orientation: {
-      description: '<Slider>의 방향을 결정합니다.',
+      description: '\\<Slider>의 방향을 결정합니다.',
       table: {
         type: { summary: 'horizontal | vertical' },
         defaultValue: { summary: 'horizontal' },
