@@ -58,6 +58,7 @@ export const UncontrolledCustomStyle: ComponentStory<typeof Input> = (args) => {
         <Input
           {...args}
           ref={inputRef}
+          defaultValue="안녕"
           css={css`
             font-size: 1.5rem;
           `}
@@ -90,9 +91,15 @@ export const Controlled: ComponentStory<typeof Input> = (args) => {
       setIsValidate(true);
     }
   }, [inputValue]);
+
   return (
     <>
-      <Input {...args} {...{ setInputValue }} isValid={isValidate} />
+      <Input
+        {...args}
+        onChange={({ target }) => setInputValue(target.value)}
+        onCancel={() => setInputValue('')}
+        isValid={isValidate}
+      />
       {!isValidate && (
         <div style={{ color: 'red', fontSize: '10px' }}>
           5글자 이상 입력하세요.
