@@ -13,6 +13,7 @@ interface RadioButtonProps extends DefaultProps<HTMLInputElement> {
   disabled?: boolean;
   customButton?: ReactNode;
   id?: string;
+  label?: string;
   direction?: 'left' | 'right' | 'top' | 'bottom';
   children?: ReactNode;
 }
@@ -29,7 +30,8 @@ const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
       disabled = false,
       customButton,
       id,
-      children = <span>{value}</span>,
+      label,
+      children = <span>{label ?? value}</span>,
       direction = 'right',
       ...props
     }: RadioButtonProps,

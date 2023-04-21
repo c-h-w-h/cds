@@ -18,7 +18,9 @@ export default {
 - \`color\` 값으로 기본 RadioButton의 색을 지정할 수 있습니다.
 - \`ref\`로 useRef를 위한 RefObject를 넘겨줄 수 있습니다. 이 경우 \`ref\`는 input 태그에 전달됩니다.
 - \`direction\`으로 라벨의 라디오 버튼 기준에서의 위치를 지정할 수 있습니다.
-- self-closing 태그로도, 자식 요소를 갖는 태그로도 사용이 가능합니다. self-closing 태그의 경우에는 \`value\`값을 라벨로 갖습니다.
+- self-closing 태그로도, 자식 요소를 갖는 태그로도 사용이 가능합니다.
+  - 자식 요소를 갖는 태그의 경우 해당 요소가 라벨로서 취급됩니다.
+  - self-closing 태그의 경우에는 \`label\` 값을, \`label\`이 주어지지 않는 경우 \`value\`값을 라벨로 갖습니다.
 - 접근성 권고 사항으로, \`fieldset\`과 \`legend\`로 라디오 버튼을 그룹화하여 사용할 것을 권장합니다.
         `,
       },
@@ -244,10 +246,10 @@ export const SelfClosingTag: ComponentStory<typeof RadioButton> = (args) => {
   return (
     <RadioGroup>
       <Legend2>당신의 팀장에 투표하세요!</Legend2>
-      <RadioButton {...args} name="leader" value="김세영" />
+      <RadioButton {...args} name="leader" value="팀장님" label="김세영" />
       <RadioButton {...args} name="leader" value="백도훈" />
       <RadioButton {...args} name="leader" value="이선민" />
-      <RadioButton {...args} name="leader" value="이우재" />
+      <RadioButton {...args} name="leader" value="이우재" label="" />
       <RadioButton {...args} name="leader" value="이현빈" />
     </RadioGroup>
   );
