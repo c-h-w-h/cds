@@ -16,7 +16,7 @@ export default {
         - value, checked, disabled 등의 일반적인 속성을 지정할 수 있습니다.
         - size로 버튼의 크기를 지정하고, 이보다 넓은 클릭 영역을 갖게 하려는 경우 outerSize 값을 지정할 수 있습니다.
         - color 값으로 기본 RadioButton의 색을 지정할 수 있습니다.
-        - inputRef로 useRef를 위한 RefObject를 넘겨줄 수 있습니다. 이 경우 ref는 input 태그에 전달됩니다.
+        - ref로 useRef를 위한 RefObject를 넘겨줄 수 있습니다. 이 경우 ref는 input 태그에 전달됩니다.
         `,
       },
     },
@@ -56,7 +56,7 @@ export default {
       },
     },
     inputRef: {
-      name: 'inputRef',
+      name: 'ref',
       description: '`useRef`를 사용하기 위한 RefObject를 지정합니다.',
       table: {
         type: { summary: 'RefObject<HTMLInputElement>' },
