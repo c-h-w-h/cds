@@ -12,11 +12,14 @@ export default {
     componentSubtitle: `RadioButton은 여러 가지 옵션 중 하나를 선택하는 <input type='radio'/>과 같은 동작을 합니다.`,
     docs: {
       description: {
-        component: `- 같은 name 속성 값을 갖는 RadioButton 중 하나만이 선택될 수 있습니다.  
-        - value, checked, disabled 등의 일반적인 속성을 지정할 수 있습니다.
-        - size로 버튼의 크기를 지정하고, 이보다 넓은 클릭 영역을 갖게 하려는 경우 outerSize 값을 지정할 수 있습니다.
-        - color 값으로 기본 RadioButton의 색을 지정할 수 있습니다.
-        - ref로 useRef를 위한 RefObject를 넘겨줄 수 있습니다. 이 경우 ref는 input 태그에 전달됩니다.
+        component: `- 같은 \`name\` 속성 값을 갖는 RadioButton 중 하나만이 선택될 수 있습니다.  
+- \`value\`, \`checked\`, \`disabled\` 등의 일반적인 속성을 지정할 수 있습니다.
+- \`size\`로 버튼의 크기를 지정하고, 이보다 넓은 클릭 영역을 갖게 하려는 경우 \`outerSize\` 값을 지정할 수 있습니다.
+- \`color\` 값으로 기본 RadioButton의 색을 지정할 수 있습니다.
+- \`ref\`로 useRef를 위한 RefObject를 넘겨줄 수 있습니다. 이 경우 \`ref\`는 input 태그에 전달됩니다.
+- \`direction\`으로 라벨의 라디오 버튼 기준에서의 위치를 지정할 수 있습니다.
+- self-closing 태그로도, 자식 요소를 갖는 태그로도 사용이 가능합니다. self-closing 태그의 경우에는 \`value\`값을 라벨로 갖습니다.
+- 접근성 권고 사항으로, \`fieldset\`과 \`legend\`로 라디오 버튼을 그룹화하여 사용할 것을 권장합니다.
         `,
       },
     },
@@ -232,9 +235,39 @@ CustomButton.parameters = {
       
     // usage
     <RadioButton customButton={<MyButton/>} />
-    
-만약 customButton에 \`position: absolute;\`를 사용하는 경우, \`z-index\`값이 1을 넘지 않도록 구현합니다.  
 또한, 접근성 권고사항으로서 실제 라디오버튼의 역할을 하지 않는 customButton에 \`aria-hidden\` 속성을 추가할 것을 권장합니다.
     `,
   },
 };
+
+export const SelfClosingTag: ComponentStory<typeof RadioButton> = (args) => {
+  return (
+    <RadioGroup>
+      <Legend2>당신의 팀장에 투표하세요!</Legend2>
+      <RadioButton {...args} name="leader" value="김세영" />
+      <RadioButton {...args} name="leader" value="백도훈" />
+      <RadioButton {...args} name="leader" value="이선민" />
+      <RadioButton {...args} name="leader" value="이우재" />
+      <RadioButton {...args} name="leader" value="이현빈" />
+    </RadioGroup>
+  );
+};
+
+const RadioGroup = styled.fieldset`
+  border: 1px solid black;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  gap: 10px;
+`;
+
+const Legend2 = styled.legend`
+  background-color: black;
+  color: white;
+  margin: 0 auto;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  border-radius: 10px;
+`;
