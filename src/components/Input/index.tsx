@@ -35,7 +35,7 @@ const Input = forwardRef(
     ref: Ref<HTMLInputElement>,
   ) => {
     const { color: themeColor } = useTheme();
-    const { error, black, gray200, gray100, white } = themeColor;
+    const { error, black, gray200, gray100, white, primary100 } = themeColor;
     const inputContainerStyle = css`
       display: flex;
       align-items: center;
@@ -46,6 +46,10 @@ const Input = forwardRef(
       border-radius: 50px;
       padding-left: 0.8%;
       font-size: 0.8rem;
+      &:focus-within {
+        outline: none;
+        border: 1px solid ${primary100};
+      }
     `;
     const inputStyle = css`
       flex: 1;
