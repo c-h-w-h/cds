@@ -54,8 +54,7 @@ const Slider = ({
       }}
     >
       <Flexbox
-        role={'slider'}
-        aria-label={label}
+        id={`${label}-slider-root`}
         css={css`
           position: relative;
           margin: 1rem;
@@ -74,7 +73,7 @@ interface TrackProps {
 }
 
 const Track = ({ color, children }: TrackProps) => {
-  const { label, orientation, trackRef, getStyles, onMoveSlider } =
+  const { label, trackRef, getStyles, onMoveSlider } =
     useSafeContext(SliderContext);
   const { color: themeColor } = theme;
   const { gray100 } = themeColor;
@@ -82,13 +81,12 @@ const Track = ({ color, children }: TrackProps) => {
 
   return (
     <div
-      id={`${label}_track`}
+      id={`${label}-slider-track`}
       ref={trackRef}
       onClick={onMoveSlider}
       onKeyDown={() => {
         return;
       }}
-      aria-orientation={orientation}
       css={css`
         position: absolute;
         cursor: pointer;
@@ -106,13 +104,14 @@ interface FilledProps {
 }
 
 const Filled = ({ color }: FilledProps) => {
-  const { filledRef, getStyles } = useSafeContext(SliderContext);
+  const { label, filledRef, getStyles } = useSafeContext(SliderContext);
   const { color: themeColor } = theme;
   const { primary100 } = themeColor;
   const { filledStyle } = getStyles();
 
   return (
     <div
+      id={`${label}-slider-filled`}
       ref={filledRef}
       css={css`
         position: absolute;
@@ -131,12 +130,23 @@ interface ThumbProps {
 }
 
 const Thumb = ({ color, children }: ThumbProps) => {
-  const { thumbRef, getValue, getStyles, onMoveSlider, onPressArrow } =
-    useSafeContext(SliderContext);
+  const {
+    label,
+    min,
+    max,
+    orientation,
+    thumbRef,
+    getValue,
+    getStyles,
+    onMoveSlider,
+    onPressArrow,
+  } = useSafeContext(SliderContext);
   const [isDraggable, setIsDraggable] = useState<boolean>(false);
   const { color: themeColor } = theme;
   const { primary100, white } = themeColor;
   const { thumbStyle } = getStyles();
+
+  const valueNow = getValue();
 
   useEffect(() => {
     const controller = new AbortController();
@@ -165,7 +175,14 @@ const Thumb = ({ color, children }: ThumbProps) => {
   }, [isDraggable]);
   return (
     <div
+      id={`${label}-slider-thumb`}
       ref={thumbRef}
+      role={'slider'}
+      aria-label={label}
+      aria-valuemin={min}
+      aria-valuemax={max}
+      aria-valuenow={valueNow}
+      aria-orientation={orientation}
       tabIndex={0}
       onMouseDown={() => setIsDraggable(true)}
       onKeyDown={onPressArrow}
@@ -188,7 +205,7 @@ const Thumb = ({ color, children }: ThumbProps) => {
             background-color: ${color ?? primary100};
           `}
         >
-          <Typography variant={'desc'}>{String(getValue())}</Typography>
+          <Typography variant={'desc'}>{String(valueNow)}</Typography>
         </Flexbox>
       )}
     </div>
