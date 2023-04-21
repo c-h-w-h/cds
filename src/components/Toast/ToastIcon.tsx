@@ -6,7 +6,7 @@ import {
   MdDangerous,
 } from 'react-icons/md';
 
-import { ToastProps } from '.';
+import { ToastProps } from './ToastCore';
 
 interface ToastIconProps {
   kind: ToastProps['kind'];
