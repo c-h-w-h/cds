@@ -32,7 +32,7 @@ interface DrawerContextInterface {
 }
 const DrawerContext = createContext<DrawerContextInterface | null>(null);
 
-const Drawer = ({ label, position = 'bottom', children }: DrawerProps) => {
+const Drawer = ({ label, position = 'left', children }: DrawerProps) => {
   const [isOpen, setIsOpen] = useState<boolean | null>(null);
 
   const drawerRef = useRef<HTMLUnknownElement>(null);
