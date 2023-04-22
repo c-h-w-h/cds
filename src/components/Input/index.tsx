@@ -21,7 +21,6 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   isValid?: boolean;
   leadingIcon?: IconSource;
   cancelIcon?: IconSource;
-  isControlled?: boolean;
 }
 
 const Input = forwardRef(
@@ -38,7 +37,6 @@ const Input = forwardRef(
       isValid = true,
       leadingIcon,
       cancelIcon,
-      isControlled = false,
       ...props
     }: InputProps,
     ref: Ref<HTMLInputElement>,
@@ -95,9 +93,9 @@ const Input = forwardRef(
     `;
 
     const [localValue, setLocalValue] = useState(value || '');
+    const isControlled = value !== undefined ? true : false;
     const [inputChangeEvent, setInputChangeEvent] =
       useState<ChangeEvent<HTMLInputElement> | null>(null);
-
     const onLocalChange = (e: ChangeEvent<HTMLInputElement>) => {
       setInputChangeEvent(e);
       setLocalValue(e.target.value);
@@ -139,7 +137,7 @@ const Input = forwardRef(
             <Icon source={cancelIcon} size={15} color={gray100} />
           </button>
         ) : (
-          <div css={cancelButtonStyle} />
+          <div aria-hidden css={cancelButtonStyle} />
         )}
       </div>
     );
