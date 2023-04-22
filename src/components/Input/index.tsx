@@ -21,6 +21,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   isValid?: boolean;
   leadingIcon?: IconSource;
   cancelIcon?: IconSource;
+  label?: string;
 }
 
 const Input = forwardRef(
@@ -37,12 +38,23 @@ const Input = forwardRef(
       isValid = true,
       leadingIcon,
       cancelIcon,
+      label,
       ...props
     }: InputProps,
     ref: Ref<HTMLInputElement>,
   ) => {
     const { color: themeColor } = useTheme();
     const { error, black, gray200, gray100, white, primary100 } = themeColor;
+    const inputWithLabelStyle = css`
+      display: flex;
+      align-items: center;
+      font-size: 0.8rem;
+      label {
+        display: block;
+        padding: 0 10px;
+        white-space: nowrap;
+      }
+    `;
     const inputContainerStyle = css`
       display: flex;
       align-items: center;
@@ -112,33 +124,40 @@ const Input = forwardRef(
       }
     }, [localValue]);
     return (
-      <div css={inputContainerStyle} {...props}>
-        {leadingIcon && <Icon source={leadingIcon} size={24} color={black} />}
-        {isControlled ? (
-          <input
-            ref={ref}
-            name={name ?? id}
-            onChange={isControlled ? onLocalChange : undefined}
-            value={localValue}
-            {...{ type, id, placeholder, defaultValue }}
-            css={inputStyle}
-          />
-        ) : (
-          <input
-            ref={ref}
-            name={name ?? id}
-            onChange={isControlled ? onLocalChange : undefined}
-            {...{ type, id, placeholder, defaultValue }}
-            css={inputStyle}
-          />
-        )}
-        {cancelIcon ? (
-          <button css={cancelButtonStyle} onClick={onLocalCancel}>
-            <Icon source={cancelIcon} size={15} color={gray100} />
-          </button>
-        ) : (
-          <div aria-hidden css={cancelButtonStyle} />
-        )}
+      <div css={inputWithLabelStyle} {...props}>
+        {label && <label htmlFor={id}>{label}</label>}
+        <div css={inputContainerStyle} {...props}>
+          {leadingIcon && <Icon source={leadingIcon} size={24} color={black} />}
+          {isControlled ? (
+            <input
+              ref={ref}
+              name={name ?? id}
+              onChange={isControlled ? onLocalChange : undefined}
+              value={localValue}
+              {...{ type, id, placeholder, defaultValue }}
+              css={inputStyle}
+            />
+          ) : (
+            <input
+              ref={ref}
+              name={name ?? id}
+              onChange={isControlled ? onLocalChange : undefined}
+              {...{ type, id, placeholder, defaultValue }}
+              css={inputStyle}
+            />
+          )}
+          {cancelIcon ? (
+            <button
+              aria-label="cancel"
+              css={cancelButtonStyle}
+              onClick={onLocalCancel}
+            >
+              <Icon source={cancelIcon} size={15} color={gray100} />
+            </button>
+          ) : (
+            <div aria-hidden css={cancelButtonStyle} />
+          )}
+        </div>
       </div>
     );
   },

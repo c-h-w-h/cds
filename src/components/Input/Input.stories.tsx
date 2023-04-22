@@ -144,16 +144,15 @@ Controlled.args = {
   id: 'controlled',
 };
 
-export const ControlledWithValue = ControlledTemplate.bind({});
-ControlledWithValue.args = {
+export const ControlledWithLabel = ControlledTemplate.bind({});
+ControlledWithLabel.args = {
   placeholder: '입력하세요',
   id: 'controlled',
-  value: '초기값',
-  leadingIcon: MdSearch,
+  label: '아이디:',
 };
-ControlledWithValue.parameters = {
+ControlledWithLabel.parameters = {
   docs: {
-    storyDescription: '초기값을 설정해준 제어 Input 컴포넌트입니다.',
+    storyDescription: 'label을 설정해준 제어 Input 컴포넌트입니다.',
   },
 };
 
