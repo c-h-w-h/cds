@@ -9,7 +9,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Drawer from '.';
 
 export default {
-  title: 'Design System/Components/Drawer',
+  title: 'Components/Drawer',
   component: Drawer,
   parameters: {
     layout: 'fullscreen',
