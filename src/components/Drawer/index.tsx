@@ -55,7 +55,9 @@ const Trigger = ({ children }: ChildProps) => {
 
     setIsOpen((prev) => {
       if (!prev === true) {
-        setTimeout(() => $drawer.focus(), 600);
+        $drawer.addEventListener('animationend', () => $drawer.focus(), {
+          once: true,
+        });
       }
       return !prev;
     });
@@ -72,7 +74,7 @@ const Trigger = ({ children }: ChildProps) => {
     'aria-haspopup': 'true',
     'aria-expanded': !!isOpen,
     'aria-controls': `${label}-drawer`,
-    'aria-label': `${label} 서랍을 여는 트리거`,
+    'aria-label': `${label} 서랍을 ${isOpen ? '닫는' : '여는'} 트리거`,
     onClick: onOpen,
     onKeyDown,
     style: {
