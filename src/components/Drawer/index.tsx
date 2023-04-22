@@ -53,12 +53,19 @@ const Trigger = ({ children }: ChildProps) => {
     const $drawer = drawerRef.current;
     if (!$drawer) return;
 
-    setIsOpen(true);
-    setTimeout(() => $drawer.focus(), 600);
+    setIsOpen((prev) => {
+      if (!prev === true) {
+        setTimeout(() => $drawer.focus(), 600);
+      }
+      return !prev;
+    });
   };
 
   const onKeyDown: KeyboardEventHandler = (e) => {
-    if ([SPACE, ENTER].includes(e.key)) onOpen();
+    if ([SPACE, ENTER].includes(e.key)) {
+      e.preventDefault();
+      onOpen();
+    }
   };
 
   return cloneElement(children, {
