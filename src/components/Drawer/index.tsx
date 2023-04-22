@@ -53,13 +53,9 @@ const Trigger = ({ children }: ChildProps) => {
     const $drawer = drawerRef.current;
     if (!$drawer) return;
 
-    setIsOpen((prev) => {
-      if (!prev === true) {
-        $drawer.addEventListener('animationend', () => $drawer.focus(), {
-          once: true,
-        });
-      }
-      return !prev;
+    setIsOpen(true);
+    $drawer.addEventListener('animationend', () => $drawer.focus(), {
+      once: true,
     });
   };
 
@@ -74,12 +70,13 @@ const Trigger = ({ children }: ChildProps) => {
     'aria-haspopup': 'true',
     'aria-expanded': !!isOpen,
     'aria-controls': `${label}-drawer`,
-    'aria-label': `${label} 서랍을 ${isOpen ? '닫는' : '여는'} 트리거`,
+    'aria-label': `${label} 서랍을 여는 트리거`,
     onClick: onOpen,
     onKeyDown,
     style: {
       cursor: 'pointer',
     },
+    tabIndex: isOpen ? -1 : 0,
   });
 };
 
