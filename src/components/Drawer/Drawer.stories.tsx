@@ -119,7 +119,7 @@ Mobile.decorators = [
 
 export const CustomContainer: ComponentStory<typeof Drawer> = (args) => {
   return (
-    <>
+    <CustomDiv id="custom-container">
       <Drawer {...args}>
         <Drawer.Trigger>
           <Button text="서랍을 열어요" />
@@ -128,8 +128,7 @@ export const CustomContainer: ComponentStory<typeof Drawer> = (args) => {
           <Panel />
         </Drawer.Panel>
       </Drawer>
-      <CustomDiv id="custom-container"></CustomDiv>
-    </>
+    </CustomDiv>
   );
 };
 CustomContainer.args = {
