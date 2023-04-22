@@ -73,7 +73,7 @@ const Panel = ({ children }: ChildrenProps) => {
   const { drawerStyle } = useDrawerStyle(position, offwhite);
   const dimmerStyle = css`
     ${isOpen ? '' : 'display: none;'}
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
@@ -83,8 +83,13 @@ const Panel = ({ children }: ChildrenProps) => {
     opacity: 20%;
   `;
 
+  const portalStyle = css`
+    position: relative;
+    visibility: ${isOpen ? 'visible' : 'hidden'};
+  `;
+
   return (
-    <Portal id={DRAWER_PORTAL_ROOT_ID}>
+    <Portal id={DRAWER_PORTAL_ROOT_ID} style={portalStyle}>
       <div
         css={dimmerStyle}
         aria-hidden={true}

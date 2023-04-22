@@ -1,12 +1,15 @@
+import { Theme } from '@components-common/CdsProvider/theme';
+import { Interpolation } from '@emotion/react';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 interface PortalProps {
   id: string;
   children: ReactNode;
+  style?: Interpolation<Theme>;
 }
 
-const Portal = ({ id, children }: PortalProps) => {
+const Portal = ({ id, children, style }: PortalProps) => {
   const ref = useRef<Element | null>();
   const [mounted, setMounted] = useState<boolean>(false);
 
@@ -15,6 +18,12 @@ const Portal = ({ id, children }: PortalProps) => {
     const portalRoot = document.getElementById(id);
     ref.current = portalRoot;
   }, []);
+
+  useEffect(() => {
+    if (!ref.current || !style) return;
+
+    ref.current.setAttribute('style', style.toString());
+  }, [style]);
 
   if (ref.current && mounted) {
     return createPortal(children, ref.current);
