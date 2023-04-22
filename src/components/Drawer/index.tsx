@@ -1,12 +1,15 @@
 import Portal from '@components-common/Portal';
-import { ENTER, SPACE } from '@constants/key';
+import { ENTER, ESC, SPACE } from '@constants/key';
 import { DRAWER_PORTAL_ROOT_ID } from '@constants/portal';
 import { css, useTheme } from '@emotion/react';
 import { ChildProps, ChildrenProps, SetState } from '@utils';
 import {
   KeyboardEventHandler,
+  RefObject,
   cloneElement,
   createContext,
+  useEffect,
+  useRef,
   useState,
 } from 'react';
 import useSafeContext from 'src/hooks/useSafeContext';
@@ -25,13 +28,16 @@ interface DrawerContextInterface {
   position: DrawerPosition;
   isOpen: boolean | null;
   setIsOpen: SetState<boolean | null>;
+  drawerRef: RefObject<HTMLUnknownElement>;
 }
 const DrawerContext = createContext<DrawerContextInterface | null>(null);
 
 const Drawer = ({ label, position = 'bottom', children }: DrawerProps) => {
   const [isOpen, setIsOpen] = useState<boolean | null>(null);
 
-  const providerValue = { label, position, isOpen, setIsOpen };
+  const drawerRef = useRef<HTMLUnknownElement>(null);
+
+  const providerValue = { label, position, isOpen, setIsOpen, drawerRef };
 
   return (
     <DrawerContext.Provider value={providerValue}>
@@ -41,10 +47,18 @@ const Drawer = ({ label, position = 'bottom', children }: DrawerProps) => {
 };
 
 const Trigger = ({ children }: ChildProps) => {
-  const { label, isOpen, setIsOpen } = useSafeContext(DrawerContext);
+  const { label, isOpen, setIsOpen, drawerRef } = useSafeContext(DrawerContext);
+
+  const onOpen = () => {
+    const $drawer = drawerRef.current;
+    if (!$drawer) return;
+
+    setIsOpen(true);
+    setTimeout(() => $drawer.focus(), 600);
+  };
 
   const onKeyDown: KeyboardEventHandler = (e) => {
-    if ([SPACE, ENTER].includes(e.key)) setIsOpen(true);
+    if ([SPACE, ENTER].includes(e.key)) onOpen();
   };
 
   return cloneElement(children, {
@@ -52,7 +66,7 @@ const Trigger = ({ children }: ChildProps) => {
     'aria-expanded': !!isOpen,
     'aria-controls': `${label}-drawer`,
     'aria-label': `${label} 서랍을 여는 트리거`,
-    onClick: () => setIsOpen(true),
+    onClick: onOpen,
     onKeyDown,
     style: {
       cursor: 'pointer',
@@ -61,9 +75,26 @@ const Trigger = ({ children }: ChildProps) => {
 };
 
 const Panel = ({ children }: ChildrenProps) => {
-  const { label, position, isOpen, setIsOpen } = useSafeContext(DrawerContext);
+  const { label, position, isOpen, setIsOpen, drawerRef } =
+    useSafeContext(DrawerContext);
 
-  // TODO: close with Esc key
+  const onKeyDown = (e: Event) => {
+    if (!(e instanceof KeyboardEvent)) return;
+    if (e.key === ESC) {
+      setIsOpen(false);
+      // TODO: Trigger로 포커스 이동
+    }
+  };
+  useEffect(() => {
+    const $portal = document.querySelector(`#${DRAWER_PORTAL_ROOT_ID}`);
+    if (!$portal) return;
+
+    $portal.addEventListener('keydown', onKeyDown);
+
+    return () => {
+      $portal.removeEventListener('keydown', onKeyDown);
+    };
+  });
 
   const { color } = useTheme();
   const { black, offwhite } = color;
@@ -100,6 +131,8 @@ const Panel = ({ children }: ChildrenProps) => {
         // eslint-disable-next-line no-nested-ternary
         className={isOpen === null ? 'initial' : isOpen ? 'open' : 'close'}
         aria-hidden={!isOpen}
+        ref={drawerRef}
+        tabIndex={-1}
       >
         {children}
       </aside>
