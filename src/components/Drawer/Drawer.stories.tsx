@@ -21,7 +21,7 @@ export default {
         component:
           '메뉴 리스트, 옵션 선택 양식 등 다양한 요소가 들어갈 수 있습니다.' +
           '\n\n컴포넌트 특성 상 스타일이 상위 요소에 영향을 받습니다.' +
-          '\n- `<Drawer />`가 차지할 영역을 결정하는 요소에 `position: relative`를 설정하고, HTML id를 `containerId` props로 전달해 커스텀이 가능합니다.' +
+          '\n- `<Drawer />`가 차지할 영역을 결정하는 요소에 CSS `position: relative; overflow: hidden;`을 설정하고, HTML id를 `containerId` props로 전달해 커스텀이 가능합니다.' +
           '\n- 기본값은 CDS에서 제공하는 Portal의 id입니다. `<CdsProvider />` 상위에 컨테이너를 감싸 스타일을 조정할 수도 있습니다. 용례는 Mobile 스토리를 참고하세요.',
       },
     },
@@ -139,6 +139,7 @@ CustomContainer.args = {
 
 const CustomDiv = styled.div`
   position: relative;
+  overflow: hidden;
   width: 300px;
   height: 300px;
 `;
