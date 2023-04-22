@@ -4,6 +4,7 @@ import CdsProvider from '@components-common/CdsProvider';
 import List from '@components-layout/List';
 import MobileContainer from '@components-layout/MobileContainer';
 import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import Drawer from '.';
@@ -18,8 +19,10 @@ export default {
     docs: {
       description: {
         component:
-          '- 메뉴 리스트, 옵션 선택 양식 등 다양한 요소가 들어갈 수 있습니다.' +
-          '\n- 컴포넌트 특성 상 스타일이 컨테이너와 결합되어 있습니다. 반응형을 고려해 개발한다면 Mobile 스토리를 참고해주세요.',
+          '메뉴 리스트, 옵션 선택 양식 등 다양한 요소가 들어갈 수 있습니다.' +
+          '\n\n컴포넌트 특성 상 스타일이 상위 요소에 영향을 받습니다.' +
+          '\n- `<Drawer />`가 차지할 영역을 결정하는 요소에 `position: relative`를 설정하고, HTML id를 `containerId` props로 전달해 커스텀이 가능합니다.' +
+          '\n- 기본값은 CDS에서 제공하는 Portal의 id입니다. `<CdsProvider />` 상위에 컨테이너를 감싸 스타일을 조정할 수도 있습니다. 용례는 Mobile 스토리를 참고하세요.',
       },
     },
   },
@@ -39,6 +42,18 @@ export default {
         },
       },
     },
+    containerId: {
+      description: '서랍 컨텐츠 상위 요소의 id를 전달합니다.',
+      table: {
+        type: {
+          name: 'string',
+          required: false,
+        },
+        defaultValue: {
+          summary: 'DRAWER_PORTAL_ROOT_ID',
+        },
+      },
+    },
   },
 } as ComponentMeta<typeof Drawer>;
 
@@ -49,18 +64,7 @@ const Template: ComponentStory<typeof Drawer> = (args) => {
         <Button text="서랍을 열어요" />
       </Drawer.Trigger>
       <Drawer.Panel>
-        <List css={liStyle}>
-          <li>
-            <Badge>1</Badge>
-          </li>
-          <li>
-            <Badge>2</Badge>
-          </li>
-
-          <li>
-            <Badge>3</Badge>
-          </li>
-        </List>
+        <Panel />
       </Drawer.Panel>
     </Drawer>
   );
@@ -102,7 +106,7 @@ Mobile.args = {
 Mobile.parameters = {
   docs: {
     storyDescription:
-      'Show Code 예시처럼 반응형 컨테이너를 CdsProvider 부모 컴포넌트로 두는 것을 권장합니다.',
+      'Show Code 예시처럼 반응형 컨테이너를 CdsProvider 부모 컴포넌트로 두고 사용할 수 있습니다.',
   },
 };
 Mobile.decorators = [
@@ -112,3 +116,45 @@ Mobile.decorators = [
     </MobileContainer>
   ),
 ];
+
+export const CustomContainer: ComponentStory<typeof Drawer> = (args) => {
+  return (
+    <>
+      <Drawer {...args}>
+        <Drawer.Trigger>
+          <Button text="서랍을 열어요" />
+        </Drawer.Trigger>
+        <Drawer.Panel>
+          <Panel />
+        </Drawer.Panel>
+      </Drawer>
+      <CustomDiv id="custom-container"></CustomDiv>
+    </>
+  );
+};
+CustomContainer.args = {
+  label: '옵션 메뉴',
+  containerId: 'custom-container',
+};
+
+const CustomDiv = styled.div`
+  position: relative;
+  width: 300px;
+  height: 300px;
+`;
+
+const Panel = () => {
+  return (
+    <List css={liStyle}>
+      <li>
+        <Badge>차가운 스터디</Badge>
+      </li>
+      <li>
+        <Badge>따뜻한 스터디</Badge>
+      </li>
+      <li>
+        <Badge>미지근한 스터디</Badge>
+      </li>
+    </List>
+  );
+};

@@ -21,6 +21,7 @@ export type DrawerPosition = 'bottom' | 'left';
 type DrawerProps = {
   label: string;
   position?: DrawerPosition;
+  containerId?: string;
 } & ChildrenProps;
 
 interface DrawerContextInterface {
@@ -29,15 +30,28 @@ interface DrawerContextInterface {
   isOpen: boolean | null;
   setIsOpen: SetState<boolean | null>;
   drawerRef: RefObject<HTMLUnknownElement>;
+  containerId: string;
 }
 const DrawerContext = createContext<DrawerContextInterface | null>(null);
 
-const Drawer = ({ label, position = 'left', children }: DrawerProps) => {
+const Drawer = ({
+  label,
+  position = 'left',
+  containerId = DRAWER_PORTAL_ROOT_ID,
+  children,
+}: DrawerProps) => {
   const [isOpen, setIsOpen] = useState<boolean | null>(null);
 
   const drawerRef = useRef<HTMLUnknownElement>(null);
 
-  const providerValue = { label, position, isOpen, setIsOpen, drawerRef };
+  const providerValue = {
+    label,
+    position,
+    isOpen,
+    setIsOpen,
+    drawerRef,
+    containerId,
+  };
 
   return (
     <DrawerContext.Provider value={providerValue}>
@@ -81,7 +95,7 @@ const Trigger = ({ children }: ChildProps) => {
 };
 
 const Panel = ({ children }: ChildrenProps) => {
-  const { label, position, isOpen, setIsOpen, drawerRef } =
+  const { label, position, isOpen, setIsOpen, drawerRef, containerId } =
     useSafeContext(DrawerContext);
 
   const onKeyDown = (e: Event) => {
@@ -92,7 +106,7 @@ const Panel = ({ children }: ChildrenProps) => {
     }
   };
   useEffect(() => {
-    const $portal = document.querySelector(`#${DRAWER_PORTAL_ROOT_ID}`);
+    const $portal = document.querySelector(`#${containerId}`);
     if (!$portal) return;
 
     $portal.addEventListener('keydown', onKeyDown);
@@ -124,7 +138,7 @@ const Panel = ({ children }: ChildrenProps) => {
   `;
 
   return (
-    <Portal id={DRAWER_PORTAL_ROOT_ID} style={portalStyle}>
+    <Portal id={containerId} style={portalStyle}>
       <div
         css={dimmerStyle}
         aria-hidden={true}
