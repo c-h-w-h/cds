@@ -132,13 +132,8 @@ const Panel = ({ children }: ChildrenProps) => {
     opacity: 20%;
   `;
 
-  const portalStyle = css`
-    position: relative;
-    visibility: ${isOpen ? 'visible' : 'hidden'};
-  `;
-
   return (
-    <Portal id={containerId} style={portalStyle}>
+    <Portal id={containerId}>
       <div
         css={dimmerStyle}
         aria-hidden={true}
