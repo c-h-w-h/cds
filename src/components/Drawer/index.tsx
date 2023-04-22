@@ -3,7 +3,12 @@ import { ENTER, SPACE } from '@constants/key';
 import { DRAWER_PORTAL_ROOT_ID } from '@constants/portal';
 import { css, useTheme } from '@emotion/react';
 import { ChildProps, ChildrenProps, SetState } from '@utils';
-import { KeyboardEventHandler, createContext, useState } from 'react';
+import {
+  KeyboardEventHandler,
+  cloneElement,
+  createContext,
+  useState,
+} from 'react';
 import useSafeContext from 'src/hooks/useSafeContext';
 
 import useDrawerStyle from './useDrawerStyle';
@@ -39,27 +44,20 @@ const Trigger = ({ children }: ChildProps) => {
   const { label, isOpen, setIsOpen } = useSafeContext(DrawerContext);
 
   const onKeyDown: KeyboardEventHandler = (e) => {
-    if ([SPACE, ENTER].includes(e.key)) setIsOpen((prev) => !prev);
+    if ([SPACE, ENTER].includes(e.key)) setIsOpen(true);
   };
 
-  const triggerStyle = css`
-    width: auto;
-    height: auto;
-    cursor: pointer;
-  `;
-
-  return (
-    <div
-      css={triggerStyle}
-      aria-haspopup={true}
-      aria-expanded={!!isOpen}
-      aria-controls={`${label}-drawer`}
-      onClick={() => setIsOpen((prev) => !prev)}
-      onKeyDown={onKeyDown}
-    >
-      {children}
-    </div>
-  );
+  return cloneElement(children, {
+    'aria-haspopup': 'true',
+    'aria-expanded': !!isOpen,
+    'aria-controls': `${label}-drawer`,
+    'aria-label': `${label} 서랍을 여는 트리거`,
+    onClick: () => setIsOpen(true),
+    onKeyDown,
+    style: {
+      cursor: 'pointer',
+    },
+  });
 };
 
 const Panel = ({ children }: ChildrenProps) => {
