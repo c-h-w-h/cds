@@ -122,13 +122,7 @@ export default {
       },
     },
   },
-  decorators: [
-    (Story) => (
-      <Center>
-        <Story />
-      </Center>
-    ),
-  ],
+  decorators: [(Story) => <Center>{Story()}</Center>],
 } as ComponentMeta<typeof RadioButton>;
 
 const DummyCustomFlag = styled.div`
@@ -278,6 +272,7 @@ export const SelfClosingTag: ComponentStory<typeof RadioButton> = (args) => {
       <RadioButton {...args} name="leader" value="이선민" />
       <RadioButton {...args} name="leader" value="이우재" label="" />
       <RadioButton {...args} name="leader" value="이현빈" />
+      <RadioButton {...args} name="leader" value="정주연" />
     </RadioGroup>
   );
 };
