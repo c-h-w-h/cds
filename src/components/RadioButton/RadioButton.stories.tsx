@@ -2,7 +2,7 @@ import { theme } from '@components/@common/CdsProvider/theme';
 import styled from '@emotion/styled';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import { RadioButton } from '.';
+import RadioButton from '.';
 
 export default {
   title: 'Design System/Components/RadioButton',

@@ -156,4 +156,4 @@ const ActualInput = styled.input`
 
 RadioButton.displayName = 'RadioButton';
 
-export { RadioButton };
+export default RadioButton;
