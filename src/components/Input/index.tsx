@@ -1,4 +1,3 @@
-import Icon, { IconSource } from '@components/Icon';
 import { useTheme, css } from '@emotion/react';
 import {
   InputHTMLAttributes,
@@ -10,8 +9,9 @@ import {
   ChangeEventHandler,
   MouseEventHandler,
   ChangeEvent,
+  ReactNode,
 } from 'react';
-import { MdSearch } from 'react-icons/md';
+import { MdCancel } from 'react-icons/md';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   id?: string;
@@ -20,8 +20,8 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   defaultValue?: string;
   value?: string;
   isValid?: boolean;
-  leadingIcon?: IconSource;
-  cancelIcon?: IconSource;
+  leadingIcon?: ReactNode;
+  isClearable?: boolean;
 }
 
 const Input = forwardRef(
@@ -37,13 +37,13 @@ const Input = forwardRef(
       value,
       isValid = true,
       leadingIcon,
-      cancelIcon,
+      isClearable,
       ...props
     }: InputProps,
     ref: Ref<HTMLInputElement>,
   ) => {
     const { color: themeColor } = useTheme();
-    const { error, black, gray200, gray100, white, primary100 } = themeColor;
+    const { error, black, gray200, white, primary100 } = themeColor;
     const inputContainerStyle = css`
       display: flex;
       align-items: center;
@@ -120,7 +120,7 @@ const Input = forwardRef(
     }, [value]);
     return (
       <div css={inputContainerStyle} {...props}>
-        {leadingIcon && <MdSearch></MdSearch>}
+        {leadingIcon}
         <input
           ref={ref}
           name={name ?? id}
@@ -129,13 +129,13 @@ const Input = forwardRef(
           {...{ type, id, placeholder, defaultValue }}
           css={inputStyle}
         />
-        {cancelIcon ? (
+        {isClearable ? (
           <button
             aria-label="cancel"
             css={cancelButtonStyle}
             onClick={onLocalCancel}
           >
-            <Icon source={cancelIcon} size={15} color={gray100} />
+            <MdCancel></MdCancel>
           </button>
         ) : (
           <div aria-hidden css={cancelButtonStyle} />

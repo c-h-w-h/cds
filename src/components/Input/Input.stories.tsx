@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { useRef, useState } from '@storybook/addons';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { useEffect } from 'react';
-import { MdSearch, MdCancel } from 'react-icons/md';
+import { MdSearch } from 'react-icons/md';
 
 import Input from '.';
 
@@ -179,8 +179,8 @@ export const ControlledWithCancel = ControlledWithCancelTemplate.bind({});
 ControlledWithCancel.args = {
   placeholder: '입력하세요',
   id: 'controlled',
-  leadingIcon: MdSearch,
-  cancelIcon: MdCancel,
+  leadingIcon: <MdSearch />,
+  isClearable: true,
 };
 ControlledWithCancel.parameters = {
   docs: {
@@ -234,7 +234,7 @@ export const UncontrolledWithLeadingIcon = UncontrolledTemplate.bind({});
 UncontrolledWithLeadingIcon.args = {
   placeholder: '입력하세요',
   id: 'uncontrolled',
-  leadingIcon: MdSearch,
+  leadingIcon: <MdSearch />,
 };
 UncontrolledWithDefaultValue.parameters = {
   docs: {
