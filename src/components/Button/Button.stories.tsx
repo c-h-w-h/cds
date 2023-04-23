@@ -8,7 +8,7 @@ import { MdCelebration } from 'react-icons/md';
 import Button from '.';
 
 export default {
-  title: 'Design System/Components/Button',
+  title: 'Components/Button',
   component: Button,
   parameters: {
     layout: 'fullscreen',
