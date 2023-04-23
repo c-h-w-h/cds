@@ -2,6 +2,7 @@ import Center from '@components/@layout/Center';
 import Portal from '@components-common/Portal';
 import { PORTAL_MODAL_ROOT_ID } from '@constants/portal';
 import styled from '@emotion/styled';
+import { ChildrenProps } from '@util-types/ChildrenProps';
 import { DefaultPropsWithChildren } from '@utils/types/DefaultPropsWithChildren';
 import { MouseEventHandler, createContext } from 'react';
 import { MdArrowBackIosNew } from 'react-icons/md';
@@ -12,7 +13,7 @@ interface ModalProps extends DefaultPropsWithChildren<HTMLDivElement> {
   onClose: MouseEventHandler;
 }
 
-interface TobBarProps {
+interface HeaderProps {
   title: string;
 }
 interface ModalContextInterface {
@@ -41,21 +42,21 @@ const Modal = ({ children, isOpen, onClose }: ModalProps) => {
   );
 };
 
-const TobBar = ({ title }: TobBarProps) => {
+const Header = ({ title }: HeaderProps) => {
   const { onClose } = useSafeContext(ModalContext);
   return (
-    <TobBarWrapper>
+    <HeaderWrapper>
       <Button onClick={onClose}>
         <Center>
           <MdArrowBackIosNew />
         </Center>
       </Button>
       <Title>{title}</Title>
-    </TobBarWrapper>
+    </HeaderWrapper>
   );
 };
 
-const Content = ({ children }: DefaultPropsWithChildren<HTMLDivElement>) => {
+const Content = ({ children }: ChildrenProps) => {
   return <ContentWrapper>{children}</ContentWrapper>;
 };
 
@@ -91,7 +92,7 @@ const BackGround = styled.div`
   background-color: ${({ theme }) => theme.color.black};
 `;
 
-const TobBarWrapper = styled.div`
+const HeaderWrapper = styled.div`
   display: flex;
   justify-content: left;
   align-items: center;
@@ -130,7 +131,7 @@ const ContentWrapper = styled.div`
   padding: 20px;
 `;
 
-Modal.TobBar = TobBar;
+Modal.Header = Header;
 Modal.Content = Content;
 
 export default Modal;
