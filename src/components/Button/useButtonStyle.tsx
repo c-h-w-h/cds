@@ -35,25 +35,25 @@ const useButtonStyle = (variant: ButtonVariant) => {
           background: transparent;
         `
       : css`
-          border-radius: ${isSquare ? '8px' : '2.25rem'};
+          border-radius: ${isSquare ? '8px' : 'calc(1rem + 24px)'};
           background-color: ${hasBackground ? primary200 : white};
-          border: 0.125rem solid ${primary200};
+          border: 2px solid ${primary200};
 
           &:hover {
             background-color: ${hasBackground ? primary400 : white};
-            border: 0.125rem solid ${primary400};
+            border: 2px solid ${primary400};
           }
 
           &:disabled,
           &.disabled {
             background-color: ${hasBackground ? gray200 : white};
-            border: 0.125rem solid ${gray200};
+            border: 2px solid ${gray200};
           }
         `}
   `;
 
   const contentStyle = css`
-    padding: 0.75rem;
+    padding: 12px;
     color: ${hasBackground ? white : primary200};
     text-decoration: none;
 
@@ -71,7 +71,7 @@ const useButtonStyle = (variant: ButtonVariant) => {
   `;
 
   return {
-    style: [flexboxStyle({ gap: '0.125rem' }), containerStyle, contentStyle],
+    style: [flexboxStyle({ gap: '2px' }), containerStyle, contentStyle],
   };
 };
 
