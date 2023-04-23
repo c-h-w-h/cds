@@ -1,11 +1,10 @@
 import Badge from '@components/Badge';
 import Button from '@components/Button';
-import CdsProvider from '@components-common/CdsProvider';
 import List from '@components-layout/List';
-import MobileContainer from '@components-layout/MobileContainer';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { ChildrenProps } from '@util-types/ChildrenProps';
 
 import Drawer from '.';
 
@@ -20,21 +19,25 @@ export default {
       description: {
         component:
           '메뉴 리스트, 옵션 선택 양식 등 다양한 요소가 들어갈 수 있습니다.' +
-          '\n\n컴포넌트 특성 상 스타일이 상위 요소에 영향을 받습니다.' +
-          '\n- `<Drawer />`가 차지할 영역을 결정하는 요소에 CSS `position: relative; overflow: hidden;`을 설정하고, HTML id를 `containerId` props로 전달해 커스텀이 가능합니다.' +
-          '\n- 기본값은 CDS에서 제공하는 Portal의 id입니다. `<CdsProvider />` 상위에 컨테이너를 감싸 스타일을 조정할 수도 있습니다. 용례는 Mobile 스토리를 참고하세요.',
+          '\n\n화면 전체 영역을 덮는 스타일을 기본으로 가집니다. 이외의 스타일링을 원한다면 Custom Parent, Mobile 스토리를 참고합니다.',
       },
     },
   },
   argTypes: {
     label: {
       description: 'Drawer 역할을 설명합니다.',
+      table: {
+        type: {
+          summary: 'string',
+          required: true,
+        },
+      },
     },
     position: {
       description: 'Panel 위치를 설정합니다.',
       table: {
         type: {
-          name: 'string',
+          summary: '"left" | "bottom"',
           required: false,
         },
         defaultValue: {
@@ -43,10 +46,10 @@ export default {
       },
     },
     containerId: {
-      description: '서랍 컨텐츠 상위 요소의 id를 전달합니다.',
+      description: '실제 DOM 상 Panel 부모가 될 요소의 HTML id를 전달합니다.',
       table: {
         type: {
-          name: 'string',
+          summary: 'string',
           required: false,
         },
         defaultValue: {
@@ -98,50 +101,52 @@ Bottom.parameters = {
   },
 };
 
+export const CustomParent = Template.bind({});
+CustomParent.args = {
+  label: '옵션 메뉴',
+  position: 'bottom',
+  containerId: 'custom-story-container',
+};
+CustomParent.decorators = [
+  (Story) => (
+    <CustomContainer id="custom-story-container">{Story()}</CustomContainer>
+  ),
+];
+CustomParent.parameters = {
+  docs: {
+    storyDescription:
+      '`<Drawer />`가 차지할 영역을 결정하는 요소의 HTML id를 `containerId` props로 전달해 스타일 커스텀이 가능합니다. 이 경우 해당 요소에 CSS `position: relative; overflow: hidden;` 스타일이 적용됩니다.',
+  },
+};
+
 export const Mobile = Template.bind({});
 Mobile.args = {
   label: '옵션 메뉴',
   position: 'bottom',
-};
-Mobile.parameters = {
-  docs: {
-    storyDescription:
-      'Show Code 예시처럼 반응형 컨테이너를 CdsProvider 부모 컴포넌트로 두고 사용할 수 있습니다.',
-  },
+  containerId: 'mobile-story-container',
 };
 Mobile.decorators = [
   (Story) => (
-    <MobileContainer>
-      <CdsProvider>{Story()}</CdsProvider>
-    </MobileContainer>
+    <MobileContainer id="mobile-story-container">{Story()}</MobileContainer>
   ),
 ];
-
-export const CustomContainer: ComponentStory<typeof Drawer> = (args) => {
-  return (
-    <CustomDiv id="custom-container">
-      <Drawer {...args}>
-        <Drawer.Trigger>
-          <Button text="서랍을 열어요" />
-        </Drawer.Trigger>
-        <Drawer.Panel>
-          <Panel />
-        </Drawer.Panel>
-      </Drawer>
-    </CustomDiv>
-  );
+Mobile.parameters = {
+  docs: {
+    storyDescription: `containerId 기본값은 \`<CdsProvider />\` 내 Portal id입니다. \`containerId\`를 전달하지 않아도 상위에 반응형 컨테이너를 감싸 Portal 영역을 조정할 수도 있습니다.
+      \n스토리를 박스 내부에서 표현하기 위해 실제 사용법과 다르게 작성되었습니다. 예시 코드는 아래 블럭을 참고하세요.
+      
+      const App = () => {
+          return (
+              <MobileContainer>
+                  <CdsProvider>
+                      // ... your components
+                  </CdsProvider>
+              </MobileContainer>
+          );
+      };
+      `,
+  },
 };
-CustomContainer.args = {
-  label: '옵션 메뉴',
-  containerId: 'custom-container',
-};
-
-const CustomDiv = styled.div`
-  position: relative;
-  overflow: hidden;
-  width: 300px;
-  height: 300px;
-`;
 
 const Panel = () => {
   return (
@@ -156,5 +161,28 @@ const Panel = () => {
         <Badge>미지근한 스터디</Badge>
       </li>
     </List>
+  );
+};
+
+const CustomContainer = styled.div`
+  width: 100%;
+  height: 200px;
+`;
+
+const MobileContainer = ({ id, children }: { id: string } & ChildrenProps) => {
+  return (
+    <div
+      id={id}
+      css={css`
+        position: relative;
+        width: min(100vw, 375px);
+        height: 812px;
+
+        overflow: hidden;
+        margin: auto;
+      `}
+    >
+      {children}
+    </div>
   );
 };
