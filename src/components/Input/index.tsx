@@ -63,7 +63,7 @@ const Input = forwardRef(
       pointer-events: none;
       border: 1px solid ${isValid ? black : error};
       border-radius: 50px;
-      padding-left: 0.8%;
+      padding-left: 5px;
       font-size: 0.8rem;
       &:focus-within {
         outline: none;
@@ -76,7 +76,7 @@ const Input = forwardRef(
       border: 0px;
       border-radius: 50px;
       outline: none;
-      padding: 5px 0.8%;
+      padding: 5px;
       font-size: 1em;
       &::placeholder {
         color: ${gray200};
