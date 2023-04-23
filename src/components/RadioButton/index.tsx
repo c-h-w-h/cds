@@ -15,6 +15,7 @@ interface RadioButtonProps extends DefaultProps<HTMLInputElement> {
   id?: string;
   label?: string;
   direction?: 'left' | 'right' | 'top' | 'bottom';
+  gap?: CSSProperties['gap'];
   children?: ReactNode;
 }
 
@@ -31,6 +32,7 @@ const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
       customButton,
       id,
       label,
+      gap = '0px',
       children = <span>{label ?? value}</span>,
       direction = 'right',
       ...props
@@ -41,7 +43,7 @@ const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
     if (!color) color = themeColor.primary100;
 
     return (
-      <WrapperLabel direction={direction}>
+      <WrapperLabel direction={direction} gap={gap}>
         {(direction === 'left' || direction === 'top') && children}
         <ActualInput
           type="radio"
@@ -88,6 +90,7 @@ const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
 
 interface WrapperProps {
   direction: 'left' | 'right' | 'top' | 'bottom';
+  gap: CSSProperties['gap'];
 }
 
 const WrapperLabel = styled.label<WrapperProps>`
@@ -97,6 +100,7 @@ const WrapperLabel = styled.label<WrapperProps>`
   align-items: center;
   justify-content: center;
   position: relative;
+  gap: ${({ gap }) => gap};
 
   & > input[type='radio']:not(:disabled) ~ * {
     cursor: pointer;
