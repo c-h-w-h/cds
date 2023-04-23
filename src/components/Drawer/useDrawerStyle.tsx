@@ -6,6 +6,7 @@ import type { DrawerPosition } from '.';
 const useDrawerStyle = (
   position: DrawerPosition,
   backgroundColor: CSSProperties['backgroundColor'],
+  isFixed: boolean,
 ) => {
   const slideIn = keyframes`
       from {
@@ -28,7 +29,7 @@ const useDrawerStyle = (
   `;
 
   const drawerStyle = css`
-    position: absolute;
+    position: ${isFixed ? 'fixed' : 'absolute'};
     ${STYLE[position]}
     transform: ${TRANSLATE[position]};
     background-color: ${backgroundColor};

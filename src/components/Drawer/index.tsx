@@ -118,11 +118,12 @@ const Panel = ({ children }: ChildrenProps) => {
 
   const { color } = useTheme();
   const { black, offwhite } = color;
+  const isFixedDrawer = containerId === DRAWER_PORTAL_ROOT_ID;
 
-  const { drawerStyle } = useDrawerStyle(position, offwhite);
+  const { drawerStyle } = useDrawerStyle(position, offwhite, isFixedDrawer);
   const dimmerStyle = css`
-    ${isOpen ? '' : 'display: none;'}
-    position: absolute;
+    display: ${isOpen ? 'block' : 'none'};
+    position: ${isFixedDrawer ? 'fixed' : 'absolute'};
     top: 0;
     left: 0;
     width: 100%;
@@ -132,8 +133,15 @@ const Panel = ({ children }: ChildrenProps) => {
     opacity: 20%;
   `;
 
+  const portalStyle = isFixedDrawer
+    ? undefined
+    : css`
+        position: relative;
+        overflow: hidden;
+      `;
+
   return (
-    <Portal id={containerId}>
+    <Portal id={containerId} style={portalStyle}>
       <div
         css={dimmerStyle}
         aria-hidden={true}
