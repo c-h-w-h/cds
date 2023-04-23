@@ -41,9 +41,9 @@ const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
     if (!color) color = themeColor.primary100;
 
     return (
-      <RadioButtonWrapper direction={direction}>
+      <WrapperDiv direction={direction}>
         {(direction === 'left' || direction === 'top') && children}
-        <ActualButton
+        <ActualInput
           type="radio"
           name={name}
           value={value}
@@ -57,7 +57,7 @@ const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
         {customButton ? (
           customButton
         ) : (
-          <Button size={outerSize} color={color} aria-hidden>
+          <DefaultButtonDiv size={outerSize} color={color} aria-hidden>
             <svg viewBox="0 0 30 30" width={size} height={size}>
               <circle
                 cx="15"
@@ -78,10 +78,10 @@ const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
                 height="30"
               />
             </svg>
-          </Button>
+          </DefaultButtonDiv>
         )}
         {(direction === 'right' || direction === 'bottom') && children}
-      </RadioButtonWrapper>
+      </WrapperDiv>
     );
   },
 );
@@ -90,7 +90,7 @@ interface WrapperProps {
   direction: 'left' | 'right' | 'top' | 'bottom';
 }
 
-const RadioButtonWrapper = styled.label<WrapperProps>`
+const WrapperDiv = styled.label<WrapperProps>`
   display: flex;
   flex-direction: ${({ direction }) =>
     direction === 'left' || direction === 'right' ? 'row' : 'column'};
@@ -108,7 +108,7 @@ interface ButtonProps {
   color: CSSProperties['color'];
 }
 
-const Button = styled.div<ButtonProps>`
+const DefaultButtonDiv = styled.div<ButtonProps>`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -147,7 +147,7 @@ const Button = styled.div<ButtonProps>`
   }
 `;
 
-const ActualButton = styled.input`
+const ActualInput = styled.input`
   width: 0px;
   height: 0px;
   margin: 0;
