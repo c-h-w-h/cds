@@ -15,7 +15,7 @@ export default {
         component: `- 같은 \`name\` 속성 값을 갖는 RadioButton 중 하나만이 선택될 수 있습니다.  
 - \`value\`, \`checked\`, \`disabled\` 등의 일반적인 라디오 버튼의 속성을 지정할 수 있습니다.
   - \`label\` 값을 지정하여 접근성 도구에서 인식하는 라벨 문자열을 지정할 수 있습니다. 기본값은 \`value\` 값을 따릅니다.
-- \`size\`로 버튼의 크기를 지정하고, 이보다 넓은 클릭 영역을 갖게 하려는 경우 \`outerSize\` 값을 지정할 수 있습니다.
+- \`size\`로 버튼의 크기를 지정하고, 이보다 넓은 클릭 영역을 갖게 하려는 경우 \`clickableSize\` 값을 지정할 수 있습니다.
 - \`color\` 값으로 기본 RadioButton의 색을 지정할 수 있습니다.
 - \`ref\`로 useRef를 위한 RefObject를 넘겨줄 수 있습니다. 이 경우 \`ref\`는 input 태그에 전달됩니다.
 - \`direction\`으로 라벨의 라디오 버튼 기준에서의 위치를 지정할 수 있습니다.
@@ -31,7 +31,7 @@ export default {
     size: '16px',
     disabled: false,
     color: theme.color.primary100,
-    outerSize: '30px',
+    clickableSize: '30px',
     direction: 'right',
   },
   argTypes: {
@@ -43,8 +43,8 @@ export default {
         defaultValue: { summary: '16px' },
       },
     },
-    outerSize: {
-      name: 'outerSize',
+    clickableSize: {
+      name: 'clickableSize',
       description: '버튼의 클릭 영역 크기를 지정합니다.',
       table: {
         type: { summary: 'string' },
@@ -211,7 +211,7 @@ CustomColor.args = {
 export const CustomSize = Template.bind({});
 CustomSize.args = {
   size: '3rem',
-  outerSize: '5rem',
+  clickableSize: '5rem',
 };
 
 export const Disabled = Template.bind({});

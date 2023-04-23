@@ -8,7 +8,7 @@ interface RadioButtonProps extends DefaultProps<HTMLInputElement> {
   value: string;
   checked?: boolean;
   color?: CSSProperties['color'];
-  outerSize?: CSSProperties['width'];
+  clickableSize?: CSSProperties['width'];
   size?: CSSProperties['width'];
   disabled?: boolean;
   customButton?: ReactNode;
@@ -26,7 +26,7 @@ const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
       checked = false,
       color,
       size = '16px',
-      outerSize = size,
+      clickableSize = size,
       disabled = false,
       customButton,
       id,
@@ -57,7 +57,7 @@ const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
         {customButton ? (
           customButton
         ) : (
-          <DefaultButtonDiv size={outerSize} color={color} aria-hidden>
+          <DefaultButtonDiv size={clickableSize} color={color} aria-hidden>
             <svg viewBox="0 0 30 30" width={size} height={size}>
               <circle
                 cx="15"
