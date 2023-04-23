@@ -5,7 +5,7 @@ import { CSSProperties, ReactNode, forwardRef } from 'react';
 
 interface RadioButtonProps extends DefaultProps<HTMLInputElement> {
   name: string;
-  value?: string;
+  value: string;
   checked?: boolean;
   color?: CSSProperties['color'];
   outerSize?: CSSProperties['width'];
@@ -51,6 +51,7 @@ const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
           disabled={disabled}
           id={id}
           ref={ref}
+          aria-label={label?.length ? label : value}
           {...props}
         />
         {customButton ? (
