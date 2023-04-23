@@ -105,6 +105,10 @@ const WrapperLabel = styled.label<WrapperProps>`
   & > input[type='radio']:not(:disabled) ~ * {
     cursor: pointer;
   }
+
+  & > input[type='radio']:disabled ~ * {
+    cursor: not-allowed;
+  }
 `;
 
 interface ButtonProps {
