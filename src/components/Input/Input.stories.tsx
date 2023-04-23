@@ -1,5 +1,5 @@
 import Button from '@components/Button';
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { useRef, useState } from '@storybook/addons';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { useEffect } from 'react';
@@ -144,18 +144,6 @@ Controlled.args = {
   id: 'controlled',
 };
 
-export const ControlledWithLabel = ControlledTemplate.bind({});
-ControlledWithLabel.args = {
-  placeholder: '입력하세요',
-  id: 'controlled',
-  label: '아이디:',
-};
-ControlledWithLabel.parameters = {
-  docs: {
-    storyDescription: 'label을 설정해준 제어 Input 컴포넌트입니다.',
-  },
-};
-
 const ControlledWithCancelTemplate: ComponentStory<typeof Input> = (args) => {
   const [inputValue, setInputValue] = useState<string>('');
   const [isValidate, setIsValidate] = useState<boolean>(true);
@@ -177,7 +165,6 @@ const ControlledWithCancelTemplate: ComponentStory<typeof Input> = (args) => {
         value={inputValue}
         isValid={isValidate}
       />
-      <Button onClick={() => setInputValue('')} text="제출"></Button>
       {!isValidate && (
         <div style={{ color: 'red', fontSize: '10px' }}>
           5글자 이상 입력하세요.
@@ -206,11 +193,7 @@ const UncontrolledTemplate: ComponentStory<typeof Input> = (args) => {
   const [inputValue, setInputValue] = useState<string>('');
   return (
     <>
-      <div
-        css={css`
-          display: flex;
-        `}
-      >
+      <UncontrolledWrapper>
         <Input {...args} ref={inputRef} />
         <Button
           onClick={() =>
@@ -218,7 +201,7 @@ const UncontrolledTemplate: ComponentStory<typeof Input> = (args) => {
           }
           text="제출"
         ></Button>
-      </div>
+      </UncontrolledWrapper>
       <div>{inputValue}</div>
     </>
   );
@@ -258,3 +241,7 @@ UncontrolledWithDefaultValue.parameters = {
     storyDescription: 'leadingIcon을 설정해준 비제어 Input 컴포넌트입니다.',
   },
 };
+
+const UncontrolledWrapper = styled.div`
+  display: flex;
+`;
