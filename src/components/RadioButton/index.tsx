@@ -41,7 +41,7 @@ const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
     if (!color) color = themeColor.primary100;
 
     return (
-      <WrapperDiv direction={direction}>
+      <WrapperLabel direction={direction}>
         {(direction === 'left' || direction === 'top') && children}
         <ActualInput
           type="radio"
@@ -81,7 +81,7 @@ const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
           </DefaultButtonDiv>
         )}
         {(direction === 'right' || direction === 'bottom') && children}
-      </WrapperDiv>
+      </WrapperLabel>
     );
   },
 );
@@ -90,7 +90,7 @@ interface WrapperProps {
   direction: 'left' | 'right' | 'top' | 'bottom';
 }
 
-const WrapperDiv = styled.label<WrapperProps>`
+const WrapperLabel = styled.label<WrapperProps>`
   display: flex;
   flex-direction: ${({ direction }) =>
     direction === 'left' || direction === 'right' ? 'row' : 'column'};
