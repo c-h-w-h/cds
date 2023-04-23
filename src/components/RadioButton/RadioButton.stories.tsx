@@ -1,4 +1,5 @@
 import { theme } from '@components/@common/CdsProvider/theme';
+import Center from '@components-layout/Center';
 import styled from '@emotion/styled';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
@@ -121,6 +122,13 @@ export default {
       },
     },
   },
+  decorators: [
+    (Story) => (
+      <Center>
+        <Story />
+      </Center>
+    ),
+  ],
 } as ComponentMeta<typeof RadioButton>;
 
 const DummyCustomFlag = styled.div`
@@ -204,17 +212,35 @@ export const Default = Template.bind({});
 Default.args = {};
 
 export const CustomColor = Template.bind({});
+CustomColor.parameters = {
+  docs: {
+    storyDescription: `\`color\` props를 통해 기본 버튼의 색을 지정할 수 있습니다.  
+css의 color 속성에 들어가는 값을 모두 지원합니다.`,
+  },
+};
 CustomColor.args = {
   color: 'red',
 };
 
 export const CustomSize = Template.bind({});
+CustomSize.parameters = {
+  docs: {
+    storyDescription: `\`size\` props를 통해 기본 버튼의 크기 지정할 수 있습니다.   
+또한 \`clickableSize\`를 조절하면 버튼의 시각적 크기보다 넓은 영역을 클릭 영역으로 정할 수 있습니다.  
+둘 다 css의 width나 height에 들어가는 값을 모두 지원합니다.`,
+  },
+};
 CustomSize.args = {
   size: '3rem',
   clickableSize: '5rem',
 };
 
 export const Disabled = Template.bind({});
+Disabled.parameters = {
+  docs: {
+    storyDescription: `\`disabled\` props를 포함하면 선택 동작이 비활성화됩니다.`,
+  },
+};
 Disabled.args = {
   disabled: true,
 };
@@ -254,6 +280,13 @@ export const SelfClosingTag: ComponentStory<typeof RadioButton> = (args) => {
       <RadioButton {...args} name="leader" value="이현빈" />
     </RadioGroup>
   );
+};
+SelfClosingTag.parameters = {
+  docs: {
+    storyDescription: `\`<RadioButton />\`과 같은 self-closing tag 형태로 사용이 가능합니다.  
+\`label\` props로 라벨로 표시될 문자열을 지정하거나, 미지정 시 \`value\` 값이 기본 라벨로 설정됩니다.  
+\`label\`에 빈 문자열을 지정시 접근성을 위해 \`aria-label\`에 \`value\` 값이 지정됩니다. 아래 예시의 네 번째 선택지를 참고하세요.`,
+  },
 };
 
 const RadioGroup = styled.fieldset`
