@@ -123,6 +123,12 @@ const Input = forwardRef(
         onChange(inputChangeEvent);
       }
     }, [localValue]);
+
+    useEffect(() => {
+      if (value !== undefined) {
+        setLocalValue(value);
+      }
+    }, [value]);
     return (
       <div css={inputWithLabelStyle} {...props}>
         {label && <label htmlFor={id}>{label}</label>}

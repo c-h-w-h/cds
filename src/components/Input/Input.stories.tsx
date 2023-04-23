@@ -177,6 +177,7 @@ const ControlledWithCancelTemplate: ComponentStory<typeof Input> = (args) => {
         value={inputValue}
         isValid={isValidate}
       />
+      <Button onClick={() => setInputValue('')} text="제출"></Button>
       {!isValidate && (
         <div style={{ color: 'red', fontSize: '10px' }}>
           5글자 이상 입력하세요.
