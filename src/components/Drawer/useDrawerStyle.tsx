@@ -51,7 +51,7 @@ const useDrawerStyle = (
 export default useDrawerStyle;
 
 const STYLE: Record<DrawerPosition, string> = {
-  bottom: 'bottom: 0; width: 100%;',
+  bottom: 'bottom: 0; left: 0; width: 100%;',
   left: 'top: 0; left: 0; height: 100%;',
 };
 
