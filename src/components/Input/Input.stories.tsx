@@ -1,4 +1,5 @@
 import Button from '@components/Button';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useRef, useState } from '@storybook/addons';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
@@ -200,7 +201,10 @@ const UncontrolledTemplate: ComponentStory<typeof Input> = (args) => {
             setInputValue(inputRef.current ? inputRef.current.value : '')
           }
           text="제출"
-        ></Button>
+          css={css`
+            padding: 5px 10px;
+          `}
+        />
       </UncontrolledWrapper>
       <div>{inputValue}</div>
     </>

@@ -43,7 +43,7 @@ const Input = forwardRef(
     ref: Ref<HTMLInputElement>,
   ) => {
     const { color: themeColor } = useTheme();
-    const { error, black, gray200, white, primary100 } = themeColor;
+    const { error, black, gray200, gray100, white, primary100 } = themeColor;
     const inputContainerStyle = css`
       display: flex;
       align-items: center;
@@ -53,7 +53,7 @@ const Input = forwardRef(
       border: 1px solid ${isValid ? black : error};
       border-radius: 50px;
       padding-left: 5px;
-      font-size: 0.8rem;
+      font-size: 1rem;
       &:focus-within {
         outline: none;
         border: 1px solid ${primary100};
@@ -94,24 +94,18 @@ const Input = forwardRef(
     `;
 
     const [localValue, setLocalValue] = useState(value || '');
-    const isControlled = value !== undefined ? true : false;
-    const [inputChangeEvent, setInputChangeEvent] =
-      useState<ChangeEvent<HTMLInputElement> | null>(null);
+    const isControlled = value !== undefined;
     const onLocalChange = (e: ChangeEvent<HTMLInputElement>) => {
-      setInputChangeEvent(e);
       setLocalValue(e.target.value);
+      if (isControlled && onChange) {
+        onChange(e);
+      }
     };
 
     const onLocalCancel = (e: MouseEvent<HTMLButtonElement>) => {
       setLocalValue('');
       onCancel && onCancel(e);
     };
-
-    useEffect(() => {
-      if (isControlled && onChange && inputChangeEvent) {
-        onChange(inputChangeEvent);
-      }
-    }, [localValue]);
 
     useEffect(() => {
       if (value !== undefined) {
@@ -129,16 +123,14 @@ const Input = forwardRef(
           {...{ type, id, placeholder, defaultValue }}
           css={inputStyle}
         />
-        {isClearable ? (
+        {isClearable && (
           <button
             aria-label="cancel"
             css={cancelButtonStyle}
             onClick={onLocalCancel}
           >
-            <MdCancel></MdCancel>
+            <MdCancel color={gray100} />
           </button>
-        ) : (
-          <div aria-hidden css={cancelButtonStyle} />
         )}
       </div>
     );
