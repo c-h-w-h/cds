@@ -14,6 +14,14 @@ export default {
     layout: 'fullscreen',
     componentSubtitle:
       'Modal은 특정 컨텐츠가 담긴 화면을 다른 화면 위로 띄워줍니다.',
+    docs: {
+      description: {
+        component: `- 다음과 같은 컴포넌트를 children으로 사용할 수 있습니다.  
+          - \\<Modal.Header\\> : \\<Modal\\> Header로 올 내용을 넣어줄 때 사용합니다.
+          - \\<Modal.Content\\> : \\<Modal\\> Content로 올 내용을 넣어줄 때 사용합니다.
+          `,
+      },
+    },
   },
   argTypes: {
     isOpen: {
@@ -82,7 +90,7 @@ const ModalContent = ({
   );
 };
 
-const Template: ComponentStory<typeof Modal> = () => {
+export const Default: ComponentStory<typeof Modal> = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleHandler = () => {
     setIsOpen(!isOpen);
@@ -99,7 +107,7 @@ const Template: ComponentStory<typeof Modal> = () => {
   );
 };
 
-const TobBarTemplate: ComponentStory<typeof Modal> = () => {
+export const WithHeader: ComponentStory<typeof Modal> = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleHandler = () => {
     setIsOpen(!isOpen);
@@ -108,7 +116,7 @@ const TobBarTemplate: ComponentStory<typeof Modal> = () => {
     <>
       <Button onClick={toggleHandler} text="Show Modal" />
       <Modal {...{ isOpen }} onClose={toggleHandler}>
-        <Modal.TobBar title="헤더" />
+        <Modal.Header title="헤더" />
         <Modal.Content>
           <ModalContent {...{ toggleHandler }} />
         </Modal.Content>
@@ -117,12 +125,9 @@ const TobBarTemplate: ComponentStory<typeof Modal> = () => {
   );
 };
 
-export const Default = Template.bind({});
-export const WithTobBar = TobBarTemplate.bind({});
-
-WithTobBar.parameters = {
+WithHeader.parameters = {
   docs: {
     storyDescription:
-      'TobBar를 포함한 Modal 입니다. Title을 지정해줄 수 있습니다.',
+      'Header를 포함한 Modal 입니다. Title을 지정해줄 수 있습니다.',
   },
 };
