@@ -89,21 +89,6 @@ export default {
         defaultValue: { summary: '0px' },
       },
     },
-    name: {
-      table: {
-        disable: true,
-      },
-    },
-    value: {
-      table: {
-        disable: true,
-      },
-    },
-    checked: {
-      table: {
-        disable: true,
-      },
-    },
     label: {
       description: `사용자에게 선택지에 대한 설명을 제공합니다. self-closing tag 형태로 사용 시 해당 값이 문자열로 표시되며,  
 그 외에도 접근성을 위한 \`aria-label\` 값으로 사용되므로 작성을 권장합니다.`,
@@ -119,11 +104,6 @@ export default {
         defaultValue: { summary: 'false' },
       },
     },
-    id: {
-      table: {
-        disable: true,
-      },
-    },
     customButton: {
       description:
         '기본으로 제공되는 디자인 외의 버튼을 사용합니다. 사용법은 아래 스토리를 참고해 주세요.',
@@ -132,6 +112,26 @@ export default {
         defaultValue: { summary: 'undefined' },
       },
       control: {
+        disable: true,
+      },
+    },
+    name: {
+      table: {
+        disable: true,
+      },
+    },
+    value: {
+      table: {
+        disable: true,
+      },
+    },
+    checked: {
+      table: {
+        disable: true,
+      },
+    },
+    id: {
+      table: {
         disable: true,
       },
     },
