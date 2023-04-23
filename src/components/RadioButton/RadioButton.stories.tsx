@@ -6,7 +6,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react';
 import RadioButton from '.';
 
 export default {
-  title: 'Design System/Components/RadioButton',
+  title: 'Components/RadioButton',
   component: RadioButton,
   parameters: {
     layout: 'fullscreen',
@@ -37,34 +37,30 @@ export default {
   },
   argTypes: {
     size: {
-      name: 'size',
       description: '버튼의 크기를 지정합니다.',
       table: {
-        type: { summary: 'string' },
+        type: { summary: "CSSProperties['width']" },
         defaultValue: { summary: '16px' },
       },
     },
     clickableSize: {
-      name: 'clickableSize',
       description: '버튼의 클릭 영역 크기를 지정합니다.',
       table: {
-        type: { summary: 'string' },
+        type: { summary: "CSSProperties['width']" },
         defaultValue: { summary: 'size의 값을 따름' },
       },
     },
     color: {
-      name: 'color',
       description: '기본 버튼의 색상을 지정합니다.',
+      table: {
+        type: { summary: "CSSProperties['color']" },
+        defaultValue: { summary: 'theme.primary100' },
+      },
       control: {
         type: 'color',
       },
-      table: {
-        type: { summary: 'string' },
-        defaultValue: { summary: 'theme.primary100' },
-      },
     },
     ref: {
-      name: 'ref',
       description: '`useRef`를 사용하기 위한 RefObject를 지정합니다.',
       table: {
         type: { summary: 'RefObject<HTMLInputElement>' },
@@ -75,7 +71,6 @@ export default {
       },
     },
     direction: {
-      name: 'direction',
       description: '버튼에 대한 라벨의 위치를 지정합니다.',
       table: {
         type: { summary: `'left' | 'right' | 'bottom' | 'top'` },
@@ -102,13 +97,18 @@ export default {
       },
     },
     label: {
+      description: `사용자에게 선택지에 대한 설명을 제공합니다. self-closing tag 형태로 사용 시 해당 값이 문자열로 표시되며,  
+그 외에도 접근성을 위한 \`aria-label\` 값으로 사용되므로 작성을 권장합니다.`,
       table: {
-        disable: true,
+        type: { summary: 'string' },
+        defaultValue: { summary: '' },
       },
     },
     disabled: {
+      description: '`true`이면 상호작용이 비활성화됩니다.',
       table: {
-        disable: true,
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
       },
     },
     id: {
@@ -117,7 +117,13 @@ export default {
       },
     },
     customButton: {
+      description:
+        '기본으로 제공되는 디자인 외의 버튼을 사용합니다. 사용법은 아래 스토리를 참고해 주세요.',
       table: {
+        type: { summary: 'ReactNode' },
+        defaultValue: { summary: 'undefined' },
+      },
+      control: {
         disable: true,
       },
     },
