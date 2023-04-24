@@ -113,7 +113,7 @@ const Template: ComponentStory<typeof Toast> = (args) => {
         height: '250px',
       }}
     >
-      <Button text="열려라 참깨" onClick={openToast} />
+      <Button onClick={openToast}>열려라 참깨</Button>
       <Toast {...args} {...toastProps} />
     </Flexbox>
   );

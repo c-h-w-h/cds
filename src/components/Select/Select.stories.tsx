@@ -102,7 +102,7 @@ export const Form: ComponentStory<typeof Select> = () => {
           <Select.Option value="3">3</Select.Option>
         </Select.OptionList>
       </Select>
-      <Button text="submit" />
+      <Button>submit</Button>
     </form>
   );
 };
@@ -135,7 +135,7 @@ export const OptGroup: ComponentStory<typeof Select> = () => {
           </Select.OptGroup>
         </Select.OptionList>
       </Select>
-      <Button text="submit" />
+      <Button>submit</Button>
     </form>
   );
 };
