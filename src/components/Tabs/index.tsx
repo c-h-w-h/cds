@@ -311,4 +311,8 @@ Tabs.List = List;
 Tabs.Trigger = Trigger;
 Tabs.Panel = Panel;
 
+List.displayName = 'Tabs.List';
+Trigger.displayName = 'Tabs.Trigger';
+Panel.displayName = 'Tabs.Panel';
+
 export default Tabs;

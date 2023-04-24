@@ -1,12 +1,11 @@
 import Container from '@components-layout/Container';
-import { css } from '@emotion/react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { MdCelebration, MdInfo, MdCheckCircle } from 'react-icons/md';
 
 import Tabs from '.';
 
 export default {
-  title: 'Design System/Components/Tabs',
+  title: 'Components/Tabs',
   component: Tabs,
   parameters: {
     layout: 'fullscreen',
@@ -260,9 +259,9 @@ Scrollable.parameters = {
 
 const FocusSelectedTemplate: ComponentStory<typeof Tabs> = (args) => (
   <Container
-    css={css`
-      width: 360px;
-    `}
+    style={{
+      width: '360px',
+    }}
   >
     <Tabs {...args}>
       <Tabs.List>
