@@ -9,7 +9,7 @@ import { MdSearch } from 'react-icons/md';
 import Input from '.';
 
 export default {
-  title: 'Input',
+  title: 'Components/Input',
   component: Input,
   parameters: {
     layout: 'fullscreen',
