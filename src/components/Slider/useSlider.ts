@@ -124,7 +124,7 @@ const useSlider = ({
   const onPressArrow = (e: KeyboardEvent) => {
     e.preventDefault();
 
-    let nextValue = (function (key: string, currentValue: number) {
+    let nextValue = ((key: string, currentValue: number) => {
       switch (key) {
         case ARROW_LEFT:
         case ARROW_DOWN:
