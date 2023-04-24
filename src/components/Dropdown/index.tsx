@@ -2,6 +2,7 @@ import Container from '@components-layout/Container';
 import { ENTER, SPACE } from '@constants/key';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { ChildProps } from '@util-types/ChildProps';
 import { ChildrenProps } from '@util-types/ChildrenProps';
 import {
   cloneElement,
@@ -11,7 +12,6 @@ import {
   KeyboardEventHandler,
   MouseEvent as ReactMouseEvent,
   MouseEventHandler,
-  ReactElement,
   SetStateAction,
   useEffect,
   useRef,
@@ -82,7 +82,7 @@ const Dropdown = ({
   );
 };
 
-const Trigger = ({ children }: { children: ReactElement }) => {
+const Trigger = ({ children }: ChildProps) => {
   const { isOpen, setIsOpen, label, setTriggerSize } =
     useSafeContext(DropdownContext);
 

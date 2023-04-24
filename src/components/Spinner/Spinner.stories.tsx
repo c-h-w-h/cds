@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Spinner from '.';
 
 export default {
-  title: 'Design System/Components/Spinner',
+  title: 'Components/Spinner',
   component: Spinner,
   parameters: {
     layout: 'fullscreen',
@@ -12,7 +12,6 @@ export default {
   },
   argTypes: {
     size: {
-      name: 'size',
       description: 'Spinner의 크기를 결정합니다.',
       table: {
         type: { summary: 'string' },

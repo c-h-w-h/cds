@@ -2,9 +2,10 @@ import Center from '@components/@layout/Center';
 import Typography from '@components/Typography';
 import Portal from '@components-common/Portal';
 import Flexbox from '@components-layout/Flexbox';
-import { PORTAL_MODAL_ROOT_ID } from '@constants/portal';
+import { MODAL_PORTAL_ROOT_ID } from '@constants/portal';
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
+import { dimmerStyle } from '@styles/dimmed';
 import { ChildrenProps } from '@util-types/ChildrenProps';
 import { DefaultPropsWithChildren } from '@utils/types/DefaultPropsWithChildren';
 import { MouseEventHandler, createContext } from 'react';
@@ -30,7 +31,7 @@ const Modal = ({ children, isOpen, onClose }: ModalProps) => {
     onClose,
   };
   return (
-    <Portal id={PORTAL_MODAL_ROOT_ID}>
+    <Portal id={MODAL_PORTAL_ROOT_ID}>
       <ModalContext.Provider value={contextValues}>
         <ModalWrapper {...{ isOpen }}>
           <Dimmed onClick={onClose} />
@@ -94,13 +95,8 @@ const ModalBox = styled.div`
 `;
 
 const Dimmed = styled.div`
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  z-index: 998;
   display: flex;
-  opacity: 0.4;
-  background-color: ${({ theme }) => theme.color.black};
+  ${({ theme }) => dimmerStyle('fixed', theme.color)}
 `;
 
 const Button = styled.button`

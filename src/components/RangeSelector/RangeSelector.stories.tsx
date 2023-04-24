@@ -5,7 +5,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import RangeSelector from '.';
 
 export default {
-  title: 'Design System/Components/RangeSelector',
+  title: 'Components/RangeSelector',
   component: RangeSelector,
   parameters: {
     layout: 'fullscreen',
@@ -22,27 +22,21 @@ export default {
   },
   argTypes: {
     id: {
-      name: 'id',
       description: 'DOM 요소를 고유하게 식별하기 위한 값입니다.',
     },
     label: {
-      name: 'label',
       description: '고유한 값으로 접근성 속성에 사용됩니다.',
     },
     min: {
-      name: 'min',
       description: '최소값을 제한합니다.',
     },
     max: {
-      name: 'max',
       description: '최대값을 제한합니다.',
     },
     init: {
-      name: 'init',
       description: '초기 슬라이드 값을 설정합니다.',
     },
     trackWidth: {
-      name: 'trackWidth',
       description: 'px단위로 Track 길이를 설정합니다.',
     },
   },
@@ -55,7 +49,7 @@ export default {
           height: 200px;
         `}
       >
-        <Story />
+        {Story()}
       </Flexbox>
     ),
   ],

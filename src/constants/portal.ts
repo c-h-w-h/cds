@@ -1,2 +1,3 @@
-export const PORTAL_TOAST_ROOT_ID = 'cds-portal-toast-root';
-export const PORTAL_MODAL_ROOT_ID = 'cds-portal-modal-root';
+export const DRAWER_PORTAL_ROOT_ID = 'cds-portal-root-drawer';
+export const TOAST_PORTAL_ROOT_ID = 'cds-portal-root-toast';
+export const MODAL_PORTAL_ROOT_ID = 'cds-portal-modal-root';

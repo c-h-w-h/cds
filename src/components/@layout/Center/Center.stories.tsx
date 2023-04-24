@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Center from '.';
 
 export default {
-  title: 'Design System/Layout/Center',
+  title: 'Layout/Center',
   component: Center,
   parameters: {
     layout: 'fullscreen',
@@ -11,7 +11,6 @@ export default {
   },
   argTypes: {
     children: {
-      name: 'children',
       description: '중앙에 위치시키고자 하는 요소입니다.',
       table: {
         type: { summary: 'ReactNode' },

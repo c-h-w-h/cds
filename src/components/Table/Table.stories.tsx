@@ -13,7 +13,7 @@ import Table, {
 } from '.';
 
 export default {
-  title: 'Design System/Components/Table',
+  title: 'Components/Table',
   component: Table,
   parameters: {
     layout: 'fullscreen',
@@ -33,7 +33,6 @@ export default {
   },
   argTypes: {
     outline: {
-      name: 'outline',
       description: 'Table의 테두리 선 유무를 결정합니다.',
       table: {
         type: { summary: 'boolean' },
@@ -45,7 +44,6 @@ export default {
       },
     },
     rounded: {
-      name: 'rounded',
       description: 'Table의 모서리가 둥근지 여부를 결정합니다.',
       table: {
         type: { summary: 'boolean' },
@@ -57,7 +55,6 @@ export default {
       },
     },
     textColor: {
-      name: 'textColor',
       description: '글자 색상을 결정합니다.',
       table: {
         type: { summary: 'color' },
@@ -66,7 +63,6 @@ export default {
       control: false,
     },
     backgroundColor: {
-      name: 'backgroundColor',
       description: '배경 색상을 결정합니다.',
       table: {
         type: { summary: 'color' },
