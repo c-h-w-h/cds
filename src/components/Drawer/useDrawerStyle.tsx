@@ -33,6 +33,7 @@ const useDrawerStyle = (
     ${STYLE[position]}
     transform: ${TRANSLATE[position]};
     background-color: ${backgroundColor};
+    padding: 12px;
 
     &.open {
       animation: ${slideIn} 0.5s;
