@@ -4,9 +4,8 @@ import Flexbox from '@components-layout/Flexbox';
 import { css } from '@emotion/react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
+import { default as Toast } from './ToastCore';
 import useToast from './useToast';
-
-import Toast from '.';
 
 export default {
   title: 'Components/Toast',
