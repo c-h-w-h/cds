@@ -2,7 +2,7 @@ import { css, useTheme } from '@emotion/react';
 
 import { TabsVariant } from '.';
 
-const useTabsStyle = (
+const useTriggerStyle = (
   variant: TabsVariant,
   isFitted: boolean,
   isActive: boolean,
@@ -85,4 +85,4 @@ const useTabsStyle = (
   return triggerStyle;
 };
 
-export default useTabsStyle;
+export default useTriggerStyle;

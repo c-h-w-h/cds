@@ -14,7 +14,7 @@ import {
 } from 'react';
 import useSafeContext from 'src/hooks/useSafeContext';
 
-import useTabsStyle from './useTabsStyle';
+import useTriggerStyle from './useTriggerStyle';
 
 export type TabsVariant = 'underline' | 'rounded';
 
@@ -115,7 +115,7 @@ const Trigger = ({ value, text, icon, disabled = false }: TabTriggerProps) => {
     useSafeContext(TabsContext);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const isActive = selectedIndex === value;
-  const triggerStyle = useTabsStyle(variant, isFitted, isActive);
+  const triggerStyle = useTriggerStyle(variant, isFitted, isActive);
 
   const onSelect = () => {
     if (disabled || !triggerRef.current) return;
