@@ -1,10 +1,8 @@
-import Icon, { IconSource } from '@components/Icon';
 import Typography from '@components/Typography';
 import Container from '@components-layout/Container';
 import Flexbox from '@components-layout/Flexbox';
-import { NEXT_KEY, PREV_KEY } from '@constants/key';
+import { ARROW_LEFT, ARROW_RIGHT } from '@constants/key';
 import { css, useTheme } from '@emotion/react';
-import { pixelToRem } from '@utils/pixelToRem';
 import {
   createContext,
   Dispatch,
@@ -16,7 +14,9 @@ import {
 } from 'react';
 import useSafeContext from 'src/hooks/useSafeContext';
 
-type TabsVariant = 'underline' | 'rounded';
+import useTriggerStyle from './useTriggerStyle';
+
+export type TabsVariant = 'underline' | 'rounded';
 
 interface TabsContextInterface {
   label: string;
@@ -106,84 +106,21 @@ const List = ({ children }: TabListProps) => {
 interface TabTriggerProps {
   value: string;
   text?: string;
-  icon?: IconSource;
+  icon?: ReactNode;
   disabled?: boolean;
 }
-
-const findFutureTrigger = (key: string, currentTrigger: HTMLElement) => {
-  const siblingProp = (function (key) {
-    if (NEXT_KEY.includes(key)) return 'nextElementSibling';
-    if (PREV_KEY.includes(key)) return 'previousElementSibling';
-    return null;
-  })(key);
-
-  if (siblingProp === null) return;
-
-  let futureTrigger = currentTrigger[siblingProp] as HTMLElement;
-
-  while (futureTrigger && futureTrigger.hasAttribute('disabled')) {
-    futureTrigger = futureTrigger[siblingProp] as HTMLElement;
-  }
-
-  if (futureTrigger) return futureTrigger;
-
-  const triggerParent = currentTrigger.parentElement;
-
-  if (triggerParent === null) return;
-
-  futureTrigger =
-    siblingProp === 'nextElementSibling'
-      ? (triggerParent.firstElementChild as HTMLElement)
-      : (triggerParent.lastElementChild as HTMLElement);
-
-  while (futureTrigger.hasAttribute('disabled')) {
-    futureTrigger = futureTrigger[siblingProp] as HTMLElement;
-  }
-
-  return futureTrigger;
-};
 
 const Trigger = ({ value, text, icon, disabled = false }: TabTriggerProps) => {
   const { label, variant, isFitted, selectedIndex, setSelectedIndex } =
     useSafeContext(TabsContext);
-
   const triggerRef = useRef<HTMLButtonElement | null>(null);
-  const { color: themeColor } = useTheme();
-  const { primary100, gray100, black, white } = themeColor;
   const isActive = selectedIndex === value;
-
-  const underlineStyle = {
-    borderColor: `${selectedIndex === value ? primary100 : gray100}`,
-    borderRadius: 0,
-    borderBottomWidth: '2px',
-    borderBottomStyle: 'solid',
-    marginBottom: '-2px',
-  } as const;
-
-  const roundedStyle = {
-    border: `${selectedIndex === value && `2px ${gray100} solid`}`,
-    borderRadius: '10px',
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
-    borderBottomColor: `${white}`,
-    marginBottom: '-2px',
-  } as const;
-
-  const triggerStyles = {
-    underline: underlineStyle,
-    rounded: roundedStyle,
-  };
-
-  const scrollOptions = {
-    behavior: 'smooth',
-    block: 'nearest',
-    inline: 'start',
-  } as const;
+  const triggerStyle = useTriggerStyle(variant, isFitted, isActive);
 
   const onSelect = () => {
     if (disabled || !triggerRef.current) return;
     setSelectedIndex(value);
-    triggerRef.current.scrollIntoView(scrollOptions);
+    triggerRef.current.scrollIntoView(SCROLL_OPTIONS);
   };
 
   const onPressArrow = (e: KeyboardEvent) => {
@@ -201,7 +138,7 @@ const Trigger = ({ value, text, icon, disabled = false }: TabTriggerProps) => {
     if (futureValue === undefined) return;
 
     futureTrigger.focus();
-    futureTrigger.scrollIntoView(scrollOptions);
+    futureTrigger.scrollIntoView(SCROLL_OPTIONS);
     setSelectedIndex(futureValue);
   };
 
@@ -218,65 +155,19 @@ const Trigger = ({ value, text, icon, disabled = false }: TabTriggerProps) => {
       onClick={onSelect}
       onKeyDown={onPressArrow}
       data-trigger-value={value}
-      css={css`
-        display: flex;
-        justify-content: center;
-        padding: 0.75rem;
-        text-decoration: none;
-        white-space: nowrap;
-        width: ${isFitted === true && '100%'};
-        background-color: ${white};
-        scroll-margin: ${pixelToRem('24px')};
-        ${triggerStyles[variant]}
-
-        & > p {
-          color: ${isActive ? primary100 : black};
-        }
-
-        & > svg {
-          fill: ${isActive ? primary100 : black};
-        }
-
-        &:hover {
-          cursor: pointer;
-          background-color: ${isActive ? white : primary100};
-          border-bottom-color: ${primary100};
-
-          & > * {
-            color: ${isActive ? primary100 : white};
-          }
-
-          & > svg {
-            fill: ${isActive ? primary100 : white};
-          }
-        }
-
-        &:disabled {
-          background-color: ${white};
-          cursor: not-allowed;
-
-          & > p {
-            color: ${gray100};
-          }
-
-          & > svg {
-            fill: ${gray100};
-          }
-
-          &:hover {
-            border-bottom-color: ${gray100};
-          }
-        }
-      `}
+      css={triggerStyle}
     >
-      {icon && (
-        <Icon
-          source={icon}
-          size={pixelToRem('16px')}
-          color={isActive ? primary100 : black}
-        />
+      {icon}
+      {text && (
+        <Typography
+          variant="body"
+          css={css`
+            margin-left: ${icon ? '4px' : 0};
+          `}
+        >
+          {text}
+        </Typography>
       )}
-      {text && <Typography variant="body">{text}</Typography>}
     </button>
   );
 };
@@ -309,4 +200,47 @@ Tabs.List = List;
 Tabs.Trigger = Trigger;
 Tabs.Panel = Panel;
 
+List.displayName = 'Tabs.List';
+Trigger.displayName = 'Tabs.Trigger';
+Panel.displayName = 'Tabs.Panel';
+
 export default Tabs;
+
+const SCROLL_OPTIONS = {
+  behavior: 'smooth',
+  block: 'nearest',
+  inline: 'start',
+} as const;
+
+const findFutureTrigger = (key: string, currentTrigger: HTMLElement) => {
+  const siblingProp = ((key) => {
+    if (ARROW_LEFT.includes(key)) return 'previousElementSibling';
+    if (ARROW_RIGHT.includes(key)) return 'nextElementSibling';
+    return null;
+  })(key);
+
+  if (siblingProp === null) return;
+
+  let futureTrigger = currentTrigger[siblingProp] as HTMLElement;
+
+  while (futureTrigger && futureTrigger.hasAttribute('disabled')) {
+    futureTrigger = futureTrigger[siblingProp] as HTMLElement;
+  }
+
+  if (futureTrigger) return futureTrigger;
+
+  const triggerParent = currentTrigger.parentElement;
+
+  if (triggerParent === null) return;
+
+  futureTrigger =
+    siblingProp === 'nextElementSibling'
+      ? (triggerParent.firstElementChild as HTMLElement)
+      : (triggerParent.lastElementChild as HTMLElement);
+
+  while (futureTrigger.hasAttribute('disabled')) {
+    futureTrigger = futureTrigger[siblingProp] as HTMLElement;
+  }
+
+  return futureTrigger;
+};

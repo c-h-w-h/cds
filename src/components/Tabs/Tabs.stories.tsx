@@ -1,5 +1,4 @@
 import Container from '@components-layout/Container';
-import { css } from '@emotion/react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { MdCelebration, MdInfo, MdCheckCircle } from 'react-icons/md';
 
@@ -66,7 +65,7 @@ export default {
     icon: {
       description: 'Trigger에 표시할 아이콘을 설정합니다.',
       table: {
-        type: { summary: 'string' },
+        type: { summary: 'ReactNode' },
         category: 'Tabs.Trigger',
       },
     },
@@ -174,9 +173,9 @@ DefaultValue.parameters = {
 const WithIconsTemplate: ComponentStory<typeof Tabs> = (args) => (
   <Tabs {...args}>
     <Tabs.List>
-      <Tabs.Trigger value="1" icon={MdCelebration} text="축하" />
-      <Tabs.Trigger value="2" icon={MdInfo} text="정보" />
-      <Tabs.Trigger value="3" icon={MdCheckCircle} text="확인" />
+      <Tabs.Trigger value="1" text="축하" icon={<MdCelebration />} />
+      <Tabs.Trigger value="2" text="정보" icon={<MdInfo />} />
+      <Tabs.Trigger value="3" text="확인" icon={<MdCheckCircle />} />
     </Tabs.List>
   </Tabs>
 );
@@ -190,16 +189,16 @@ WithIcons.args = {
 WithIcons.parameters = {
   docs: {
     storyDescription:
-      '<Tabs.Trigger>의 icon 속성으로 적절한 react-icons 값을 설정하면 해당 아이콘이 표시됩니다.',
+      '<Tabs.Trigger>의 icon 속성으로 react-icons에 있는 아이콘 컴포넌트를 설정할 수 있습니다.',
   },
 };
 
 const WithDisabledTemplate: ComponentStory<typeof Tabs> = (args) => (
   <Tabs {...args}>
     <Tabs.List>
-      <Tabs.Trigger value="1" icon={MdCelebration} text="축하" />
-      <Tabs.Trigger value="2" icon={MdInfo} text="정보" disabled />
-      <Tabs.Trigger value="3" icon={MdCheckCircle} text="확인" />
+      <Tabs.Trigger value="1" text="축하" icon={<MdCelebration />} />
+      <Tabs.Trigger value="2" text="정보" icon={<MdInfo />} disabled />
+      <Tabs.Trigger value="3" text="확인" icon={<MdCheckCircle />} />
     </Tabs.List>
   </Tabs>
 );
@@ -220,13 +219,19 @@ WithDisabled.parameters = {
 const ScrollableTemplate: ComponentStory<typeof Tabs> = (args) => (
   <Tabs {...args}>
     <Tabs.List>
-      <Tabs.Trigger value="1" text="축하하는 탭을 띄우기 위한 트리거입니다." />
+      <Tabs.Trigger
+        value="1"
+        text="탭이 길어지는 상황을 나타내기 위한 스토리입니다."
+      />
       <Tabs.Trigger
         value="2"
-        text="정보를 표시하기 위해서 여기를 클릭하세요."
+        text="Trigger에 있는 텍스트가 길어질 수도 있죠."
       />
-      <Tabs.Trigger value="3" text="아무튼 길어지면 스크롤이 생기겠죠?" />
-      <Tabs.Trigger value="4" text="여기까지 보이시면 너비를 줄여주시겠어요?" />
+      <Tabs.Trigger value="3" text="전체 Tabs 너비보다 길어질 수도 있습니다." />
+      <Tabs.Trigger
+        value="4"
+        text="그렇게 되면 스크롤이 생기도록 구현되어 있습니다."
+      />
     </Tabs.List>
   </Tabs>
 );
@@ -246,19 +251,19 @@ Scrollable.parameters = {
 
 const FocusSelectedTemplate: ComponentStory<typeof Tabs> = (args) => (
   <Container
-    css={css`
-      width: 360px;
-    `}
+    style={{
+      width: '360px',
+    }}
   >
     <Tabs {...args}>
       <Tabs.List>
-        <Tabs.Trigger value="1" text="New!!" />
-        <Tabs.Trigger value="2" text="Hot~~" />
+        <Tabs.Trigger value="1" text="New" />
+        <Tabs.Trigger value="2" text="Hot" />
         <Tabs.Trigger value="3" text="상의" />
         <Tabs.Trigger value="4" text="아우터" />
         <Tabs.Trigger value="5" text="맨투맨" />
-        <Tabs.Trigger value="6" text="반팔" />
-        <Tabs.Trigger value="7" text="롱슬리브" />
+        <Tabs.Trigger value="6" text="롱슬리브" />
+        <Tabs.Trigger value="7" text="반팔" />
         <Tabs.Trigger value="8" text="하의" />
         <Tabs.Trigger value="9" text="반바지" />
         <Tabs.Trigger value="10" text="슬랙스" />
