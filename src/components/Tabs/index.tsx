@@ -3,7 +3,6 @@ import Container from '@components-layout/Container';
 import Flexbox from '@components-layout/Flexbox';
 import { ARROW_LEFT, ARROW_RIGHT } from '@constants/key';
 import { css, useTheme } from '@emotion/react';
-import { pixelToRem } from '@utils/pixelToRem';
 import {
   createContext,
   Dispatch,
@@ -15,7 +14,9 @@ import {
 } from 'react';
 import useSafeContext from 'src/hooks/useSafeContext';
 
-type TabsVariant = 'underline' | 'rounded';
+import useTabsStyle from './useTabsStyle';
+
+export type TabsVariant = 'underline' | 'rounded';
 
 interface TabsContextInterface {
   label: string;
@@ -142,47 +143,23 @@ const findFutureTrigger = (key: string, currentTrigger: HTMLElement) => {
   return futureTrigger;
 };
 
+const SCROLL_OPTIONS = {
+  behavior: 'smooth',
+  block: 'nearest',
+  inline: 'start',
+} as const;
+
 const Trigger = ({ value, text, icon, disabled = false }: TabTriggerProps) => {
   const { label, variant, isFitted, selectedIndex, setSelectedIndex } =
     useSafeContext(TabsContext);
-
   const triggerRef = useRef<HTMLButtonElement | null>(null);
-  const { color: themeColor } = useTheme();
-  const { primary100, gray100, black, white } = themeColor;
   const isActive = selectedIndex === value;
-
-  const underlineStyle = {
-    borderColor: `${selectedIndex === value ? primary100 : gray100}`,
-    borderRadius: 0,
-    borderBottomWidth: '2px',
-    borderBottomStyle: 'solid',
-    marginBottom: '-2px',
-  } as const;
-
-  const roundedStyle = {
-    border: `${selectedIndex === value && `2px ${gray100} solid`}`,
-    borderRadius: '10px',
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
-    borderBottomColor: `${white}`,
-    marginBottom: '-2px',
-  } as const;
-
-  const triggerStyles = {
-    underline: underlineStyle,
-    rounded: roundedStyle,
-  };
-
-  const scrollOptions = {
-    behavior: 'smooth',
-    block: 'nearest',
-    inline: 'start',
-  } as const;
+  const triggerStyle = useTabsStyle(variant, isFitted, isActive);
 
   const onSelect = () => {
     if (disabled || !triggerRef.current) return;
     setSelectedIndex(value);
-    triggerRef.current.scrollIntoView(scrollOptions);
+    triggerRef.current.scrollIntoView(SCROLL_OPTIONS);
   };
 
   const onPressArrow = (e: KeyboardEvent) => {
@@ -200,7 +177,7 @@ const Trigger = ({ value, text, icon, disabled = false }: TabTriggerProps) => {
     if (futureValue === undefined) return;
 
     futureTrigger.focus();
-    futureTrigger.scrollIntoView(scrollOptions);
+    futureTrigger.scrollIntoView(SCROLL_OPTIONS);
     setSelectedIndex(futureValue);
   };
 
@@ -217,56 +194,7 @@ const Trigger = ({ value, text, icon, disabled = false }: TabTriggerProps) => {
       onClick={onSelect}
       onKeyDown={onPressArrow}
       data-trigger-value={value}
-      css={css`
-        display: flex;
-        justify-content: center;
-        padding: 0.75rem;
-        text-decoration: none;
-        white-space: nowrap;
-        width: ${isFitted === true && '100%'};
-        background-color: ${white};
-        scroll-margin: ${pixelToRem('24px')};
-        ${triggerStyles[variant]}
-
-        & > p {
-          color: ${isActive ? primary100 : black};
-        }
-
-        & > svg {
-          fill: ${isActive ? primary100 : black};
-        }
-
-        &:hover {
-          cursor: pointer;
-          background-color: ${isActive ? white : primary100};
-          border-bottom-color: ${primary100};
-
-          & > * {
-            color: ${isActive ? primary100 : white};
-          }
-
-          & > svg {
-            fill: ${isActive ? primary100 : white};
-          }
-        }
-
-        &:disabled {
-          background-color: ${white};
-          cursor: not-allowed;
-
-          & > p {
-            color: ${gray100};
-          }
-
-          & > svg {
-            fill: ${gray100};
-          }
-
-          &:hover {
-            border-bottom-color: ${gray100};
-          }
-        }
-      `}
+      css={triggerStyle}
     >
       {icon}
       {text && (
