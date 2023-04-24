@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Flexbox from '.';
 
 export default {
-  title: 'Design System/Layout/Flexbox',
+  title: 'Layout/Flexbox',
   component: Flexbox,
   parameters: {
     layout: 'fullscreen',
@@ -13,14 +13,12 @@ export default {
   },
   argTypes: {
     children: {
-      name: 'children',
       description: '목록으로 표시되는 요소입니다.',
       table: {
         type: { summary: 'ReactNode' },
       },
     },
     flexDirection: {
-      name: 'flexDirection',
       description: '요소가 배치되는 방향을 결정합니다.',
       table: {
         type: { summary: "CSSProperties['flexDirection']" },
@@ -32,7 +30,6 @@ export default {
       },
     },
     flexWrap: {
-      name: 'flexWrap',
       description: '줄바꿈 속성을 설정합니다.',
       table: {
         type: { summary: "CSSProperties['flexWrap']" },
@@ -44,7 +41,6 @@ export default {
       },
     },
     alignContent: {
-      name: 'alignContent',
       description:
         'flex의 교차축을 따라 요소와 간격 배치 방식을 결정합니다. 줄바꿈이 일어나는 경우 적용되며 이 경우 alignItems 속성은 무시됩니다.',
       table: {
@@ -69,7 +65,6 @@ export default {
       },
     },
     alignItems: {
-      name: 'alignItems',
       description: 'flex의 교차축에 대한 요소 배치 방식을 결정합니다.',
       table: {
         type: { summary: "CSSProperties['alignItems']" },
@@ -93,7 +88,6 @@ export default {
       },
     },
     justifyContent: {
-      name: 'justifyContent',
       description:
         'flex의 주축을 따라 요소와 주변 공간 배치 방식을 결정합니다.',
       table: {
@@ -119,7 +113,6 @@ export default {
       },
     },
     gap: {
-      name: 'gap',
       description: '행과 열 사이의 간격을 설정합니다.',
       table: {
         type: { summary: "CSSProperties['gap']" },
@@ -134,19 +127,17 @@ export default {
   },
 } as ComponentMeta<typeof Flexbox>;
 
-const items = (
-  <>
-    <p>1</p>
-    <p>2</p>
-    <p>3</p>
-    <p>4</p>
-    <p>5</p>
-    <p>6</p>
-  </>
-);
-
 const Template: ComponentStory<typeof Flexbox> = (args) => {
-  return <Flexbox {...args}>{items}</Flexbox>;
+  return (
+    <Flexbox {...args}>
+      <p>1</p>
+      <p>🧊</p>
+      <p>3</p>
+      <p>🧊</p>
+      <p>5</p>
+      <p>🧊</p>
+    </Flexbox>
+  );
 };
 
 export const Default = Template.bind({});
@@ -195,7 +186,12 @@ export const WithWrap: ComponentStory<typeof Flexbox> = (args) => {
 
   return (
     <Flexbox css={narrowWidthStyle} {...args}>
-      {items}
+      <p>1</p>
+      <p>🧊</p>
+      <p>3</p>
+      <p>🧊</p>
+      <p>5</p>
+      <p>🧊</p>
     </Flexbox>
   );
 };

@@ -273,5 +273,7 @@ const Dot = styled.div<{ current: boolean }>`
 
 Carousel.Card = Card;
 Carousel.Slide = Slide;
+Card.displayName = 'Carousel.Card';
+Slide.displayName = 'Carousel.Slide';
 
 export default Carousel;

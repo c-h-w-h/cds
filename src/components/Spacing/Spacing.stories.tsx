@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Spacing from '.';
 
 export default {
-  title: 'Design System/Components/Spacing',
+  title: 'Components/Spacing',
   component: Spacing,
   parameters: {
     layout: 'fullscreen',
@@ -19,7 +19,6 @@ export default {
   },
   argTypes: {
     size: {
-      name: 'size',
       description: '여백의 크기를 설정합니다.',
       table: {
         type: { summary: 'SpacingVariant' },
@@ -44,6 +43,9 @@ const Template: ComponentStory<typeof Spacing> = (args) => (
 );
 
 export const Default = Template.bind({});
+Default.args = {
+  size: 5,
+};
 
 export const Size_5 = Template.bind({});
 Size_5.args = {
