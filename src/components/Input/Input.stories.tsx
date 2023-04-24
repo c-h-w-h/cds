@@ -207,8 +207,9 @@ const UncontrolledTemplate: ComponentStory<typeof Input> = (args) => {
           onClick={() =>
             setInputValue(inputRef.current ? inputRef.current.value : '')
           }
-          text="제출"
-        />
+        >
+          제출
+        </Button>
       </UncontrolledWrapper>
       <div>{inputValue}</div>
     </>

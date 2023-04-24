@@ -63,7 +63,7 @@ const Template: ComponentStory<typeof Drawer> = (args) => {
   return (
     <Drawer {...args}>
       <Drawer.Trigger>
-        <Button text="서랍을 열어요" />
+        <Button>서랍을 열어요</Button>
       </Drawer.Trigger>
       <Drawer.Panel>
         <StudyList />

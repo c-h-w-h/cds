@@ -71,7 +71,10 @@ export default {
 const Template: ComponentStory<typeof Dropdown> = (args) => (
   <Dropdown {...args}>
     <Dropdown.Trigger>
-      <Button text="팀원 목록" icon={MdPeople} variant="light" />
+      <Button variant="light">
+        <MdPeople />
+        팀원 목록
+      </Button>
     </Dropdown.Trigger>
     <Dropdown.Menu>
       <ul>

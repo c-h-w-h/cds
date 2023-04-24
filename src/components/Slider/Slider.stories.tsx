@@ -243,7 +243,9 @@ const ThumbTemplate: ComponentStory<typeof Slider> = (args) => (
       <Slider.Filled />
     </Slider.Track>
     <Slider.Thumb>
-      <Button icon={MdCelebration} />
+      <Button variant="round" label="Slider Thumb">
+        <MdCelebration />
+      </Button>
     </Slider.Thumb>
   </Slider>
 );

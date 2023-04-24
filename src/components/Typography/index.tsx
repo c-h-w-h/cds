@@ -1,12 +1,7 @@
 import { TYPOGRAPHY } from '@constants/typography';
 import { css, jsx } from '@emotion/react';
 import { DefaultProps } from '@util-types/DefaultProps';
-import { CSSProperties, ReactNode, ReactPortal } from 'react';
-
-type TextNode = Exclude<
-  ReactNode,
-  number | boolean | ReactPortal | null | undefined
->;
+import { CSSProperties } from 'react';
 
 interface TypographyProps extends DefaultProps<HTMLParagraphElement> {
   children: TextNode;
