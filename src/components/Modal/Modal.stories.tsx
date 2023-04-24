@@ -74,16 +74,18 @@ const DummyModalContent = ({
           css={css`
             height: 30px;
           `}
-          text="확인"
           onClick={toggleHandler}
-        />
+        >
+          확인
+        </Button>
         <Button
           css={css`
             height: 30px;
           `}
-          text="취소"
           onClick={toggleHandler}
-        />
+        >
+          취소
+        </Button>
       </Flexbox>
     </>
   );
@@ -96,7 +98,7 @@ export const Default: ComponentStory<typeof Modal> = () => {
   };
   return (
     <>
-      <Button onClick={toggleHandler} text="Show Modal" />
+      <Button onClick={toggleHandler}>Show Modal</Button>
       <Modal {...{ isOpen }} onClose={toggleHandler}>
         <Modal.Content>
           <DummyModalContent {...{ toggleHandler }} />
@@ -113,7 +115,7 @@ export const WithHeader: ComponentStory<typeof Modal> = () => {
   };
   return (
     <>
-      <Button onClick={toggleHandler} text="Show Modal" />
+      <Button onClick={toggleHandler}>Show Modal</Button>
       <Modal {...{ isOpen }} onClose={toggleHandler}>
         <Modal.Header title="헤더" />
         <Modal.Content>
