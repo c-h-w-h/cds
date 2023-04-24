@@ -2,6 +2,7 @@ import Center from '@components/@layout/Center';
 import Flexbox from '@components-layout/Flexbox';
 import { css } from '@emotion/react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { ReactNode } from 'react';
 
 import Table, {
   TableHead,
@@ -12,7 +13,7 @@ import Table, {
 } from '.';
 
 export default {
-  title: 'Design System/Components/Table',
+  title: 'Components/Table',
   component: Table,
   parameters: {
     layout: 'fullscreen',
@@ -32,7 +33,6 @@ export default {
   },
   argTypes: {
     outline: {
-      name: 'outline',
       description: 'Table의 테두리 선 유무를 결정합니다.',
       table: {
         type: { summary: 'boolean' },
@@ -44,7 +44,6 @@ export default {
       },
     },
     rounded: {
-      name: 'rounded',
       description: 'Table의 모서리가 둥근지 여부를 결정합니다.',
       table: {
         type: { summary: 'boolean' },
@@ -56,7 +55,6 @@ export default {
       },
     },
     textColor: {
-      name: 'textColor',
       description: '글자 색상을 결정합니다.',
       table: {
         type: { summary: 'color' },
@@ -65,7 +63,6 @@ export default {
       control: false,
     },
     backgroundColor: {
-      name: 'backgroundColor',
       description: '배경 색상을 결정합니다.',
       table: {
         type: { summary: 'color' },
@@ -76,21 +73,7 @@ export default {
     as: { table: { disable: true } },
     theme: { table: { disable: true } },
   },
-  decorators: [
-    (Story) => (
-      <Flexbox
-        justifyContent={'center'}
-        alignItems={'center'}
-        css={css`
-          height: 300px;
-        `}
-      >
-        <Center>
-          <Story />
-        </Center>
-      </Flexbox>
-    ),
-  ],
+  decorators: [(Story) => <StoryContainer>{Story()}</StoryContainer>],
 } as ComponentMeta<typeof Table>;
 
 const DUMMY_HEAD = [['Column1', 'Column2', 'Column3']];
@@ -275,3 +258,15 @@ WithBackgroundHighlight.parameters = {
       '\\<TableBodyData\\> 컴포넌트의 backgroundColor 속성에 사용자 지정 색상을 전달하여 강조할 수 있습니다.',
   },
 };
+
+const StoryContainer = ({ children }: { children: ReactNode }) => (
+  <Flexbox
+    justifyContent={'center'}
+    alignItems={'center'}
+    css={css`
+      height: 300px;
+    `}
+  >
+    <Center>{children}</Center>
+  </Flexbox>
+);

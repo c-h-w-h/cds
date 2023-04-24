@@ -23,21 +23,18 @@ export default {
   },
   argTypes: {
     label: {
-      name: 'label',
       description: '고유한 값으로 접근성 속성에 사용됩니다.',
       table: {
         category: 'Tabs',
       },
     },
     defaultValue: {
-      name: 'defaultValue',
       description: '초기에 활성화되어 있을 Trigger의 value를 입력합니다.',
       table: {
         category: 'Tabs',
       },
     },
     variant: {
-      name: 'variant',
       description: 'Tabs의 디자인을 선택할 수 있습니다.',
       table: {
         defaultValue: { summary: 'underline' },
@@ -45,7 +42,6 @@ export default {
       },
     },
     isFitted: {
-      name: 'isFitted',
       description: 'Trigger들이 List의 너비를 꽉 채울지 결정합니다.',
       table: {
         defaultValue: { summary: false },
@@ -53,7 +49,6 @@ export default {
       },
     },
     value: {
-      name: 'value',
       description: '각각의 Trigger와 Panel을 짝짓기 위한 값입니다.',
       table: {
         type: { summary: 'string', required: true },
@@ -61,7 +56,6 @@ export default {
       },
     },
     text: {
-      name: 'text',
       description: 'Trigger에 표시할 제목을 설정합니다.',
       table: {
         type: { summary: 'string' },
@@ -69,7 +63,6 @@ export default {
       },
     },
     icon: {
-      name: 'icon',
       description: 'Trigger에 표시할 아이콘을 설정합니다.',
       table: {
         type: { summary: 'ReactNode' },
@@ -77,7 +70,6 @@ export default {
       },
     },
     disabled: {
-      name: 'disabled',
       description: 'Trigger의 비활성화 여부를 결정합니다.',
       table: {
         type: { summary: 'boolean' },

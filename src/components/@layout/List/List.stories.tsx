@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import List from '.';
 
 export default {
-  title: 'Design System/Layout/List',
+  title: 'Layout/List',
   component: List,
   parameters: {
     layout: 'fullscreen',
@@ -13,14 +13,12 @@ export default {
   },
   argTypes: {
     children: {
-      name: 'children',
       description: '목록으로 표시되는 요소입니다.',
       table: {
         type: { summary: 'ReactNode' },
       },
     },
     flexDirection: {
-      name: 'flexDirection',
       description: '요소가 배치되는 방향을 결정합니다.',
       table: {
         type: { summary: "CSSProperties['flexDirection']" },
@@ -32,7 +30,6 @@ export default {
       },
     },
     flexWrap: {
-      name: 'flexWrap',
       description: '줄바꿈 속성을 설정합니다.',
       table: {
         type: { summary: "CSSProperties['flexWrap']" },
@@ -55,11 +52,11 @@ const Template: ComponentStory<typeof List> = (args) => {
   return (
     <List {...args}>
       <li>1</li>
-      <li>2</li>
+      <li>🧊</li>
       <li>3</li>
-      <li>4</li>
+      <li>🧊</li>
       <li>5</li>
-      <li>6</li>
+      <li>🧊</li>
     </List>
   );
 };

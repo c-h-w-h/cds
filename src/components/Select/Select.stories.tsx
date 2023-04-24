@@ -4,12 +4,12 @@ import Container from '@components-layout/Container';
 import { css } from '@emotion/react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { flexboxStyle } from '@styles/flex-box';
-import { FormEventHandler, useState } from 'react';
+import { FormEventHandler, ReactNode, useState } from 'react';
 
 import Select from '.';
 
 export default {
-  title: 'Design System/Components/Select',
+  title: 'Components/Select',
   component: Select,
   parameters: {
     layout: 'fullscreen',
@@ -51,9 +51,7 @@ export default {
       control: false,
     },
   },
-  decorators: [
-    (Story) => <Container css={containerStyle}>{Story()}</Container>,
-  ],
+  decorators: [(Story) => <StoryContainer>{Story()}</StoryContainer>],
 } as ComponentMeta<typeof Select>;
 
 const Template: ComponentStory<typeof Select> = (args) => {
@@ -161,6 +159,10 @@ const containerStyle = css`
   padding: 0 20px;
   ${flexColumn}
 `;
+
+const StoryContainer = ({ children }: { children: ReactNode }) => (
+  <Container css={containerStyle}>{children}</Container>
+);
 
 const formStyle = css`
   width: 100%;
