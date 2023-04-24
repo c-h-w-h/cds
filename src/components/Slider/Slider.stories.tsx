@@ -1,6 +1,5 @@
 import Button from '@components/Button';
 import Flexbox from '@components-layout/Flexbox';
-import { css } from '@emotion/react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { MdCelebration } from 'react-icons/md';
 
@@ -105,11 +104,11 @@ export default {
       <Flexbox
         justifyContent={'center'}
         alignItems={'center'}
-        css={css`
-          height: 250px;
-        `}
+        style={{
+          height: '250px',
+        }}
       >
-        <Story />
+        {Story()}
       </Flexbox>
     ),
   ],

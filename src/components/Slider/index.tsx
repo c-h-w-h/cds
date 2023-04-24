@@ -240,5 +240,9 @@ Slider.Track = Track;
 Slider.Filled = Filled;
 Slider.Thumb = Thumb;
 
+Track.displayName = 'Slider.Track';
+Filled.displayName = 'Slider.Filled';
+Thumb.displayName = 'Slider.Thumb';
+
 export { SliderContext };
 export default Slider;
