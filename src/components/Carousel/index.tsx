@@ -265,7 +265,7 @@ const Progress = styled.div<{ isSlide: boolean }>`
 const Dot = styled.div<{ current: boolean }>`
   margin: 0.7rem;
   background: ${({ theme, current }) =>
-    current ? theme.color.primary100 : theme.color.gray100};
+    current ? theme.color.primary : theme.color.gray100};
   border-radius: 100%;
   height: ${pixelToRem('8px')};
   width: ${pixelToRem('8px')};

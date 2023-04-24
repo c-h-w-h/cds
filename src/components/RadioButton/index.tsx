@@ -38,7 +38,7 @@ const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
     ref,
   ) => {
     const { color: themeColor } = useTheme();
-    if (!color) color = themeColor.primary100;
+    if (!color) color = themeColor.primary;
 
     return (
       <WrapperLabel direction={direction}>

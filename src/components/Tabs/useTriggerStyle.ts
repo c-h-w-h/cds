@@ -8,10 +8,10 @@ const useTriggerStyle = (
   isActive: boolean,
 ) => {
   const { color: themeColor } = useTheme();
-  const { primary100, gray100, black, white } = themeColor;
+  const { primary, gray100, black, white } = themeColor;
 
   const underlineStyle = {
-    borderColor: `${isActive ? primary100 : gray100}`,
+    borderColor: `${isActive ? primary : gray100}`,
     borderRadius: 0,
     borderBottomWidth: '2px',
     borderBottomStyle: 'solid',
@@ -44,24 +44,24 @@ const useTriggerStyle = (
     ${variantStyles[variant]}
 
     & > p {
-      color: ${isActive ? primary100 : black};
+      color: ${isActive ? primary : black};
     }
 
     & > svg {
-      fill: ${isActive ? primary100 : black};
+      fill: ${isActive ? primary : black};
     }
 
     &:hover {
       cursor: pointer;
-      background-color: ${isActive ? white : primary100};
-      border-bottom-color: ${primary100};
+      background-color: ${isActive ? white : primary};
+      border-bottom-color: ${primary};
 
       & > * {
-        color: ${isActive ? primary100 : white};
+        color: ${isActive ? primary : white};
       }
 
       & > svg {
-        fill: ${isActive ? primary100 : white};
+        fill: ${isActive ? primary : white};
       }
     }
 
