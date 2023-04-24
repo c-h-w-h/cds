@@ -1,4 +1,3 @@
-import Icon, { IconSource } from '@components/Icon';
 import Typography from '@components/Typography';
 import Container from '@components-layout/Container';
 import Flexbox from '@components-layout/Flexbox';
@@ -106,7 +105,7 @@ const List = ({ children }: TabListProps) => {
 interface TabTriggerProps {
   value: string;
   text?: string;
-  icon?: IconSource;
+  icon?: ReactNode;
   disabled?: boolean;
 }
 
@@ -269,14 +268,17 @@ const Trigger = ({ value, text, icon, disabled = false }: TabTriggerProps) => {
         }
       `}
     >
-      {icon && (
-        <Icon
-          source={icon}
-          size={pixelToRem('16px')}
-          color={isActive ? primary100 : black}
-        />
+      {icon}
+      {text && (
+        <Typography
+          variant="body"
+          css={css`
+            margin-left: ${icon ? '4px' : 0};
+          `}
+        >
+          {text}
+        </Typography>
       )}
-      {text && <Typography variant="body">{text}</Typography>}
     </button>
   );
 };
