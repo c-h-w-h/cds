@@ -8,12 +8,12 @@ import { MouseEventHandler, useState } from 'react';
 import Modal from '.';
 
 export default {
-  title: 'Design System/Components/Modal',
+  title: 'Components/Modal',
   component: Modal,
   parameters: {
     layout: 'fullscreen',
     componentSubtitle:
-      'Modal은 특정 컨텐츠가 담긴 화면을 다른 화면 위로 띄워줍니다.',
+      'Modal은 사용자의 주의를 끌거나 추가적인 정보를 제공하는 경우 특정 컨텐츠가 담긴 요소를 화면 위에 표시합니다.',
     docs: {
       description: {
         component: `- 다음과 같은 컴포넌트를 children으로 사용할 수 있습니다.  
@@ -27,7 +27,6 @@ export default {
     isOpen: {
       name: 'isOpen',
       description: 'Modal을 띄울지 여부를 나타내는 상태입니다.',
-      defaultValue: true,
       table: {
         type: { summary: 'boolean', required: true },
       },
@@ -55,7 +54,7 @@ export default {
   ],
 } as ComponentMeta<typeof Modal>;
 
-const ModalContent = ({
+const DummyModalContent = ({
   toggleHandler,
 }: {
   toggleHandler: MouseEventHandler;
@@ -100,7 +99,7 @@ export const Default: ComponentStory<typeof Modal> = () => {
       <Button onClick={toggleHandler} text="Show Modal" />
       <Modal {...{ isOpen }} onClose={toggleHandler}>
         <Modal.Content>
-          <ModalContent {...{ toggleHandler }} />
+          <DummyModalContent {...{ toggleHandler }} />
         </Modal.Content>
       </Modal>
     </>
@@ -118,7 +117,7 @@ export const WithHeader: ComponentStory<typeof Modal> = () => {
       <Modal {...{ isOpen }} onClose={toggleHandler}>
         <Modal.Header title="헤더" />
         <Modal.Content>
-          <ModalContent {...{ toggleHandler }} />
+          <DummyModalContent {...{ toggleHandler }} />
         </Modal.Content>
       </Modal>
     </>
