@@ -10,7 +10,6 @@ export { default as Badge } from '@components/Badge';
 export { default as Button } from '@components/Button';
 export { default as Drawer } from '@components/Drawer';
 export { default as Dropdown } from '@components/Dropdown';
-export { default as Icon } from '@components/Icon';
 export { default as Input } from '@components/Input';
 export { default as Modal } from '@components/Modal';
 export { default as RangeSelector } from '@components/RangeSelector';
@@ -24,3 +23,12 @@ export { default as Typography } from '@components/Typography';
 
 export * from '@styles/index';
 export * from '@utils/index';
+
+export {
+  CdsBag,
+  CdsHamburger,
+  CdsHeart,
+  CdsHome,
+  CdsSearch,
+  CdsUser,
+} from '@components/Icon';

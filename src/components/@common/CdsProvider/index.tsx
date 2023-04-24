@@ -1,5 +1,9 @@
 import Global from '@components-common/Global';
-import { DRAWER_PORTAL_ROOT_ID, TOAST_PORTAL_ROOT_ID } from '@constants/portal';
+import {
+  DRAWER_PORTAL_ROOT_ID,
+  TOAST_PORTAL_ROOT_ID,
+  MODAL_PORTAL_ROOT_ID,
+} from '@constants/portal';
 import { ThemeProvider } from '@emotion/react';
 import { ReactNode } from 'react';
 
@@ -17,6 +21,7 @@ const CdsProvider = ({ children }: CdsProviderProps) => {
         {children}
         <div id={DRAWER_PORTAL_ROOT_ID}></div>
         <div id={TOAST_PORTAL_ROOT_ID}></div>
+        <div id={MODAL_PORTAL_ROOT_ID}></div>
       </ThemeProvider>
     </>
   );
