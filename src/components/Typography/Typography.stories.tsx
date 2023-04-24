@@ -5,7 +5,7 @@ import Highlight from './Highlight';
 import Typography from '.';
 
 export default {
-  title: 'Design System/Components/Typography',
+  title: 'Components/Typography',
   component: Typography,
   parameters: {
     layout: 'fullscreen',
@@ -21,7 +21,6 @@ export default {
   },
   argTypes: {
     variant: {
-      name: 'variant',
       description: '텍스트 역할을 선택합니다.',
       table: {
         type: { summary: 'TypographyVariant' },
@@ -34,7 +33,6 @@ export default {
       },
     },
     children: {
-      name: 'children',
       description:
         'Typography로 나타낼 글 내용입니다. 문자로 평가되는 모든 노드가 올 수 있습니다.',
       table: {
@@ -43,7 +41,6 @@ export default {
       },
     },
     color: {
-      name: 'color',
       description: '텍스트 색상을 지정합니다.',
       table: {
         type: { summary: "CSSProperties['color']" },

@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Image from '.';
 
 export default {
-  title: 'Design System/Components/Image',
+  title: 'Components/Image',
   component: Image,
   parameters: {
     layout: 'fullscreen',
@@ -12,7 +12,6 @@ export default {
   },
   argTypes: {
     src: {
-      name: 'src',
       description: '이미지가 저장된 경로나 URL을 설정합니다.',
       table: {
         type: { summary: 'string', required: true },
@@ -22,7 +21,6 @@ export default {
       },
     },
     alt: {
-      name: 'alt',
       description: '이미지의 대체 텍스트를 설정합니다.',
       table: {
         type: { summary: 'string', required: true },
@@ -32,7 +30,6 @@ export default {
       },
     },
     size: {
-      name: 'size',
       description: '이미지 크기를 설정합니다.',
       table: {
         type: { summary: 'string', required: true },
@@ -43,7 +40,6 @@ export default {
       },
     },
     shape: {
-      name: 'shape',
       description: '이미지 모양을 설정합니다.',
       table: {
         type: { summary: 'string' },

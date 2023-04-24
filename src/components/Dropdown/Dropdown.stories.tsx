@@ -9,7 +9,7 @@ import { MdPeople } from 'react-icons/md';
 import Dropdown from '.';
 
 export default {
-  title: 'Design System/Components/Dropdown',
+  title: 'Components/Dropdown',
   component: Dropdown,
   parameters: {
     layout: 'fullscreen',
@@ -26,7 +26,6 @@ export default {
   },
   argTypes: {
     label: {
-      name: 'label',
       description: '고유한 값으로 접근성 속성에 사용됩니다.',
       table: {
         type: { summary: 'string' },
@@ -36,7 +35,6 @@ export default {
       },
     },
     collapseOnBlur: {
-      name: 'collapseOnBlur',
       description:
         '메뉴가 열렸을 때 메뉴 이외의 영역을 눌렀을 때 메뉴를 닫을 것인지 여부를 설정합니다.',
       table: {
@@ -48,7 +46,6 @@ export default {
       },
     },
     direction: {
-      name: 'direction',
       description: '메뉴가 열리는 방향을 선택합니다.',
       table: {
         type: { summary: 'string' },
@@ -69,9 +66,7 @@ export default {
           height: 500px;
         `}
       >
-        <Center>
-          <Story />
-        </Center>
+        <Center>{Story()}</Center>
       </Flexbox>
     ),
   ],

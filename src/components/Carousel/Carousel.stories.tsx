@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Carousel from '.';
 
 export default {
-  title: 'Design System/Components/Carousel',
+  title: 'Components/Carousel',
   component: Carousel,
   parameters: {
     layout: 'fullscreen',
@@ -21,7 +21,6 @@ export default {
   },
   argTypes: {
     line: {
-      name: 'line',
       description: 'Carousel 내부 열 개수를 설정합니다.',
       table: {
         type: { summary: 'number' },
@@ -29,7 +28,6 @@ export default {
       },
     },
     width: {
-      name: 'width',
       description: 'Carousel 아이템의 너비를 px 단위로 설정합니다.',
       table: {
         type: { summary: 'number' },
@@ -37,7 +35,6 @@ export default {
       control: false,
     },
     height: {
-      name: 'height',
       description: 'Carousel 아이템의 높이를 px 단위로 설정합니다.',
       table: {
         type: { summary: 'number' },
@@ -88,9 +85,9 @@ const Template: ComponentStory<typeof Carousel> = (args) => (
 
 export const Default = Template.bind({});
 
-export const WithCarouselCard = Template.bind({});
+export const CarouselCard = Template.bind({});
 
-WithCarouselCard.parameters = {
+CarouselCard.parameters = {
   docs: {
     storyDescription:
       '<Carousel.Card>를 사용한 Card 형식의 기본 Carousel입니다.',
@@ -101,6 +98,8 @@ export const WithCustomLine = Template.bind({});
 WithCustomLine.args = {
   line: 2,
 };
+
+WithCustomLine.storyName = 'With Custom Line (Card)';
 
 WithCustomLine.parameters = {
   docs: {
@@ -113,6 +112,8 @@ WithCustomSize.args = {
   width: 300,
   height: 400,
 };
+
+WithCustomSize.storyName = 'With Custom Size (Card)';
 
 WithCustomSize.parameters = {
   docs: {
@@ -127,6 +128,8 @@ WithCustomLineAndSize.args = {
   width: 300,
   height: 400,
 };
+
+WithCustomLineAndSize.storyName = 'With Custom Line And Size (Card)';
 
 WithCustomLineAndSize.parameters = {
   docs: {
@@ -147,9 +150,9 @@ const SlideTemplate: ComponentStory<typeof Carousel> = (args) => {
   );
 };
 
-export const WithCarouselSlide = SlideTemplate.bind({});
+export const CarouselSlide = SlideTemplate.bind({});
 
-WithCarouselSlide.parameters = {
+CarouselSlide.parameters = {
   docs: {
     storyDescription:
       '<Carousel.Slide>를 사용한 Slide 형식의 기본 Carousel입니다.',
@@ -161,9 +164,11 @@ WidthCustomHeight.args = {
   height: 500,
 };
 
+WidthCustomHeight.storyName = 'With Custom Height (Slide)';
+
 WidthCustomHeight.parameters = {
   docs: {
     storyDescription:
-      '<Carousel.Slide>와 함께 height에 사용자 지정 값을 전달하여 Carousel 높이를 설정할 수 있습니다.',
+      'height에 사용자 지정 값을 전달하여 Carousel 높이를 설정할 수 있습니다.',
   },
 };

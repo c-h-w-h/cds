@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Container from '.';
 
 export default {
-  title: 'Design System/Layout/Container',
+  title: 'Layout/Container',
   component: Container,
   parameters: {
     layout: 'fullscreen',
@@ -13,14 +13,12 @@ export default {
   },
   argTypes: {
     children: {
-      name: 'children',
       description: 'Container 내부에 위치하는 요소입니다.',
       table: {
         type: { summary: 'ReactNode' },
       },
     },
     overflowX: {
-      name: 'overflowX',
       description:
         '너비를 초과하는 요소가 존재할 경우 어떻게 보여줄 것인지 결정합니다.',
       table: {
@@ -33,7 +31,6 @@ export default {
       },
     },
     overflowY: {
-      name: 'overflowY',
       description:
         '높이를 초과하는 요소가 존재할 경우 어떻게 보여줄 것인지 결정합니다.',
       table: {

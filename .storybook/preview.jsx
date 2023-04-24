@@ -10,12 +10,29 @@ export const parameters = {
       date: /Date$/,
     },
   },
+  previewTabs: {
+    canvas: {
+      hidden: true,
+    },
+  },
+  viewMode: 'docs',
+  options: {
+    storySort: {
+      method: 'configure',
+      includeNames: true,
+      order: [
+        'Layout', ['Container', 'Flexbox', 'Center', 'List', '*'],
+        'Components', ['Spacing', 'Typography', 'Badge', 'Image', 'Button', 'Input', 'RadioButton', 'Table', 'Slider', 'Dropdown', 'Select', 'Tabs', 'Carousel', 'Drawer', '*', 'Spinner', 'Modal', 'Toast'],
+        '*'
+      ],
+    },
+  },
 };
 
 export const decorators = [
   (Story) => (
     <CdsProvider>
-      <Story />
+      {Story()}
     </CdsProvider>
   ),
 ];
