@@ -2,7 +2,7 @@ import Icon, { IconSource } from '@components/Icon';
 import Typography from '@components/Typography';
 import Container from '@components-layout/Container';
 import Flexbox from '@components-layout/Flexbox';
-import { NEXT_KEY, PREV_KEY } from '@constants/key';
+import { ARROW_LEFT, ARROW_RIGHT } from '@constants/key';
 import { css, useTheme } from '@emotion/react';
 import { pixelToRem } from '@utils/pixelToRem';
 import {
@@ -112,8 +112,8 @@ interface TabTriggerProps {
 
 const findFutureTrigger = (key: string, currentTrigger: HTMLElement) => {
   const siblingProp = (function (key) {
-    if (NEXT_KEY.includes(key)) return 'nextElementSibling';
-    if (PREV_KEY.includes(key)) return 'previousElementSibling';
+    if (ARROW_LEFT.includes(key)) return 'previousElementSibling';
+    if (ARROW_RIGHT.includes(key)) return 'nextElementSibling';
     return null;
   })(key);
 
