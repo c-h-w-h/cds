@@ -8,10 +8,10 @@ interface HighlightProps {
 
 const Highlight = ({ children, color }: HighlightProps) => {
   const { color: themeColor } = useTheme();
-  const { primary100 } = themeColor;
+  const { primary } = themeColor;
 
   const highlightStyle = css`
-    color: ${color ?? primary100};
+    color: ${color ?? primary};
   `;
 
   return <span css={highlightStyle}>{children}</span>;

@@ -55,13 +55,13 @@ const Spin = styled.div`
 const Circle = styled.div<SpinnerProps>(
   ({ theme, size }: SpinnerStyleProps) => {
     const { color: themeColor } = theme;
-    const { primary100 } = themeColor;
+    const { primary } = themeColor;
 
     return {
       position: 'absolute',
       width: SPINNER_STYLE[size].INNERCIRCLE,
       height: SPINNER_STYLE[size].INNERCIRCLE,
-      border: `${SPINNER_STYLE[size].STROKEWIDTH} solid ${primary100}`,
+      border: `${SPINNER_STYLE[size].STROKEWIDTH} solid ${primary}`,
       borderTopColor: 'transparent',
       borderRadius: '50%',
       animation: 'spin-animation 1s linear infinite',

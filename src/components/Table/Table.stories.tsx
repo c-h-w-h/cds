@@ -161,7 +161,7 @@ export const WithBackgroundColor = TableHeadTemplate.bind({});
 
 WithBackgroundColor.args = {
   textColor: 'white',
-  backgroundColor: 'primary100',
+  backgroundColor: 'primary',
 };
 
 WithBackgroundColor.parameters = {
@@ -175,7 +175,7 @@ const BodyDataTextColorTemplate: ComponentStory<typeof TableBodyData> = (
   args,
 ) => (
   <Table outline>
-    <TableHead backgroundColor="primary100" textColor="white">
+    <TableHead backgroundColor="primary" textColor="white">
       {DUMMY_HEAD.map((head, index) => (
         <TableRow key={`head_${index}`}>
           {head.map((text) => (
@@ -204,7 +204,7 @@ const BodyDataTextColorTemplate: ComponentStory<typeof TableBodyData> = (
 export const WithTextHighlight = BodyDataTextColorTemplate.bind({});
 
 WithTextHighlight.args = {
-  textColor: 'primary100',
+  textColor: 'primary',
 };
 
 WithTextHighlight.parameters = {
@@ -218,7 +218,7 @@ const BodyDataBackgroundColorTemplate: ComponentStory<typeof TableBodyData> = (
   args,
 ) => (
   <Table outline>
-    <TableHead backgroundColor="primary100" textColor="white">
+    <TableHead backgroundColor="primary" textColor="white">
       {DUMMY_HEAD.map((head, index) => (
         <TableRow key={`head_${index}`}>
           {head.map((text) => (
