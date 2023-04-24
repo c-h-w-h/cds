@@ -164,6 +164,8 @@ const Panel = ({ children }: ChildrenProps) => {
 };
 
 Drawer.Trigger = Trigger;
+Trigger.displayName = 'Drawer.Trigger';
 Drawer.Panel = Panel;
+Panel.displayName = 'Drawer.Panel';
 
 export default Drawer;

@@ -2,7 +2,6 @@ import Badge from '@components/Badge';
 import Button from '@components/Button';
 import List from '@components-layout/List';
 import { css } from '@emotion/react';
-import styled from '@emotion/styled';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { ChildrenProps } from '@util-types/ChildrenProps';
 
@@ -67,7 +66,7 @@ const Template: ComponentStory<typeof Drawer> = (args) => {
         <Button text="서랍을 열어요" />
       </Drawer.Trigger>
       <Drawer.Panel>
-        <Panel />
+        <StudyList />
       </Drawer.Panel>
     </Drawer>
   );
@@ -148,7 +147,7 @@ Mobile.parameters = {
   },
 };
 
-const Panel = () => {
+const StudyList = () => {
   return (
     <List css={liStyle}>
       <li>
@@ -164,10 +163,17 @@ const Panel = () => {
   );
 };
 
-const CustomContainer = styled.div`
-  width: 100%;
-  height: 200px;
-`;
+const CustomContainer = ({ id, children }: { id: string } & ChildrenProps) => (
+  <div
+    id={id}
+    css={css`
+      width: 100%;
+      height: 200px;
+    `}
+  >
+    {children}
+  </div>
+);
 
 const MobileContainer = ({ id, children }: { id: string } & ChildrenProps) => {
   return (
