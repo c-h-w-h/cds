@@ -7,7 +7,7 @@ import { MdCelebration } from 'react-icons/md';
 import Slider from '.';
 
 export default {
-  title: 'Design System/Components/Slider',
+  title: 'Components/Slider',
   component: Slider,
   parameters: {
     layout: 'fullscreen',
@@ -61,17 +61,18 @@ export default {
       },
     },
     size: {
-      description: 'px 단위로 <Slider.Track> 길이를 설정합니다.',
+      description: '<Slider.Track> 길이를 설정합니다.',
       table: {
-        type: { summary: 'number', required: true },
+        type: { summary: `CSSProperties['width']` },
+        defaultValue: { summary: '100%' },
       },
       control: {
-        type: 'number',
+        type: 'text',
       },
     },
     step: {
       description:
-        '<Slider.Thumb>가 한 번에 이동할 수 있는 px단위를 설정합니다.',
+        '<Slider.Thumb>가 1회 이동할 때 변경되는 \\<Slider> 값을 설정합니다.',
       table: {
         type: { summary: 'number' },
         defaultValue: { summary: 1 },
@@ -120,20 +121,22 @@ const DEFAULT_PROPS = {
   min: 0,
   max: 100,
   defaultValue: 50,
-  size: 200,
 };
 
-const Template: ComponentStory<typeof Slider> = (args) => (
-  <Slider {...args}>
-    <Slider.Track>
-      <Slider.Filled />
-    </Slider.Track>
-    <Slider.Thumb />
-  </Slider>
-);
+const Template: ComponentStory<typeof Slider> = (args) => <Slider {...args} />;
 
 export const Default = Template.bind({});
 Default.args = { ...DEFAULT_PROPS };
+
+export const OnlySlider = Template.bind({});
+OnlySlider.args = { ...DEFAULT_PROPS };
+
+OnlySlider.parameters = {
+  docs: {
+    storyDescription:
+      '하위 컴포넌트 없이 \\<Slider> 만으로도 사용할 수 있습니다.',
+  },
+};
 
 export const StartFromZero = Template.bind({});
 StartFromZero.args = { ...DEFAULT_PROPS, defaultValue: 0 };
@@ -168,7 +171,6 @@ MaxValueVariant.args = {
   min: 50,
   max: 200,
   defaultValue: 100,
-  size: 200,
 };
 
 MaxValueVariant.parameters = {
@@ -182,8 +184,7 @@ SizeVariant.args = { ...DEFAULT_PROPS, size: 500 };
 
 SizeVariant.parameters = {
   docs: {
-    storyDescription:
-      'size를 px 단위로 하여 전체 컴포넌트의 너비가 결정됩니다.',
+    storyDescription: 'size를 px 단위로 하여 너비/높이를 결정합니다.',
   },
 };
 
@@ -193,7 +194,7 @@ WithStep10.args = { ...DEFAULT_PROPS, step: 10 };
 WithStep10.parameters = {
   docs: {
     storyDescription:
-      'step 속성을 설정하여 <Slider.Thumb>가 움직이는 px을 설정할 수 있습니다. step이 10인 경우입니다.',
+      'step 속성을 10으로 설정하여 <Slider.Thumb>가 1회 이동할 때 \\<Slider> 값이 10씩 변경됩니다.',
   },
 };
 
@@ -203,7 +204,7 @@ WithStep20.args = { ...DEFAULT_PROPS, step: 20 };
 WithStep20.parameters = {
   docs: {
     storyDescription:
-      'step 속성을 설정하여 <Slider.Thumb>가 움직이는 px을 설정할 수 있습니다. step이 20인 경우입니다.',
+      'step 속성을 20으로 설정하여 <Slider.Thumb>가 1회 이동할 때 \\<Slider> 값이 20씩 변경됩니다.',
   },
 };
 
