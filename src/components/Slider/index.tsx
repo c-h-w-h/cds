@@ -120,7 +120,7 @@ interface FilledProps {
 const Filled = ({ color }: FilledProps) => {
   const { label, filledRef, getStyles } = useSafeContext(SliderContext);
   const { color: themeColor } = theme;
-  const { primary100 } = themeColor;
+  const { primary } = themeColor;
   const { filledStyle } = getStyles();
 
   return (
@@ -131,7 +131,7 @@ const Filled = ({ color }: FilledProps) => {
         position: absolute;
         left: 0;
         bottom: 0;
-        background-color: ${color ?? primary100};
+        background-color: ${color ?? primary};
         ${filledStyle};
       `}
     />
@@ -157,7 +157,7 @@ const Thumb = ({ color, children }: ThumbProps) => {
   } = useSafeContext(SliderContext);
   const [isDraggable, setIsDraggable] = useState<boolean>(false);
   const { color: themeColor } = theme;
-  const { primary100, white } = themeColor;
+  const { primary, white } = themeColor;
   const { thumbStyle } = getStyles();
 
   const valueNow = getValue();
@@ -225,7 +225,7 @@ const Thumb = ({ color, children }: ThumbProps) => {
             height: 24px;
             border-radius: 50%;
             color: ${white};
-            background-color: ${color ?? primary100};
+            background-color: ${color ?? primary};
           `}
         >
           <Typography variant={'desc'}>{String(valueNow)}</Typography>

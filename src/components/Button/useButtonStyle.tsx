@@ -3,7 +3,7 @@ import { flexboxStyle } from '@styles/flex-box';
 
 const useButtonStyle = (variant: ButtonVariant) => {
   const { color: themeColor } = useTheme();
-  const { white, primary200, primary400, gray200 } = themeColor;
+  const { white, primary, primaryDark, gray200 } = themeColor;
 
   const isPlain = variant === 'plain';
   const hasBackground = !variant.includes('light') && !isPlain;
@@ -36,12 +36,12 @@ const useButtonStyle = (variant: ButtonVariant) => {
         `
       : css`
           border-radius: ${isSquare ? '8px' : 'calc(1rem + 24px)'};
-          background-color: ${hasBackground ? primary200 : white};
-          border: 2px solid ${primary200};
+          background-color: ${hasBackground ? primary : white};
+          border: 2px solid ${primary};
 
           &:hover {
-            background-color: ${hasBackground ? primary400 : white};
-            border: 2px solid ${primary400};
+            background-color: ${hasBackground ? primaryDark : white};
+            border: 2px solid ${primaryDark};
           }
 
           &:disabled,
@@ -54,13 +54,13 @@ const useButtonStyle = (variant: ButtonVariant) => {
 
   const contentStyle = css`
     padding: 12px;
-    color: ${hasBackground ? white : primary200};
+    color: ${hasBackground ? white : primary};
     text-decoration: none;
 
     ${!hasBackground &&
     css`
       &:hover {
-        color: ${primary400};
+        color: ${primaryDark};
       }
 
       &:disabled,

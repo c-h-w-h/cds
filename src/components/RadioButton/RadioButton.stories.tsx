@@ -31,7 +31,7 @@ export default {
   args: {
     size: '16px',
     disabled: false,
-    color: theme.color.primary100,
+    color: theme.color.primary,
     clickableSize: '30px',
     direction: 'right',
   },
@@ -54,7 +54,7 @@ export default {
       description: '기본 버튼의 색상을 지정합니다.',
       table: {
         type: { summary: "CSSProperties['color']" },
-        defaultValue: { summary: 'theme.primary100' },
+        defaultValue: { summary: 'theme.primary' },
       },
       control: {
         type: 'color',

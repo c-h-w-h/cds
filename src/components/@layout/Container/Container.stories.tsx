@@ -47,7 +47,7 @@ export default {
   },
 } as ComponentMeta<typeof Container>;
 
-const cdsTheme = { backgroundColor: COLOR.primary200, color: COLOR.offwhite };
+const cdsTheme = { backgroundColor: COLOR.primary, color: COLOR.offWhite };
 
 export const Default: ComponentStory<typeof Container> = (args) => (
   <Container
