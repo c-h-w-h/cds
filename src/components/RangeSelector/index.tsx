@@ -167,7 +167,7 @@ const Slider = () => {
     const thumbPos = setSliderPos(trackWidth, max, min, value, offset);
     const filledTrackPos = setSliderPos(trackWidth, max, min, value);
 
-    thumbRef.current.style.left = `${left + thumbPos}px`;
+    thumbRef.current.style.left = `${thumbPos}px`;
     trackRef.current.style.setProperty('--filled', `${filledTrackPos}px`);
   }, []);
 

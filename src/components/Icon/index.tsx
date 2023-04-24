@@ -1,20 +1,43 @@
+export { default as CdsBag } from './CdsBag';
+export { default as CdsHamburger } from './CdsHamburger';
+export { default as CdsHeart } from './CdsHeart';
+export { default as CdsHome } from './CdsHome';
+export { default as CdsSearch } from './CdsSearch';
+export { default as CdsUser } from './CdsUser';
+
 import styled from '@emotion/styled';
 import { IconType } from '@react-icons/all-files';
 import { pixelToRem } from '@utils/pixelToRem';
 import { CSSProperties } from 'react';
 
+/**
+ * @deprecated
+ */
 export type IconSource = string | IconType;
 
-interface IconProps {
+/**
+ * @deprecated
+ */
+export interface IconProps {
+  alt?: string;
   source: IconSource;
-  size: CSSProperties['width'];
-  color: CSSProperties['fill'];
+  size?: CSSProperties['width'];
+  color?: CSSProperties['fill'];
 }
 
-const Icon = ({ source: Source, size, color }: IconProps) => {
+/**
+ * @deprecated
+ */
+const Icon = ({
+  alt = '',
+  source: Source,
+  size = '1.5rem',
+  color = 'none',
+}: IconProps) => {
   if (typeof Source === 'string') {
     return (
       <IconContainer
+        alt={alt}
         src={Source}
         width={pixelToRem(`${size}`)}
         height={pixelToRem(`${size}`)}
@@ -22,7 +45,7 @@ const Icon = ({ source: Source, size, color }: IconProps) => {
     );
   }
 
-  return <Source size={size} color={color} />;
+  return <Source size={size} color={color} role="img" />;
 };
 
 const IconContainer = styled.img`

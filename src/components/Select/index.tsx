@@ -1,20 +1,25 @@
 import Dropdown, { DropdownContext } from '@components/Dropdown';
-import { ARROW_DOWN, ARROW_UP, ENTER } from '@constants/key';
+import Typography from '@components/Typography';
+import { ARROW_DOWN, ARROW_UP, ENTER, ESC, TAB } from '@constants/key';
 import { css, useTheme } from '@emotion/react';
 import { ChildrenProps } from '@util-types/ChildrenProps';
+import { getNextElement } from '@utils/getNextElement';
 import {
   Dispatch,
   KeyboardEventHandler,
+  MutableRefObject,
   ReactNode,
+  RefObject,
   SetStateAction,
   createContext,
   forwardRef,
   useEffect,
+  useRef,
 } from 'react';
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 import useSafeContext from 'src/hooks/useSafeContext';
 
-import useSelect from './useSelect';
+import useSelect, { SelectedOption } from './useSelect';
 
 type SelectProps = {
   id: string;
@@ -23,17 +28,30 @@ type SelectProps = {
 };
 
 interface SelectContextInterface {
+  optionRefs: MutableRefObject<Map<string, HTMLDivElement>>;
+  triggerRef: RefObject<HTMLDivElement>;
   selectValue: (value: string) => void;
-  registerOption: (value: string) => void;
+  registerOption: ($div: HTMLDivElement, value: string) => void;
+  selectedOption: SelectedOption | null;
 }
 const SelectContext = createContext<SelectContextInterface | null>(null);
 
 const Select = ({ id, setValue, children }: SelectProps) => {
-  const { selectRef, selectValue, registerOption } = useSelect(id, setValue);
+  const triggerRef = useRef<HTMLDivElement>(null);
+  const { selectRef, optionRefs, selectValue, registerOption, selectedOption } =
+    useSelect(id, setValue);
+
+  const providerValue = {
+    optionRefs,
+    triggerRef,
+    selectValue,
+    registerOption,
+    selectedOption,
+  };
 
   return (
     <Dropdown label={`select-${id}`} collapseOnBlur={true}>
-      <SelectContext.Provider value={{ selectValue, registerOption }}>
+      <SelectContext.Provider value={providerValue}>
         {children}
       </SelectContext.Provider>
       <HiddenSelect id={id} ref={selectRef} />
@@ -42,10 +60,24 @@ const Select = ({ id, setValue, children }: SelectProps) => {
 };
 
 const Trigger = ({ children }: ChildrenProps) => {
-  const { isOpen } = useSafeContext(DropdownContext);
+  const { isOpen, setIsOpen } = useSafeContext(DropdownContext);
 
-  const { color } = useTheme();
-  const { gray200, white, black } = color;
+  const { optionRefs, triggerRef, selectedOption } =
+    useSafeContext(SelectContext);
+  const onKeyDown: KeyboardEventHandler<HTMLDivElement> = (e) => {
+    if (e.key === ARROW_DOWN) {
+      e.preventDefault();
+      setIsOpen(true);
+    }
+  };
+
+  useEffect(() => {
+    const indexToFocus = selectedOption?.index ?? 0;
+    [...optionRefs.current.values()][indexToFocus].focus();
+  }, [isOpen]);
+
+  const { color: themeColor } = useTheme();
+  const { gray200, white, black } = themeColor;
 
   const triggerStyle = css`
     display: flex;
@@ -56,6 +88,12 @@ const Trigger = ({ children }: ChildrenProps) => {
     padding: 12px 24px;
     background-color: ${white};
     border: 1.2px solid ${isOpen ? black : gray200};
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+      border: 1.5px solid ${black};
+    }
   `;
   const chevronStyle = css`
     position: absolute;
@@ -64,7 +102,7 @@ const Trigger = ({ children }: ChildrenProps) => {
 
   return (
     <Dropdown.Trigger>
-      <div css={triggerStyle}>
+      <div ref={triggerRef} css={triggerStyle} onKeyDown={onKeyDown}>
         {children}
         {isOpen ? (
           <FiChevronUp size={20} css={chevronStyle} />
@@ -90,10 +128,45 @@ const OptionList = ({ children }: ChildrenProps) => {
 
   return (
     <Dropdown.Menu>
-      <ul role="listbox" css={listStyle}>
+      <div role="listbox" css={listStyle}>
         {children}
-      </ul>
+      </div>
     </Dropdown.Menu>
+  );
+};
+
+type OptGroupProps = {
+  label: string;
+} & ChildrenProps;
+
+const OptGroup = ({ label, children }: OptGroupProps) => {
+  const optGroupStyle = css`
+    & > p {
+      padding: 12px 24px;
+    }
+
+    & > div {
+      padding-left: calc(24px + 1rem);
+    }
+  `;
+
+  return (
+    <div
+      css={optGroupStyle}
+      role="group"
+      aria-details={`${label} option group`}
+    >
+      <Typography
+        color={
+          '#555F6D' // TODO: theme color로 변경
+        }
+        bold
+        aria-hidden={true}
+      >
+        {label}
+      </Typography>
+      {children}
+    </div>
   );
 };
 
@@ -102,59 +175,64 @@ type OptionProps = {
 } & ChildrenProps;
 
 const Option = ({ value, children }: OptionProps) => {
-  const { selectValue, registerOption } = useSafeContext(SelectContext);
-
-  useEffect(() => {
-    registerOption(value);
-  }, []);
+  const {
+    optionRefs,
+    triggerRef,
+    selectValue,
+    registerOption,
+    selectedOption,
+  } = useSafeContext(SelectContext);
 
   const { setIsOpen } = useSafeContext(DropdownContext);
 
+  const closeOptionList = () => {
+    setIsOpen(false);
+    triggerRef.current?.focus();
+  };
+
   const onSelect = () => {
     selectValue(value);
-    setIsOpen(false);
+    closeOptionList();
   };
 
   const onKeyDown: KeyboardEventHandler = (e) => {
     const { key } = e;
 
-    const target = e.target;
-    if (!(target instanceof HTMLLIElement)) return;
+    const $div = optionRefs.current.get(value);
+    if (!$div) return;
 
     if (key === ENTER) {
       onSelect();
       return;
     }
 
-    const $ul = target.closest('ul');
-    if (!$ul) return;
-
-    let $nextLi;
+    const options = [...optionRefs.current.values()];
     switch (key) {
+      case TAB:
+        if (e.shiftKey) {
+          e.preventDefault();
+          getNextElement(options, options.indexOf($div), -1).focus();
+          break;
+        }
+      // eslint-disable-next-line no-fallthrough
       case ARROW_DOWN:
         e.preventDefault();
-        $nextLi = target.nextElementSibling;
-
-        if (!$nextLi) {
-          $nextLi = $ul.firstElementChild;
-        }
-        break;
+        getNextElement(options, options.indexOf($div)).focus();
+        return;
 
       case ARROW_UP:
         e.preventDefault();
-        $nextLi = target.previousElementSibling;
+        getNextElement(options, options.indexOf($div), -1).focus();
+        return;
 
-        if (!$nextLi) {
-          $nextLi = $ul.lastElementChild;
-        }
-        break;
+      case ESC:
+        closeOptionList();
+        return;
     }
-
-    if ($nextLi instanceof HTMLLIElement) $nextLi.focus();
   };
 
   const { color } = useTheme();
-  const { gray200 } = color;
+  const { white, gray200 } = color;
   const optionStyle = css`
     width: 100%;
     height: 100%;
@@ -163,14 +241,23 @@ const Option = ({ value, children }: OptionProps) => {
 
     &:focus {
       outline: none;
+      color: ${white};
       background-color: ${gray200};
     }
   `;
 
   return (
-    <li onClick={onSelect} tabIndex={0} onKeyDown={onKeyDown} css={optionStyle}>
+    <div
+      ref={($div: HTMLDivElement | null) => $div && registerOption($div, value)}
+      onClick={onSelect}
+      tabIndex={0}
+      onKeyDown={onKeyDown}
+      css={optionStyle}
+      role={'option'}
+      aria-selected={selectedOption?.value === value}
+    >
       {children}
-    </li>
+    </div>
   );
 };
 
@@ -189,6 +276,7 @@ HiddenSelect.displayName = 'HiddenSelect';
 
 Select.Trigger = Trigger;
 Select.OptionList = OptionList;
+Select.OptGroup = OptGroup;
 Select.Option = Option;
 
 export default Select;
