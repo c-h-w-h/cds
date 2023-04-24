@@ -5,6 +5,7 @@ import Flexbox from '@components-layout/Flexbox';
 import { MODAL_PORTAL_ROOT_ID } from '@constants/portal';
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
+import { dimmerStyle } from '@styles/dimmed';
 import { ChildrenProps } from '@util-types/ChildrenProps';
 import { DefaultPropsWithChildren } from '@utils/types/DefaultPropsWithChildren';
 import { MouseEventHandler, createContext } from 'react';
@@ -94,13 +95,8 @@ const ModalBox = styled.div`
 `;
 
 const Dimmed = styled.div`
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  z-index: 998;
   display: flex;
-  opacity: 0.4;
-  background-color: ${({ theme }) => theme.color.black};
+  ${({ theme }) => dimmerStyle('fixed', theme.color)}
 `;
 
 const Button = styled.button`

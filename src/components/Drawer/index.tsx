@@ -2,6 +2,7 @@ import Portal from '@components-common/Portal';
 import { ENTER, ESC, SPACE } from '@constants/key';
 import { DRAWER_PORTAL_ROOT_ID } from '@constants/portal';
 import { css, useTheme } from '@emotion/react';
+import { dimmerStyle as commonDimmerStyle } from '@styles/dimmed';
 import { ChildProps, ChildrenProps, SetState } from '@utils';
 import {
   KeyboardEventHandler,
@@ -117,20 +118,14 @@ const Panel = ({ children }: ChildrenProps) => {
   });
 
   const { color } = useTheme();
-  const { black, offwhite } = color;
+  const { offwhite } = color;
   const isFixedDrawer = containerId === DRAWER_PORTAL_ROOT_ID;
 
   const { drawerStyle } = useDrawerStyle(position, offwhite, isFixedDrawer);
   const dimmerStyle = css`
     display: ${isOpen ? 'block' : 'none'};
-    position: ${isFixedDrawer ? 'fixed' : 'absolute'};
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    ${commonDimmerStyle(isFixedDrawer ? 'fixed' : 'absolute', color)}
     overflow-y: hidden;
-    background-color: ${black};
-    opacity: 20%;
   `;
 
   const portalStyle = isFixedDrawer
