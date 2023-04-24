@@ -8,7 +8,12 @@ import {
   PAGE_DOWN,
   PAGE_UP,
 } from '@constants/key';
-import { KeyboardEvent, MouseEvent, useRef, useState } from 'react';
+import {
+  KeyboardEvent,
+  MouseEvent as ReactMouseEvent,
+  useRef,
+  useState,
+} from 'react';
 
 import { SliderProps } from '.';
 
@@ -19,12 +24,13 @@ const useSlider = ({
   size,
   step,
   orientation,
-}: Omit<SliderProps, 'label' | 'children'>) => {
-  const [value, setValue] = useState<number>(defaultValue);
-
+}: Omit<SliderProps, 'label' | 'children'> & {
+  step: number;
+  orientation: 'horizontal' | 'vertical';
+}) => {
   const defaultRatio = Math.round(((defaultValue - min) / (max - min)) * 100);
-  const [thumbPosition, setThumbPosition] = useState<number>(defaultRatio);
-  const [filledRatio, setFilledRatio] = useState<number>(defaultRatio);
+  const [ratio, setRatio] = useState<number>(defaultRatio);
+  const [value, setValue] = useState<number>(defaultValue);
 
   const trackRef = useRef<HTMLDivElement | null>(null);
   const filledRef = useRef<HTMLDivElement | null>(null);
@@ -39,42 +45,42 @@ const useSlider = ({
 
     const rootStyle = {
       horizontal: {
-        width: `${size}px`,
+        width: size,
       },
       vertical: {
-        height: `${size}px`,
+        height: size,
       },
     };
 
     const trackStyle = {
       horizontal: {
-        width: `${size}px`,
+        width: size,
         height: `${SLIDER_THICKNESS}px`,
       },
       vertical: {
-        height: `${size}px`,
+        height: size,
         width: `${SLIDER_THICKNESS}px`,
       },
     };
 
     const filledStyle = {
       horizontal: {
-        width: `${filledRatio}%`,
+        width: `${ratio}%`,
         height: `${SLIDER_THICKNESS}px`,
       },
       vertical: {
-        height: `${filledRatio}%`,
+        height: `${ratio}%`,
         width: `${SLIDER_THICKNESS}px`,
       },
     };
 
     const thumbStyle = {
       horizontal: {
-        left: `${thumbPosition}%`,
+        left: `${ratio}%`,
         transform: 'translateX(-50%)',
       },
       vertical: {
-        bottom: `${thumbPosition}%`,
+        bottom: `${ratio}%`,
         transform: 'translateY(50%)',
       },
     };
@@ -87,55 +93,58 @@ const useSlider = ({
     };
   };
 
-  const onMoveSlider = (
-    e: MouseEvent<HTMLDivElement> | globalThis.MouseEvent,
-  ) => {
+  const onMoveSlider = (e: ReactMouseEvent<HTMLDivElement> | MouseEvent) => {
     e.preventDefault();
 
     if (!trackRef.current || !filledRef.current || !thumbRef.current) return;
-    const { left, right, bottom, top } =
+    const { left, bottom, width, height } =
       trackRef.current.getBoundingClientRect();
 
-    // Verify that the event point is valid
-    if (isHorizontal) {
-      if (e.clientX < left || e.clientX > right) return;
-    } else {
-      if (e.clientY > bottom || e.clientY < top) return;
+    const dist = Math.round(
+      isHorizontal ? e.clientX - left : bottom - e.clientY,
+    );
+    const trackLength = isHorizontal ? width : height;
+    const ratio = (dist / trackLength) * 100;
+    const value = ((max - min) * ratio) / 100 + min;
+    let stepValue = Math.round((value - min) / step) * step + min;
+
+    // Verify that the value is valid
+    if (stepValue < min) {
+      stepValue = min;
+    } else if (stepValue > max) {
+      stepValue = max;
     }
 
-    const dist = Math.round(
-      isHorizontal ? e.clientX - left : -(e.clientY - bottom),
-    );
-    const ratio = (dist / size) * 100;
-    const value = ((max - min) * ratio) / 100 + min;
-    const stepValue = Math.round((value - min) / step) * step + min;
     const stepRatio = ((stepValue - min) / (max - min)) * 100;
 
     setValue(stepValue);
-    setFilledRatio(stepRatio);
-    setThumbPosition(stepRatio);
+    setRatio(stepRatio);
   };
 
   const onPressArrow = (e: KeyboardEvent) => {
     e.preventDefault();
 
     let nextValue = (function (key: string, currentValue: number) {
-      if (key === ARROW_LEFT || key === ARROW_DOWN) {
-        return currentValue - step;
-      } else if (key === ARROW_RIGHT || key === ARROW_UP) {
-        return currentValue + step;
-      } else if (key === PAGE_DOWN) {
-        // decrease 10%
-        return currentValue - (max - min) / 10;
-      } else if (key === PAGE_UP) {
-        // increase 10%
-        return currentValue + (max - min) / 10;
-      } else if (key === HOME) {
-        return min;
-      } else if (key === END) {
-        return max;
+      switch (key) {
+        case ARROW_LEFT:
+        case ARROW_DOWN:
+          return currentValue - step;
+        case ARROW_RIGHT:
+        case ARROW_UP:
+          return currentValue + step;
+        case PAGE_DOWN:
+          // decrease 10%
+          return currentValue - (max - min) / 10;
+        case PAGE_UP:
+          // increase 10%
+          return currentValue + (max - min) / 10;
+        case HOME:
+          return min;
+        case END:
+          return max;
+        default:
+          return null;
       }
-      return null;
     })(e.key, value);
 
     if (nextValue === null) return;
@@ -149,8 +158,7 @@ const useSlider = ({
     const stepRatio = ((nextValue - min) / (max - min)) * 100;
 
     setValue(nextValue);
-    setThumbPosition(stepRatio);
-    setFilledRatio(stepRatio);
+    setRatio(stepRatio);
     if (thumbRef.current) thumbRef.current.focus();
   };
 
