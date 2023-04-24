@@ -22,9 +22,9 @@ export default {
           WithChild: <p>안녕하세요</p>,
           WithChildren: (
             <div>
-              <div>hi</div>
-              <div>hello</div>
-              <div>안녕</div>
+              <div>차가운</div>
+              <div>디자인</div>
+              <div>시스템이에요</div>
             </div>
           ),
         },
@@ -57,9 +57,9 @@ export const WithChildren = Template.bind({});
 WithChildren.args = {
   children: (
     <div>
-      <div>hi</div>
-      <div>hello</div>
-      <div>안녕</div>
+      <div>차가운</div>
+      <div>디자인</div>
+      <div>시스템이에요</div>
     </div>
   ),
 };
