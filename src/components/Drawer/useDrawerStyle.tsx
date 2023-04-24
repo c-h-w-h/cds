@@ -31,6 +31,7 @@ const useDrawerStyle = (
   const drawerStyle = css`
     position: ${isFixed ? 'fixed' : 'absolute'};
     ${STYLE[position]}
+    z-index: 999;
     transform: ${TRANSLATE[position]};
     background-color: ${backgroundColor};
     padding: 12px;
