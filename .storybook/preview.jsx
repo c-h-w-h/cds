@@ -22,7 +22,7 @@ export const parameters = {
       includeNames: true,
       order: [
         'Layout', ['Container', 'Flexbox', 'Center', 'List', '*'],
-        'Components', ['Spacing', 'Typography', 'Badge', 'Image', 'Button', 'Input', 'Table', 'RangeSelector', 'Dropdown', 'Select', 'Tabs', 'Carousel', '*', 'Spinner', 'Modal', 'Toast'],
+        'Components', ['Spacing', 'Typography', 'Badge', 'Image', 'Button', 'Input', 'RadioButton', 'Table', 'Slider', 'Dropdown', 'Select', 'Tabs', 'Carousel', 'Drawer', '*', 'Spinner', 'Modal', 'Toast'],
         '*'
       ],
     },
