@@ -3,6 +3,7 @@ export const COLOR = {
   primaryLight: '#66B9FF',
   primaryDark: '#0075DC',
 
+  alert: '#333333',
   info: '#1493FF',
   success: '#36B37E',
   warning: '#FFAB00',
