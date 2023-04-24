@@ -17,3 +17,5 @@ export const COLOR = {
   white: '#FEFEFE',
   offwhite: '#FCFCFC',
 } as const;
+
+export type Color = typeof COLOR;

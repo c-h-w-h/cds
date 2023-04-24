@@ -8,6 +8,7 @@
       "@constants/*": ["./src/constants/*"],
       "@styles/*": ["./src/styles/*"],
       "@util-types/*": ["./src/utils/types/*"],
+      "@utils": ["./src/utils"],
       "@utils/*": ["./src/utils/*"]
     }
   }
