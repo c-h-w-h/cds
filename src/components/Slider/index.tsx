@@ -67,7 +67,6 @@ const Slider = ({
         id={`${label}-slider-root`}
         css={css`
           position: relative;
-          margin: 1rem;
           ${rootStyle};
         `}
       >

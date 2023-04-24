@@ -106,6 +106,7 @@ export default {
         alignItems={'center'}
         style={{
           height: '250px',
+          padding: '50px',
         }}
       >
         {Story()}
