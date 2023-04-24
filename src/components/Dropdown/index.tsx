@@ -191,7 +191,9 @@ const MenuWrapper = styled.div<MenuWrapperProps>`
   z-index: 1;
 `;
 
+Trigger.displayName = 'Dropdown.Trigger';
 Dropdown.Trigger = Trigger;
+Menu.displayName = 'Dropdown.Menu';
 Dropdown.Menu = Menu;
 
 export default Dropdown;
