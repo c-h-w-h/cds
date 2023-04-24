@@ -43,6 +43,9 @@ const Template: ComponentStory<typeof Spacing> = (args) => (
 );
 
 export const Default = Template.bind({});
+Default.args = {
+  size: 5,
+};
 
 export const Size_5 = Template.bind({});
 Size_5.args = {

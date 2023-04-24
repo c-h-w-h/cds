@@ -275,8 +275,12 @@ const hiddenStyle = css`
 HiddenSelect.displayName = 'HiddenSelect';
 
 Select.Trigger = Trigger;
+Trigger.displayName = 'Select.Trigger';
 Select.OptionList = OptionList;
+OptionList.displayName = 'Select.OptionList';
 Select.OptGroup = OptGroup;
+OptGroup.displayName = 'Select.OptGroup';
 Select.Option = Option;
+Option.displayName = 'Select.Option';
 
 export default Select;

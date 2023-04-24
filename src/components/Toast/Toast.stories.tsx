@@ -1,7 +1,5 @@
 import Button from '@components/Button';
-import Container from '@components-layout/Container';
 import Flexbox from '@components-layout/Flexbox';
-import { css } from '@emotion/react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { default as Toast } from './ToastCore';
@@ -97,21 +95,6 @@ export default {
       },
     },
   },
-  decorators: [
-    (Story) => (
-      <Container>
-        <Flexbox
-          justifyContent={'center'}
-          alignItems={'center'}
-          css={css`
-            height: 300px;
-          `}
-        >
-          {Story()}
-        </Flexbox>
-      </Container>
-    ),
-  ],
 } as ComponentMeta<typeof Toast>;
 
 const DUMMY_TITLE = '기본 제목을 설정할 수 있습니다.';
@@ -123,10 +106,16 @@ const Template: ComponentStory<typeof Toast> = (args) => {
   const { openToast, toastProps } = useToast();
 
   return (
-    <>
+    <Flexbox
+      justifyContent={'center'}
+      alignItems={'center'}
+      style={{
+        height: '250px',
+      }}
+    >
       <Button text="열려라 참깨" onClick={openToast} />
       <Toast {...args} {...toastProps} />
-    </>
+    </Flexbox>
   );
 };
 

@@ -1,8 +1,6 @@
 import Button from '@components/Button';
 import Center from '@components-layout/Center';
 import Flexbox from '@components-layout/Flexbox';
-import List from '@components-layout/List';
-import { css } from '@emotion/react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { MdPeople } from 'react-icons/md';
 
@@ -62,9 +60,7 @@ export default {
       <Flexbox
         justifyContent={'center'}
         alignItems={'center'}
-        css={css`
-          height: 500px;
-        `}
+        style={{ height: '500px' }}
       >
         <Center>{Story()}</Center>
       </Flexbox>
@@ -78,18 +74,14 @@ const Template: ComponentStory<typeof Dropdown> = (args) => (
       <Button text="팀원 목록" icon={MdPeople} variant="light" />
     </Dropdown.Trigger>
     <Dropdown.Menu>
-      <List
-        css={css`
-          width: max-content;
-        `}
-      >
+      <ul>
         <li>김세영</li>
         <li>백도훈</li>
         <li>이선민</li>
         <li>이우재</li>
         <li>이현빈</li>
         <li>정주연</li>
-      </List>
+      </ul>
     </Dropdown.Menu>
   </Dropdown>
 );
