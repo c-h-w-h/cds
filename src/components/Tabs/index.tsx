@@ -213,7 +213,7 @@ const SCROLL_OPTIONS = {
 } as const;
 
 const findFutureTrigger = (key: string, currentTrigger: HTMLElement) => {
-  const siblingProp = (function (key) {
+  const siblingProp = ((key) => {
     if (ARROW_LEFT.includes(key)) return 'previousElementSibling';
     if (ARROW_RIGHT.includes(key)) return 'nextElementSibling';
     return null;
