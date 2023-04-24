@@ -12,6 +12,7 @@ export { default as Drawer } from '@components/Drawer';
 export { default as Dropdown } from '@components/Dropdown';
 export { default as Input } from '@components/Input';
 export { default as Modal } from '@components/Modal';
+export { default as RadioButton } from '@components/RadioButton';
 export { default as RangeSelector } from '@components/RangeSelector';
 export { default as Select } from '@components/Select';
 export { default as Spacing } from '@components/Spacing';
