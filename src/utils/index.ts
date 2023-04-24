@@ -1,4 +1,4 @@
-export * from './pixelToRem';
+export * from './pixel-to-rem';
 
 export type { ChildProps } from './types/ChildProps';
 export type { ChildrenProps } from './types/ChildrenProps';

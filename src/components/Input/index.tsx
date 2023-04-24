@@ -50,7 +50,7 @@ const Input = forwardRef(
       width: fit-content;
       height: fit-content;
       pointer-events: none;
-      padding: 5 0px;
+      padding: 0 5px;
       border: 1px solid ${isValid ? black : error};
       border-radius: 50px;
       font-size: 1rem;

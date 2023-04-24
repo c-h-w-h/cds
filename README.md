@@ -11,9 +11,6 @@
 
 ## Usage
 
-> 4월 24일 npm 배포 예정입니다. 현재 일부 컴포넌트 개발과 스토리북 마무리 작업이 진행중입니다.
-
-<!--
 ```zsh
 npm install @chwh/cds
 ```
@@ -21,7 +18,6 @@ npm install @chwh/cds
 ```zsh
 yarn add @chwh/cds
 ```
--->
 
 <br />
 
@@ -39,8 +35,7 @@ const App = () => {
 
 ## Documentation
 
-[Storybook 문서](https://640054c53834f08f15bbad68-qilvqmdnrv.chromatic.com/) 에
-서 제공하는 컴포넌트의 종류와 용례를 확인해보세요.
+[Storybook 문서](https://640054c53834f08f15bbad68-gkurucdpms.chromatic.com/) 에서 제공하는 컴포넌트의 종류와 용례를 확인해보세요.
 
 ## Contributors
 

@@ -118,10 +118,10 @@ const Panel = ({ children }: ChildrenProps) => {
   });
 
   const { color } = useTheme();
-  const { offwhite } = color;
+  const { offWhite } = color;
   const isFixedDrawer = containerId === DRAWER_PORTAL_ROOT_ID;
 
-  const { drawerStyle } = useDrawerStyle(position, offwhite, isFixedDrawer);
+  const { drawerStyle } = useDrawerStyle(position, offWhite, isFixedDrawer);
   const dimmerStyle = css`
     display: ${isOpen ? 'block' : 'none'};
     ${commonDimmerStyle(isFixedDrawer ? 'fixed' : 'absolute', color)}

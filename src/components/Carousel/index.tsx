@@ -2,7 +2,7 @@ import Center from '@components-layout/Center';
 import Container from '@components-layout/Container';
 import { CAROUSEL_SLIDE_STYLE } from '@constants/carouselSlide';
 import styled from '@emotion/styled';
-import { pixelToRem } from '@utils/pixelToRem';
+import { pixelToRem } from '@utils/pixel-to-rem';
 import { DefaultPropsWithChildren } from '@utils/types/DefaultPropsWithChildren';
 import { debounce, throttle } from 'lodash';
 import { useState, useRef, useEffect, createContext, Children } from 'react';
