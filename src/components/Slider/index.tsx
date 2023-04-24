@@ -2,8 +2,13 @@ import { theme } from '@components/@common/CdsProvider/theme';
 import Flexbox from '@components/@layout/Flexbox';
 import Typography from '@components/Typography';
 import { css } from '@emotion/react';
-import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import { createContext, ReactNode, useState, useEffect } from 'react';
+import {
+  createContext,
+  ReactNode,
+  useState,
+  useEffect,
+  CSSProperties,
+} from 'react';
 import useSafeContext from 'src/hooks/useSafeContext';
 
 import { useSlider, UseSliderReturn } from './useSlider';
@@ -18,10 +23,10 @@ export interface SliderProps {
   min: number;
   max: number;
   defaultValue: number;
-  size: number;
-  step: number;
-  orientation: 'horizontal' | 'vertical';
   children: ReactNode;
+  size?: CSSProperties['width'];
+  step?: number;
+  orientation?: 'horizontal' | 'vertical';
 }
 
 const Slider = ({
@@ -29,10 +34,10 @@ const Slider = ({
   min,
   max,
   defaultValue,
-  size,
+  children,
+  size = '100%',
   step = 1,
   orientation = 'horizontal',
-  children,
 }: SliderProps) => {
   const { getStyles, ...contextValue } = useSlider({
     min,
@@ -66,7 +71,14 @@ const Slider = ({
           ${rootStyle};
         `}
       >
-        {children}
+        {children ?? (
+          <>
+            <Track>
+              <Filled />
+            </Track>
+            <Thumb />
+          </>
+        )}
       </Flexbox>
     </SliderContext.Provider>
   );
@@ -74,7 +86,7 @@ const Slider = ({
 
 interface TrackProps {
   color?: string;
-  children: EmotionJSX.Element;
+  children: ReactNode;
 }
 
 const Track = ({ color, children }: TrackProps) => {
