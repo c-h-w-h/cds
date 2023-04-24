@@ -1,9 +1,9 @@
 import Button from '@components/Button';
+import { CdsSearch } from '@components/Icon';
 import styled from '@emotion/styled';
 import { useRef, useState } from '@storybook/addons';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { useEffect } from 'react';
-import { MdSearch } from 'react-icons/md';
 
 import Input from '.';
 
@@ -133,7 +133,7 @@ export const Default = ControlledWithCancelTemplate.bind({});
 Default.args = {
   placeholder: '입력하세요',
   id: 'controlled',
-  leadingIcon: <MdSearch />,
+  leadingIcon: <CdsSearch />,
   isClearable: true,
 };
 Default.parameters = {
@@ -187,7 +187,7 @@ export const ControlledWithCancel = ControlledWithCancelTemplate.bind({});
 ControlledWithCancel.args = {
   placeholder: '입력하세요',
   id: 'controlled',
-  leadingIcon: <MdSearch />,
+  leadingIcon: <CdsSearch />,
   isClearable: true,
 };
 ControlledWithCancel.parameters = {
@@ -243,7 +243,7 @@ export const UncontrolledWithLeadingIcon = UncontrolledTemplate.bind({});
 UncontrolledWithLeadingIcon.args = {
   placeholder: '입력하세요',
   id: 'uncontrolled',
-  leadingIcon: <MdSearch />,
+  leadingIcon: <CdsSearch />,
 };
 UncontrolledWithDefaultValue.parameters = {
   docs: {
