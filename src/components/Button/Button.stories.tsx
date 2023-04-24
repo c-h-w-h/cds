@@ -48,7 +48,7 @@ export default {
       description:
         'aria-label 속성으로 사용되는 값입니다. 요소의 역할을 간단히 설명합니다.',
       table: {
-        type: { summary: 'string' },
+        type: { summary: 'string', required: false },
       },
     },
   },

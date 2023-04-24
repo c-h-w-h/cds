@@ -4,7 +4,7 @@ import useButtonStyle from './useButtonStyle';
 
 export interface ButtonBaseProps {
   variant?: ButtonVariant;
-  label: string;
+  label?: string;
   children: TextNode;
 }
 
