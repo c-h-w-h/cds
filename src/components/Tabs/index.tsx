@@ -110,45 +110,6 @@ interface TabTriggerProps {
   disabled?: boolean;
 }
 
-const findFutureTrigger = (key: string, currentTrigger: HTMLElement) => {
-  const siblingProp = (function (key) {
-    if (ARROW_LEFT.includes(key)) return 'previousElementSibling';
-    if (ARROW_RIGHT.includes(key)) return 'nextElementSibling';
-    return null;
-  })(key);
-
-  if (siblingProp === null) return;
-
-  let futureTrigger = currentTrigger[siblingProp] as HTMLElement;
-
-  while (futureTrigger && futureTrigger.hasAttribute('disabled')) {
-    futureTrigger = futureTrigger[siblingProp] as HTMLElement;
-  }
-
-  if (futureTrigger) return futureTrigger;
-
-  const triggerParent = currentTrigger.parentElement;
-
-  if (triggerParent === null) return;
-
-  futureTrigger =
-    siblingProp === 'nextElementSibling'
-      ? (triggerParent.firstElementChild as HTMLElement)
-      : (triggerParent.lastElementChild as HTMLElement);
-
-  while (futureTrigger.hasAttribute('disabled')) {
-    futureTrigger = futureTrigger[siblingProp] as HTMLElement;
-  }
-
-  return futureTrigger;
-};
-
-const SCROLL_OPTIONS = {
-  behavior: 'smooth',
-  block: 'nearest',
-  inline: 'start',
-} as const;
-
 const Trigger = ({ value, text, icon, disabled = false }: TabTriggerProps) => {
   const { label, variant, isFitted, selectedIndex, setSelectedIndex } =
     useSafeContext(TabsContext);
@@ -244,3 +205,42 @@ Trigger.displayName = 'Tabs.Trigger';
 Panel.displayName = 'Tabs.Panel';
 
 export default Tabs;
+
+const SCROLL_OPTIONS = {
+  behavior: 'smooth',
+  block: 'nearest',
+  inline: 'start',
+} as const;
+
+const findFutureTrigger = (key: string, currentTrigger: HTMLElement) => {
+  const siblingProp = (function (key) {
+    if (ARROW_LEFT.includes(key)) return 'previousElementSibling';
+    if (ARROW_RIGHT.includes(key)) return 'nextElementSibling';
+    return null;
+  })(key);
+
+  if (siblingProp === null) return;
+
+  let futureTrigger = currentTrigger[siblingProp] as HTMLElement;
+
+  while (futureTrigger && futureTrigger.hasAttribute('disabled')) {
+    futureTrigger = futureTrigger[siblingProp] as HTMLElement;
+  }
+
+  if (futureTrigger) return futureTrigger;
+
+  const triggerParent = currentTrigger.parentElement;
+
+  if (triggerParent === null) return;
+
+  futureTrigger =
+    siblingProp === 'nextElementSibling'
+      ? (triggerParent.firstElementChild as HTMLElement)
+      : (triggerParent.lastElementChild as HTMLElement);
+
+  while (futureTrigger.hasAttribute('disabled')) {
+    futureTrigger = futureTrigger[siblingProp] as HTMLElement;
+  }
+
+  return futureTrigger;
+};
