@@ -7,4 +7,9 @@ export const ENTER = 'Enter';
 export const TAB = 'Tab';
 export const SPACE = ' ';
 
+export const PAGE_DOWN = 'PageDown';
+export const PAGE_UP = 'PageUp';
+export const HOME = 'Home';
+export const END = 'End';
+
 export const ESC = 'Escape';
