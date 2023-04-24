@@ -3,7 +3,7 @@ import Typography from '@components/Typography';
 import { ARROW_DOWN, ARROW_UP, ENTER, ESC, TAB } from '@constants/key';
 import { css, useTheme } from '@emotion/react';
 import { ChildrenProps } from '@util-types/ChildrenProps';
-import { getNextElement } from '@utils/getNextElement';
+import { getNextElement } from '@utils/get-next-element';
 import {
   Dispatch,
   KeyboardEventHandler,

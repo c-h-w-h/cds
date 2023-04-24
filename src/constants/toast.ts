@@ -1,5 +1,5 @@
 import { Interpolation, Theme } from '@emotion/react';
-import { pixelToRem } from '@utils/pixelToRem';
+import { pixelToRem } from '@utils/pixel-to-rem';
 
 export type ToastKind = 'alert' | 'info' | 'success' | 'warning' | 'error';
 

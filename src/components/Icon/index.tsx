@@ -7,7 +7,7 @@ export { default as CdsUser } from './CdsUser';
 
 import styled from '@emotion/styled';
 import { IconType } from '@react-icons/all-files';
-import { pixelToRem } from '@utils/pixelToRem';
+import { pixelToRem } from '@utils/pixel-to-rem';
 import { CSSProperties } from 'react';
 
 /**
