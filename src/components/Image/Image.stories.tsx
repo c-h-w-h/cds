@@ -1,3 +1,4 @@
+import Flexbox from '@components-layout/Flexbox';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import Image from '.';
@@ -72,11 +73,11 @@ Default.args = {
 
 const SizeVariantTemplate: ComponentStory<typeof Image> = (args) => {
   return (
-    <>
+    <Flexbox>
       <Image {...args} {...DEFAULT_ARGS} size={'small'} />
       <Image {...args} {...DEFAULT_ARGS} size={'medium'} />
       <Image {...args} {...DEFAULT_ARGS} size={'large'} />
-    </>
+    </Flexbox>
   );
 };
 
@@ -90,10 +91,10 @@ SizeVariant.parameters = {
 
 const ShapeVariantTemplate: ComponentStory<typeof Image> = (args) => {
   return (
-    <>
+    <Flexbox>
       <Image {...args} {...DEFAULT_ARGS} size={'large'} shape={'circle'} />
       <Image {...args} {...DEFAULT_ARGS} size={'large'} shape={'rounded'} />
-    </>
+    </Flexbox>
   );
 };
 
