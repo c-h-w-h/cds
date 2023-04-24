@@ -1,9 +1,10 @@
+import Flexbox from '@components-layout/Flexbox';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import Image from '.';
 
 export default {
-  title: 'Design System/Components/Image',
+  title: 'Components/Image',
   component: Image,
   parameters: {
     layout: 'fullscreen',
@@ -12,7 +13,6 @@ export default {
   },
   argTypes: {
     src: {
-      name: 'src',
       description: '이미지가 저장된 경로나 URL을 설정합니다.',
       table: {
         type: { summary: 'string', required: true },
@@ -22,7 +22,6 @@ export default {
       },
     },
     alt: {
-      name: 'alt',
       description: '이미지의 대체 텍스트를 설정합니다.',
       table: {
         type: { summary: 'string', required: true },
@@ -32,10 +31,9 @@ export default {
       },
     },
     size: {
-      name: 'size',
       description: '이미지 크기를 설정합니다.',
       table: {
-        type: { summary: 'string', required: true },
+        type: { summary: 'ImageSizeVariant', required: true },
       },
       control: {
         type: 'select',
@@ -43,10 +41,9 @@ export default {
       },
     },
     shape: {
-      name: 'shape',
       description: '이미지 모양을 설정합니다.',
       table: {
-        type: { summary: 'string' },
+        type: { summary: 'ImageShapeVariant' },
       },
       control: {
         type: 'select',
@@ -56,11 +53,13 @@ export default {
   },
 } as ComponentMeta<typeof Image>;
 
-const DUMMY_SRC = 'https://picsum.photos/seed/picsum/200/300';
-const DUMMY_ALT = '테스트 이미지를 설명';
+const DEFAULT_ARGS = {
+  src: 'https://user-images.githubusercontent.com/31645195/233934759-59b7a8e6-4dfd-41f5-9c06-4985c65bdc53.png',
+  alt: '테스트 이미지를 설명',
+};
 
 const Template: ComponentStory<typeof Image> = (args) => (
-  <Image {...args} src={DUMMY_SRC} alt={DUMMY_ALT} />
+  <Image {...args} {...DEFAULT_ARGS} />
 );
 
 export const Default = Template.bind({});
@@ -68,107 +67,37 @@ Default.args = {
   size: 'small',
 };
 
-export const SmallDefault = Template.bind({});
-SmallDefault.args = {
-  size: 'small',
+const SizeVariantTemplate: ComponentStory<typeof Image> = (args) => {
+  return (
+    <Flexbox>
+      <Image {...args} {...DEFAULT_ARGS} size={'small'} />
+      <Image {...args} {...DEFAULT_ARGS} size={'medium'} />
+      <Image {...args} {...DEFAULT_ARGS} size={'large'} />
+    </Flexbox>
+  );
 };
 
-SmallDefault.parameters = {
+export const SizeVariant = SizeVariantTemplate.bind({});
+SizeVariant.parameters = {
   docs: {
-    storyDescription: '크기가 small이고 shape을 설정하지 않은 이미지입니다.',
+    storyDescription:
+      'size 속성을 설정하여 컴포넌트의 크기를 설정할 수 있습니다. 좌측부터 차례로 small, medium, large 입니다.',
   },
 };
 
-export const SmallCircle = Template.bind({});
-SmallCircle.args = {
-  size: 'small',
-  shape: 'circle',
+const ShapeVariantTemplate: ComponentStory<typeof Image> = (args) => {
+  return (
+    <Flexbox>
+      <Image {...args} {...DEFAULT_ARGS} size={'large'} shape={'circle'} />
+      <Image {...args} {...DEFAULT_ARGS} size={'large'} shape={'rounded'} />
+    </Flexbox>
+  );
 };
 
-SmallCircle.parameters = {
+export const ShapeVariant = ShapeVariantTemplate.bind({});
+ShapeVariant.parameters = {
   docs: {
-    storyDescription: '크기가 small이고 모양이 원형인 이미지입니다.',
-  },
-};
-
-export const SmallRounded = Template.bind({});
-SmallRounded.args = {
-  size: 'small',
-  shape: 'rounded',
-};
-
-SmallRounded.parameters = {
-  docs: {
-    storyDescription: '크기가 small이고 모서리가 둥근 이미지입니다.',
-  },
-};
-
-export const MediumDefault = Template.bind({});
-MediumDefault.args = {
-  size: 'medium',
-};
-
-MediumDefault.parameters = {
-  docs: {
-    storyDescription: '크기가 medium이고 shape을 설정하지 않은 이미지입니다.',
-  },
-};
-
-export const MediumCircle = Template.bind({});
-MediumCircle.args = {
-  size: 'medium',
-  shape: 'circle',
-};
-
-MediumCircle.parameters = {
-  docs: {
-    storyDescription: '크기가 medium이고 모양이 원형인 이미지입니다.',
-  },
-};
-
-export const MediumRounded = Template.bind({});
-MediumRounded.args = {
-  size: 'medium',
-  shape: 'rounded',
-};
-
-MediumRounded.parameters = {
-  docs: {
-    storyDescription: '크기가 medium이고 모서리가 둥근 이미지입니다.',
-  },
-};
-
-export const LargeDefault = Template.bind({});
-LargeDefault.args = {
-  size: 'large',
-};
-
-LargeDefault.parameters = {
-  docs: {
-    storyDescription: '크기가 large이고 shape을 설정하지 않은 이미지입니다.',
-  },
-};
-
-export const LargeCircle = Template.bind({});
-LargeCircle.args = {
-  size: 'large',
-  shape: 'circle',
-};
-
-LargeCircle.parameters = {
-  docs: {
-    storyDescription: '크기가 large이고 모양이 원형인 이미지입니다.',
-  },
-};
-
-export const LargeRounded = Template.bind({});
-LargeRounded.args = {
-  size: 'large',
-  shape: 'rounded',
-};
-
-LargeRounded.parameters = {
-  docs: {
-    storyDescription: '크기가 large이고 모서리가 둥근 이미지입니다.',
+    storyDescription:
+      'shape 속성을 설정하여 테두리 모양을 설정할 수 있습니다. 좌측부터 차례로 circle, rounded 입니다.',
   },
 };
