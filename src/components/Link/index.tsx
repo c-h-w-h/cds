@@ -7,7 +7,7 @@ type ButtonLinkProps = ButtonBaseProps & {
   disabled?: boolean;
 } & AnchorHTMLAttributes<HTMLAnchorElement>;
 
-const ButtonLink = ({
+const Link = ({
   variant = 'square',
   label,
   href,
@@ -30,4 +30,4 @@ const ButtonLink = ({
   );
 };
 
-export default ButtonLink;
+export default Link;
