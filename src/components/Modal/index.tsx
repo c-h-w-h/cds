@@ -1,6 +1,9 @@
 import Center from '@components/@layout/Center';
+import Typography from '@components/Typography';
 import Portal from '@components-common/Portal';
+import Flexbox from '@components-layout/Flexbox';
 import { PORTAL_MODAL_ROOT_ID } from '@constants/portal';
+import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { ChildrenProps } from '@util-types/ChildrenProps';
 import { DefaultPropsWithChildren } from '@utils/types/DefaultPropsWithChildren';
@@ -30,7 +33,7 @@ const Modal = ({ children, isOpen, onClose }: ModalProps) => {
     <Portal id={PORTAL_MODAL_ROOT_ID}>
       <ModalContext.Provider value={contextValues}>
         <ModalWrapper {...{ isOpen }}>
-          <BackGround onClick={onClose} />
+          <Dimmed onClick={onClose} />
           <Center>
             <ModalBox role="dialog" aria-modal="true">
               {children}
@@ -44,15 +47,23 @@ const Modal = ({ children, isOpen, onClose }: ModalProps) => {
 
 const Header = ({ title }: HeaderProps) => {
   const { onClose } = useSafeContext(ModalContext);
+  const { color: themeColor } = useTheme();
   return (
-    <HeaderWrapper>
-      <Button onClick={onClose}>
+    <Flexbox
+      justifyContent="left"
+      css={css`
+        height: 50px;
+        padding: 20px;
+        border-bottom: 1px solid ${themeColor.gray100};
+      `}
+    >
+      <Button disabled onClick={onClose}>
         <Center>
           <MdArrowBackIosNew />
         </Center>
       </Button>
-      <Title>{title}</Title>
-    </HeaderWrapper>
+      <Typography variant="body">{title}</Typography>
+    </Flexbox>
   );
 };
 
@@ -82,7 +93,7 @@ const ModalBox = styled.div`
   background-color: ${({ theme }) => theme.color.white};
 `;
 
-const BackGround = styled.div`
+const Dimmed = styled.div`
   width: 100%;
   height: 100%;
   position: fixed;
@@ -90,20 +101,6 @@ const BackGround = styled.div`
   display: flex;
   opacity: 0.4;
   background-color: ${({ theme }) => theme.color.black};
-`;
-
-const HeaderWrapper = styled.div`
-  display: flex;
-  justify-content: left;
-  align-items: center;
-  height: 50px;
-  line-height: 50px;
-  padding: 20px;
-  border-bottom: 1px solid ${({ theme }) => theme.color.gray100};
-`;
-
-const Title = styled.div`
-  margin-left: 10px;
 `;
 
 const Button = styled.button`
@@ -114,16 +111,13 @@ const Button = styled.button`
   border-radius: 50%;
   pointer-events: all;
   @media (hover: hover) {
-    &:enabled:hover {
+    &:hover {
       filter: brightness(0.9);
       cursor: pointer;
     }
   }
-  &:enabled:active {
+  &:active {
     filter: brightness(0.7);
-  }
-  &:disabled {
-    opacity: 0;
   }
 `;
 
