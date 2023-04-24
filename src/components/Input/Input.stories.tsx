@@ -14,7 +14,7 @@ export default {
   parameters: {
     layout: 'fullscreen',
     componentSubtitle:
-      'Input은 사용자의 입력을 받는 컴포넌트입니다. 비제어, 제어 두 방식 모두 지원합니다.',
+      'Input은 사용자의 입력을 받는 컴포넌트입니다. 제어, 비제어 두 방식 모두 지원합니다.',
   },
   argTypes: {
     placeholder: {
@@ -89,26 +89,59 @@ export default {
       },
     },
 
-    cancelIcon: {
-      name: 'cancelIcon',
-      description:
-        'Input 컴포넌트 뒤에 오는 취소 아이콘을 설정합니다. 취소 기능 사용시 반드시 내려주어야 합니다.',
+    isClearable: {
+      name: 'isClearable',
+      description: 'Input 컴포넌트 뒤에 오는 취소 아이콘 유무를 설정합니다.',
       table: {
-        type: { summary: 'IconSource' },
-      },
-    },
-
-    isControlled: {
-      name: 'isControlled',
-      description:
-        'Input 컴포넌트의 제어 비제어 여부를 판단합니다. 제어 컴포넌트 사용시 반드시 내려주어야합니다.',
-      table: {
-        type: { summary: 'string' },
-        defaultValue: { summary: 'false' },
+        type: { summary: 'boolean' },
       },
     },
   },
 } as ComponentMeta<typeof Input>;
+
+const ControlledWithCancelTemplate: ComponentStory<typeof Input> = (args) => {
+  const [inputValue, setInputValue] = useState<string>('');
+  const [isValidate, setIsValidate] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (inputValue.length < 5 && inputValue.length > 0) {
+      setIsValidate(false);
+    } else {
+      setIsValidate(true);
+    }
+  }, [inputValue]);
+
+  return (
+    <>
+      <Input
+        {...args}
+        onChange={({ target }) => setInputValue(target.value)}
+        onCancel={() => setInputValue('')}
+        value={inputValue}
+        isValid={isValidate}
+      />
+      {!isValidate && (
+        <div style={{ color: 'red', fontSize: '10px' }}>
+          5글자 이상 입력하세요.
+        </div>
+      )}
+      <div>{inputValue}</div>
+    </>
+  );
+};
+
+export const Default = ControlledWithCancelTemplate.bind({});
+Default.args = {
+  placeholder: '입력하세요',
+  id: 'controlled',
+  leadingIcon: <MdSearch />,
+  isClearable: true,
+};
+Default.parameters = {
+  docs: {
+    storyDescription: '취소 버튼을 설정한 제어 Input 컴포넌트입니다.',
+  },
+};
 
 const ControlledTemplate: ComponentStory<typeof Input> = (args) => {
   const [inputValue, setInputValue] = useState<string>('');
@@ -145,35 +178,10 @@ Controlled.args = {
   id: 'controlled',
 };
 
-const ControlledWithCancelTemplate: ComponentStory<typeof Input> = (args) => {
-  const [inputValue, setInputValue] = useState<string>('');
-  const [isValidate, setIsValidate] = useState<boolean>(true);
-
-  useEffect(() => {
-    if (inputValue.length < 5 && inputValue.length > 0) {
-      setIsValidate(false);
-    } else {
-      setIsValidate(true);
-    }
-  }, [inputValue]);
-
-  return (
-    <>
-      <Input
-        {...args}
-        onChange={({ target }) => setInputValue(target.value)}
-        onCancel={() => setInputValue('')}
-        value={inputValue}
-        isValid={isValidate}
-      />
-      {!isValidate && (
-        <div style={{ color: 'red', fontSize: '10px' }}>
-          5글자 이상 입력하세요.
-        </div>
-      )}
-      <div>{inputValue}</div>
-    </>
-  );
+Controlled.parameters = {
+  docs: {
+    storyDescription: '기본 제어 Input 컴포넌트입니다.',
+  },
 };
 
 export const ControlledWithCancel = ControlledWithCancelTemplate.bind({});

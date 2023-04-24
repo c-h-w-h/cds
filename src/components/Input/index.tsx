@@ -50,9 +50,9 @@ const Input = forwardRef(
       width: fit-content;
       height: fit-content;
       pointer-events: none;
+      padding: 5 0px;
       border: 1px solid ${isValid ? black : error};
       border-radius: 50px;
-      padding-left: 5px;
       font-size: 1rem;
       &:focus-within {
         outline: none;
@@ -65,7 +65,7 @@ const Input = forwardRef(
       border: 0px;
       border-radius: 50px;
       outline: none;
-      padding: 5px;
+      padding: 0.75rem;
       font-size: 1em;
       &::placeholder {
         color: ${gray200};
@@ -75,13 +75,14 @@ const Input = forwardRef(
     const cancelButtonStyle = css`
       border: 0;
       width: max-content;
-      height: 15px;
+      display: flex;
       background-color: ${white};
       padding: 0;
       margin: auto;
       margin-right: 5px;
       border-radius: 50px;
       pointer-events: all;
+      font-size: 1em;
       @media (hover: hover) {
         &:enabled:hover {
           filter: brightness(0.9);
