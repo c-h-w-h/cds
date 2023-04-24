@@ -15,7 +15,6 @@ interface RadioButtonProps extends DefaultProps<HTMLInputElement> {
   id?: string;
   label?: string;
   direction?: 'left' | 'right' | 'top' | 'bottom';
-  gap?: CSSProperties['gap'];
   children?: ReactNode;
 }
 
@@ -32,7 +31,6 @@ const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
       customButton,
       id,
       label,
-      gap = '0px',
       children = <span>{label ?? value}</span>,
       direction = 'right',
       ...props
@@ -43,7 +41,7 @@ const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
     if (!color) color = themeColor.primary100;
 
     return (
-      <WrapperLabel direction={direction} gap={gap}>
+      <WrapperLabel direction={direction}>
         {(direction === 'left' || direction === 'top') && children}
         <ActualInput
           type="radio"
@@ -90,7 +88,6 @@ const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
 
 interface WrapperProps {
   direction: 'left' | 'right' | 'top' | 'bottom';
-  gap: CSSProperties['gap'];
 }
 
 const WrapperLabel = styled.label<WrapperProps>`
@@ -100,7 +97,7 @@ const WrapperLabel = styled.label<WrapperProps>`
   align-items: center;
   justify-content: center;
   position: relative;
-  gap: ${({ gap }) => gap};
+  gap: 1px;
 
   & > input[type='radio']:not(:disabled) ~ * {
     cursor: pointer;
@@ -151,7 +148,16 @@ const DefaultButtonDiv = styled.div<ButtonProps>`
   }
 
   input[type='radio']:focus ~ & {
-    background-color: rgba(0, 0, 0, 0.1);
+    @keyframes fadeOut {
+      0% {
+        background-color: rgba(0, 0, 0, 0.2);
+      }
+      100% {
+        background-color: rgba(0, 0, 0, 0);
+      }
+    }
+
+    animation: fadeOut 0.5s ease-out forwards;
   }
 `;
 

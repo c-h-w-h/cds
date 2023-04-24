@@ -34,7 +34,6 @@ export default {
     color: theme.color.primary100,
     clickableSize: '30px',
     direction: 'right',
-    gap: '0px',
   },
   argTypes: {
     size: {
@@ -80,13 +79,6 @@ export default {
       control: {
         type: 'select',
         options: ['left', 'right', 'top', 'bottom'],
-      },
-    },
-    gap: {
-      description: '버튼과 라벨의 사이 간격을 지정합니다.',
-      table: {
-        type: { summary: "CSSProperties['gap']" },
-        defaultValue: { summary: '0px' },
       },
     },
     label: {
