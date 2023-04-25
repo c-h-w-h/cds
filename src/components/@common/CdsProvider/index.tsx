@@ -1,4 +1,5 @@
 import Global from '@components-common/Global';
+import { COLOR, Color } from '@constants/color';
 import {
   DRAWER_PORTAL_ROOT_ID,
   TOAST_PORTAL_ROOT_ID,
@@ -7,17 +8,25 @@ import {
 import { ThemeProvider } from '@emotion/react';
 import { ReactNode } from 'react';
 
-import { theme } from './theme';
-
 interface CdsProviderProps {
+  themeColor: Color;
   children: ReactNode;
 }
 
-const CdsProvider = ({ children }: CdsProviderProps) => {
+export interface Theme {
+  color: Color;
+}
+
+const CdsProvider = ({ themeColor, children }: CdsProviderProps) => {
+  const color = {
+    ...COLOR,
+    ...themeColor,
+  };
+
   return (
     <>
       <Global />
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={{ color }}>
         {children}
         <div id={DRAWER_PORTAL_ROOT_ID}></div>
         <div id={TOAST_PORTAL_ROOT_ID}></div>
