@@ -4,7 +4,7 @@
 
 일관적인 UI 디자인과 접근성을 고려한 사용자 인터랙션을 제공합니다.
 
-[Storybook 문서](https://640054c53834f08f15bbad68-gkurucdpms.chromatic.com/) 에서 제공하는 컴포넌트의 종류와 용례를 확인해보세요.
+[Storybook 문서](https://640054c53834f08f15bbad68-sscshdmgyf.chromatic.com/) 에서 제공하는 컴포넌트의 종류와 용례를 확인할 수 있습니다.
 
 <!-- ## Table of contents
 - [Usage](#usage)
