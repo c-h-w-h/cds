@@ -9,7 +9,7 @@ import { ThemeProvider } from '@emotion/react';
 import { ReactNode } from 'react';
 
 interface CdsProviderProps {
-  themeColor: Color;
+  themeColor: Partial<Color>;
   children: ReactNode;
 }
 
