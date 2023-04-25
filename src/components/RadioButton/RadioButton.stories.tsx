@@ -1,5 +1,5 @@
-import { theme } from '@components/@common/CdsProvider/theme';
 import Center from '@components-layout/Center';
+import { COLOR } from '@constants/color';
 import styled from '@emotion/styled';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
@@ -31,7 +31,7 @@ export default {
   args: {
     size: '16px',
     disabled: false,
-    color: theme.color.primary,
+    color: COLOR.primary,
     clickableSize: '30px',
     direction: 'right',
   },
@@ -54,7 +54,7 @@ export default {
       description: '기본 버튼의 색상을 지정합니다.',
       table: {
         type: { summary: "CSSProperties['color']" },
-        defaultValue: { summary: 'theme.primary' },
+        defaultValue: { summary: 'theme.color.primary' },
       },
       control: {
         type: 'color',
