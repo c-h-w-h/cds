@@ -4,6 +4,8 @@
 
 일관적인 UI 디자인과 접근성을 고려한 사용자 인터랙션을 제공합니다.
 
+[Storybook 문서](https://640054c53834f08f15bbad68-gkurucdpms.chromatic.com/) 에서 제공하는 컴포넌트의 종류와 용례를 확인해보세요.
+
 <!-- ## Table of contents
 - [Usage](#usage)
 - [Documentation](#documentation)
@@ -19,13 +21,9 @@ npm install @chwh/cds
 yarn add @chwh/cds
 ```
 
-## Documentation
-
-[Storybook 문서](https://640054c53834f08f15bbad68-gkurucdpms.chromatic.com/) 에서 제공하는 컴포넌트의 종류와 용례를 확인해보세요.
-
 ## Usage
 
-사용을 위해 상위 컴포넌트를 `CdsProvider`로 감싸야 합니다.
+⚠️ 사용을 위해 상위 컴포넌트를 `CdsProvider`로 감싸야 합니다.
 
 ```tsx
 const App = () => {
@@ -37,7 +35,7 @@ const App = () => {
 };
 ```
 
-아래 인터페이스 중 일부를 재정의한 객체를 `CdsProvider`의 `themeColor` props로 전달해 테마 컬러를 변경할 수 있습니다.
+💅 아래 인터페이스 중 일부를 재정의한 객체를 `CdsProvider`의 `themeColor` props로 전달해 테마 컬러를 변경할 수 있습니다.
 
 ```tsx
 type ColorSet = {
