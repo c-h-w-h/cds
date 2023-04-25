@@ -37,7 +37,7 @@ const App = () => {
 };
 ```
 
-아래 인터페이스 중 일부를 재정의한 객체를 `themeColor` props로 전달해 테마 컬러를 변경할 수 있습니다.
+아래 인터페이스 중 일부를 재정의한 객체를 `CdsProvider`의 `themeColor` props로 전달해 테마 컬러를 변경할 수 있습니다.
 
 ```tsx
 type ColorSet = {
