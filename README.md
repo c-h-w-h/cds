@@ -9,7 +9,7 @@
 - [Documentation](#documentation)
 - [Contributors](#contributors) -->
 
-## Usage
+## Installation
 
 ```zsh
 npm install @chwh/cds
@@ -19,11 +19,15 @@ npm install @chwh/cds
 yarn add @chwh/cds
 ```
 
-<br />
+## Documentation
 
-⚠️ 사용을 위해 상위 컴포넌트를 `CdsProvider`로 감싸야 합니다.
+[Storybook 문서](https://640054c53834f08f15bbad68-gkurucdpms.chromatic.com/) 에서 제공하는 컴포넌트의 종류와 용례를 확인해보세요.
 
-```jsx
+## Usage
+
+사용을 위해 상위 컴포넌트를 `CdsProvider`로 감싸야 합니다.
+
+```tsx
 const App = () => {
   return (
     <CdsProvider>
@@ -33,9 +37,30 @@ const App = () => {
 };
 ```
 
-## Documentation
+아래 인터페이스 중 일부를 재정의한 객체를 `themeColor` props로 전달해 테마 컬러를 변경할 수 있습니다.
 
-[Storybook 문서](https://640054c53834f08f15bbad68-gkurucdpms.chromatic.com/) 에서 제공하는 컴포넌트의 종류와 용례를 확인해보세요.
+```tsx
+type ColorSet = {
+  primary: Property.Color;
+  primaryLight: Property.Color;
+  primaryDark: Property.Color;
+
+  alert: Property.Color;
+  info: Property.Color;
+  success: Property.Color;
+  warning: Property.Color;
+  error: Property.Color;
+
+  black: Property.Color;
+  white: Property.Color;
+  offWhite: Property.Color;
+  background: Property.Color;
+  gray100: Property.Color;
+  gray200: Property.Color;
+  gray300: Property.Color;
+  gray400: Property.Color;
+};
+```
 
 ## Contributors
 
