@@ -20,7 +20,7 @@ export const COLOR = {
   gray200: '#CFD6DD',
   gray300: '#9EA8B3',
   gray400: '#555F6D',
-};
+} as const;
 
 type Color = Exclude<CSSProperties['color'], undefined>;
 
