@@ -1,15 +1,10 @@
-import { Color } from '@constants/color';
+import { ColorSet } from '@constants/color';
 import { css } from '@emotion/react';
 import { CSSProperties } from 'react';
 
-/**
- * @param {CSSProperties['position']} position
- * @param {Color} {black}
- * @returns {SerializedStyles}
- */
 export const dimmerStyle = (
   position: CSSProperties['position'],
-  { black }: Color,
+  { black }: ColorSet,
 ) => css`
   position: ${position};
   top: 0;

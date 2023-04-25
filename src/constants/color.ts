@@ -1,3 +1,5 @@
+import { CSSProperties } from 'react';
+
 export const COLOR = {
   primary: '#1493FF',
   primaryLight: '#66B9FF',
@@ -20,4 +22,8 @@ export const COLOR = {
   gray400: '#555F6D',
 } as const;
 
-export type Color = typeof COLOR;
+type Color = Exclude<CSSProperties['color'], undefined>;
+
+export type ColorSet = {
+  [P in keyof typeof COLOR]: Color;
+};

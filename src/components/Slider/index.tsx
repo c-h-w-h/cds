@@ -1,7 +1,6 @@
-import { theme } from '@components/@common/CdsProvider/theme';
 import Flexbox from '@components/@layout/Flexbox';
 import Typography from '@components/Typography';
-import { css } from '@emotion/react';
+import { css, useTheme } from '@emotion/react';
 import {
   createContext,
   ReactNode,
@@ -91,7 +90,7 @@ interface TrackProps {
 const Track = ({ color, children }: TrackProps) => {
   const { label, trackRef, getStyles, onMoveSlider } =
     useSafeContext(SliderContext);
-  const { color: themeColor } = theme;
+  const { color: themeColor } = useTheme();
   const { gray100 } = themeColor;
   const { trackStyle } = getStyles();
 
@@ -119,7 +118,7 @@ interface FilledProps {
 
 const Filled = ({ color }: FilledProps) => {
   const { label, filledRef, getStyles } = useSafeContext(SliderContext);
-  const { color: themeColor } = theme;
+  const { color: themeColor } = useTheme();
   const { primary } = themeColor;
   const { filledStyle } = getStyles();
 
@@ -156,7 +155,7 @@ const Thumb = ({ color, children }: ThumbProps) => {
     onPressArrow,
   } = useSafeContext(SliderContext);
   const [isDraggable, setIsDraggable] = useState<boolean>(false);
-  const { color: themeColor } = theme;
+  const { color: themeColor } = useTheme();
   const { primary, white } = themeColor;
   const { thumbStyle } = getStyles();
 

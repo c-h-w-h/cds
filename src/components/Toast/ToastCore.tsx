@@ -1,4 +1,3 @@
-import { theme } from '@components/@common/CdsProvider/theme';
 import Flexbox from '@components/@layout/Flexbox';
 import Typography from '@components/Typography';
 import {
@@ -10,7 +9,7 @@ import {
   MAIN_ICON_SIZE,
   CLOSE_ICON_SIZE,
 } from '@constants/toast';
-import { css, keyframes } from '@emotion/react';
+import { css, keyframes, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { DefaultProps } from '@utils/types/DefaultProps';
 import { useEffect } from 'react';
@@ -42,7 +41,7 @@ const ToastCore = ({
   open,
   onClose,
 }: ToastProps) => {
-  const { color: themeColor } = theme;
+  const { color: themeColor } = useTheme();
   const { white } = themeColor;
 
   useEffect(() => {
