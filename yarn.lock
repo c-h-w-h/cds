@@ -1655,6 +1655,7 @@ __metadata:
     "@storybook/builder-vite": ^0.4.1
     "@storybook/react": ^6.5.16
     "@storybook/testing-library": ^0.0.13
+    "@types/node": ^20.1.0
     "@types/react": ^18.0.27
     "@types/react-dom": ^18.0.10
     "@types/react-icons": ^3.0.0
@@ -4204,6 +4205,13 @@ __metadata:
   version: 16.18.21
   resolution: "@types/node@npm:16.18.21"
   checksum: 152e7976f30b4e599d37e5a92a0c62dbe0751a63dab1aef44a0c2db940fa6f79a23be9783886b6afe34aa20485679c6bdd7b787b304fdbb05e72326c95d2b255
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^20.1.0":
+  version: 20.1.0
+  resolution: "@types/node@npm:20.1.0"
+  checksum: c6d9afa9aa78b4b4348c69ece94975be70346b144c278f1395694a10ef919d7db300018101b6f9245e6bdd76674a5327d2d14829092f3d5295e858cff5f22a66
   languageName: node
   linkType: hard
 

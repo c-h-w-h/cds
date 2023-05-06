@@ -56,6 +56,7 @@
     "@storybook/builder-vite": "^0.4.1",
     "@storybook/react": "^6.5.16",
     "@storybook/testing-library": "^0.0.13",
+    "@types/node": "^20.1.0",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@types/react-icons": "^3.0.0",
