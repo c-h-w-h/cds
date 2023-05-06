@@ -1647,7 +1647,6 @@ __metadata:
     "@babel/core": ^7.20.12
     "@emotion/react": ^11.10.5
     "@emotion/styled": ^11.10.5
-    "@react-icons/all-files": ^4.1.0
     "@storybook/addon-actions": ^6.5.16
     "@storybook/addon-essentials": ^6.5.16
     "@storybook/addon-interactions": ^6.5.16
@@ -1677,6 +1676,7 @@ __metadata:
     plop: ^3.1.2
     react: ^18.2.0
     react-dom: ^18.2.0
+    react-icons: ^4.8.0
     typescript: ^4.9.3
     vite: ^4.1.0
     vite-plugin-dts: ^2.1.0
@@ -2546,15 +2546,6 @@ __metadata:
     webpack-plugin-serve:
       optional: true
   checksum: c45beded9c56fbbdc7213a2c36131ace5db360ed704d462cc39d6678f980173a91c9a3f691e6bd3a026f25486644cd0027e8a12a0a4eced8e8b886a0472e7d34
-  languageName: node
-  linkType: hard
-
-"@react-icons/all-files@npm:^4.1.0":
-  version: 4.1.0
-  resolution: "@react-icons/all-files@npm:4.1.0"
-  peerDependencies:
-    react: "*"
-  checksum: c34c644650a144e4f2157c20b3106200ac1f76b3132dcda1a40f061e000a34c78df188266395afae571d5c85bf48365824db7b1bf8b7ae6229fdc148c941ab85
   languageName: node
   linkType: hard
 
@@ -14339,7 +14330,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-icons@npm:*":
+"react-icons@npm:*, react-icons@npm:^4.8.0":
   version: 4.8.0
   resolution: "react-icons@npm:4.8.0"
   peerDependencies:

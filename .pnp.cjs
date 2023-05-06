@@ -31,7 +31,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", "npm:7.21.3"],\
             ["@emotion/react", "virtual:035c464e424796e537829cb4f2fd5a95265947b3ddc6061b1ef8d022d262a7277c9ee48188efb4902ee4f2ef86981b240c13aa7360c44e03b45765fb3e1b1da3#npm:11.10.6"],\
             ["@emotion/styled", "virtual:035c464e424796e537829cb4f2fd5a95265947b3ddc6061b1ef8d022d262a7277c9ee48188efb4902ee4f2ef86981b240c13aa7360c44e03b45765fb3e1b1da3#npm:11.10.6"],\
-            ["@react-icons/all-files", "virtual:035c464e424796e537829cb4f2fd5a95265947b3ddc6061b1ef8d022d262a7277c9ee48188efb4902ee4f2ef86981b240c13aa7360c44e03b45765fb3e1b1da3#npm:4.1.0"],\
             ["@storybook/addon-actions", "virtual:035c464e424796e537829cb4f2fd5a95265947b3ddc6061b1ef8d022d262a7277c9ee48188efb4902ee4f2ef86981b240c13aa7360c44e03b45765fb3e1b1da3#npm:6.5.16"],\
             ["@storybook/addon-essentials", "virtual:035c464e424796e537829cb4f2fd5a95265947b3ddc6061b1ef8d022d262a7277c9ee48188efb4902ee4f2ef86981b240c13aa7360c44e03b45765fb3e1b1da3#npm:6.5.16"],\
             ["@storybook/addon-interactions", "virtual:035c464e424796e537829cb4f2fd5a95265947b3ddc6061b1ef8d022d262a7277c9ee48188efb4902ee4f2ef86981b240c13aa7360c44e03b45765fb3e1b1da3#npm:6.5.16"],\
@@ -61,6 +60,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["plop", "npm:3.1.2"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:035c464e424796e537829cb4f2fd5a95265947b3ddc6061b1ef8d022d262a7277c9ee48188efb4902ee4f2ef86981b240c13aa7360c44e03b45765fb3e1b1da3#npm:18.2.0"],\
+            ["react-icons", "virtual:035c464e424796e537829cb4f2fd5a95265947b3ddc6061b1ef8d022d262a7277c9ee48188efb4902ee4f2ef86981b240c13aa7360c44e03b45765fb3e1b1da3#npm:4.8.0"],\
             ["typescript", "patch:typescript@npm%3A4.9.5#~builtin<compat/typescript>::version=4.9.5&hash=289587"],\
             ["vite", "virtual:035c464e424796e537829cb4f2fd5a95265947b3ddc6061b1ef8d022d262a7277c9ee48188efb4902ee4f2ef86981b240c13aa7360c44e03b45765fb3e1b1da3#npm:4.2.1"],\
             ["vite-plugin-dts", "virtual:035c464e424796e537829cb4f2fd5a95265947b3ddc6061b1ef8d022d262a7277c9ee48188efb4902ee4f2ef86981b240c13aa7360c44e03b45765fb3e1b1da3#npm:2.1.0"],\
@@ -4066,7 +4066,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", "npm:7.21.3"],\
             ["@emotion/react", "virtual:035c464e424796e537829cb4f2fd5a95265947b3ddc6061b1ef8d022d262a7277c9ee48188efb4902ee4f2ef86981b240c13aa7360c44e03b45765fb3e1b1da3#npm:11.10.6"],\
             ["@emotion/styled", "virtual:035c464e424796e537829cb4f2fd5a95265947b3ddc6061b1ef8d022d262a7277c9ee48188efb4902ee4f2ef86981b240c13aa7360c44e03b45765fb3e1b1da3#npm:11.10.6"],\
-            ["@react-icons/all-files", "virtual:035c464e424796e537829cb4f2fd5a95265947b3ddc6061b1ef8d022d262a7277c9ee48188efb4902ee4f2ef86981b240c13aa7360c44e03b45765fb3e1b1da3#npm:4.1.0"],\
             ["@storybook/addon-actions", "virtual:035c464e424796e537829cb4f2fd5a95265947b3ddc6061b1ef8d022d262a7277c9ee48188efb4902ee4f2ef86981b240c13aa7360c44e03b45765fb3e1b1da3#npm:6.5.16"],\
             ["@storybook/addon-essentials", "virtual:035c464e424796e537829cb4f2fd5a95265947b3ddc6061b1ef8d022d262a7277c9ee48188efb4902ee4f2ef86981b240c13aa7360c44e03b45765fb3e1b1da3#npm:6.5.16"],\
             ["@storybook/addon-interactions", "virtual:035c464e424796e537829cb4f2fd5a95265947b3ddc6061b1ef8d022d262a7277c9ee48188efb4902ee4f2ef86981b240c13aa7360c44e03b45765fb3e1b1da3#npm:6.5.16"],\
@@ -4096,6 +4095,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["plop", "npm:3.1.2"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:035c464e424796e537829cb4f2fd5a95265947b3ddc6061b1ef8d022d262a7277c9ee48188efb4902ee4f2ef86981b240c13aa7360c44e03b45765fb3e1b1da3#npm:18.2.0"],\
+            ["react-icons", "virtual:035c464e424796e537829cb4f2fd5a95265947b3ddc6061b1ef8d022d262a7277c9ee48188efb4902ee4f2ef86981b240c13aa7360c44e03b45765fb3e1b1da3#npm:4.8.0"],\
             ["typescript", "patch:typescript@npm%3A4.9.5#~builtin<compat/typescript>::version=4.9.5&hash=289587"],\
             ["vite", "virtual:035c464e424796e537829cb4f2fd5a95265947b3ddc6061b1ef8d022d262a7277c9ee48188efb4902ee4f2ef86981b240c13aa7360c44e03b45765fb3e1b1da3#npm:4.2.1"],\
             ["vite-plugin-dts", "virtual:035c464e424796e537829cb4f2fd5a95265947b3ddc6061b1ef8d022d262a7277c9ee48188efb4902ee4f2ef86981b240c13aa7360c44e03b45765fb3e1b1da3#npm:2.1.0"],\
@@ -5208,28 +5208,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             "webpack-hot-middleware",\
             "webpack-plugin-serve",\
             "webpack"\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@react-icons/all-files", [\
-        ["npm:4.1.0", {\
-          "packageLocation": "./.yarn/cache/@react-icons-all-files-npm-4.1.0-0c7fb4e7cd-c34c644650.zip/node_modules/@react-icons/all-files/",\
-          "packageDependencies": [\
-            ["@react-icons/all-files", "npm:4.1.0"]\
-          ],\
-          "linkType": "SOFT"\
-        }],\
-        ["virtual:035c464e424796e537829cb4f2fd5a95265947b3ddc6061b1ef8d022d262a7277c9ee48188efb4902ee4f2ef86981b240c13aa7360c44e03b45765fb3e1b1da3#npm:4.1.0", {\
-          "packageLocation": "./.yarn/__virtual__/@react-icons-all-files-virtual-6045cf1ef5/0/cache/@react-icons-all-files-npm-4.1.0-0c7fb4e7cd-c34c644650.zip/node_modules/@react-icons/all-files/",\
-          "packageDependencies": [\
-            ["@react-icons/all-files", "virtual:035c464e424796e537829cb4f2fd5a95265947b3ddc6061b1ef8d022d262a7277c9ee48188efb4902ee4f2ef86981b240c13aa7360c44e03b45765fb3e1b1da3#npm:4.1.0"],\
-            ["@types/react", "npm:18.0.29"],\
-            ["react", "npm:18.2.0"]\
-          ],\
-          "packagePeers": [\
-            "@types/react",\
-            "react"\
           ],\
           "linkType": "HARD"\
         }]\
@@ -19605,6 +19583,19 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-icons", "npm:4.8.0"]\
           ],\
           "linkType": "SOFT"\
+        }],\
+        ["virtual:035c464e424796e537829cb4f2fd5a95265947b3ddc6061b1ef8d022d262a7277c9ee48188efb4902ee4f2ef86981b240c13aa7360c44e03b45765fb3e1b1da3#npm:4.8.0", {\
+          "packageLocation": "./.yarn/__virtual__/react-icons-virtual-a43d880b72/0/cache/react-icons-npm-4.8.0-aa5423cd6c-4dbba7ad98.zip/node_modules/react-icons/",\
+          "packageDependencies": [\
+            ["react-icons", "virtual:035c464e424796e537829cb4f2fd5a95265947b3ddc6061b1ef8d022d262a7277c9ee48188efb4902ee4f2ef86981b240c13aa7360c44e03b45765fb3e1b1da3#npm:4.8.0"],\
+            ["@types/react", "npm:18.0.29"],\
+            ["react", "npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/react",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
         }],\
         ["virtual:db6868aae3b0ebbfe2a4b4ec4372353f0b542900bf16a7edce80cb3623fbf1dbf7ac8153f2185a6ad8d2eb6495648fac3adc77b4fbf372b8f123e2cc3a2b93a7#npm:4.8.0", {\
           "packageLocation": "./.yarn/__virtual__/react-icons-virtual-230b25901a/0/cache/react-icons-npm-4.8.0-aa5423cd6c-4dbba7ad98.zip/node_modules/react-icons/",\
