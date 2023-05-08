@@ -7,8 +7,9 @@ export interface SelectedOption {
 
 const useSelect = (id: string, setValue?: Dispatch<SetStateAction<string>>) => {
   const selectRef = useRef<HTMLSelectElement>(null);
-  const [selectedOption, setSelectedOption] =
-    useState<SelectedOption | null>(null);
+  const [selectedOption, setSelectedOption] = useState<SelectedOption | null>(
+    null,
+  );
 
   const optionRefs = useRef<Map<string, HTMLDivElement>>(new Map());
 
