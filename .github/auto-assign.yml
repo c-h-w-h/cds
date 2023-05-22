@@ -1,0 +1,9 @@
+addReviewers: true
+addAssignees: author
+reviewers:
+  - prayinforrain
+  - iyu88
+  - se030
+  - leesunmin1231
+  - dohun31
+numberOfReviewers: 0
