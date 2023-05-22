@@ -1,6 +1,6 @@
 {
   "name": "@chwh/cds",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "cold design system for React apps",
   "keywords": [
     "React",
@@ -40,8 +40,8 @@
     "lodash": "^4.17.21"
   },
   "peerDependencies": {
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
     "react": "^18.2.0"
   },
   "devDependencies": {
