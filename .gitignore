@@ -17,6 +17,7 @@ node_modules
 !.yarn/sdks
 !.yarn/versions
 
+# zero-install을 사용하게 된다면 아래 두 줄의 ignore를 토글해주세요.
 .pnp.*
 # !.yarn/cache
 
