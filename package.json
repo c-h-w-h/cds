@@ -10,7 +10,7 @@
   "type": "module",
   "scripts": {
     "dev": "yarn storybook",
-    "build": "tsc -p tsconfig.publish.json && vite build --config vite.publish.config.ts",
+    "build": "yarn pnpify tsc -p tsconfig.publish.json && yarn pnpify vite build --config vite.publish.config.ts",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "lint-staged": "lint-staged",
@@ -73,6 +73,7 @@
     "@typescript-eslint/eslint-plugin": "^5.51.0",
     "@typescript-eslint/parser": "^5.51.0",
     "@vitejs/plugin-react": "^3.1.0",
+    "@yarnpkg/pnpify": "^4.0.0-rc.44",
     "babel-loader": "^8.3.0",
     "chromatic": "^6.17.1",
     "eslint": "^8.34.0",
