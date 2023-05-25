@@ -175,30 +175,10 @@ const useSlider = ({
 };
 
 type getStylesReturn = {
-  rootStyle:
-    | {
-        width: CSSProperties['width'];
-      }
-    | {
-        height: CSSProperties['height'];
-      };
-  trackStyle: {
-    width: CSSProperties['width'];
-    height: CSSProperties['height'];
-  };
-  filledStyle: {
-    width: CSSProperties['width'];
-    height: CSSProperties['height'];
-  };
-  thumbStyle:
-    | {
-        left: CSSProperties['left'];
-        transform: CSSProperties['transform'];
-      }
-    | {
-        bottom: CSSProperties['bottom'];
-        transform: CSSProperties['transform'];
-      };
+  rootStyle: Partial<CSSProperties>;
+  trackStyle: Partial<CSSProperties>;
+  filledStyle: Partial<CSSProperties>;
+  thumbStyle: Partial<CSSProperties>;
 };
 
 export type UseSliderReturn = ReturnType<typeof useSlider>;
