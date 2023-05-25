@@ -1,5 +1,5 @@
 import { css, useTheme } from '@emotion/react';
-import { CSSProperties } from 'react';
+import { CSSProperties } from '@utils';
 
 interface HighlightProps {
   children: string;

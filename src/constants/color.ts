@@ -1,4 +1,4 @@
-import { CSSProperties } from 'react';
+import { CSSProperties } from '@utils';
 
 export const COLOR = {
   primary: '#1493FF',

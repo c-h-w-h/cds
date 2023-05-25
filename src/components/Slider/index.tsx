@@ -1,13 +1,8 @@
 import Flexbox from '@components/@layout/Flexbox';
 import Typography from '@components/Typography';
 import { css, useTheme } from '@emotion/react';
-import {
-  createContext,
-  ReactNode,
-  useState,
-  useEffect,
-  CSSProperties,
-} from 'react';
+import { CSSProperties } from '@utils';
+import { createContext, ReactNode, useState, useEffect } from 'react';
 import useSafeContext from 'src/hooks/useSafeContext';
 
 import { useSlider, UseSliderReturn } from './useSlider';

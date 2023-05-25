@@ -1,4 +1,4 @@
-import { CSSProperties } from 'react';
+import type { CSSProperties } from '@utils';
 
 interface FlexboxStyleProps {
   flexDirection?: CSSProperties['flexDirection'];
@@ -16,7 +16,7 @@ export const flexboxStyle = ({
   alignItems = 'center',
   justifyContent = 'center',
   gap = '1rem',
-}: FlexboxStyleProps = {}) => {
+}: FlexboxStyleProps = {}): Partial<CSSProperties> => {
   return {
     display: 'flex',
     flexDirection,

@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { CSSProperties } from 'react';
+import { CSSProperties } from '@utils';
 
 export interface IconProps {
   size?: CSSProperties['width'];

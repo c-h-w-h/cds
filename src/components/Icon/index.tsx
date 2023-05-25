@@ -6,8 +6,8 @@ export { default as CdsSearch } from './CdsSearch';
 export { default as CdsUser } from './CdsUser';
 
 import styled from '@emotion/styled';
+import { CSSProperties } from '@utils';
 import { pixelToRem } from '@utils/pixel-to-rem';
-import { CSSProperties } from 'react';
 import { IconType } from 'react-icons/lib';
 
 /**

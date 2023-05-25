@@ -8,6 +8,7 @@ import {
   PAGE_DOWN,
   PAGE_UP,
 } from '@constants/key';
+import { CSSProperties } from '@utils';
 import {
   KeyboardEvent,
   MouseEvent as ReactMouseEvent,
@@ -40,7 +41,7 @@ const useSlider = ({
 
   const getValue = () => value;
 
-  const getStyles = () => {
+  const getStyles = (): getStylesReturn => {
     const SLIDER_THICKNESS = 4;
 
     const rootStyle = {
@@ -171,6 +172,33 @@ const useSlider = ({
     onMoveSlider,
     onPressArrow,
   };
+};
+
+type getStylesReturn = {
+  rootStyle:
+    | {
+        width: CSSProperties['width'];
+      }
+    | {
+        height: CSSProperties['height'];
+      };
+  trackStyle: {
+    width: CSSProperties['width'];
+    height: CSSProperties['height'];
+  };
+  filledStyle: {
+    width: CSSProperties['width'];
+    height: CSSProperties['height'];
+  };
+  thumbStyle:
+    | {
+        left: CSSProperties['left'];
+        transform: CSSProperties['transform'];
+      }
+    | {
+        bottom: CSSProperties['bottom'];
+        transform: CSSProperties['transform'];
+      };
 };
 
 export type UseSliderReturn = ReturnType<typeof useSlider>;

@@ -1,8 +1,8 @@
 import { COLOR } from '@constants/color';
 import { TYPOGRAPHY } from '@constants/typography';
 import styled from '@emotion/styled';
+import { CSSProperties } from '@utils';
 import { pixelToRem } from '@utils/pixel-to-rem';
-import { CSSProperties } from 'react';
 
 type Color = keyof typeof COLOR;
 
