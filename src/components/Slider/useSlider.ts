@@ -41,7 +41,7 @@ const useSlider = ({
 
   const getValue = () => value;
 
-  const getStyles = (): getStylesReturn => {
+  const getStyles = (): GetStylesReturn => {
     const SLIDER_THICKNESS = 4;
 
     const rootStyle = {
@@ -174,7 +174,7 @@ const useSlider = ({
   };
 };
 
-type getStylesReturn = {
+type GetStylesReturn = {
   rootStyle: Partial<CSSProperties>;
   trackStyle: Partial<CSSProperties>;
   filledStyle: Partial<CSSProperties>;
