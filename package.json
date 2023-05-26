@@ -15,7 +15,9 @@
     "build-storybook": "build-storybook",
     "lint-staged": "lint-staged",
     "chromatic": "chromatic --exit-zero-on-changes",
-    "generate": "plop"
+    "generate": "plop",
+    "test:cy": "cypress open",
+    "test": "concurrently 'yarn dev' 'wait-on http://localhost:6006 && yarn test:cy'"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
@@ -65,6 +67,7 @@
     "@vitejs/plugin-react": "^3.1.0",
     "babel-loader": "^8.3.0",
     "chromatic": "^6.17.1",
+    "concurrently": "^8.0.1",
     "cypress": "^12.13.0",
     "eslint": "^8.34.0",
     "eslint-config-prettier": "^8.6.0",
@@ -84,7 +87,8 @@
     "typescript": "^5.0.4",
     "vite": "^4.1.0",
     "vite-plugin-dts": "^2.1.0",
-    "vite-tsconfig-paths": "^4.0.5"
+    "vite-tsconfig-paths": "^4.0.5",
+    "wait-on": "^7.0.1"
   },
   "homepage": "https://github.com/c-h-w-h/cds#readme",
   "repository": {
