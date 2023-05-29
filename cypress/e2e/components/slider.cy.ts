@@ -73,5 +73,15 @@ describe('Slider component test', () => {
       cy.get("@thumb").trigger('keydown', { keyCode : 34 });
       cy.get('@thumb').invoke('text').should('eq', '40');
     });
+
+    it('Set min with home key', () => {
+      cy.get("@thumb").trigger('keydown', { keyCode : 36 });
+      cy.get('@thumb').invoke('text').should('eq', '0');
+    });
+
+    it('Set max with end key', () => {
+      cy.get("@thumb").trigger('keydown', { keyCode : 35 });
+      cy.get('@thumb').invoke('text').should('eq', '100');
+    });
   });
 });
