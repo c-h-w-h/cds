@@ -49,8 +49,18 @@ describe('Slider component test', () => {
       cy.get('@thumb').invoke('text').should('eq', '51');
     });
 
+    it('Increase with up arrow', () => {
+      cy.get("@thumb").trigger('keydown', { keyCode : 38 });
+      cy.get('@thumb').invoke('text').should('eq', '51');
+    });
+
     it('Decrease with left arrow', () => {
       cy.get("@thumb").trigger('keydown', { keyCode : 37 });
+      cy.get('@thumb').invoke('text').should('eq', '49');
+    });
+
+    it('Decrease with down arrow', () => {
+      cy.get("@thumb").trigger('keydown', { keyCode : 40 });
       cy.get('@thumb').invoke('text').should('eq', '49');
     });
   });
