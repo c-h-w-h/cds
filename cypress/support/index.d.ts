@@ -4,3 +4,6 @@ declare namespace Cypress {
     getStory(componentName: string, storyName: string): Chainable<JQuery<HTMLElement>>
   }
 }
+
+type FilledDimension = 'width' | 'height';
+type ThumbPosition = 'left' | 'bottom';

@@ -11,6 +11,18 @@ describe('Slider component test', () => {
     cy.get('@slider').find(THUMB_ID).as('thumb');
   }
 
+  const shouldBeEqualPercentage = (dimension: FilledDimension, position: ThumbPosition) => {
+    cy.get('@filled')
+      .invoke('css', dimension)
+      .then(dimensionPercentage => {
+        cy.get('@thumb')
+          .invoke('css', position)
+          .then(positionPercentage => {
+            expect(dimensionPercentage).equal(positionPercentage);
+        });
+      });
+  }
+
   beforeEach(() => {
     cy.visitStory('components-slider');
   });
@@ -22,12 +34,14 @@ describe('Slider component test', () => {
 
     it('Click min value', () => {
       cy.get('@track').click('left');
-      cy.get('@thumb').invoke('text').should('eq', '0');  
+      cy.get('@thumb').invoke('text').should('eq', '0');
+      shouldBeEqualPercentage('width', 'left');
     });
 
     it('Click max value', () => {
       cy.get('@track').click('right');
-      cy.get('@thumb').invoke('text').should('eq', '100');  
+      cy.get('@thumb').invoke('text').should('eq', '100');
+      shouldBeEqualPercentage('width', 'left');
     });
   });
 });
