@@ -63,5 +63,15 @@ describe('Slider component test', () => {
       cy.get("@thumb").trigger('keydown', { keyCode : 40 });
       cy.get('@thumb').invoke('text').should('eq', '49');
     });
+
+    it('Increase with page up', () => {
+      cy.get("@thumb").trigger('keydown', { keyCode : 33 });
+      cy.get('@thumb').invoke('text').should('eq', '60');
+    });
+
+    it('Decrease with page down', () => {
+      cy.get("@thumb").trigger('keydown', { keyCode : 34 });
+      cy.get('@thumb').invoke('text').should('eq', '40');
+    });
   });
 });
