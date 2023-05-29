@@ -1,14 +1,15 @@
-const SLIDER_TRACK_ID = '#cds_Slider-slider-track';
-const SLIDER_FILLED_ID = '#cds_Slider-slider-filled';
-const SLIDER_THUMB_ID = '#cds_Slider-slider-thumb';
+const SLIDER_PREFIX = '#cds_Slider-slider';
+const TRACK_ID = `${SLIDER_PREFIX}-track`;
+const FILLED_ID = `${SLIDER_PREFIX}-filled`;
+const THUMB_ID = `${SLIDER_PREFIX}-thumb`;
 
 describe('Slider component test', () => {
   beforeEach(() => {
     cy.visitStory('components-slider');
     cy.getStory('slider', 'default').as('slider');
-    cy.get('@slider').find(SLIDER_TRACK_ID).as('track');
-    cy.get('@slider').find(SLIDER_FILLED_ID).as('filled');
-    cy.get('@slider').find(SLIDER_THUMB_ID).as('thumb');
+    cy.get('@slider').find(TRACK_ID).as('track');
+    cy.get('@slider').find(FILLED_ID).as('filled');
+    cy.get('@slider').find(THUMB_ID).as('thumb');
   });
 
   describe('Default slider', () => {
