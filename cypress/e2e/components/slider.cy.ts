@@ -4,7 +4,7 @@ const SLIDER_THUMB_ID = '#cds_Slider-slider-thumb';
 
 describe('Slider component test', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:6006/?path=/docs/components-slider--default');
+    cy.visitStory('components-slider');
     cy.getStory('slider', 'default').as('slider');
     cy.get('@slider').find(SLIDER_TRACK_ID).as('track');
     cy.get('@slider').find(SLIDER_FILLED_ID).as('filled');
