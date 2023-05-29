@@ -43,5 +43,15 @@ describe('Slider component test', () => {
       cy.get('@thumb').invoke('text').should('eq', '100');
       shouldBeEqualPercentage('width', 'left');
     });
+
+    it('Increase with right arrow', () => {
+      cy.get("@thumb").trigger('keydown', { keyCode : 39 });
+      cy.get('@thumb').invoke('text').should('eq', '51');
+    });
+
+    it('Decrease with left arrow', () => {
+      cy.get("@thumb").trigger('keydown', { keyCode : 37 });
+      cy.get('@thumb').invoke('text').should('eq', '49');
+    });
   });
 });
