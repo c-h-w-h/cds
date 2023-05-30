@@ -84,4 +84,64 @@ describe('Slider component test', () => {
       cy.get('@thumb').invoke('text').should('eq', '100');
     });
   });
+
+  describe('Min Value Variant slider', () => {
+    beforeEach(() => {
+      initAlias('min-value-variant');
+    });
+
+    afterEach(() => {
+      shouldBeEqualPercentage('width', 'left');
+    });
+
+    it('Click min value', () => {
+      cy.get('@track').click('left');
+      cy.get('@thumb').invoke('text').should('eq', '50');
+    });
+
+    it('Click max value', () => {
+      cy.get('@track').click('right');
+      cy.get('@thumb').invoke('text').should('eq', '100');
+    });
+
+    it('Increase with right arrow', () => {
+      cy.get("@thumb").trigger('keydown', { keyCode : 39 });
+      cy.get('@thumb').invoke('text').should('eq', '76');
+    });
+
+    it('Increase with up arrow', () => {
+      cy.get("@thumb").trigger('keydown', { keyCode : 38 });
+      cy.get('@thumb').invoke('text').should('eq', '76');
+    });
+
+    it('Decrease with left arrow', () => {
+      cy.get("@thumb").trigger('keydown', { keyCode : 37 });
+      cy.get('@thumb').invoke('text').should('eq', '74');
+    });
+
+    it('Decrease with down arrow', () => {
+      cy.get("@thumb").trigger('keydown', { keyCode : 40 });
+      cy.get('@thumb').invoke('text').should('eq', '74');
+    });
+
+    it('Increase with page up', () => {
+      cy.get("@thumb").trigger('keydown', { keyCode : 33 });
+      cy.get('@thumb').invoke('text').should('eq', '80');
+    });
+
+    it('Decrease with page down', () => {
+      cy.get("@thumb").trigger('keydown', { keyCode : 34 });
+      cy.get('@thumb').invoke('text').should('eq', '70');
+    });
+
+    it('Set min with home key', () => {
+      cy.get("@thumb").trigger('keydown', { keyCode : 36 });
+      cy.get('@thumb').invoke('text').should('eq', '50');
+    });
+
+    it('Set max with end key', () => {
+      cy.get("@thumb").trigger('keydown', { keyCode : 35 });
+      cy.get('@thumb').invoke('text').should('eq', '100');
+    });
+  });
 });
