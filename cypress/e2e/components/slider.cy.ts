@@ -12,15 +12,13 @@ describe('Slider component test', () => {
   }
 
   const shouldBeEqualPercentage = (dimension: FilledDimension, position: ThumbPosition) => {
-    cy.get('@filled')
-      .invoke('css', dimension)
-      .then(dimensionPercentage => {
-        cy.get('@thumb')
-          .invoke('css', position)
-          .then(positionPercentage => {
-            expect(dimensionPercentage).equal(positionPercentage);
-        });
+    cy.get('@filled').then(([ filledElement ]) => {
+      cy.get('@thumb').then(([ thumbElement ]) => {
+        const filledStyle = window.getComputedStyle(filledElement)[dimension];
+        const thumbStyle = window.getComputedStyle(thumbElement)[position];
+        expect(filledStyle).equal(thumbStyle);
       });
+    });
   }
 
   beforeEach(() => {
