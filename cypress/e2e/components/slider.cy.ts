@@ -30,18 +30,20 @@ describe('Slider component test', () => {
   describe('Default slider', () => {
     beforeEach(() => {
       initAlias('default');
-    })
+    });
+
+    afterEach(() => {
+      shouldBeEqualPercentage('width', 'left');
+    });
 
     it('Click min value', () => {
       cy.get('@track').click('left');
       cy.get('@thumb').invoke('text').should('eq', '0');
-      shouldBeEqualPercentage('width', 'left');
     });
 
     it('Click max value', () => {
       cy.get('@track').click('right');
       cy.get('@thumb').invoke('text').should('eq', '100');
-      shouldBeEqualPercentage('width', 'left');
     });
 
     it('Increase with right arrow', () => {
