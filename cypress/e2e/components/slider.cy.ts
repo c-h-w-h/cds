@@ -334,4 +334,64 @@ describe('Slider component test', () => {
       cy.get('@thumb').invoke('text').should('eq', '40');
     });
   });
+
+  describe('With Vertical Orientation slider', () => {
+    beforeEach(() => {
+      initAlias('with-vertical-orientation');
+    });
+
+    afterEach(() => {
+      shouldBeEqualPercentage('height', 'bottom');
+    });
+
+    it('Click min value', () => {
+      cy.get('@track').click(0, 200, { force: true });
+      cy.get('@thumb').invoke('text').should('eq', '0');
+    });
+
+    it('Click max value', () => {
+      cy.get('@track').click('top');
+      cy.get('@thumb').invoke('text').should('eq', '100');
+    });
+
+    it('Increase with right arrow', () => {
+      cy.get("@thumb").trigger('keydown', { keyCode : 39 });
+      cy.get('@thumb').invoke('text').should('eq', '51');
+    });
+
+    it('Increase with up arrow', () => {
+      cy.get("@thumb").trigger('keydown', { keyCode : 38 });
+      cy.get('@thumb').invoke('text').should('eq', '51');
+    });
+
+    it('Decrease with left arrow', () => {
+      cy.get("@thumb").trigger('keydown', { keyCode : 37 });
+      cy.get('@thumb').invoke('text').should('eq', '49');
+    });
+
+    it('Decrease with down arrow', () => {
+      cy.get("@thumb").trigger('keydown', { keyCode : 40 });
+      cy.get('@thumb').invoke('text').should('eq', '49');
+    });
+
+    it('Increase with page up', () => {
+      cy.get("@thumb").trigger('keydown', { keyCode : 33 });
+      cy.get('@thumb').invoke('text').should('eq', '60');
+    });
+
+    it('Decrease with page down', () => {
+      cy.get("@thumb").trigger('keydown', { keyCode : 34 });
+      cy.get('@thumb').invoke('text').should('eq', '40');
+    });
+
+    it('Set min with home key', () => {
+      cy.get("@thumb").trigger('keydown', { keyCode : 36 });
+      cy.get('@thumb').invoke('text').should('eq', '0');
+    });
+
+    it('Set max with end key', () => {
+      cy.get("@thumb").trigger('keydown', { keyCode : 35 });
+      cy.get('@thumb').invoke('text').should('eq', '100');
+    });
+  });
 });
