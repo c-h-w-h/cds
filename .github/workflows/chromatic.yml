@@ -1,6 +1,6 @@
 name: 'Chromatic Deployment'
 
-on: 
+on:
   pull_request:
     branches: ['main']
     paths:
@@ -12,14 +12,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - run: yarn
 
       - uses: actions/setup-node@v3
         with:
           node-version: '16'
           cache: 'yarn'
           cache-dependency-path: yarn.lock
-        
+
+      - run: |
+          yarn config set nodeLinker "node-modules"
+          yarn install --immutable
+
       - uses: chromaui/action@v1
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}

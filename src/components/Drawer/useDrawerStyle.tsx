@@ -1,5 +1,5 @@
 import { css, keyframes } from '@emotion/react';
-import { CSSProperties } from 'react';
+import { CSSProperties } from '@utils';
 
 import type { DrawerPosition } from '.';
 

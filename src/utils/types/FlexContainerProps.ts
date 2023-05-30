@@ -1,4 +1,4 @@
-import { CSSProperties } from 'react';
+import { CSSProperties } from '@utils';
 
 export interface FlexContainerProps {
   flexDirection?: CSSProperties['flexDirection'];

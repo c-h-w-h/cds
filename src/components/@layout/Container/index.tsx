@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import { DefaultPropsWithChildren } from '@util-types/DefaultPropsWithChildren';
-import { CSSProperties } from 'react';
+import { CSSProperties } from '@utils';
 
 interface ContainerProps extends DefaultPropsWithChildren<HTMLDivElement> {
   overflowX?: CSSProperties['overflowX'];

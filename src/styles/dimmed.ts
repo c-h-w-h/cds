@@ -1,6 +1,6 @@
 import { ColorSet } from '@constants/color';
 import { css } from '@emotion/react';
-import { CSSProperties } from 'react';
+import { CSSProperties } from '@utils';
 
 export const dimmerStyle = (
   position: CSSProperties['position'],

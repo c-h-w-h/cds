@@ -1,7 +1,7 @@
 import { TYPOGRAPHY } from '@constants/typography';
 import { css, jsx } from '@emotion/react';
 import { DefaultProps } from '@util-types/DefaultProps';
-import { CSSProperties } from 'react';
+import { CSSProperties } from '@utils';
 
 interface TypographyProps extends DefaultProps<HTMLParagraphElement> {
   children: TextNode;

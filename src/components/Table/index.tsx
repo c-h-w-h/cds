@@ -1,7 +1,7 @@
 import { COLOR } from '@constants/color';
 import { TYPOGRAPHY } from '@constants/typography';
-import { CSSProperties } from '@emotion/serialize';
 import styled from '@emotion/styled';
+import { CSSProperties } from '@utils';
 import { pixelToRem } from '@utils/pixel-to-rem';
 
 type Color = keyof typeof COLOR;

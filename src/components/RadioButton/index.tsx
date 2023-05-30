@@ -1,7 +1,8 @@
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
+import { CSSProperties } from '@utils';
 import { DefaultProps } from '@utils/types/DefaultProps';
-import { CSSProperties, ReactNode, forwardRef } from 'react';
+import { ReactNode, forwardRef } from 'react';
 
 interface RadioButtonProps extends DefaultProps<HTMLInputElement> {
   name: string;

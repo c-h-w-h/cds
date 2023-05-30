@@ -23,7 +23,8 @@
   "settings": {
     "react": {
       "version": "detect"
-    }
+    },
+    "import/external-module-folders": [".yarn"]
   },
   "rules": {
     "react/react-in-jsx-scope": "off",
