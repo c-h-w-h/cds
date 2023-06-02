@@ -4,11 +4,11 @@ const FILLED_ID = `${SLIDER_PREFIX}-filled`;
 const THUMB_ID = `${SLIDER_PREFIX}-thumb`;
 
 describe('Slider component test', () => {
-  const initAlias = (storyName: string) => {
-    cy.getStory('slider', storyName).as('slider');
-    cy.get('@slider').find(TRACK_ID).as('track');
-    cy.get('@slider').find(FILLED_ID).as('filled');
-    cy.get('@slider').find(THUMB_ID).as('thumb');
+  const initAlias = () => {
+    cy.get('#root').as('root');
+    cy.get('@root').find(TRACK_ID).as('track');
+    cy.get('@root').find(FILLED_ID).as('filled');
+    cy.get('@root').find(THUMB_ID).as('thumb');
   }
 
   const shouldBeEqualPercentage = (dimension: FilledDimension, position: ThumbPosition) => {
@@ -21,13 +21,10 @@ describe('Slider component test', () => {
     });
   }
 
-  beforeEach(() => {
-    cy.visitStory('components-slider');
-  });
-
   describe('Default slider', () => {
     beforeEach(() => {
-      initAlias('default');
+      cy.visitStory('slider', 'default');
+      initAlias();
     });
 
     afterEach(() => {
@@ -87,7 +84,8 @@ describe('Slider component test', () => {
 
   describe('Start From Zero slider', () => {
     beforeEach(() => {
-      initAlias('start-from-zero');
+      cy.visitStory('slider', 'start-from-zero');
+      initAlias();
     });
 
     afterEach(() => {
@@ -112,7 +110,8 @@ describe('Slider component test', () => {
 
   describe('Start From End slider', () => {
     beforeEach(() => {
-      initAlias('start-from-end');
+      cy.visitStory('slider', 'start-from-end');
+      initAlias();
     });
 
     afterEach(() => {
@@ -137,7 +136,8 @@ describe('Slider component test', () => {
 
   describe('Min Value Variant slider', () => {
     beforeEach(() => {
-      initAlias('min-value-variant');
+      cy.visitStory('slider', 'min-value-variant');
+      initAlias();
     });
 
     afterEach(() => {
@@ -197,7 +197,8 @@ describe('Slider component test', () => {
 
   describe('Max Value Variant slider', () => {
     beforeEach(() => {
-      initAlias('max-value-variant');
+      cy.visitStory('slider', 'max-value-variant');
+      initAlias();
     });
 
     afterEach(() => {
@@ -257,7 +258,8 @@ describe('Slider component test', () => {
 
   describe('With Step 10 slider', () => {
     beforeEach(() => {
-      initAlias('with-step-10');
+      cy.visitStory('slider', 'with-step-10');
+      initAlias();
     });
 
     afterEach(() => {
@@ -297,7 +299,8 @@ describe('Slider component test', () => {
 
   describe('With Step 20 slider', () => {
     beforeEach(() => {
-      initAlias('with-step-20');
+      cy.visitStory('slider', 'with-step-20');
+      initAlias();
     });
 
     afterEach(() => {
@@ -337,7 +340,8 @@ describe('Slider component test', () => {
 
   describe('With Vertical Orientation slider', () => {
     beforeEach(() => {
-      initAlias('with-vertical-orientation');
+      cy.visitStory('slider', 'with-vertical-orientation');
+      initAlias();
     });
 
     afterEach(() => {
